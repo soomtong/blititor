@@ -1,5 +1,5 @@
-bliter
-======
+blititer
+========
 
 humble web editor for nodejs
 
