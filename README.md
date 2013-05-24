@@ -9,7 +9,7 @@ humble web board for nodejs using summernote
 - express + mongoskin
 - jquery + knockout
 - bootstrap
-- base on npm, bower
+- used npm, bower
 
 ## usage
 
