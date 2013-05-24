@@ -19,10 +19,14 @@ git clone git://github.com/soomtong/blititor.git
 ```
 
 - prepare nodejs, npm, bower, jake
+- edit your config.json file
+```shell
+cd blititor
+cp config.default.json config.js
+```
 
 - install component with npm, bower
 ```shell
-cd blititor
 npm install
 bower install
 ```
