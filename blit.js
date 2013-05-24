@@ -15,7 +15,7 @@ program.command('start')
         var script = path.join(__dirname, 'app.js');
         forever.startDaemon (script, {});
 
-        console.log("blititor server is start...");
+        console.log("blititor server is started...");
     });
 
 program.command('stop')
