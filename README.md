@@ -14,10 +14,27 @@ humble web board for nodejs using summernote
 ## usage
 
 - clone repos
+```shell
+git clone git://github.com/soomtong/blititor.git
+```
+
 - prepare nodejs, npm, bower, jake
-- jake init : install component with npm, bower
-- jake ready : generate configuration file, make mongo collection, insert dummy data
-- jake run : run server with forever
+
+- install component with npm, bower
+```shell
+cd blititor
+npm install
+bower install
+```
+
+- generate configuration file, make mongo collection, insert dummy data
+```shell
+node blititor.js ready
+```
+- run server with forever
+```shell
+node blititor.js run
+```
 
 ## for hackers
 
