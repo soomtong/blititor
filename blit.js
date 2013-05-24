@@ -29,6 +29,3 @@ program.command('stop')
 program.version('============================================================'
         + '\nblititor V0.1 - humble web board for nodejs using summernote')
     .parse(process.argv);
-
-console.log('blititor - humble web board for nodejs using summernote');
-console.log('\n    Help: blit.js -h');
