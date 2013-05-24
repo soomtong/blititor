@@ -3,6 +3,8 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "commander": "1.1.x",
+        "forever": "0.10.x",
         "express": "3.2.x",
         "consolidate": "0.8.x",
         "swig": "0.13.x",

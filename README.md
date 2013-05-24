@@ -18,11 +18,12 @@ humble web board for nodejs using summernote
 git clone git://github.com/soomtong/blititor.git
 ```
 
-- prepare nodejs, npm, bower, jake
+- prepare nodejs, npm, bower
 - edit your config.json file
 ```shell
 cd blititor
 cp config.default.json config.js
+chmod +x blit.js
 ```
 
 - install component with npm, bower
@@ -33,13 +34,21 @@ bower install
 
 - generate configuration file, make mongo collection, insert dummy data
 ```shell
-node blititor.js ready
+./blit ready
+```
+for windows
+```shell
+node blit ready
 ```
 - run server with forever
 ```shell
-node blititor.js run
+./blit start
+./blit stop
 ```
-
+for windows use single node app
+```shell
+node app.js
+```
 ## for hackers
 
 I wish you can make this better one :)
