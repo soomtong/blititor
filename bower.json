@@ -1,0 +1,15 @@
+{
+    "name": "blititer",
+    "version": "0.0.1",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ],
+    "dependencies": {
+        "jquery": "1.9.x",
+        "knockout.js": "2.1.x",
+        "bootstrap": "2.3.x"
+    },
+    "devDependencies": {
+    }
+}
