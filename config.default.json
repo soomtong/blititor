@@ -4,7 +4,9 @@
     "secretToken": "your secret token",
 
     "author": {
-        "name": "your name"
+        "name": "your name",
+        "id": "your auth id",
+        "pw": "your auth password"
     },
     "site": {
         "theme": "starter",
