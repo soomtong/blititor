@@ -5,7 +5,7 @@
     <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ title }}">
-    <meta name="author" content="{{ author }}">
+    <meta name="author" content="{{ author.name }}">
     <link href="/lib/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
     <style>
         body {
@@ -32,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="{{ homeLink }}">{{ homeMenu }}</a>
+            <a class="brand" href="{{ site.homeLink }}">{{ site.homeMenu }}</a>
             <div class="nav-collapse collapse">
                 <ul class="nav" data-bind="foreach: menu">
                     <li data-bind="attr: {class: css}"><a data-bind="attr: {href: link}, text: name"></a></li>
@@ -62,7 +62,6 @@
 <script src="/lib/knockout.js/knockout.js"></script>
 <script src="/lib/jwerty/jwerty.js"></script>
 <script src="/js/common.js"></script>
-<script src="/js/loadIndicator.js"></script>
 <script type="text/javascript">
     var viewModel = {
         menu: ko.observable(),

@@ -19,14 +19,13 @@ swig.init({
 app.set('port', config.port);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
-app.set('views', __dirname + '/theme/' + config.theme);
+app.set('views', __dirname + '/theme/' + config.site.theme);
 app.set('view cache', false);
 
 app.locals({
     title: config.description,
     author: config.author,
-    homeMenu: config.homeMenu,
-    homeLink: config.homeLink,
+    site: config.site,
     revision: config.revision
 });
 

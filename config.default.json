@@ -3,9 +3,20 @@
     "cookieId": "your cookie id",
     "secretToken": "your secret token",
     "description": "your site description",
-    "author": "your name",
-    "theme": "starter",
-    "homeMenu": "your home menu name",
-    "homeLink": "/",
+
+    "author": {
+        "name": "your name"
+    },
+    "site": {
+        "theme": "starter",
+        "homeMenu": "your home menu name",
+        "homeMenuImage": "your image url",
+        "homeLink": "/"
+    },
+    "postList": {
+        "size": 20,
+        "gutter": 10
+    },
+
     "revision": 1
 }
