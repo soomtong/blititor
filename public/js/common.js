@@ -20,7 +20,7 @@ var bindKey = function (menuData) {
 };
 
 $(document).ajaxStart(function () {
-    $('#loading').fadeIn();
+    $('#loading').spin();
 }).ajaxStop(function () {
-    $('#loading').fadeOut();
+    $('#loading').spin(false);
 });
