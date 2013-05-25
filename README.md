@@ -1,11 +1,11 @@
 blititer
 ========
 
-humble web board for nodejs using summernote
+humble blog application for nodejs using summernote
 
 ## stack
 
-- nodejs + nginx (recommened) + mongodb
+- nodejs + mongodb + nginx (recommended)
 - express + mongoskin
 - jquery + knockout
 - bootstrap
@@ -19,6 +19,7 @@ git clone git://github.com/soomtong/blititor.git
 ```
 
 - prepare nodejs, npm, bower
+
 - edit your config.json file
 ```shell
 cd blititor
@@ -40,6 +41,7 @@ for windows
 ```shell
 node blit ready
 ```
+
 - run server with forever
 ```shell
 ./blit start
