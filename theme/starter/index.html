@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ title }}">
+    <meta name="author" content="{{ author }}">
+    <link href="/lib/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <link href="/lib/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/lib/bootstrap/docs/assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/lib/bootstrap/docs/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/lib/bootstrap/docs/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/lib/bootstrap/docs/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/lib/bootstrap/docs/assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/lib/bootstrap/docs/assets/ico/favicon.png">
+</head>
+<body>
+<img id="loading" src="/img/loading.gif" alt="loading indicator" style="display: none;position: absolute;top: 50%; left: 50%;width: 32px; height: 32px; margin-top: -16px; margin-left: -16px;"/>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="{{ homeLink }}">{{ homeMenu }}</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav" data-bind="foreach: menu">
+                    <li data-bind="attr: {class: css}"><a data-bind="attr: {href: link}, text: name"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="hero-unit" data-bind="foreach: featured">
+        <h1 data-bind="text: title"></h1>
+        <p data-bind="text: desc"></p>
+    </div>
+    <div class="row" data-bind="foreach: list">
+        <div class="span4">
+            <h2 data-bind="text: title"></h2>
+            <p data-bind="text: desc"></p>
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <p>blititor 2013</p>
+    </footer>
+</div>
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/bootstrap/docs/assets/js/bootstrap.min.js"></script>
+<script src="/lib/knockout.js/knockout.js"></script>
+<script src="/lib/jwerty/jwerty.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/loadIndicator.js"></script>
+<script type="text/javascript">
+    var viewModel = {
+        menu: ko.observable(),
+        featured: ko.observable(),
+        list: ko.observable()
+    };
+    $(document).ready(function () {
+        ko.applyBindings(viewModel);
+
+        $.getJSON('/home', function (data) {
+            viewModel.menu(data.menu)
+                    .featured(data.featured)
+                    .list(data.list);
+            bindKey(data.menu);
+        });
+    });
+</script>
+</body>
+</html>

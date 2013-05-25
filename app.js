@@ -10,7 +10,7 @@ var app = express();
 // set template engine
 app.engine('html', cons.swig);
 swig.init({
-    root: __dirname + '/views',
+    root: __dirname + '/theme',
     allowErrors: true,
     cache: false
 });
@@ -19,12 +19,15 @@ swig.init({
 app.set('port', config.port);
 app.set('view engine', 'html');
 app.set('view options', { layout: false });
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/theme/' + config.theme);
 app.set('view cache', false);
 
 app.locals({
-    title: "humble blog for node.js",
-    revision: 1
+    title: config.description,
+    author: config.author,
+    homeMenu: config.homeMenu,
+    homeLink: config.homeLink,
+    revision: config.revision
 });
 
 // using Express behind nginx
