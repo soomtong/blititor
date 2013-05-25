@@ -18,7 +18,7 @@ swig.init({
 // set express app
 app.set('port', config.port);
 app.set('view engine', 'html');
-app.set('view options', { layout: false });
+app.set('view options', { layout: true });
 app.set('views', __dirname + '/theme/' + config.site.theme);
 app.set('view cache', false);
 

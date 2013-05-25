@@ -1,13 +1,8 @@
 {% extends 'starter/layout.html' %}
 
 {% block content %}
-<div class="hero-unit" data-bind="foreach: featured">
-    <h1 data-bind="text: title"></h1>
-
-    <p data-bind="text: desc"></p>
-</div>
 <div class="row" data-bind="foreach: list">
-    <div class="span4">
+    <div class="span12">
         <h2 data-bind="text: title"></h2>
 
         <p data-bind="text: desc"></p>
@@ -19,15 +14,13 @@
 <script type="text/javascript">
     var viewModel = {
         menu: ko.observable(),
-        featured: ko.observable(),
         list: ko.observable()
     };
     $(document).ready(function () {
         ko.applyBindings(viewModel);
 
-        $.getJSON('/', function (data) {
+        $.getJSON('/list', function (data) {
             viewModel.menu(data.menu)
-                    .featured(data.featured)
                     .list(data.list);
             bindKey(data.menu);
         });
