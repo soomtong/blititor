@@ -7,6 +7,7 @@
     <meta name="description" content="{{ site.description }}">
     <meta name="author" content="{{ author.name }}">
     <link href="/lib/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
     <style>
         body {
             padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -27,11 +28,11 @@
 {% include 'starter/menu.html' %}
 <div class="container">
     {% block content %}{% endblock %}
-    <hr>
-    <footer>
-        <p>blititor 2013</p>
-    </footer>
 </div>
+<footer class="footer">
+    <hr>
+    <p>blititor 2013</p>
+</footer>
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/bootstrap/docs/assets/js/bootstrap.min.js"></script>
 <script src="/lib/knockout.js/knockout.js"></script>

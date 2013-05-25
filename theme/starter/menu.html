@@ -13,6 +13,14 @@
                     <li class="{{ item.css }}"><a href="{{ item.link }}" accesskey="{{ item.key }}">{{ item.name }}</a></li>
                     {% endfor %}
                 </ul>
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+                    {% if login %}
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
