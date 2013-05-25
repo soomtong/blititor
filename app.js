@@ -23,7 +23,6 @@ app.set('views', __dirname + '/theme/' + config.site.theme);
 app.set('view cache', false);
 
 app.locals({
-    title: config.description,
     author: config.author,
     site: config.site,
     revision: config.revision

@@ -2,13 +2,14 @@
     "port": 8000,
     "cookieId": "your cookie id",
     "secretToken": "your secret token",
-    "description": "your site description",
 
     "author": {
         "name": "your name"
     },
     "site": {
         "theme": "starter",
+        "title": "your site title",
+        "description": "your site description",
         "homeMenu": "your home menu name",
         "homeMenuImage": "your image url",
         "homeLink": "/"
