@@ -1,36 +1,28 @@
 {% extends 'starter/layout.html' %}
 
 {% block content %}
-<div class="hero-unit" data-bind="foreach: featured">
-    <h1 data-bind="text: title"></h1>
+<div class="hero-unit">
+    {% for item in featured %}
+    <h1>{{ item.title }}</h1>
 
-    <p data-bind="text: desc"></p>
+    <p>{{ item.desc }}</p>
+    {% endfor %}
 </div>
-<div class="row" data-bind="foreach: list">
+<div class="row">
+    {% for item in list %}
     <div class="span4">
-        <h2 data-bind="text: title"></h2>
+        <h2>{{ item.title }}</h2>
 
-        <p data-bind="text: desc"></p>
+        <p>{{ item.desc }}</p>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-    var viewModel = {
-        menu: ko.observable(),
-        featured: ko.observable(),
-        list: ko.observable()
-    };
     $(document).ready(function () {
-        ko.applyBindings(viewModel);
 
-        $.getJSON('/', function (data) {
-            viewModel.menu(data.menu)
-                    .featured(data.featured)
-                    .list(data.list);
-            bindKey(data.menu);
-        });
     });
 </script>
 {% endblock %}

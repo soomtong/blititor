@@ -2,28 +2,20 @@
 
 {% block content %}
 <div class="row" data-bind="foreach: list">
+    {% for item in list %}
     <div class="span12">
-        <h2 data-bind="text: title"></h2>
+        <h2>{{ item.title }}</h2>
 
-        <p data-bind="text: desc"></p>
+        <p>{{ item.desc }}</p>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-    var viewModel = {
-        menu: ko.observable(),
-        list: ko.observable()
-    };
     $(document).ready(function () {
-        ko.applyBindings(viewModel);
 
-        $.getJSON('/list', function (data) {
-            viewModel.menu(data.menu)
-                    .list(data.list);
-            bindKey(data.menu);
-        });
     });
 </script>
 {% endblock %}
