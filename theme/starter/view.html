@@ -2,13 +2,11 @@
 
 {% block content %}
 <div class="row">
-    {% for item in list %}
     <div class="span12">
-        <h2>{{ item.title }}</h2>
+        <h2>{{ view.title }}</h2>
 
-        <p>{{ item.desc }}</p>
+        <p>{{ view.desc }}</p>
     </div>
-    {% endfor %}
 </div>
 {% endblock %}
 
