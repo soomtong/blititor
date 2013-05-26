@@ -8,8 +8,14 @@ humble blog application for nodejs using summernote
 - nodejs + mongodb + nginx (recommended)
 - express + mongoskin
 - jquery + knockout
+- swig
 - bootstrap
+- with [summernote](http://hackerwins.github.io/summernote/)
 - used npm, bower
+
+## demo
+
+view the [sample blog](http://blog.nerdbrea.kr/)
 
 ## usage
 
