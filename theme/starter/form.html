@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <form class="" method="post" action="/post">
+        <form id="postForm" method="post" action="/post" enctype="multipart/form-data" onsubmit="return postForm(this)">
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
@@ -23,7 +23,9 @@
                 <div class="input-prepend" data-bind="visible: useImage">
                     <input type="file" name="bg_image">
                 </div>
-                <textarea class="input-block-level" id="content" name="content" rows="20"></textarea>
+                <p class="container">
+                    <textarea class="input-block-level" id="summernote" name="content" rows="18"></textarea>
+                </p>
                 <label for="excerpt">Excerpt</label>
                 <input class="input-block-level" type="text" id="excerpt" name="excerpt" placeholder="Excerpt">
             </fieldset>
@@ -35,12 +37,25 @@
 {% endblock %}
 
 {% block script %}
+<link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="http://hackerwins.github.io/summernote/summernote.css" rel="stylesheet">
+<script src="http://hackerwins.github.io/summernote/js/jquery.curstyles.min.js"></script>
+<script src="http://hackerwins.github.io/summernote/summernote.js"></script>
 <script type="text/javascript">
+    var postForm = function (el) {
+        console.log(el);
+
+        return false;
+    };
     var menuModel = {
         useMenu: ko.observable(false),
         useImage: ko.observable(false)
     };
     $(document).ready(function () {
+        $('#summernote').summernote({
+            height: 361,
+            focus: true
+        });
         ko.applyBindings(menuModel);
 
         $('#cancel').click(function () {
