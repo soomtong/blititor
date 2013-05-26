@@ -1,0 +1,47 @@
+{% extends 'starter/layout.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+        <form class="" method="post" action="/post">
+            <fieldset>
+                <legend>Make Post</legend>
+                <label for="title">Title</label>
+                <input class="input-block-level" type="text" id="title" name="title" placeholder="Title">
+                <p class="controls">
+                    <label class="checkbox inline"><input type="checkbox" data-bind="checked: useMenu"> Use Top Menu</label>
+                    <label class="checkbox inline"><input type="checkbox" data-bind="checked: useImage"> Use Background Image</label>
+                </p>
+                <div class="input-prepend" data-bind="visible: useMenu">
+                    <span class="add-on">Menu</span>
+                    <input class="span3" id="prependedInput" type="text" name="menu_title" placeholder="Menu Title">
+                </div>
+                <div class="input-prepend" data-bind="visible: useMenu">
+                    <span class="add-on">Key</span>
+                    <input class="span1" type="text" name="bind_key" placeholder="Bind">
+                </div>
+                <div class="input-prepend" data-bind="visible: useImage">
+                    <input type="file" name="bg_image">
+                </div>
+                <textarea class="input-block-level" id="content" name="content" rows="20"></textarea>
+                <label for="excerpt">Excerpt</label>
+                <input class="input-block-level" type="text" id="excerpt" name="excerpt" placeholder="Excerpt">
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn">Cancel</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    var menuModel = {
+        useMenu: ko.observable(false),
+        useImage: ko.observable(false)
+    };
+    $(document).ready(function () {
+        ko.applyBindings(menuModel);
+    });
+</script>
+{% endblock %}
