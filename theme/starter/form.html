@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <form id="postForm" method="post" action="/post" enctype="multipart/form-data" onsubmit="return postForm(this)">
+        <form id="postForm" action="/post" onsubmit="return postForm(this)">
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
@@ -41,10 +41,20 @@
 <link href="http://hackerwins.github.io/summernote/summernote.css" rel="stylesheet">
 <script src="http://hackerwins.github.io/summernote/js/jquery.curstyles.min.js"></script>
 <script src="http://hackerwins.github.io/summernote/summernote.js"></script>
+<script src="/js/jquery.iframe-transport.js"></script>
 <script type="text/javascript">
     var postForm = function (el) {
-        console.log(el);
-
+        $.ajax(el.action, {
+            data: $(":text", el).serializeArray(),
+            files: $(":file", el),
+            iframe: true,
+            method: 'post',
+            processData: false
+        }).complete(function(data) {
+            if (data.responseText) {
+                location.href = '/view/' + data.responseText;
+            }
+        });
         return false;
     };
     var menuModel = {
