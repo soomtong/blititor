@@ -12,9 +12,18 @@
         "theme": "starter",
         "title": "your site title",
         "description": "your site description",
-        "homeMenu": "your home menu name",
-        "homeMenuImage": "your image url",
+        "homeMenu": "your home link name like Home",
+        "homeMenuImage": "your image url if exist",
         "homeLink": "/"
+    },
+    "mongoConf": {
+        "host": "your mongo db host",
+        "port": "27017",
+        "database": "mongo database",
+        "auth": {
+            "user": "mongo db user id",
+            "pass": "mongo db user password"
+        }
     },
     "postList": {
         "size": 20,
