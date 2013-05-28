@@ -7,7 +7,7 @@
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
-                <input class="input-block-level" type="text" id="title" name="title" placeholder="Title">
+                <input class="input-block-level" type="text" id="title" name="title" placeholder="Title" data-bind="value: titleText, valueUpdate: 'afterkeydown'">
                 <p class="controls">
                     <label class="checkbox inline"><input type="checkbox" data-bind="checked: useMenu"> Use Top Menu</label>
                     <label class="checkbox inline"><input type="checkbox" data-bind="checked: useImage"> Use Background Image</label>
@@ -29,7 +29,7 @@
                 <label for="excerpt">Excerpt</label>
                 <input class="input-block-level" type="text" id="excerpt" name="excerpt" placeholder="Excerpt">
             </fieldset>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary" data-bind="css: { disabled: !titleText() }">Save changes</button>
             <button type="button" id="cancel" class="btn">Cancel</button>
         </form>
     </div>
@@ -38,35 +38,44 @@
 
 {% block script %}
 <link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="http://hackerwins.github.io/summernote/summernote.css" rel="stylesheet">
-<script src="http://hackerwins.github.io/summernote/js/jquery.curstyles.min.js"></script>
-<script src="http://hackerwins.github.io/summernote/summernote.js"></script>
+<link href="/js/summernote.css" rel="stylesheet">
+<script src="/js/jquery.curstyles.min.js"></script>
+<script src="/js/summernote.js"></script>
 <script src="/js/jquery.iframe-transport.js"></script>
 <script type="text/javascript">
     var postForm = function (el) {
-        $.ajax(el.action, {
-            data: $(":text", el).serializeArray(),
-            files: $(":file", el),
-            iframe: true,
-            method: 'post',
-            processData: false
-        }).complete(function(data) {
-            if (data.responseText) {
-                location.href = '/view/' + data.responseText;
-            }
-        });
+        if (postModel.titleText()) {
+            $('button[type=submit]', el).addClass('disabled');
+            $('textarea[name="content"]', el).text($('#summernote').code());
+
+            $.ajax(el.action, {
+                data: $("textarea, :text", el).serializeArray(),
+                files: $(":file", el),
+                iframe: true,
+                type: "POST",
+                processData: false
+            }).complete(function(data) {
+                if (data.responseText) {
+                    location.href = '/view/' + data.responseText;
+                } else {
+                    $('#postForm').find('button[type=submit]').removeClass('disabled');
+                }
+            });
+        }
+
         return false;
     };
-    var menuModel = {
+    var postModel = {
         useMenu: ko.observable(false),
-        useImage: ko.observable(false)
+        useImage: ko.observable(false),
+        titleText: ko.observable()
     };
     $(document).ready(function () {
         $('#summernote').summernote({
             height: 361,
             focus: true
         });
-        ko.applyBindings(menuModel);
+        ko.applyBindings(postModel);
 
         $('#cancel').click(function () {
             history.back();

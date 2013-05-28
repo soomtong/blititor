@@ -9,8 +9,9 @@
             <a class="brand" href="{{ site.homeLink }}" accesskey="`">{{ site.homeMenu }}</a>
             <div class="nav-collapse collapse">
                 <ul class="nav" id="top_menu">
+                    <li class=""><a href="/list" accesskey="1">List</a></li>
                     {% for item in menu %}
-                    <li class="{{ item.css }}"><a href="{{ item.link }}" accesskey="{{ item.key }}">{{ item.name }}</a></li>
+                    <li class=""><a href="/view/{{ item._id }}" accesskey="{{ item.bind_key }}">{{ item.menu_title }}</a></li>
                     {% endfor %}
                 </ul>
                 <ul class="nav pull-right">

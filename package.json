@@ -8,6 +8,7 @@
         "express": "3.2.x",
         "consolidate": "0.8.x",
         "swig": "0.13.x",
+        "async": "0.2.x",
         "request": "2.21.x",
         "mongoskin": "0.5.x"
     },
