@@ -4,12 +4,12 @@
 <div class="row">
     {% for item in list %}
     <div class="span12">
-        <h2>{{ item.title }}</h2>
+        <a href="/view/{{ item._id }}"><h2>{{ item.title }}</h2></a>
 
         {% if item.excerpt %}
         <p>{{ item.excerpt }}</p>
         {% else %}
-        <p>{{ item.content|striptags|substring(100) }}</p>
+        <p>{{ item.content|striptags|substring(200) }}</p>
         {% endif %}
     </div>
     {% endfor %}
