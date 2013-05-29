@@ -11,6 +11,8 @@ var app = express();
 app.engine('html', cons.swig);
 swig.init({
     root: __dirname + '/theme',
+    tags: require('./lib/swigTag'),
+    filters: require('./lib/swigFilter'),
     allowErrors: true,
     cache: false
 });

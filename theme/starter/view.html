@@ -13,7 +13,8 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function () {
-
+        var menu = '{{ view._id }}';
+        $('#top_menu li[data-id="' + menu + '"]').addClass('active');
     });
 </script>
 {% endblock %}

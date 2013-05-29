@@ -6,7 +6,7 @@
     <div class="span12">
         <h2>{{ item.title }}</h2>
 
-        <p>{{ item.desc }}</p>
+        <p>{{ item.content|striptags|substring(100) }}</p>
     </div>
     {% endfor %}
 </div>
@@ -15,7 +15,8 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function () {
-
+        var menu = 'list';
+        $('#top_menu li[data-id="' + menu + '"]').addClass('active');
     });
 </script>
 {% endblock %}

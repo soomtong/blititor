@@ -7,19 +7,19 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="brand" href="{{ site.homeLink }}" accesskey="`">{{ site.homeMenu }}</a>
-            <div class="nav-collapse collapse">
-                <ul class="nav" id="top_menu">
-                    <li class=""><a href="/list" accesskey="1">List</a></li>
+            <div class="nav-collapse collapse" id="top_menu">
+                <ul class="nav">
+                    <li class="" data-id="list"><a href="/list" accesskey="1">List</a></li>
                     {% for item in menu %}
-                    <li class=""><a href="/view/{{ item._id }}" accesskey="{{ item.bind_key }}">{{ item.menu_title }}</a></li>
+                    <li class="" data-id="{{ item._id }}"><a href="/view/{{ item._id }}" accesskey="{{ item.bind_key }}">{{ item.menu_title }}</a></li>
                     {% endfor %}
                 </ul>
                 <ul class="nav pull-right">
                     {% if login %}
-                    <li><a href="/post">Post</a></li>
+                    <li class="" data-id="post"><a href="/post">Post</a></li>
                     <li><a href="/logout">Logout</a></li>
                     {% else %}
-                    <li><a href="/login">Login</a></li>
+                    <li class="" data-id="login"><a href="/login">Login</a></li>
                     {% endif %}
                 </ul>
             </div>

@@ -80,6 +80,8 @@
         $('#cancel').click(function () {
             history.back();
         });
+        var menu = 'post';
+        $('#top_menu li[data-id="' + menu + '"]').addClass('active');
     });
 </script>
 {% endblock %}
