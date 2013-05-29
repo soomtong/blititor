@@ -5,7 +5,11 @@
     {% for item in featured %}
     <h1>{{ item.title }}</h1>
 
-    <p>{{ item.desc }}</p>
+    {% if item.excerpt %}
+    <p>{{ item.excerpt }}</p>
+    {% else %}
+    <p>{{ item.content|striptags|substring(100) }}</p>
+    {% endif %}
     {% endfor %}
 </div>
 <div class="row">
@@ -13,7 +17,11 @@
     <div class="span4">
         <h2>{{ item.title }}</h2>
 
-        <p>{{ item.desc }}</p>
+        {% if item.excerpt %}
+        <p>{{ item.excerpt }}</p>
+        {% else %}
+        <p>{{ item.content|striptags|substring(100) }}</p>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

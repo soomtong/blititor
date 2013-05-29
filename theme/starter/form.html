@@ -9,6 +9,7 @@
                 <label for="title">Title</label>
                 <input class="input-block-level" type="text" id="title" name="title" placeholder="Title" data-bind="value: titleText, valueUpdate: 'afterkeydown'">
                 <p class="controls">
+                    <label class="checkbox inline"><input type="checkbox" name="home" value="1"> Use Home</label>
                     <label class="checkbox inline"><input type="checkbox" data-bind="checked: useMenu"> Use Top Menu</label>
                     <label class="checkbox inline"><input type="checkbox" data-bind="checked: useImage"> Use Background Image</label>
                 </p>
@@ -49,7 +50,7 @@
             $('textarea[name="content"]', el).text($('#summernote').code());
 
             $.ajax(el.action, {
-                data: $("textarea, :text", el).serializeArray(),
+                data: $("textarea, :text, :checkbox[name='home']", el).serializeArray(),
                 files: $(":file", el),
                 iframe: true,
                 type: "POST",

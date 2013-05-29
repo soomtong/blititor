@@ -1,5 +1,5 @@
 $(document).ajaxStart(function () {
-    $('#loading').spin();
+    $('#loading').spin().show();
 }).ajaxStop(function () {
-    $('#loading').spin(false);
+    $('#loading').hide().spin(false);
 });

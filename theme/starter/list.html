@@ -6,9 +6,33 @@
     <div class="span12">
         <h2>{{ item.title }}</h2>
 
+        {% if item.excerpt %}
+        <p>{{ item.excerpt }}</p>
+        {% else %}
         <p>{{ item.content|striptags|substring(100) }}</p>
+        {% endif %}
     </div>
     {% endfor %}
+    <div class="span12">
+        <div class="pagination pagination-centered">
+            <ul>
+                {% if page_param.startPage > 1 %}
+                <li><a href="?p=1">1</a></li>
+                {% endif %}
+                {% iterate item with page_param.startPage to page_param.endPage %}
+                {% if item == page %}
+                <li class="active"><a href="?p={{ item }}">{{ item }}</a></li>
+                {% else %}
+                <li><a href="?p={{ item }}">{{ item }}</a></li>
+                {% endif %}
+                {% enditerate %}
+                {% if page_param.endPage < page_param.totalPages %}
+                <li><a href="?p={{ page_param.totalPages }}">{{ page_param.totalPages }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
