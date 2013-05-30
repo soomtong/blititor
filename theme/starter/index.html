@@ -3,7 +3,7 @@
 {% block content %}
 <div class="hero-unit">
     {% for item in featured %}
-    <a href="/view/{{ item._id }}"><h1>{{ item.title }}</h1></a>
+    <h1><a href="/view/{{ item._id }}">{{ item.title }}</a></h1>
     {% if item.excerpt %}
     <p>{{ item.excerpt }}</p>
     {% else %}
@@ -15,7 +15,7 @@
 <div class="row">
     {% for item in list %}
     <div class="span4">
-        <a href="/view/{{ item._id }}"><h2>{{ item.title }}</h2></a>
+        <h2><a href="/view/{{ item._id }}">{{ item.title }}</a></h2>
 
         {% if item.excerpt %}
         <p>{{ item.excerpt }}</p>

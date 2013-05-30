@@ -4,7 +4,7 @@
 <div class="row">
     {% for item in list %}
     <div class="span12">
-        <a href="/view/{{ item._id }}"><h2>{{ item.title }}</h2></a>
+        <h2><a href="/view/{{ item._id }}">{{ item.title }}</a></h2>
 
         {% if item.excerpt %}
         <p>{{ item.excerpt }}</p>
