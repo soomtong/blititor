@@ -1,9 +1,10 @@
+var fs = require('fs');
 var express = require('express');
 var cons = require('consolidate'),
     swig = require('swig');
 
 var route = require('./lib/route');
-var config = require('./lib/config').get();
+var config = global.config = require('./lib/utility').getConfig();
 
 var app = express();
 
@@ -34,6 +35,8 @@ app.locals({
 app.enable('trust proxy');
 
 // use express middleware
+var logFile = fs.createWriteStream(__dirname + '/log/express.log', {flags: 'a'});
+app.use(express.logger({ stream: logFile }));
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.use(express.bodyParser());
@@ -51,6 +54,7 @@ app.use(express.static(__dirname + '/public'));
 
 // route
 route.bind(app);
+route.bindAdmin(app);
 
 // server
 app.listen(app.get('port'), function () {
