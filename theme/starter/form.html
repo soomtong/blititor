@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <form id="postForm" action="/post" onsubmit="return postForm(this)">
+        <form id="postForm" action="/post" method="POST" enctype="multipart/form-data" onsubmit="return postForm(this)">
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
@@ -41,27 +41,12 @@
 <link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link href="/js/summernote.css" rel="stylesheet">
 <script src="/js/jquery.curstyles.min.js"></script>
-<script src="/js/summernote.js"></script>
-<script src="/js/jquery.iframe-transport.js"></script>
+<script src="/js/summernote.min.js"></script>
 <script type="text/javascript">
     var postForm = function (el) {
         if (postModel.titleText()) {
-            $('button[type=submit]', el).addClass('disabled');
-            $('textarea[name="content"]', el).text($('#summernote').code());
-
-            $.ajax(el.action, {
-                data: $("textarea, :text, :checkbox[name='home']", el).serializeArray(),
-                files: $(":file", el),
-                iframe: true,
-                type: "POST",
-                processData: false
-            }).complete(function(data) {
-                if (data.responseText) {
-                    location.href = '/view/' + data.responseText;
-                } else {
-                    $('#postForm').find('button[type=submit]').removeClass('disabled');
-                }
-            });
+            $('textarea[name="content"]').val($('#summernote').code()[0]);
+            return true;
         }
 
         return false;
