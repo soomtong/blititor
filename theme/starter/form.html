@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <form id="postForm" action="/post" method="POST" enctype="multipart/form-data" onsubmit="return postForm(this)">
+        <form id="postForm" action="/upload" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
@@ -43,13 +43,8 @@
 <script src="/js/jquery.curstyles.min.js"></script>
 <script src="/js/summernote.min.js"></script>
 <script type="text/javascript">
-    var postForm = function (el) {
-        if (postModel.titleText()) {
-            $('textarea[name="content"]').val($('#summernote').code()[0]);
-            return true;
-        }
-
-        return false;
+    var postForm = function () {
+        return postModel.titleText() ? true : false;
     };
     var postModel = {
         useMenu: ko.observable(false),
@@ -68,6 +63,20 @@
         });
         var menu = 'post';
         $('#top_menu li[data-id="' + menu + '"]').addClass('active');
+
+        // bind 'myForm' and provide a simple callback function
+        $('#postForm').submit(function() {
+            $('textarea[name="content"]').val($('#summernote').code()[0]);
+            $(this).ajaxSubmit({
+                beforeSubmit: postForm,
+                success: function (response, status) {
+                    if (status && response.id) {
+                        location.href = '/list/' + response.id;
+                    }
+                }
+            });
+            return false;
+        });
     });
 </script>
 {% endblock %}
