@@ -8,7 +8,6 @@
     "dependencies": {
         "jquery": "1.9.x",
         "jquery-form": "3.37.x",
-        "knockout.js": "2.1.x",
         "bootstrap": "2.3.x",
         "font-awesome": "3.1.x",
         "spin.js": "1.3.x"
