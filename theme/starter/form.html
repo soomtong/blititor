@@ -1,6 +1,8 @@
 {% extends 'starter/layout.html' %}
 
 {% block content %}
+<link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="/js/summernote.css" rel="stylesheet">
 <div class="row">
     <div class="span12">
         <form id="postForm" action="/upload" method="POST" enctype="multipart/form-data">
@@ -30,6 +32,10 @@
                 <label for="excerpt">Excerpt</label>
                 <input class="input-block-level" type="text" id="excerpt" name="excerpt" placeholder="Excerpt">
             </fieldset>
+            <div class="alert alert-danger hide">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> post process is not done
+            </div>
             <button type="submit" class="btn btn-primary disabled">Save changes</button>
             <button type="button" id="cancel" class="btn">Cancel</button>
         </form>
@@ -39,90 +45,7 @@
 
 {% block script %}
 <script src="/lib/jquery-form/jquery.form.js"></script>
-<link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/js/summernote.css" rel="stylesheet">
 <script src="/js/jquery.curstyles.min.js"></script>
 <script src="/js/summernote.min.js"></script>
-<script type="text/javascript">
-    var postForm = function () {
-        var form = $('#postForm');
-
-        return form.find('input[name="title"]').val() && ( form.find('input.use-menu').prop('checked') && form.find('input[name="menu_title"]').val() ) ? true : false;
-    };
-    var checkButton = function () {
-        var form = $('#postForm');
-
-        if (form.find('input[name="title"]').val()) {
-            form.find('button[type="submit"]').removeClass('disabled');
-        } else {
-            if (!form.find('button[type="submit"]').hasClass('disabled')) {
-                form.find('button[type="submit"]').addClass('disabled');
-            }
-        }
-        if (form.find('input.use-menu').prop('checked')) {
-            if (form.find('input[name="menu_title"]').val()) {
-                form.find('button[type="submit"]').removeClass('disabled');
-            } else {
-                if (!form.find('button[type="submit"]').hasClass('disabled')) {
-                    form.find('button[type="submit"]').addClass('disabled');
-                }
-            }
-        }
-    };
-
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            height: 361,
-            focus: true
-        });
-
-        $('#cancel').click(function () {
-            history.back();
-        });
-
-        // activate top menu
-        var menu = 'post';
-        $('#top_menu li[data-id="' + menu + '"]').addClass('active');
-
-        var form = $('#postForm');
-
-        // bind event
-        form.on('keyup', 'input[name="title"],input[name="menu_title"]', function () {
-            checkButton();
-        });
-        form.on('click', '.controls .checkbox', function () {
-            checkButton();
-            if ($(this).find('input.use-menu').prop('checked')) {
-                if (form.find('div.use-menu').hasClass('hide')) {
-                    form.find('div.use-menu').removeClass('hide');
-                }
-            } else {
-                if (!form.find('div.use-menu').hasClass('hide')) {
-                    form.find('div.use-menu').addClass('hide');
-                }
-            }
-            if ($(this).find('input.use-bg').prop('checked')) {
-                if (form.find('div.use-bg').hasClass('hide')) {
-                    form.find('div.use-bg').removeClass('hide');
-                }
-            } else {
-                form.find('div.use-bg').addClass('hide');
-            }
-        });
-
-        // bind 'myForm' and provide a simple callback function
-        form.submit(function() {
-            $('textarea[name="content"]').val($('#summernote').code()[0]);
-            $(this).ajaxSubmit({
-                beforeSubmit: postForm,
-                success: function (response, status) {
-                    if (status && response.id) {
-                        location.href = '/list/' + response.id;
-                    }
-                }
-            });
-            return false;
-        });
-    });
-</script>
+<script src="/js/post.js"></script>
 {% endblock %}
