@@ -1,7 +1,18 @@
 var postForm = function () {
+    var result = false;
     var form = $('#postForm');
 
-    return form.find('input[name="title"]').val() && ( form.find('input.use-menu').prop('checked') && form.find('input[name="menu_title"]').val() ) ? true : false;
+    if (form.find('input[name="title"]').val()) {
+        if (form.find('input.use-menu').prop('checked')) {
+            if (form.find('input[name="menu_title"]').val()) {
+                result = true;
+            }
+        } else {
+            result = true;
+        }
+    }
+
+    return result;
 };
 var checkButton = function () {
     var form = $('#postForm');
@@ -70,8 +81,9 @@ $(document).ready(function () {
         $(this).ajaxSubmit({
             beforeSubmit: postForm,
             success: function (response, status) {
+                console.log(response);
                 if (status && response.id) {
-                    location.href = '/list/' + response.id;
+                    location.href = '/view/' + response.id;
                 } else {
                     // show message
                     form.find('div.alert-danger').removeClass('hide');
