@@ -7,21 +7,21 @@
             <fieldset>
                 <legend>Make Post</legend>
                 <label for="title">Title</label>
-                <input class="input-block-level" type="text" id="title" name="title" placeholder="Title" data-bind="value: titleText, valueUpdate: 'afterkeydown'">
+                <input class="input-block-level" type="text" id="title" name="title" placeholder="Title">
                 <p class="controls">
                     <label class="checkbox inline"><input type="checkbox" name="home" value="1"> Use Home</label>
-                    <label class="checkbox inline"><input type="checkbox" data-bind="checked: useMenu"> Use Top Menu</label>
-                    <label class="checkbox inline"><input type="checkbox" data-bind="checked: useImage"> Use Background Image</label>
+                    <label class="checkbox inline"><input type="checkbox" class="use-menu"> Use Top Menu</label>
+                    <label class="checkbox inline"><input type="checkbox" class="use-bg"> Use Background Image</label>
                 </p>
-                <div class="input-prepend" data-bind="visible: useMenu">
+                <div class="input-prepend hide use-menu">
                     <span class="add-on">Menu</span>
                     <input class="span3" id="prependedInput" type="text" name="menu_title" placeholder="Menu Title">
                 </div>
-                <div class="input-prepend" data-bind="visible: useMenu">
+                <div class="input-prepend hide use-menu">
                     <span class="add-on">Key</span>
                     <input class="span1" type="text" name="bind_key" placeholder="Bind">
                 </div>
-                <div class="input-prepend" data-bind="visible: useImage">
+                <div class="input-prepend hide use-bg">
                     <input type="file" name="bg_image">
                 </div>
                 <p class="container">
@@ -30,7 +30,7 @@
                 <label for="excerpt">Excerpt</label>
                 <input class="input-block-level" type="text" id="excerpt" name="excerpt" placeholder="Excerpt">
             </fieldset>
-            <button type="submit" class="btn btn-primary" data-bind="css: { disabled: !titleText() }">Save changes</button>
+            <button type="submit" class="btn btn-primary disabled">Save changes</button>
             <button type="button" id="cancel" class="btn">Cancel</button>
         </form>
     </div>
@@ -45,13 +45,31 @@
 <script src="/js/summernote.min.js"></script>
 <script type="text/javascript">
     var postForm = function () {
-        return postModel.titleText() ? true : false;
+        var form = $('#postForm');
+
+        return form.find('input[name="title"]').val() && ( form.find('input.use-menu').prop('checked') && form.find('input[name="menu_title"]').val() ) ? true : false;
     };
-    var postModel = {
-        useMenu: ko.observable(false),
-        useImage: ko.observable(false),
-        titleText: ko.observable()
+    var checkButton = function () {
+        var form = $('#postForm');
+
+        if (form.find('input[name="title"]').val()) {
+            form.find('button[type="submit"]').removeClass('disabled');
+        } else {
+            if (!form.find('button[type="submit"]').hasClass('disabled')) {
+                form.find('button[type="submit"]').addClass('disabled');
+            }
+        }
+        if (form.find('input.use-menu').prop('checked')) {
+            if (form.find('input[name="menu_title"]').val()) {
+                form.find('button[type="submit"]').removeClass('disabled');
+            } else {
+                if (!form.find('button[type="submit"]').hasClass('disabled')) {
+                    form.find('button[type="submit"]').addClass('disabled');
+                }
+            }
+        }
     };
+
     $(document).ready(function () {
         $('#summernote').summernote({
             height: 361,
@@ -61,11 +79,39 @@
         $('#cancel').click(function () {
             history.back();
         });
+
+        // activate top menu
         var menu = 'post';
         $('#top_menu li[data-id="' + menu + '"]').addClass('active');
 
+        var form = $('#postForm');
+
+        // bind event
+        form.on('keyup', 'input[name="title"],input[name="menu_title"]', function () {
+            checkButton();
+        });
+        form.on('click', '.controls .checkbox', function () {
+            checkButton();
+            if ($(this).find('input.use-menu').prop('checked')) {
+                if (form.find('div.use-menu').hasClass('hide')) {
+                    form.find('div.use-menu').removeClass('hide');
+                }
+            } else {
+                if (!form.find('div.use-menu').hasClass('hide')) {
+                    form.find('div.use-menu').addClass('hide');
+                }
+            }
+            if ($(this).find('input.use-bg').prop('checked')) {
+                if (form.find('div.use-bg').hasClass('hide')) {
+                    form.find('div.use-bg').removeClass('hide');
+                }
+            } else {
+                form.find('div.use-bg').addClass('hide');
+            }
+        });
+
         // bind 'myForm' and provide a simple callback function
-        $('#postForm').submit(function() {
+        form.submit(function() {
             $('textarea[name="content"]').val($('#summernote').code()[0]);
             $(this).ajaxSubmit({
                 beforeSubmit: postForm,
