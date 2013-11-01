@@ -35,10 +35,28 @@ var checkButton = function () {
     }
 };
 
+var imageInput = null;
+
 $(document).ready(function () {
     $('#summernote').summernote({
         height: 361,
-        focus: true
+        focus: true,
+        onImageUpload: function(files, editor, position) {
+            imageInput = $('.note-image-input');
+            imageInput.fileupload();
+            var jqXHR = imageInput.fileupload('send',
+                {
+                    files: files,
+                    url: '/upload/file'
+                })
+                .success(function (result, textStatus, jqXHR) {
+                    editor.insertImage(position, result.url);
+                })
+                .error(function (jqXHR, textStatus, errorThrown) {
+                    // TODO: Display a detailed error message. It will come from JSON.
+                    alert( 'Got an error while uploading images.' );
+                })
+        }
     });
 
     $('#cancel').click(function () {

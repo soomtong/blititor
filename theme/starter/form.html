@@ -2,7 +2,8 @@
 
 {% block content %}
 <link href="/lib/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/js/summernote.css" rel="stylesheet">
+<link href="/css/summernote-bs2.css" rel="stylesheet">
+<link href="/css/summernote.css" rel="stylesheet">
 <div class="row">
     <div class="span12">
         <form id="postForm" action="/upload" method="POST" enctype="multipart/form-data">
@@ -45,7 +46,9 @@
 
 {% block script %}
 <script src="/lib/jquery-form/jquery.form.js"></script>
-<script src="/js/jquery.curstyles.min.js"></script>
 <script src="/js/summernote.min.js"></script>
+<script src="/js/jquery.ui.widget.js"></script>
+<script src="/js/jquery.iframe-transport.js"></script>
+<script src="/js/jquery.fileupload.js"></script>
 <script src="/js/post.js"></script>
 {% endblock %}
