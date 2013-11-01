@@ -96,7 +96,7 @@ $(document).ready(function () {
 
     // bind 'myForm' and provide a simple callback function
     form.submit(function() {
-        $('textarea[name="content"]').val($('#summernote').code()[0]);
+        $('textarea[name="content"]').val($('#summernote').code());
         $(this).ajaxSubmit({
             beforeSubmit: postForm,
             success: function (response, status) {
