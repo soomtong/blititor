@@ -12,6 +12,7 @@ lib-cov
 .idea
 node_modules
 public/lib
+public/upload
 
 npm-debug.log
 config.json
