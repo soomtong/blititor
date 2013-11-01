@@ -44,8 +44,9 @@ $(document).ready(function () {
         onImageUpload: function(files, editor, position) {
             imageInput = $('.note-image-input');
             imageInput.fileupload();
-            var jqXHR = imageInput.fileupload('send',
-                {
+
+            imageInput
+                .fileupload('send', {
                     files: files,
                     url: '/upload/file'
                 })
@@ -54,8 +55,8 @@ $(document).ready(function () {
                 })
                 .error(function (jqXHR, textStatus, errorThrown) {
                     // TODO: Display a detailed error message. It will come from JSON.
-                    alert( 'Got an error while uploading images.' );
-                })
+                    alert('Got an error while uploading images.');
+                });
         }
     });
 
