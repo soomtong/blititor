@@ -1,21 +1,24 @@
-blititer
+blititor
 ========
 
-humble blog application for nodejs using summernote
+Easy to custom for the all Web Agencies and Web Masters in Korea!
 
 ## stack
 
-- nodejs + mongodb + nginx (recommended)
-- express + mongoskin
-- jquery + jquery-form
-- swig template
-- bootstrap
-- with [summernote](http://hackerwins.github.io/summernote/)
+- NodeJS + MariaDB + Sphinx + Nginx (recommended)
+- Express.js + Socket.io
+- Swig template
+- Jquery, Bootstrap, etc
 - used npm, bower
 
 ## demo
 
-view the [sample blog](http://blog.nerdbrea.kr/)
+view the samples!
+
+- bootstrap
+- foundation
+- materialize
+- ...
 
 ## usage
 
@@ -32,10 +35,6 @@ vi config.js
 ```
 
 - prepare nodejs, npm, bower
-```
-npm -g install bower
-```
-
 - install component with npm, bower
 ```shell
 npm install
@@ -47,7 +46,3 @@ bower install
 node app
 ```
 
-
-## for hackers
-
-I wish you can make this poor better one :)
