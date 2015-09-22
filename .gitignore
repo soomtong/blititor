@@ -15,4 +15,4 @@ public/lib
 public/upload
 
 npm-debug.log
-config.json
+database.conf.json

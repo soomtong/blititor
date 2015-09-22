@@ -7,10 +7,10 @@ var BLITITOR = {
             theme: 'basic',
             host: '',
             url_prefix: '/',
-            port: 3003
+            port: 3000
         },
         author: 'soomtong',
-        revision: '1.0',
+        revision: '1.0.0',
         cookieSecret: 'blititor',
         sessionSecret: 'blititor'
     }
@@ -27,13 +27,14 @@ require('../lib/dependency')(BLITITOR);
 
 // load common library
 var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var expressValidator = require('express-validator');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var flash = require('express-flash');
-//var methodOverride = require('method-override');
+//var methodOverride = require('method-override');      // need this? let me know
 var compress = require('compression');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -46,9 +47,13 @@ var databaseFile = 'database.conf.json';
 
 fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
     if (!err) {
+/*
         fs.readFile(databaseFile, function (err, data) {
             BLITITOR.config.database = data;
         });
+*/
+
+        BLITITOR.config.database = require(path.join('..', databaseFile));
     }
 });
 
