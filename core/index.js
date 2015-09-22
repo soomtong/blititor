@@ -22,6 +22,9 @@ var WEEK = DAY * 7;
 
 global.BLITITOR = BLITITOR;
 
+// check modules for npm, bower
+require('../lib/dependency')(BLITITOR);
+
 // load common library
 var fs = require('fs');
 var express = require('express');
@@ -111,5 +114,5 @@ app.use(errorHandler());
 
 // start server
 app.listen(app.get('port'), function () {
-    console.log("=== server listening on port " + app.get('port') + " ===");
+    console.log("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
 });
