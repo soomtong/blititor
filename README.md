@@ -1,14 +1,16 @@
 blititor
 ========
 
-Easy to custom for the all Web Agencies and Web Masters in Korea!
+Easy to custom for the all Web Agencies and Web Masters in Korea
+
+    this code is really easy to customize for your business!    - web developer journal in korean times
 
 ## stack
 
 - NodeJS + MariaDB + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
-- Swig template
-- Jquery, Bootstrap, etc
+- Swig html template
+- Jquery, Bootstrap, Materialize etc
 - used npm, bower
 
 ## demo
@@ -25,13 +27,6 @@ view the samples!
 - clone repos
 ```shell
 git clone git://github.com/soomtong/blititor.git
-```
-
-- edit your config.json file
-```shell
-cd blititor
-cp config.default.json config.js
-vi config.js
 ```
 
 - prepare nodejs, npm, bower

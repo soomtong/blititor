@@ -38,6 +38,17 @@ var errorHandler = require('errorhandler');
 var lusca = require('lusca');
 var swig = require('swig');
 
+// load DB configuration
+var databaseFile = 'database.conf.json';
+
+fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
+    if (!err) {
+        fs.readFile(databaseFile, function (err, data) {
+            BLITITOR.config.database = data;
+        });
+    }
+});
+
 // load route setup
 var route = require('./route');
 

@@ -1,12 +1,12 @@
 {
-    "name": "blititer",
-    "version": "0.0.1",
-    "ignore": [
-        ".jshintrc",
-        "**/*.txt"
-    ],
-    "dependencies": {
-    },
-    "devDependencies": {
-    }
+  "name": "blititer",
+  "version": "0.1.0",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "Materialize": "materialize#~0.97.1"
+  },
+  "devDependencies": {}
 }
