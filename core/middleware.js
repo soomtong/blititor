@@ -1,20 +1,23 @@
-function database(req, res, next) {
+var misc = require('../lib/misc');
+var routeTable = misc.routeTable();
+
+function checkDatabaseConfig(req, res, next) {
     if (!BLITITOR.config.database) {
-        res.redirect('/admin/setup');
+        res.redirect(routeTable['database_setup']);
     } else {
         next();
     }
 }
 
-function pass(req, res, next) {
+function passDatabaseConfigCheck(req, res, next) {
     if (BLITITOR.config.database) {
-        res.redirect('/');
+        res.redirect(routeTable['root']);
     } else {
         next();
     }
 }
 
 module.exports = {
-    databaseCheck: database,
-    bypassDatabase: pass
+    databaseCheck: checkDatabaseConfig,
+    bypassDatabase: passDatabaseConfigCheck
 };

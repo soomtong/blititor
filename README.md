@@ -41,3 +41,6 @@ bower install
 node app
 ```
 
+## todo next
+
+- start up to admin page

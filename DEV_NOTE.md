@@ -1,3 +1,18 @@
+## Convention
+
+### file name
+
+should use lower case for all file system, not camel case, also snake case
+
+### variable name
+
+can use any style, camelcase recommended from many javascript code style
+
+### route name
+
+use lower case for source code, make dash for space or separation for significant
+
+
 ## MariaDB
 
 $ mysql.server start
