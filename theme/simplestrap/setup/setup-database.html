@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{siteTitle}}</title>
+    <title>{{site.title}}</title>
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,9 +9,24 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/{{siteTheme}}/main.css"/>
+    <link rel="stylesheet" href="/{{site.theme}}/style.css"/>
 </head>
 <body>
+<header class="navbar navbar-light navbar-static-top bd-navbar" role="banner">
+    <div class="clearfix">
+        <button class="navbar-toggler pull-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav">☰</button>
+        <a class="navbar-brand hidden-sm-up" href="/">
+            Blititor
+        </a>
+    </div>
+    <div class="collapse navbar-toggleable-xs" id="bd-main-nav">
+        <nav class="nav navbar-nav">
+            <a class="nav-item nav-link" href="/">Blititor</a>
+            <a class="nav-item nav-link active" href="{{site.url}}">Setup Blititor</a>
+            <a class="nav-item nav-link " href="http://blititor.com/">Official Site</a>
+        </nav>
+    </div>
+</header>
 <div class="bd-pageheader">
     <div class="container">
 

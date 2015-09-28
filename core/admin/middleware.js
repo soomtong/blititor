@@ -1,0 +1,29 @@
+var misc = require('../../lib/misc');
+var routeTable = misc.routeTable();
+
+// bind common parameters
+function setupMiddleware(req, res, next) {
+    var siteTheme = BLITITOR.config.site.theme + '/setup';
+
+    res.locals.site = {
+        theme: siteTheme,
+        title: BLITITOR.config.revision,
+        url: routeTable.admin_root + req.path
+    };
+
+    next();
+}
+
+function passDatabaseConfigCheck(req, res, next) {
+    if (BLITITOR.config.database) {
+        res.redirect(routeTable.root);
+    } else {
+        next();
+    }
+}
+
+
+module.exports = {
+    setupMiddleware: setupMiddleware,
+    bypassDatabase: passDatabaseConfigCheck
+};
