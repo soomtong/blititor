@@ -3,7 +3,7 @@ var routeTable = misc.routeTable();
 
 function checkDatabaseConfig(req, res, next) {
     if (!BLITITOR.config.database) {
-        res.redirect(routeTable['database_setup']);
+        res.redirect(routeTable.database_setup);
     } else {
         next();
     }
@@ -11,7 +11,7 @@ function checkDatabaseConfig(req, res, next) {
 
 function passDatabaseConfigCheck(req, res, next) {
     if (BLITITOR.config.database) {
-        res.redirect(routeTable['root']);
+        res.redirect(routeTable.root);
     } else {
         next();
     }

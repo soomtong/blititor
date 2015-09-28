@@ -4,10 +4,10 @@ var BLITITOR = {
     root: __dirname + '/../',
     config: {
         site: {
-            theme: 'basic',
+            theme: 'simplestrap',
             host: '',
             url_prefix: '/',
-            port: 3000
+            port: 3010
         },
         author: 'soomtong',
         revision: '1.0.0',
@@ -43,7 +43,7 @@ var lusca = require('lusca');
 var swig = require('swig');
 
 // load DB configuration
-var databaseFile = 'database.conf.json';
+var databaseFile = 'database.json';
 
 fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
     if (!err) {
@@ -68,7 +68,7 @@ app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
 
 // set express app
-app.set('views', 'theme/' + BLITITOR.config.site.theme);
+app.set('views', 'theme');
 app.set('view engine', 'html');
 app.set('view options', { layout: true });
 app.set('view cache', false);

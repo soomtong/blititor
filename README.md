@@ -3,7 +3,7 @@ blititor
 
 Easy to custom for the all Web Agencies and Web Masters in Korea
 
-    this code is really easy to customize for your business!    - web developer journal in korean times
+> this code is really easy to customize for your business! - web developer journal in korean times
 
 ## stack
 
@@ -15,7 +15,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 
 ## demo
 
-view the samples!
+check out the samples!
 
 - bootstrap
 - foundation
@@ -43,4 +43,7 @@ node app
 
 ## todo next
 
+- select css framework
 - start up to admin page
+- save database config file
+- redirect main page
