@@ -42,6 +42,9 @@ var errorHandler = require('errorhandler');
 var lusca = require('lusca');
 var swig = require('swig');
 
+// load custom library
+var misc = require('../lib/misc');
+
 // load DB configuration
 var databaseFile = 'database.json';
 
@@ -58,7 +61,10 @@ fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
 });
 
 // load route setup
+var routeTable = misc.routeTable();
+
 var route = require('./route');
+var adminRoute = require('./admin_route');
 
 // ready Express
 var app = express();
@@ -103,16 +109,18 @@ app.use(lusca.csrf());  // default key: _csrf
 
 // set static files
 var staticOptions = {
-    dotfiles: 'allow',
-    extensions: ['html'],
-    etag: true,
+    dotfiles: 'allow',  // http://expressjs.com/4x/api.html#express many middleware is gone
     maxAge: WEEK
 };
 
 app.use(express.static('public', staticOptions));
+app.use(express.static('theme', staticOptions));
 
 // bind route
 app.use(route);
+
+// bind admin(manager) route
+app.use(routeTable.admin_root, adminRoute);
 
 // 500 Error Handler
 app.use(errorHandler());
@@ -120,4 +128,6 @@ app.use(errorHandler());
 // start server
 app.listen(app.get('port'), function () {
     console.log("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
+    // display default route table
+    misc.showRouteTable(routeTable);
 });

@@ -12,6 +12,18 @@ can use any style, camelcase recommended from many javascript code style
 
 use lower case for source code, make dash for space or separation for significant
 
+## theme
+
+each theme include setup, admin (manager), site, board. and have fallback if not exist these folders
+
+### directory
+
+setup
+: setup
+
+admin
+: admin
+
 
 ## MariaDB
 
