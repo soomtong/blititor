@@ -40,13 +40,57 @@
     <div class="row">
         <div class="col-12">
 
-
+            <form id="database_info">
+                <fieldset class="form-group">
+                    <label for="db_host">데이터베이스 주소</label>
+                    <input type="text" class="form-control" id="db_host" placeholder="mysql-or-mariadb-address.com">
+                    <small class="text-muted">데이터베이스 포트를 제외한 아이피 또는 주소를 입력해주세요.</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_port">데이터베이스 포트</label>
+                    <input type="text" class="form-control" id="db_port" placeholder="3306">
+                    <small class="text-muted">데이터베이스 포트 번호를 입력해주세요.</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_id">아이디</label>
+                    <input type="text" class="form-control" id="db_id" placeholder="">
+                    <small class="text-muted">해당 서버에 사용가능한 아이디를 입력해주세요</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_password">패스워드</label>
+                    <input type="password" class="form-control" id="db_password" placeholder="">
+                    <small class="text-muted">아이디의 패스워드를 입력해주세요.</small>
+                </fieldset>
+                <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </form>
 
         </div>
     </div>
 </div>
+<footer class="bd-footer text-muted" role="contentinfo">
+    <div class="container">
+        <ul class="bd-footer-links">
+            <li><a href="//blititor.com">Blititor</a></li>
+            <li><a href="//blititor.com/example">Examples</a></li>
+            <li><a href="//blititor.com/about">About</a></li>
+            <li><a href="mailto://soomtong@me.com">Contact</a></li>
+        </ul>
+        <p>Developed by <a href="https://twitter.com/soomtong" target="_blank">@soomtong</a>.
+            Maintained by the <a href="https://github.com/soomtong/blititor">team</a> with contributors.</p>
+        <p>Currently in alpha stage.</p>
+    </div>
+</footer>
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+<script src="/js/common.js"></script>
+<script>
+    $(function() {
+        var $form = $('#database_info');
+        blititor.db.initForm($form);
+        blititor.db.checkForm($form, blititor.db.saveForm);
+    });
+</script>
 </body>
 </html>
