@@ -3,10 +3,12 @@ var routeTable = misc.routeTable();
 
 // bind common parameters
 function setupMiddleware(req, res, next) {
-    var siteTheme = BLITITOR.config.site.theme + '/setup';
+    var siteTheme = BLITITOR.config.site.theme;
+    var siteThemeType = 'setup';
 
     res.locals.site = {
         theme: siteTheme,
+        themeType: siteThemeType,
         title: BLITITOR.config.revision,
         url: routeTable.admin_root + req.path
     };

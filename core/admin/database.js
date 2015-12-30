@@ -7,7 +7,7 @@ function databaseSetup(req, res) {
     console.log(res.locals);
 
     // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/setup-database', params);
+    res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/setup-database', params);
 }
 
 module.exports = {

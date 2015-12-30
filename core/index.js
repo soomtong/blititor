@@ -74,12 +74,13 @@ var app = express();
 // set express app
 app.set('views', 'theme');
 app.set('view engine', 'html');
+//app.set('view cache', false);
 app.set('port', BLITITOR.config.site.port);
 
 // set template engine
 nunjucks.configure(app.get('views'), {
-    autoescape: true,
-    express: app
+    express: app,
+    noCache: true
 });
 
 // using Express behind nginx
