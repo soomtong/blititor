@@ -40,7 +40,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
 var lusca = require('lusca');
-var swig = require('swig');
+//var swig = require('swig');       // replace nunjucks
+var nunjucks = require('nunjucks');
 
 // load custom library
 var misc = require('../lib/misc');
@@ -56,6 +57,7 @@ fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
         });
 */
 
+        // simple better
         BLITITOR.config.database = require(path.join('..', databaseFile));
     }
 });
@@ -69,20 +71,20 @@ var adminRoute = require('./admin_route');
 // ready Express
 var app = express();
 
-// set template engine
-app.engine('html', swig.renderFile);
-swig.setDefaults({ cache: false });
-
 // set express app
 app.set('views', 'theme');
 app.set('view engine', 'html');
-app.set('view options', { layout: true });
-app.set('view cache', false);
 app.set('port', BLITITOR.config.site.port);
+
+// set template engine
+nunjucks.configure(app.get('views'), {
+    autoescape: true,
+    express: app
+});
 
 // using Express behind nginx
 if (BLITITOR.env == 'production') {
-    server.enable('trust proxy');
+    app.enable('trust proxy');
 }
 
 // use express middleware
