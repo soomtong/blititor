@@ -24,6 +24,10 @@ setup
 admin
 : admin
 
+manage
+
+: manager
+
 
 ## MariaDB
 

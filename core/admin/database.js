@@ -1,5 +1,9 @@
+var misc = require('../../lib/misc');
+
+var routeTable = misc.routeTable();
+
 // view page
-function databaseSetup(req, res) {
+function databaseSetupView(req, res) {
     var params = {
 
     };
@@ -10,6 +14,20 @@ function databaseSetup(req, res) {
     res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/setup-database', params);
 }
 
+function databaseSetup(req, res) {
+    var params = {
+
+    };
+
+    console.log(res.body);
+
+    if (true) {
+        res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-done', params);
+    } else {
+        res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-error', params);
+    }
+}
 module.exports = {
+    databaseSetupView: databaseSetupView,
     databaseSetup: databaseSetup
 };

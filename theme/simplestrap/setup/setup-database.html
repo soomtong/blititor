@@ -62,6 +62,10 @@
                     <input type="password" class="form-control" id="db_password" placeholder="">
                     <small class="text-muted">아이디의 패스워드를 입력해주세요.</small>
                 </fieldset>
+                <div class="message" hidden>
+                    <p class="text">입력 내용을 확인해주세요</p>
+                </div>
+
                 <input type="hidden" name="_csrf" value="{{_csrf}}"/>
                 <button type="submit" class="btn btn-primary" >Submit</button>
             </form>
@@ -72,13 +76,24 @@
 {% include site.theme + '/' + site.themeType + "/include/footer.html" %}
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
 <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 <script src="/{{site.theme}}/{{site.themeType}}/{{site.themeType}}.js"></script>
 <script>
     $(function() {
         var $form = $('#database_info');
+
         blititor.db.initForm($form);
-        blititor.db.checkForm($form, blititor.db.saveForm);
+
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            if (blititor.db.checkForm()) {
+                blititor.db.submitForm(blititor.db.saveDone, blititor.db.saveFail);
+            } else {
+                blititor.db.showMessage()
+            }
+            return false;
+        });
     });
 </script>
 </body>
