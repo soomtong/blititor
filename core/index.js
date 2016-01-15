@@ -96,7 +96,7 @@ app.use(errorHandler({ dumpExceptions: true, showStack: true }));
 app.use(favicon('public/favicon.ico'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(compress());    // compress all for default
+app.use(compress({}));    // compress all for default
 app.use(expressValidator());
 //app.use(methodOverride());
 

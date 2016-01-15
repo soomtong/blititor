@@ -19,7 +19,7 @@ function databaseSetup(req, res) {
 
     };
 
-    console.log(res.body);
+    console.log('result from client', req.body);
 
     if (true) {
         res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-done', params);

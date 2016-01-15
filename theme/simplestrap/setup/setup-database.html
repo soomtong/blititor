@@ -22,7 +22,7 @@
     </div>
     <div class="collapse navbar-toggleable-xs" id="bd-main-nav">
         <nav class="nav navbar-nav">
-            <a class="nav-item nav-link" href="/">Blititor</a>
+            <a class="nav-item nav-link" href="{{routeTable.root}}">Blititor</a>
             <a class="nav-item nav-link active" href="{{site.url}}">Setup Blititor</a>
             <a class="nav-item nav-link " href="http://blititor.com/">Official Site</a>
         </nav>
@@ -41,29 +41,32 @@
     <div class="row">
         <div class="col-12">
 
-            <form id="database_info">
+            <form id="database_info" method="post" action="{{site.url}}">
                 <fieldset class="form-group">
                     <label for="db_host">데이터베이스 주소</label>
-                    <input type="text" class="form-control" id="db_host" placeholder="mysql-or-mariadb-address.net">
+                    <input type="text" name="db_host" class="form-control" id="db_host" placeholder="mysql-or-mariadb-address.net">
                     <small class="text-muted">데이터베이스 포트를 제외한 아이피 또는 주소를 입력해주세요.</small>
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="db_port">데이터베이스 포트</label>
-                    <input type="text" class="form-control" id="db_port" placeholder="3306">
+                    <input type="text" name="db_port" class="form-control" id="db_port" placeholder="3306">
                     <small class="text-muted">데이터베이스 포트 번호를 입력해주세요.</small>
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="db_id">아이디</label>
-                    <input type="text" class="form-control" id="db_id" placeholder="">
+                    <input type="text" name="db_id" class="form-control" id="db_id" placeholder="">
                     <small class="text-muted">해당 서버에 사용가능한 아이디를 입력해주세요</small>
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="db_password">패스워드</label>
-                    <input type="password" class="form-control" id="db_password" placeholder="">
+                    <input type="password" name="db_password" class="form-control" id="db_password" placeholder="">
                     <small class="text-muted">아이디의 패스워드를 입력해주세요.</small>
                 </fieldset>
-                <div class="message" hidden>
-                    <p class="text">입력 내용을 확인해주세요</p>
+                <div id="message" class="alert alert-danger alert-dismissible fade in" role="alert" hidden>
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="text"><strong>불량!</strong> 내용 점검에 실패했습니다.</p>
                 </div>
 
                 <input type="hidden" name="_csrf" value="{{_csrf}}"/>
@@ -90,7 +93,7 @@
             if (blititor.db.checkForm()) {
                 blititor.db.submitForm(blititor.db.saveDone, blititor.db.saveFail);
             } else {
-                blititor.db.showMessage()
+                blititor.db.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
             }
             return false;
         });
