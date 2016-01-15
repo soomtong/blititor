@@ -2,7 +2,7 @@ var misc = require('../../lib/misc');
 var routeTable = misc.routeTable();
 
 // bind common parameters
-function setupMiddleware(req, res, next) {
+function exposeParameter(req, res, next) {
     var siteTheme = BLITITOR.config.site.theme;
     var siteThemeType = 'setup';
 
@@ -12,7 +12,7 @@ function setupMiddleware(req, res, next) {
         title: BLITITOR.config.revision,
         url: routeTable.admin_root + req.path
     };
-    res.locals.routeTable = routeTable;
+    res.locals.route = routeTable;
 
     next();
 }
@@ -27,6 +27,6 @@ function passDatabaseConfigCheck(req, res, next) {
 
 
 module.exports = {
-    setupMiddleware: setupMiddleware,
+    exposeParameter: exposeParameter,
     bypassDatabase: passDatabaseConfigCheck
 };

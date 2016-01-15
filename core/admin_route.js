@@ -8,7 +8,7 @@ var router = express.Router();
 var routeTable = misc.routeTable();
 
 router.use(middleware.bypassDatabase);
-router.use(middleware.setupMiddleware);
+router.use(middleware.exposeParameter);
 
 router.get(routeTable.admin.database_setup, database.databaseSetupView);
 router.post(routeTable.admin.database_setup, database.databaseSetup);
