@@ -12,6 +12,7 @@ function setupMiddleware(req, res, next) {
         title: BLITITOR.config.revision,
         url: routeTable.admin_root + req.path
     };
+    res.locals.routeTable = routeTable;
 
     next();
 }
