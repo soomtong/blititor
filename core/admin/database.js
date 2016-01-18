@@ -12,7 +12,7 @@ function databaseSetupView(req, res) {
     console.log(res.locals);
 
     // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/setup-database', params);
+    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-database', params);
 }
 
 function databaseSetup(req, res) {
@@ -38,7 +38,7 @@ function databaseSetup(req, res) {
     connection.connect(function(err) {
         if (err) {
             console.error('error connecting: ' + err.stack);
-            res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-error', params);
+            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
 
         } else {
             // save params to database.json
@@ -48,7 +48,7 @@ function databaseSetup(req, res) {
 
             //console.log('connected as id ' + connection.threadId);
 
-            res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-done', params);
+            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-done', params);
         }
         connection.destroy();
     });
@@ -62,7 +62,7 @@ function databaseInitView(req, res) {
     console.log(res.locals);
 
     // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/init-database', params);
+    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/init-database', params);
 }
 
 function makeDatabase() {

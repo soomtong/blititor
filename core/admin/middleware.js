@@ -6,7 +6,11 @@ var routeTable = misc.routeTable();
 // bind common parameters
 function exposeParameter(req, res, next) {
     var siteTheme = BLITITOR.config.site.theme;
-    var siteThemeType = 'setup';
+    var siteThemeType = {
+        setup: 'setup',
+        admin: 'admin',
+        manage: 'manage'
+    };
 
     res.locals.site = {
         theme: siteTheme,
