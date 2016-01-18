@@ -17,9 +17,9 @@
 <div class="bd-pageheader">
     <div class="container">
 
-        <h1>Database Connection Configuration</h1>
+        <h1>Database Initialize</h1>
         <p class="lead">
-            데이터베이스 접속 정보를 입력해주세요
+            데이터베이스를 만들고 테이블을 초기화합니다
         </p>
     </div>
 </div>
@@ -29,29 +29,9 @@
 
             <form id="database_info" method="post" action="{{site.url}}">
                 <fieldset class="form-group">
-                    <label for="db_host">데이터베이스 주소</label>
-                    <input type="text" name="db_host" class="form-control" id="db_host" placeholder="mysql-or-mariadb-address.net">
-                    <small class="text-muted">데이터베이스 포트를 제외한 아이피 또는 주소를 입력해주세요.</small>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="db_port">데이터베이스 포트</label>
-                    <input type="text" name="db_port" class="form-control" id="db_port" placeholder="3306">
-                    <small class="text-muted">데이터베이스 포트 번호를 입력해주세요. 기본은 3306 입니다.</small>
-                </fieldset>
-                <fieldset class="form-group">
                     <label for="db_name">데이터베이스 이름</label>
-                    <input type="text" name="db_name" class="form-control" id="db_name" placeholder="db_blititor">
-                    <small class="text-muted">데이터베이스 이름이 정해져있을 경우 입력해주세요.(아이디와 패스워드가 지정된 데이터베이스에서만 사용 가능한 경우가 있습니다)</small>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="db_user_id">아이디</label>
-                    <input type="text" name="db_user_id" class="form-control" id="db_user_id" placeholder="">
-                    <small class="text-muted">해당 서버에 사용가능한 아이디를 입력해주세요</small>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="db_user_password">패스워드</label>
-                    <input type="password" name="db_user_password" class="form-control" id="db_user_password" placeholder="">
-                    <small class="text-muted">아이디의 패스워드를 입력해주세요.</small>
+                    <input type="text" name="db_name" class="form-control" id="db_name" value="db_blititor">
+                    <small class="text-muted">기본적으로 지정된 데이터베이스 이름은 위와 같습니다. 다른 이름을 사용할 경우 변경해주세요.</small>
                 </fieldset>
                 <div id="message" class="alert alert-danger alert-dismissible fade in" role="alert" hidden>
                     <button type="button" class="close" aria-label="Close">

@@ -24,8 +24,7 @@ function databaseSetup(req, res) {
         dbUserPassword: req.body['db_user_password']
     };
 
-    //console.log('result from client', req.body);
-    var mysql      = require('mysql');
+    var mysql = require('mysql');
     var connection = mysql.createConnection({
         host: params.dbHost,
         port: params.dbPort || 3306,
@@ -48,11 +47,56 @@ function databaseSetup(req, res) {
             fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
 
             //console.log('connected as id ' + connection.threadId);
+
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/partial/setup-database-done', params);
         }
+        connection.destroy();
     });
 }
+
+function databaseInitView(req, res) {
+    var params = {
+
+    };
+
+    console.log(res.locals);
+
+    // load theme folder as it's condition
+    res.render(res.locals.site.theme + '/' + res.locals.site.themeType + '/init-database', params);
+}
+
+function makeDatabase() {
+
+}
+
+function makeSchema() {
+    var databaseConfiguration = BLITITOR.config.database;
+    var knex = require('knex');
+    var connection = knex({
+        client: 'mysql',
+        connection: {
+            host: databaseConfiguration.dbHost,
+            port: databaseConfiguration.dbPort || 3306,
+            database: databaseConfiguration.dbName || 'db_blititor',
+            user: databaseConfiguration.dbUserID,
+            password: databaseConfiguration.dbUserPassword
+        }
+    });
+
+    connection.schema.createTableIfNotExists('users', function (table) {
+        console.log('table', table);
+        table.increments();
+        table.string('name');
+        table.timestamps();
+
+        //connection.destroy();
+    });
+}
+
 module.exports = {
     databaseSetupView: databaseSetupView,
-    databaseSetup: databaseSetup
+    databaseSetup: databaseSetup,
+    databaseInitView: databaseInitView,
+    makeDatabase: makeDatabase,
+    makeSchema: makeSchema
 };
