@@ -10,7 +10,7 @@ blititor.db = {
     },
     watchForm: function () {
         var form = this._form;
-        var formFields = form.find('input[type=text],input[type=password]');
+        var formFields = form.find('input[name=db_host],input[name=db_user_id],input[type=password]');
         var formSummitButton = form.find('button:submit');
 
         formSummitButton.attr('disabled', true);
@@ -35,9 +35,10 @@ blititor.db = {
         var form = this._form;
         var checkList = [
             form.find('#db_host').val(),
-            form.find('#db_port').val(),
-            form.find('#db_id').val(),
-            form.find('#db_password').val()
+            //form.find('#db_port').val(),
+            //form.find('#db_name').val(),
+            form.find('#db_user_id').val(),
+            form.find('#db_user_password').val()
         ];
 
         // validate
@@ -55,14 +56,7 @@ blititor.db = {
     submitForm: function (done, fail) {
         var form = this._form;
         var formActionURL = form.prop('action');    // use prop() over attr()
-/*
-        var formData = {
-            'host': form.find('#db_host').val(),
-            'port': form.find('#db_port').val(),
-            'id': form.find('#db_id').val(),
-            'password': form.find('#db_password').val()
-        };
-*/
+
         // ajax call
         $.post(formActionURL, form.serialize()).done(done.bind(this)).fail(fail.bind(this));
 /*
