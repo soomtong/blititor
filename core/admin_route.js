@@ -10,9 +10,9 @@ var routeTable = misc.routeTable();
 router.use(middleware.exposeParameter);
 
 router.get(routeTable.admin.database_setup, middleware.checkDatabaseConfiguration, database.databaseSetupView);
-router.post(routeTable.admin.database_setup, middleware.checkDatabaseConfiguration, database.databaseSetup);
+router.post(routeTable.admin.database_setup, database.databaseSetup);
 
-router.get(routeTable.admin.database_init, database.databaseInitView);
+router.get(routeTable.admin.database_init, middleware.checkDatabaseInitialization, database.databaseInitView);
 
 //router.get(routeTable.admin.theme_setup, theme.themeSetupView);
 //router.post(routeTable.admin.theme_setup, theme.themeSetup);

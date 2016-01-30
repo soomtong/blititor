@@ -37,9 +37,8 @@ function databaseSetup(req, res) {
 
     connection.connect(function(err) {
         if (err) {
-            console.error('error connecting: ' + err.stack);
+            //console.error('error connecting: ' + err.stack);
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
-
         } else {
             // save params to database.json
             var databaseFile = BLITITOR.db_config_file;

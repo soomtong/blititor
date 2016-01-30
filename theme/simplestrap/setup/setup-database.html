@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/{{site.theme}}/common/style.css"/>
-    <link rel="stylesheet" href="/{{site.theme}}/{{site.themeType}}/{{site.themeType}}.css"/>
+    <link rel="stylesheet" href="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.css"/>
 </head>
 <body>
 {% include site.theme + '/' + site.themeType.setup + "/include/header.html" %}
@@ -72,7 +72,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
 <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-<script src="/{{site.theme}}/{{site.themeType}}/{{site.themeType}}.js"></script>
+<script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
 <script>
     $(function() {
         var $form = $('#database_info');
