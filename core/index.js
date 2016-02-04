@@ -13,8 +13,7 @@ var BLITITOR = {
         revision: '1.0.0',
         cookieSecret: 'blititor',
         sessionSecret: 'blititor'
-    },
-    db_config_file: 'database.json'
+    }
 };
 
 var HOUR = 3600000;
@@ -48,8 +47,10 @@ var nunjucks = require('nunjucks');
 var misc = require('../lib/misc');
 
 // load DB configuration
-var databaseFile = BLITITOR.db_config_file;
+var databaseDefault = require('./admin/database_default');
+var databaseFile = databaseDefault.config_file;
 
+// use sync function for convenience. it's initialization
 fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
     if (!err) {
 /*

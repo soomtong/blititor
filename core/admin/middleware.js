@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var database = require('./database');
+var databaseDefault = require('./database_default');
 
 var misc = require('../../lib/misc');
 var routeTable = misc.routeTable();
@@ -42,15 +43,15 @@ function passDatabaseConfig(req, res, next) {
                 console.log('invalid configuration', err);
 
                 var today = new Date().toISOString().substr(0,10);
-                fs.rename(path.join('.', BLITITOR.db_config_file), path.join('.', BLITITOR.db_config_file + '.' + today), function (err, data) {
+
+                fs.rename(path.join('.', databaseDefault.config_file), path.join('.', databaseDefault.config_file + '.' + today), function (err, data) {
                     BLITITOR.config.database = undefined;
                     res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
                 });
             } else {
                 if (BLITITOR.config.database.dbName) {
-                    // check schema
-                    database.makeDatabase();
-                    database.makeSchema();
+                    // check database status and scheme
+                    database.makeDefaultScheme();
 
                     res.redirect(routeTable.admin_root);
                 } else {
@@ -78,11 +79,12 @@ function passDatabaseInit(req, res, next) {
 
         connection.connect(function(err) {
             if (err) {
-                console.log('1');
                 res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
             } else {
                 if (BLITITOR.config.database.dbName) {
                     // todo: check this schema if we need
+                    database.makeDefaultScheme();
+
                     res.redirect(routeTable.admin_root);
                 } else {
                     next();
