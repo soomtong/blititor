@@ -57,14 +57,14 @@
     $(function() {
         var $form = $('#database_info');
 
-        blititor.db.initForm($form);
+        blititor.dbInit.initForm($form);
 
         $form.on('submit', function (e) {
             e.preventDefault();
-            if (blititor.db.checkForm()) {
-                blititor.db.submitForm(blititor.db.saveDone, blititor.db.saveFail);
+            if (blititor.dbInit.checkForm()) {
+                blititor.dbInit.submitForm(blititor.dbInit.saveDone, blititor.dbInit.saveFail);
             } else {
-                blititor.db.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
+                blititor.dbInit.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
             }
             return false;
         });

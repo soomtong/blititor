@@ -82,10 +82,7 @@ function passDatabaseInit(req, res, next) {
                 res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
             } else {
                 if (BLITITOR.config.database.dbName) {
-                    // check schema
-                    database.makeDatabase();
-                    database.makeSchema();
-
+                    // todo: check this schema if we need
                     res.redirect(routeTable.admin_root);
                 } else {
                     next();

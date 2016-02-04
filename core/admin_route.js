@@ -13,6 +13,7 @@ router.get(routeTable.admin.database_setup, middleware.checkDatabaseConfiguratio
 router.post(routeTable.admin.database_setup, database.databaseSetup);
 
 router.get(routeTable.admin.database_init, middleware.checkDatabaseInitialization, database.databaseInitView);
+router.post(routeTable.admin.database_init, database.databaseInit);
 
 //router.get(routeTable.admin.theme_setup, theme.themeSetupView);
 //router.post(routeTable.admin.theme_setup, theme.themeSetup);

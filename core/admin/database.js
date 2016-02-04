@@ -64,8 +64,51 @@ function databaseInitView(req, res) {
     res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/init-database', params);
 }
 
-function makeDatabase() {
+function databaseInit(req, res) {
+    var params = {
+        dbName: req.body['db_name']
+    };
 
+    BLITITOR.config.database.dbName = params.dbName;
+
+    // make database
+    makeDatabase(makeSchema());
+}
+
+function makeDatabase(callback) {
+    var connectionInfo = BLITITOR.config.database;
+
+    // make database by given name
+    var mysql = require('mysql');
+    var connection = mysql.createConnection({
+        host: connectionInfo.dbHost,
+        port: connectionInfo.dbPort || 3306,
+        database: connectionInfo.dbName || undefined,
+        user: connectionInfo.dbUserID,
+        password: connectionInfo.dbUserPassword
+    });
+
+    //console.log(connection);
+
+    connection.connect(function(err) {
+        if (err) {
+            //console.error('error connecting: ' + err.stack);
+            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
+        } else {
+            // save params to database.json
+            var databaseFile = BLITITOR.db_config_file;
+
+            fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
+
+            //console.log('connected as id ' + connection.threadId);
+
+            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-done', params);
+        }
+        connection.destroy();
+
+        // if has argument then execute callback
+        callback();
+    });
 }
 
 function makeSchema() {
@@ -96,6 +139,7 @@ module.exports = {
     databaseSetupView: databaseSetupView,
     databaseSetup: databaseSetup,
     databaseInitView: databaseInitView,
+    databaseInit: databaseInit,
     makeDatabase: makeDatabase,
     makeSchema: makeSchema
 };

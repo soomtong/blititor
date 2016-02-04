@@ -1,5 +1,12 @@
 var blititor = {};
 
+// todo: extract common features
+var common = {
+
+
+
+};
+
 blititor.dbSetup = {
     _form: null,
     initForm: function ($form) {
@@ -110,7 +117,7 @@ blititor.dbInit = {
     },
     watchForm: function () {
         var form = this._form;
-        var formFields = form.find('input[name=db_host],input[name=db_user_id],input[type=password]');
+        var formFields = form.find('input[name=db_name]');
         var formSummitButton = form.find('button:submit');
 
         formSummitButton.attr('disabled', true);
@@ -134,11 +141,9 @@ blititor.dbInit = {
     checkForm: function () {
         var form = this._form;
         var checkList = [
-            form.find('#db_host').val(),
-            //form.find('#db_port').val(),
-            //form.find('#db_name').val(),
-            form.find('#db_user_id').val(),
-            form.find('#db_user_password').val()
+            form.find('#db_name').val()
+            //form.find('#db_user_id').val(),
+            //form.find('#db_user_password').val()
         ];
 
         // validate
