@@ -122,13 +122,17 @@ function makeDefaultScheme() {
         }
     });
 
-    connection.schema.createTableIfNotExists('users', function (table) {
+    var userTable = function (table) {
         table.increments();
         table.string('name');
         table.timestamps();
-    }).then(function (err, results) {
-        connection.destroy();
-    });
+    };
+
+    connection.schema.createTableIfNotExists('account', userTable)
+        .createTableIfNotExists('site', userTable)
+        .then(function (err, results) {
+            connection.destroy();
+        });
 }
 
 module.exports = {

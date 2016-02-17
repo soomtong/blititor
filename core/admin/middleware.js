@@ -53,7 +53,7 @@ function passDatabaseConfig(req, res, next) {
                     // check database status and scheme
                     database.makeDefaultScheme();
 
-                    res.redirect(routeTable.admin_root);
+                    res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
                 } else {
                     res.redirect(routeTable.admin_root + routeTable.admin.database_init);
                 }
@@ -85,7 +85,7 @@ function passDatabaseInit(req, res, next) {
                     // todo: check this schema if we need
                     database.makeDefaultScheme();
 
-                    res.redirect(routeTable.admin_root);
+                    res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
                 } else {
                     next();
                 }
