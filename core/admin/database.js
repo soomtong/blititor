@@ -99,7 +99,7 @@ function databaseInit(req, res) {
                 connection.destroy();
 
                 // if has argument then execute callback
-                makeDefaultScheme();
+                makeDefaultScheme({});
 
                 res.redirect('/');
             });
@@ -107,9 +107,11 @@ function databaseInit(req, res) {
     });
 }
 
-function makeDefaultScheme() {
+function makeDefaultScheme(options) {
+    if (!options) options = { reset: false };
+
     var databaseConfiguration = BLITITOR.config.database;
-    console.log('== make default scheme. here we go!', databaseConfiguration);
+    console.log('== make default scheme. here we go!', databaseConfiguration, databaseDefault);
 
     var connection = knex({
         client: 'mysql',
@@ -122,17 +124,80 @@ function makeDefaultScheme() {
         }
     });
 
-    var userTable = function (table) {
-        table.increments();
-        table.string('name');
-        table.timestamps();
-    };
+    if (options.reset) {
+        deleteScheme(connection, createScheme);
+    } else {
+        createScheme(connection);
+    }
+}
 
-    connection.schema.createTableIfNotExists('account', userTable)
-        .createTableIfNotExists('site', userTable)
-        .then(function (err, results) {
+function deleteScheme(connection, callback) {
+    console.log('-- drop exist tables --');
+
+    connection.schema
+        .dropTableIfExists('point')
+        .dropTableIfExists('user')
+        .dropTableIfExists('site')
+        .then(function (error, results) {
+            callback(connection);
+        })
+        .catch(function (error) {
+            console.error(error);
             connection.destroy();
         });
+}
+
+function createScheme(connection) {
+    console.log('-- make tables if not exist --');
+
+    connection.schema
+        .createTableIfNotExists('site', siteTable)
+        .createTableIfNotExists('user', userTable)
+        .createTableIfNotExists('point', pointTable)
+        .then(function (error, results) {
+            connection.destroy();
+        })
+        .catch(function (error) {
+            console.error(error);
+            connection.destroy();
+        });
+}
+
+
+/* table specs */
+function siteTable(table) {
+    table.increments();
+    table.string('title', 64);
+    table.string('icon');
+    table.string('start_page', 128);
+    table.string('layout', 128);
+    table.text('desc');
+    table.dateTime('created_at');
+}
+
+function userTable(table) {
+    table.increments();
+    table.uuid('uuid').index('user_uuid');
+    table.integer('site_id').unsigned().references('id').inTable('user');
+    table.string('user_id', 64).index('user_id').unique().notNullable();
+    table.string('user_password').notNullable();
+    table.string('nickname', 64);
+    table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
+    table.string('photo');
+    table.integer('point');
+    table.integer('login_counter');
+    table.integer('logout_counter');
+    table.text('desc');
+    table.dateTime('last_logged_at');
+    table.timestamps();
+}
+
+function pointTable(table) {
+    table.increments();
+    table.integer('user_id').unsigned().references('id').inTable('user');
+    table.integer('amount');
+    table.string('reason');
+    table.dateTime('created_at');
 }
 
 module.exports = {

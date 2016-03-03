@@ -7,9 +7,9 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 
 ## stack
 
-- NodeJS + MariaDB + Sphinx + Nginx (recommended)
+- NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
-- Swig html template
+- Nunjucks html template
 - Jquery, Bootstrap, Materialize etc
 - used npm, bower
 
