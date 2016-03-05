@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var winston = require('winston');
+
 var database = require('./database');
 var databaseDefault = require('./database_default');
 
@@ -40,7 +42,7 @@ function passDatabaseConfig(req, res, next) {
 
         connection.connect(function(err) {
             if (err) {
-                console.log('invalid configuration', err);
+                winston.log('invalid configuration', err);
 
                 var today = new Date().toISOString().substr(0,10);
 

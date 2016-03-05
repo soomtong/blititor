@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{site.title}}</title>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/{{site.theme}}/common/style.css"/>
+    <link rel="stylesheet" href="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.css"/>
+</head>
+<body>
+{% include site.theme + '/' + site.themeType.setup + "/include/header.html" %}
+<div class="bd-pageheader">
+    <div class="container">
+
+        <h1>Database Connection Configuration</h1>
+        <p class="lead">
+            데이터베이스 접속 정보를 입력해주세요
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <form id="database_info" method="post" action="{{site.url}}">
+                <fieldset class="form-group">
+                    <label for="db_host">데이터베이스 주소</label>
+                    <input type="text" name="db_host" class="form-control" id="db_host" placeholder="mysql-or-mariadb-address.net">
+                    <small class="text-muted">데이터베이스 포트를 제외한 아이피 또는 주소를 입력해주세요.</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_port">데이터베이스 포트</label>
+                    <input type="text" name="db_port" class="form-control" id="db_port" placeholder="3306">
+                    <small class="text-muted">데이터베이스 포트 번호를 입력해주세요. 기본은 3306 입니다.</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_name">데이터베이스 이름</label>
+                    <input type="text" name="db_name" class="form-control" id="db_name" placeholder="db_blititor">
+                    <small class="text-muted">데이터베이스 이름이 정해져있을 경우 입력해주세요.(아이디와 패스워드가 지정된 데이터베이스에서만 사용 가능한 경우가 있습니다)</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_user_id">아이디</label>
+                    <input type="text" name="db_user_id" class="form-control" id="db_user_id" placeholder="">
+                    <small class="text-muted">해당 서버에 사용가능한 아이디를 입력해주세요</small>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="db_user_password">패스워드</label>
+                    <input type="password" name="db_user_password" class="form-control" id="db_user_password" placeholder="">
+                    <small class="text-muted">아이디의 패스워드를 입력해주세요.</small>
+                </fieldset>
+                <div id="message" class="alert alert-danger alert-dismissible fade in" role="alert" hidden>
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="text"><strong>불량!</strong> 내용 점검에 실패했습니다.</p>
+                </div>
+
+                <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% include site.theme + '/' + site.themeType.setup + "/include/footer.html" %}
+<!-- jQuery first, then Bootstrap JS. -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+<script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
+<script>
+    $(function() {
+        var $form = $('#database_info');
+
+        blititor.dbSetup.initForm($form);
+
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            if (blititor.dbSetup.checkForm()) {
+                blititor.dbSetup.submitForm(blititor.dbSetup.saveDone, blititor.dbSetup.saveFail);
+            } else {
+                blititor.dbSetup.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
+            }
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,8 +1,6 @@
 var fs = require('fs');
 var misc = require('../../lib/misc');
 
-var routeTable = misc.routeTable();
-
 function themeSetupView(req, res) {
     var params = {};
 

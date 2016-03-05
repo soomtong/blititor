@@ -1,6 +1,15 @@
 // global bind
 var BLITITOR = {
     env: process.env['NODE_ENV'] || 'development',
+    logLevel: 'verbose',
+    /* winston log level
+     error: 0,
+     warn: 1,
+     info: 2,
+     verbose: 3,
+     debug: 4,
+     silly: 5
+     */
     root: __dirname + '/../',
     config: {
         site: {
@@ -10,7 +19,7 @@ var BLITITOR = {
             port: 3010
         },
         author: 'soomtong',
-        revision: '1.0.0',
+        revision: '1.0.0',  // will be bind next process
         cookieSecret: 'blititor',
         sessionSecret: 'blititor'
     },
@@ -45,6 +54,7 @@ var errorHandler = require('errorhandler');
 var lusca = require('lusca');
 //var swig = require('swig');       // replace nunjucks
 var nunjucks = require('nunjucks');
+var winston = require('winston');
 
 // load custom library
 var misc = require('../lib/misc');
@@ -86,6 +96,17 @@ app.set('port', BLITITOR.config.site.port);
 nunjucks.configure(app.get('views'), {
     express: app,
     noCache: true
+});
+
+// set log
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+    colorize: true,
+    timestamp: function() {
+        var date = new Date();
+        return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
+    },
+    level: BLITITOR.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
 });
 
 // using Express behind nginx
@@ -135,7 +156,15 @@ app.use(errorHandler());
 
 // start server
 app.listen(app.get('port'), function () {
-    console.log("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
+    winston.info("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
     // display default route table
     misc.showRouteTable(routeTable);
 });
+
+if (!process.send) {
+    // If run using `node app`, log GNU copyright info along with server info
+    winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @soomtong.');
+    winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
+    winston.info('This is free software, and you are welcome to redistribute it under certain conditions.');
+    winston.info('');
+}

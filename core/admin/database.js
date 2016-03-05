@@ -2,6 +2,7 @@ var fs = require('fs');
 var misc = require('../../lib/misc');
 var mysql = require('mysql');
 var knex = require('knex');
+var winston = require('winston');
 
 var databaseDefault = require('./database_default');
 
@@ -34,19 +35,15 @@ function databaseSetup(req, res) {
         password: params.dbUserPassword
     });
 
-    //console.log(connection);
-
     connection.connect(function(err) {
         if (err) {
-            //console.error('error connecting: ' + err.stack);
+            winston.error('error connecting: ' + err.stack);
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
         } else {
             // save params to database.json
             var databaseFile = databaseDefault.config_file;
 
             fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
-
-            //console.log('connected as id ' + connection.threadId);
 
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-done', params);
         }
@@ -59,8 +56,6 @@ function databaseInitView(req, res) {
     var params = {
 
     };
-
-    console.log(res.locals);
 
     // load theme folder as it's condition
     res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/init-database', params);
@@ -82,11 +77,9 @@ function databaseInit(req, res) {
         password: connectionInfo.dbUserPassword
     });
 
-    //console.log(connection);
-
     connection.connect(function(err) {
         if (err) {
-            console.error('error connecting: ' + err.stack);
+            winston.error('error connecting: ' + err.stack);
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
         } else {
             // make database by given name
@@ -109,7 +102,7 @@ function makeDefaultScheme(options) {
     if (!options) options = { reset: false };
 
     var databaseConfiguration = BLITITOR.config.database;
-    console.log('== make default scheme. here we go!', databaseConfiguration, databaseDefault);
+    winston.info('== make default scheme. here we go!', databaseConfiguration, databaseDefault);
 
     var connection = knex({
         client: 'mysql',
@@ -130,7 +123,7 @@ function makeDefaultScheme(options) {
 }
 
 function deleteScheme(connection, callback) {
-    console.log('-- drop exist tables --');
+    winston.info('-- drop exist tables --');
 
     connection.schema
         .dropTableIfExists('point')
@@ -140,13 +133,13 @@ function deleteScheme(connection, callback) {
             callback(connection);
         })
         .catch(function (error) {
-            console.error(error);
+            winston.error(error);
             connection.destroy();
         });
 }
 
 function createScheme(connection) {
-    console.log('-- make tables if not exist --');
+    winston.info('-- make tables if not exist --');
 
     connection.schema
         .createTableIfNotExists('site', siteTable)
@@ -156,7 +149,7 @@ function createScheme(connection) {
             connection.destroy();
         })
         .catch(function (error) {
-            console.error(error);
+            winston.error(error);
             connection.destroy();
         });
 }
