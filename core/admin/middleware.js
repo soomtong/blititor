@@ -27,7 +27,7 @@ function exposeParameter(req, res, next) {
 }
 
 function passDatabaseConfig(req, res, next) {
-    if (BLITITOR.config.database) {
+    if (BLITITOR.config.database && !BLITITOR.tweak.passDBCheckMiddleware) {
         var databaseConfiguration = BLITITOR.config.database;
         var mysql = require('mysql');
         var connection = mysql.createConnection({
@@ -66,7 +66,7 @@ function passDatabaseConfig(req, res, next) {
 }
 
 function passDatabaseInit(req, res, next) {
-    if (BLITITOR.config.database) {
+    if (BLITITOR.config.database && !BLITITOR.tweak.passDBCheckMiddleware) {
         var databaseConfiguration = BLITITOR.config.database;
         var mysql = require('mysql');
         var connection = mysql.createConnection({

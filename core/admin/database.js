@@ -101,7 +101,7 @@ function databaseInit(req, res) {
                 // if has argument then execute callback
                 makeDefaultScheme({});
 
-                res.redirect('/');
+                res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
             });
         }
     });
@@ -178,7 +178,7 @@ function siteTable(table) {
 function userTable(table) {
     table.increments();
     table.uuid('uuid').index('user_uuid');
-    table.integer('site_id').unsigned().references('id').inTable('user');
+    table.integer('site_id').unsigned().references('id').inTable('site');
     table.string('user_id', 64).index('user_id').unique().notNullable();
     table.string('user_password').notNullable();
     table.string('nickname', 64);

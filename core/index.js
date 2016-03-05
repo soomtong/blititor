@@ -13,6 +13,9 @@ var BLITITOR = {
         revision: '1.0.0',
         cookieSecret: 'blititor',
         sessionSecret: 'blititor'
+    },
+    tweak: {
+        passDBCheckMiddleware: false    // for speed
     }
 };
 
