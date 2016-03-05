@@ -2,6 +2,7 @@ var express = require('express');
 var misc = require('../lib/misc');
 
 var database = require('./admin/database');
+var theme = require('./admin/theme');
 var middleware = require('./admin/middleware');
 
 var router = express.Router();

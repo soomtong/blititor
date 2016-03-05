@@ -5,8 +5,6 @@ var knex = require('knex');
 
 var databaseDefault = require('./database_default');
 
-var routeTable = misc.routeTable();
-
 //view page for routeTable.admin_root.database_setup
 function databaseSetupView(req, res) {
     var params = {
@@ -101,7 +99,7 @@ function databaseInit(req, res) {
                 // if has argument then execute callback
                 makeDefaultScheme({});
 
-                res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
+                res.redirect(res.locals.route.admin_root + res.locals.route.admin.theme_setup);
             });
         }
     });
