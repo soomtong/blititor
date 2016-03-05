@@ -19,7 +19,7 @@ var BLITITOR = {
             port: 3010
         },
         author: 'soomtong',
-        revision: '1.0.0',  // will be bind next process
+        revision: '0.0.0',  // will be bind next process
         cookieSecret: 'blititor',
         sessionSecret: 'blititor'
     },
