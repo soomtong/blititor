@@ -162,6 +162,10 @@
     }
 }
 
+.card-deck {
+    margin: 2rem 0;
+}
+
 .bd-featurette {
     padding-top: 3rem;
     padding-bottom: 3rem;

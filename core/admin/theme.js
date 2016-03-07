@@ -10,6 +10,7 @@ function themeSetupView(req, res) {
     getThemeList(BLITITOR.root + 'theme', function (themeList) {
         params.themeList = themeList;
 
+        console.log(params);
         res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-theme', params);
     });
 }
@@ -54,13 +55,18 @@ function getThemeInfo(directory, done) {
         });
     };
     var getDescription = function (done) {
-        var description;
-        var file = BLITITOR.root + 'theme/' + directory + '/desc.md';
+        var description = {};
+        var file = BLITITOR.root + 'theme/' + directory + '/description.md';
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);
             } else {
-                description = fs.readFileSync(file);
+                //todo: split title, desc line from markdown
+                description = {
+                    raw: fs.readFileSync(file),
+                    title: 'extract from markdown',
+                    quote: 'first > line text from markdown'
+                }
             }
             done(null, description);
         });
