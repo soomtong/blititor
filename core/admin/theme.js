@@ -2,6 +2,8 @@ var fs = require('fs');
 var async = require('neo-async');
 var winston = require('winston');
 
+var common = require('../../lib/common');
+
 function themeSetupView(req, res) {
     var params = {
         themeList: []
@@ -10,14 +12,21 @@ function themeSetupView(req, res) {
     getThemeList(BLITITOR.root + 'theme', function (themeList) {
         params.themeList = themeList;
 
-        console.log(params);
         res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-theme', params);
     });
 }
 
 function themeSetup(req, res) {
+    var params = {
+        theme: req.body['theme'],
+        insertData: req.body['insert_sample']
+    };
 
-    res.render();
+    console.log(params);
+    // todo: init theme and insert sample data
+    // todo: make index to `theme/page/index.html`
+
+    res.redirect(res.locals.route.root);
 }
 
 function themeInitView(req, res) {
@@ -55,18 +64,14 @@ function getThemeInfo(directory, done) {
         });
     };
     var getDescription = function (done) {
-        var description = {};
+        var description = {}, md;
         var file = BLITITOR.root + 'theme/' + directory + '/description.md';
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);
             } else {
-                //todo: split title, desc line from markdown
-                description = {
-                    raw: fs.readFileSync(file),
-                    title: 'extract from markdown',
-                    quote: 'first > line text from markdown'
-                }
+                md = fs.readFileSync(file);
+                description = common.destructMarkdown(md);
             }
             done(null, description);
         });

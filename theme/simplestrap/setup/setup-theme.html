@@ -31,20 +31,18 @@
                 <div class="row">
                         {% for theme in themeList %}
                     <div class="col-md-4 col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top img-fluid" src="/{{site.theme}}/screenshot.jpg"
-                                 alt="Card image cap">
+                        <div class="card" title="{{ theme.folderName }}">
+                            <img class="card-img-top img-fluid" src="/{{theme.folderName}}/screenshot.jpg" alt="{{ theme.folderName }}">
                             <div class="card-block">
                                 <h4 class="card-title">
-                                    <label>{{loop.index % 3}}
+                                    <label>
                                         <input type="radio" name="theme" value="{{ theme.folderName }}">
                                         {{ theme.description.title | default('No title here') }}
-                                        ({{ theme.folderName }})
                                     </label>
                                 </h4>
                                 <p class="card-text">{{ theme.description.quote | default('No description here') }}</p>
                                 <p class="card-text">
-                                    <small class="text-muted">soomtong (soomtong@gmail.com)</small>
+                                    <small class="text-muted">{{ theme.description.credit | default('No Name') }}</small>
                                 </p>
                             </div>
                         </div>
@@ -54,7 +52,7 @@
 
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="insert_sample"> 샘플 데이터를 함께 설정
+                        <input type="checkbox" name="insert_sample" value="insert"> 샘플 데이터를 함께 설정
                     </label>
                 </div>
 
