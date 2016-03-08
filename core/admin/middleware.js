@@ -7,18 +7,12 @@ var databaseDefault = require('./database_default');
 
 var misc = require('../../lib/misc');
 var routeTable = misc.routeTable();
+var siteThemeType = misc.siteThemeType();
 
 // bind common parameters
 function exposeParameter(req, res, next) {
-    var siteTheme = BLITITOR.config.site.theme;
-    var siteThemeType = {
-        setup: 'setup',
-        admin: 'admin',
-        manage: 'manage'
-    };
-
     res.locals.site = {
-        theme: siteTheme,
+        theme: BLITITOR.config.site.theme,
         themeType: siteThemeType,
         title: BLITITOR.config.revision,
         url: routeTable.admin_root + req.path

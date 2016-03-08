@@ -2,13 +2,18 @@ var express = require('express');
 var middleware = require('./middleware');
 var misc = require('../lib/misc');
 
+// load default modules
+var site = require('../module/site');
+
 var router = express.Router();
 var routeTable = misc.routeTable();
 
-function index(req, res, next) {
-    res.send(BLITITOR.config);
-}
+router.use(middleware.exposeParameter);
 
-router.get(routeTable.root, middleware.databaseCheck, index);
+router.get(routeTable.root, middleware.databaseCheck, site.index);
+routeTable.pages.map(function (r) {
+    router.get('/' + r, site.pages);
+});
 
+console.log(router);
 module.exports = router;
