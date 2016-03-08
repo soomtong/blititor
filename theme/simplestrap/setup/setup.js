@@ -2,9 +2,15 @@ var blititor = {};
 
 // todo: extract common features
 var common = {
-
-
-
+    setMaxHeight: function(el) {
+        var maxHeight = 0;
+        el.map(function (index, item) {
+            var h = $(item).height();
+            maxHeight = h > maxHeight ? h : maxHeight;
+        });
+        console.log(maxHeight);
+        el.height(maxHeight);
+    }
 };
 
 blititor.dbSetup = {

@@ -1,3 +1,11 @@
+.card-deck {
+    margin: 2rem 0;
+}
+
+.card {
+    margin-bottom: 1.5rem;
+}
+
 /*!
  * Bootstrap Docs (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
@@ -160,10 +168,6 @@
         width: 85%;
         font-size: 2rem
     }
-}
-
-.card-deck {
-    margin: 2rem 0;
 }
 
 .bd-featurette {

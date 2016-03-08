@@ -26,57 +26,29 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+
             <form id="theme_list" method="post" action="{{site.url}}">
-                <div class="card-deck-wrapper">
-                    {% for theme in themeList %}
-                    {% if loop.index % 3 %}
-                    <div class="card-deck">
-                    {% endif %}
+                <div class="row">
+                        {% for theme in themeList %}
+                    <div class="col-md-4 col-sm-6">
                         <div class="card">
-                            <img class="card-img-top" data-src="..." alt="Card image cap">
+                            <img class="card-img-top img-fluid" src="/{{site.theme}}/screenshot.jpg"
+                                 alt="Card image cap">
                             <div class="card-block">
                                 <h4 class="card-title">
-                                    <label>
+                                    <label>{{loop.index % 3}}
+                                        <input type="radio" name="theme" value="{{ theme.folderName }}">
                                         {{ theme.description.title | default('No title here') }}
                                         ({{ theme.folderName }})
-                                        <input type="radio" name="theme" value="{{ theme.folderName }}">
                                     </label>
                                 </h4>
                                 <p class="card-text">{{ theme.description.quote | default('No description here') }}</p>
-                                <p class="card-text"><small class="text-muted">soomtong (soomtong@gmail.com)</small></p>
+                                <p class="card-text">
+                                    <small class="text-muted">soomtong (soomtong@gmail.com)</small>
+                                </p>
                             </div>
                         </div>
-                        <div class="card">
-                            <img class="card-img-top" data-src="..." alt="Card image cap">
-                            <div class="card-block">
-                                <h4 class="card-title">
-                                    <label>
-                                        {{ theme.description.title | default('No title here') }}
-                                        ({{ theme.folderName }})
-                                        <input type="radio" name="theme" value="{{ theme.folderName }}">
-                                    </label>
-                                </h4>
-                                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" data-src="..." alt="Card image cap">
-                            <div class="card-block">
-                                <h4 class="card-title">
-                                    <label>
-                                        {{ theme.description.title | default('No title here') }}
-                                        ({{ theme.folderName }})
-                                        <input type="radio" name="theme" value="{{ theme.folderName }}">
-                                    </label>
-                                </h4>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    {% if loop.index % 3 %}
                     </div>
-                    {% endif %}
                     {% endfor %}
                 </div>
 
@@ -108,6 +80,8 @@
 <script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
 <script>
     $(function() {
+        common.setMaxHeight($('.card'));
+
         var $form = $('#database_info');
 
         blititor.dbSetup.initForm($form);
