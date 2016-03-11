@@ -1,9 +1,9 @@
 var express = require('express');
-var misc = require('../lib/misc');
+var misc = require('../../lib/misc');
 
-var database = require('./admin/database');
-var theme = require('./admin/theme');
-var middleware = require('./admin/middleware');
+var database = require('./database');
+var theme = require('./theme');
+var middleware = require('./middleware');
 
 var router = express.Router();
 var routeTable = misc.routeTable();

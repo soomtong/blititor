@@ -81,7 +81,7 @@ fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
 var routeTable = misc.routeTable();
 
 var route = require('./route');
-var adminRoute = require('./admin_route');
+var adminRoute = require('./admin/route');
 
 // ready Express
 var app = express();

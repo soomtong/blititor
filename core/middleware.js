@@ -20,10 +20,10 @@ function exposeParameter(req, res, next) {
 }
 
 function checkDatabaseConfig(req, res, next) {
-    if (!BLITITOR.config.database) {
-        res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
-    } else {
+    if (BLITITOR.tweak.passDBCheckMiddleware || BLITITOR.config.database) {
         next();
+    } else {
+        res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
     }
 }
 

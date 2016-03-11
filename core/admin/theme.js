@@ -23,6 +23,7 @@ function themeSetup(req, res) {
     };
 
     console.log(params);
+    console.log('route', res.locals.route.root);
     // todo: init theme and insert sample data
     // todo: make index to `theme/page/index.html`
 

@@ -102,7 +102,7 @@ function makeDefaultScheme(options) {
     if (!options) options = { reset: false };
 
     var databaseConfiguration = BLITITOR.config.database;
-    winston.info('== make default scheme. here we go!', databaseConfiguration, databaseDefault);
+    winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', databaseDefault);
 
     var connection = knex({
         client: 'mysql',
@@ -157,6 +157,7 @@ function createScheme(connection) {
 
 /* table specs */
 function siteTable(table) {
+    winston.info('make table site');
     table.increments();
     table.string('title', 64);
     table.string('icon');
@@ -167,10 +168,11 @@ function siteTable(table) {
 }
 
 function userTable(table) {
+    winston.info('make table user');
     table.increments();
-    table.uuid('uuid').index('user_uuid');
-    table.integer('site_id').unsigned().references('id').inTable('site');
-    table.string('user_id', 64).index('user_id').unique().notNullable();
+    table.string('uuid', 36);   //.index('user_uuid');
+    table.integer('site_id').unsigned();    //.references('id').inTable('site');
+    table.string('user_id', 64);    //.index('user_id').unique().notNullable();
     table.string('user_password').notNullable();
     table.string('nickname', 64);
     table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
@@ -184,8 +186,9 @@ function userTable(table) {
 }
 
 function pointTable(table) {
+    winston.info('make table point');
     table.increments();
-    table.integer('user_id').unsigned().references('id').inTable('user');
+    table.integer('user_id').unsigned();    //.references('id').inTable('user');
     table.integer('amount');
     table.string('reason');
     table.dateTime('created_at');

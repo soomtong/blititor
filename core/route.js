@@ -11,9 +11,9 @@ var routeTable = misc.routeTable();
 router.use(middleware.exposeParameter);
 
 router.get(routeTable.root, middleware.databaseCheck, site.index);
+
 routeTable.pages.map(function (r) {
     router.get('/' + r, site.pages);
 });
 
-console.log(router);
 module.exports = router;

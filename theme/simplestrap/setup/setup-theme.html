@@ -78,12 +78,11 @@
 <script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
 <script>
     $(function() {
-        common.setMaxHeight($('.card'));
+//        var $form = $('#database_info');
+//
+//        blititor.dbSetup.initForm($form);
 
-        var $form = $('#database_info');
-
-        blititor.dbSetup.initForm($form);
-
+/*
         $form.on('submit', function (e) {
             e.preventDefault();
             if (blititor.dbSetup.checkForm()) {
@@ -93,6 +92,11 @@
             }
             return false;
         });
+*/
+
+
+        // template page tweaks
+        common.setMaxHeight($('.card'));
     });
 </script>
 </body>
