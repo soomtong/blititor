@@ -77,14 +77,7 @@ function passDatabaseInit(req, res, next) {
             if (err) {
                 res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
             } else {
-                if (BLITITOR.config.database.dbName) {
-                    // todo: check this schema if we need
-                    database.makeDefaultScheme();
-
-                    res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
-                } else {
-                    next();
-                }
+                next();
             }
             connection.destroy();
         });
@@ -92,7 +85,6 @@ function passDatabaseInit(req, res, next) {
         res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
     }
 }
-
 module.exports = {
     exposeParameter: exposeParameter,
     checkDatabaseConfiguration: passDatabaseConfig,

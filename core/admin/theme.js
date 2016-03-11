@@ -23,22 +23,21 @@ function themeSetup(req, res) {
     };
 
     console.log(params);
-    console.log('route', res.locals.route.root);
+    console.log('done move to root', res.locals.route.root);
     // todo: init theme and insert sample data
     // todo: make index to `theme/page/index.html`
+
+    themeInit({ theme: params.theme });
 
     res.redirect(res.locals.route.root);
 }
 
-function themeInitView(req, res) {
+function themeInit(options) {
 
-    res.render();
-}
-
-function themeInit(req, res) {
+    console.log(options);
 
 
-    res.redirect(res.locals.route.admin_root);    // goto admin main page
+    // init theme default data to database...
 
 }
 
@@ -96,7 +95,5 @@ function makeDefaultThemeConfiguration(options) {
 module.exports = {
     themeSetupView: themeSetupView,
     themeSetup: themeSetup,
-    themeInitView: themeInitView,
-    themeInit: themeInit,
     makeDefaultThemeConfiguration: makeDefaultThemeConfiguration
 };

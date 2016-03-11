@@ -6,6 +6,12 @@ var winston = require('winston');
 
 var databaseDefault = require('./database_default');
 
+var tables = {
+    user: 'user',
+    site: 'site',
+    point: 'point'
+};
+
 //view page for routeTable.admin_root.database_setup
 function databaseSetupView(req, res) {
     var params = {
@@ -72,7 +78,7 @@ function databaseInit(req, res) {
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,
         port: connectionInfo.dbPort || databaseDefault.port,
-        database: connectionInfo.dbName || undefined,
+        database: connectionInfo.dbName,
         user: connectionInfo.dbUserID,
         password: connectionInfo.dbUserPassword
     });
@@ -105,6 +111,7 @@ function makeDefaultScheme(options) {
     winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', databaseDefault);
 
     var connection = knex({
+        debug: true,
         client: 'mysql',
         connection: {
             host: databaseConfiguration.dbHost,
@@ -126,9 +133,9 @@ function deleteScheme(connection, callback) {
     winston.info('-- drop exist tables --');
 
     connection.schema
-        .dropTableIfExists('point')
-        .dropTableIfExists('user')
-        .dropTableIfExists('site')
+        .dropTableIfExists(tables.point)
+        .dropTableIfExists(tables.user)
+        .dropTableIfExists(tables.site)
         .then(function (error, results) {
             callback(connection);
         })
@@ -142,10 +149,11 @@ function createScheme(connection) {
     winston.info('-- make tables if not exist --');
 
     connection.schema
-        .createTableIfNotExists('site', siteTable)
-        .createTableIfNotExists('user', userTable)
-        .createTableIfNotExists('point', pointTable)
-        .then(function (error, results) {
+        .createTableIfNotExists(tables.site, siteTable)
+        .createTableIfNotExists(tables.user, userTable)
+        .createTableIfNotExists(tables.point, pointTable)
+        .then(function (result) {
+            winston.info(result);
             connection.destroy();
         })
         .catch(function (error) {
@@ -157,7 +165,7 @@ function createScheme(connection) {
 
 /* table specs */
 function siteTable(table) {
-    winston.info('make table site');
+    winston.info('make table', tables.site);
     table.increments();
     table.string('title', 64);
     table.string('icon');
@@ -168,11 +176,11 @@ function siteTable(table) {
 }
 
 function userTable(table) {
-    winston.info('make table user');
+    winston.info('make table', tables.user);
     table.increments();
-    table.string('uuid', 36);   //.index('user_uuid');
-    table.integer('site_id').unsigned();    //.references('id').inTable('site');
-    table.string('user_id', 64);    //.index('user_id').unique().notNullable();
+    table.uuid('uuid').unique().notNullable();
+    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(tables.site);
+    table.string('user_id', 64).unique().notNullable();
     table.string('user_password').notNullable();
     table.string('nickname', 64);
     table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
@@ -186,13 +194,38 @@ function userTable(table) {
 }
 
 function pointTable(table) {
-    winston.info('make table point');
+    winston.info('make table', tables.point);
     table.increments();
-    table.integer('user_id').unsigned();    //.references('id').inTable('user');
+    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(tables.site);
+    table.integer('user_id').index('user_id').unsigned().notNullable().references('id').inTable(tables.user);
     table.integer('amount');
     table.string('reason');
     table.dateTime('created_at');
 }
+
+/*
+function createIndex(connection) {
+    winston.info('make index');
+    connection.schema.table(tables.user, function (table) {
+        table.dropIndex('user_uuid').index('user_uuid');
+        table.dropIndex('user_id').index('user_id');
+        //table.dropForeign('site_id').foreign('site_id').references('id').inTable(tables.site);
+    }).then(function (error, results) {
+        winston.info(results);
+    }).catch(function (error) {
+        winston.error(tables.user, 'indexing', error);
+    });
+    connection.schema.table(tables.point, function (table) {
+        table.dropIndex('site_id').index('site_id');
+        table.dropIndex('user_uuid').index('user_uuid');
+        //table.dropForeign('user_id').foreign('user_id').references('id').inTable(tables.user);
+    }).then(function (error, results) {
+        winston.info(results);
+    }).catch(function (error) {
+        winston.error(tables.point, 'indexing', error);
+    });
+}
+*/
 
 module.exports = {
     databaseSetupView: databaseSetupView,
