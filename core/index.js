@@ -170,14 +170,40 @@ var staticOptions = {
 app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
-// bind route
-app.use(route);
-
 // bind admin(manager) route
 app.use(routeTable.admin_root, adminRoute);
 
-// 500 Error Handler
-app.use(errorHandler());
+// bind route
+app.use(route);
+
+// Handle 404
+app.use(function(req, res, next){
+    res.status(404);
+
+    // respond with html page
+    if (req.accepts('html')) {
+        res.render('../theme/simplestrap/page/_404', { url: req.url });
+        return;
+    }
+
+    // respond with json
+    if (req.accepts('json')) {
+        res.send({ error: 'Not found' });
+        return;
+    }
+
+    // default to plain-text. send()
+    res.type('txt').send('Not found');
+});
+
+// Handle 500
+app.use(function(err, req, res, next){
+    // we may use properties of the error object
+    // here and next(err) appropriately, or if
+    // we possibly recovered from the error, simply next().
+    res.status(err.status || 500);
+    res.render('../theme/simplestrap/page/_500', { error: err });
+});
 
 // start server
 app.listen(app.get('port'), function () {

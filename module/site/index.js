@@ -8,6 +8,9 @@ function index(req, res) {
         title: "Home"
     };
 
+    //500 Error
+    //throw Error('make noise!');
+
     // load recent articles
 
     res.render(BLITITOR.config.site.theme + '/page/index', params);
@@ -27,18 +30,7 @@ function pages(req, res) {
     }
 }
 
-function notExist(req, res) {
-    //res.sendStatus(404);
-
-    var params = {
-        title: "Home"
-    };
-
-    res.render(BLITITOR.config.site.theme + '/page/index', params);
-}
-
 module.exports = {
     index: index,
-    pages: pages,
-    notExist: notExist
+    pages: pages
 };
