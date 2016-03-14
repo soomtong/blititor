@@ -18,8 +18,6 @@ function databaseSetupView(req, res) {
 
     };
 
-    console.log(res.locals);
-
     // load theme folder as it's condition
     res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-database', params);
 }

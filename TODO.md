@@ -1,3 +1,4 @@
+- [ ] default set (blititor basic theme)
 - [ ] theme select
 - [ ] insert initial data to `site` table for selected theme
 - [ ] connect mysql by socket

@@ -11,9 +11,10 @@ var BLITITOR = {
      silly: 5
      */
     root: __dirname + '/../',
+    route: {},
     config: {
         site: {
-            theme: 'simplestrap',
+            theme: 'none',
             host: '',
             url_prefix: '/',
             port: 3010
@@ -56,6 +57,17 @@ var lusca = require('lusca');
 var nunjucks = require('nunjucks');
 var winston = require('winston');
 
+// set log
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+    colorize: true,
+    timestamp: function() {
+        var date = new Date();
+        return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
+    },
+    level: BLITITOR.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
+});
+
 // load custom library
 var misc = require('../lib/misc');
 
@@ -64,20 +76,47 @@ var databaseDefault = require('./admin/database_default');
 var databaseFile = databaseDefault.config_file;
 
 // use sync function for convenience. it's initialization
-fs.access(databaseFile, function (err) {    // can use fs.R_OK mode for option
-    if (!err) {
-/*
-        fs.readFile(databaseFile, function (err, data) {
-            BLITITOR.config.database = data;
-        });
-*/
+try {
+    fs.accessSync(databaseFile, fs.R_OK);
 
-        // simple better
-        BLITITOR.config.database = require(path.join('..', databaseFile));
+    BLITITOR.config.database = require(path.join('..', databaseFile));
+} catch (e) {
+    winston.warn('database config file not exist');
+}
+
+// load Theme configuration
+try {
+    fs.accessSync('theme.json', fs.R_OK);
+
+    var themeFile = require('../theme');
+
+    fs.accessSync('./theme/' + themeFile.siteTheme, fs.R_OK);
+
+    BLITITOR.config.site.theme = themeFile.siteTheme;
+
+    winston.verbose('Set site theme to', BLITITOR.config.site.theme);
+} catch (e) {
+    winston.error('theme folder or config file not exist');
+}
+
+/*
+fs.access('theme.json', fs.R_OK, function (err) {
+    if (!err) {
+        var themeFile = require('../theme');
+
+        fs.access('./theme/' + themeFile.siteTheme, fs.R_OK, function (err) {
+            if (!err) {
+                BLITITOR.config.site.theme = themeFile.siteTheme;
+
+                winston.verbose('Set site theme to', BLITITOR.config.site.theme);
+            }
+        });
     }
 });
+*/
 
 // load route setup
+misc.setRoutePage();
 var routeTable = misc.routeTable();
 
 var route = require('./route');
@@ -96,17 +135,6 @@ app.set('port', BLITITOR.config.site.port);
 nunjucks.configure(app.get('views'), {
     express: app,
     noCache: true
-});
-
-// set log
-winston.remove(winston.transports.Console);
-winston.add(winston.transports.Console, {
-    colorize: true,
-    timestamp: function() {
-        var date = new Date();
-        return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
-    },
-    level: BLITITOR.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
 });
 
 // using Express behind nginx
