@@ -17,3 +17,5 @@ public/upload
 npm-debug.log
 database.json
 database.json.*
+theme.json
+theme.json.*

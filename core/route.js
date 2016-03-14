@@ -18,6 +18,6 @@ routeTable.pages.map(function (r) {
     router.get('/' + r, site.pages);
 });
 
-router.use(site.notExist);  // default route or not exist route
+//router.use(site.notExist);  // default route or not exist route
 
 module.exports = router;

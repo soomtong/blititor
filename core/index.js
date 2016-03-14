@@ -97,23 +97,20 @@ try {
     winston.verbose('Set site theme to', BLITITOR.config.site.theme);
 } catch (e) {
     winston.error('theme folder or config file not exist');
+
+    var file = {
+        "setupTheme": "simplestrap",
+        "adminTheme": "simplestrap",
+        "manageTheme": "simplestrap",
+        "siteTheme": "simplestrap"
+    };
+
+    fs.writeFileSync('theme.json', JSON.stringify(file, null, 4));
+
+    BLITITOR.config.site.theme = file.siteTheme;
+
+    winston.verbose('Set site theme to', BLITITOR.config.site.theme);
 }
-
-/*
-fs.access('theme.json', fs.R_OK, function (err) {
-    if (!err) {
-        var themeFile = require('../theme');
-
-        fs.access('./theme/' + themeFile.siteTheme, fs.R_OK, function (err) {
-            if (!err) {
-                BLITITOR.config.site.theme = themeFile.siteTheme;
-
-                winston.verbose('Set site theme to', BLITITOR.config.site.theme);
-            }
-        });
-    }
-});
-*/
 
 // load route setup
 misc.setRoutePage();
