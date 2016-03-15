@@ -143,7 +143,7 @@ if (BLITITOR.env == 'production') {
 var logFile = fs.createWriteStream('log/express.log', {flags: 'a'});
 
 app.use(logger('combined', { stream: logFile }));
-app.use(errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
 app.use(favicon('public/favicon.ico'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -217,5 +217,5 @@ if (!process.send) {
     winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @soomtong.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
     winston.info('This is free software, and you are welcome to redistribute it under certain conditions.');
-    winston.info('');
+    //winston.info('');
 }
