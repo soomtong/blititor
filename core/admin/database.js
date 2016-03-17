@@ -62,7 +62,7 @@ function databaseInitView(req, res) {
     };
 
     // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/init-database', params);
+    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-database-table', params);
 }
 
 function databaseInit(req, res) {

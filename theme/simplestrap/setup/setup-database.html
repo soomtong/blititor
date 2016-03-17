@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.css"/>
 </head>
 <body>
-{% include site.theme + '/' + site.themeType.setup + "/include/header.html" %}
+
+{% include site.theme + '/' + site.themeType.setup + '/include/header.html' %}
+
 <div class="bd-pageheader">
     <div class="container">
 
@@ -67,14 +69,16 @@
         </div>
     </div>
 </div>
-{% include site.theme + '/' + site.themeType.setup + "/include/footer.html" %}
+
+{% include site.theme + '/' + site.themeType.setup + '/include/footer.html' %}
+
 <!-- jQuery first, then Bootstrap JS. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
 <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 <script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
 <script>
-    $(function() {
+    $(document).ready(function () {
         var $form = $('#database_info');
 
         blititor.dbSetup.initForm($form);
