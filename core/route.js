@@ -6,13 +6,12 @@ var misc = require('../lib/misc');
 
 // load default modules
 var site = require('../module/site');
-var menu = require('../module/menu');
 
 var router = express.Router();
 var routeTable = misc.routeTable();
 
 router.use(middleware.exposeParameter);
-router.use(menu.exposeMenu);
+router.use(site.exposeMenu);
 
 router.get(routeTable.root, middleware.databaseCheck, site.pages);
 

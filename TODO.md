@@ -2,3 +2,4 @@
 - [ ] theme select to file
 - [ ] insert initial data to `site` table for selected theme
 - [ ] connect mysql by socket
+- [ ] use macro, layout for advanced template

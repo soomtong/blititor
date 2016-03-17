@@ -3,6 +3,8 @@ var misc = require('../../lib/misc');
 var knex = require('knex');
 var winston = require('winston');
 
+var menu = require('./menu');
+
 function index(req, res) {
     var params = {
         title: "Home"
@@ -34,5 +36,6 @@ function pages(req, res) {
 
 module.exports = {
     //index: pages,
-    pages: pages
+    pages: pages,
+    exposeMenu: menu.exposeMenu
 };

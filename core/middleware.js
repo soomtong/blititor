@@ -12,7 +12,7 @@ function exposeParameter(req, res, next) {
         theme: BLITITOR.config.site.theme,
         themeType: siteThemeType,
         title: BLITITOR.config.revision,
-        url: routeTable.admin_root + req.path
+        url: req.path
     };
     res.locals.route = routeTable;
 

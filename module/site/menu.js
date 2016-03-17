@@ -9,7 +9,12 @@ function menu(req, res, next) {
 
     //todo: retrieve from database site menu record which should match with `pages` items
     // read from database
-    res.locals.menu = [{'menu1':'메뉴1'}, {'menu2':'메뉴2'}, {'menu3':'메뉴3'}];
+    res.locals.menu = [
+        { url: '/', name: '홈' },
+        { url: '/blog', name: '블로그' },
+        { url: '/guest', name: '방명록' },
+        { url: '/about', name: '소개' }
+    ];
 
     next();
 }
