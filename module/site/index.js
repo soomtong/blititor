@@ -21,9 +21,11 @@ function pages(req, res) {
         page: req.path
     };
 
-    console.log(req.path);
+    console.log(res.locals.menu, req.path);
 
-    if (false || isPage) {
+    var isPage = req.path.indexOf('/') == 0 && req.path.length > 1;
+
+    if (isPage) {
         res.render(BLITITOR.config.site.theme + '/page' + req.path, params);
     } else {
         res.render(BLITITOR.config.site.theme + '/page/index', params);
@@ -31,6 +33,6 @@ function pages(req, res) {
 }
 
 module.exports = {
-    index: index,
+    //index: pages,
     pages: pages
 };
