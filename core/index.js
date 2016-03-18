@@ -69,7 +69,7 @@ winston.add(winston.transports.Console, {
 });
 
 // load custom library
-var misc = require('../lib/misc');
+var misc = require('./misc');
 
 // load DB configuration
 var databaseDefault = require('./admin/database_default');

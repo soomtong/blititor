@@ -1,9 +1,17 @@
 <nav>
     <ul class="nav nav-pills pull-xs-right">
+        {% set user = { level: 1, grant: M } %}
         {% for item in menu %}
+        {% if not item.level and not item.grant %}
         <li class="nav-item {% if site.url == item.url %}active{% endif %}">
             <a class="nav-link" href="{{item.url}}">{{item.name}} {% if site.url == item.url %}<span class="sr-only">(current)</span>{% endif %}</a>
         </li>
+        {% endif %}
+        {% if user and item.level and item.level <= user.level %}
+        <li class="nav-item {% if site.url == item.url %}active{% endif %}">
+            <a class="nav-link" href="{{item.url}}">{{item.name}} {% if site.url == item.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+        </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </nav>

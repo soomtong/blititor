@@ -2,7 +2,7 @@
 //var path = require('path');
 //var winston = require('winston');
 
-var misc = require('../lib/misc');
+var misc = require('./misc');
 var routeTable = misc.routeTable();
 var siteThemeType = misc.siteThemeType();
 

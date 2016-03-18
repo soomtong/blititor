@@ -1,5 +1,5 @@
 var fs = require('fs');
-var misc = require('../../lib/misc');
+var misc = require('../misc');
 var mysql = require('mysql');
 var knex = require('knex');
 var winston = require('winston');

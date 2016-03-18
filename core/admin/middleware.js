@@ -5,7 +5,7 @@ var winston = require('winston');
 var database = require('./database');
 var databaseDefault = require('./database_default');
 
-var misc = require('../../lib/misc');
+var misc = require('../misc');
 var routeTable = misc.routeTable();
 var siteThemeType = misc.siteThemeType();
 

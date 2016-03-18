@@ -1,5 +1,4 @@
 var fs = require('fs');
-var misc = require('../../lib/misc');
 var knex = require('knex');
 var winston = require('winston');
 
@@ -12,6 +11,7 @@ function menu(req, res, next) {
     res.locals.menu = [
         { url: '/', name: '홈' },
         { url: '/blog', name: '블로그' },
+        { url: '/write', name: '새글쓰기', level: 1, grant: 'AMC' },
         { url: '/guest', name: '방명록' },
         { url: '/about', name: '소개' }
     ];
