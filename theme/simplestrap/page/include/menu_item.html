@@ -1,0 +1,10 @@
+{% macro item(item, site) %}
+<li class="nav-item {% if site.url == item.url %}active{% endif %}">
+    <a class="nav-link" href="{{item.url}}">{{item.name}} {% if site.url == item.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+</li>
+{% endmacro %}
+{% macro itemGranted(item, site) %}
+<li class="nav-item {% if site.url == item.url %}active{% endif %}">
+    <a class="nav-link label-warning" href="{{item.url}}">{{item.name}} {% if site.url == item.url %}<span class="sr-only">(current)</span>{% endif %}</a>
+</li>
+{% endmacro %}

@@ -26,7 +26,7 @@ function setRoutePage() {
         var files = fs.readdirSync('./theme/' + theme + '/page');
 
         BLITITOR.route.pages = files.filter(function (file) {
-            return file.indexOf('.html') && file.indexOf('_') !== 0 && file.indexOf('index') == -1
+            return file.indexOf('.html') && file.indexOf('_') !== 0 && file.indexOf('include') == -1
         }).map(function (file) {
             return file.replace('.html', '');
         });

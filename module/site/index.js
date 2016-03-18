@@ -19,6 +19,7 @@ function index(req, res) {
 
 function pages(req, res) {
     var params = {
+        title: "Home",
         page: req.path
     };
 
