@@ -1,10 +1,8 @@
-/* Space out content a bit */
 body {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
@@ -12,19 +10,34 @@ body {
     padding-left: 1rem;
 }
 
-/* Custom page header */
 .header {
     padding-bottom: 1rem;
     border-bottom: .05rem solid #e5e5e5;
 }
-/* Make the masthead heading the same height as the navigation */
 .header h3 {
     margin-top: 0;
     margin-bottom: 0;
     line-height: 3rem;
+    display: none;
 }
 
-/* Custom page footer */
+.blog-main {
+    margin-top: 2rem;
+    border-right: .05rem solid #e5e5e5;
+}
+
+.about-main, .blog-sidebar {
+    margin-top: 2rem;
+}
+
+.bg-guest-form-holder, .bg-member-holder {
+    position: relative;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: solid #f7f7f9;
+    border-width: .2rem 0 0;
+}
+
 .footer {
     padding-top: 1.5rem;
     color: #777;
@@ -37,7 +50,7 @@ body {
         max-width: 46rem;
     }
 }
-.container-narrow > hr {
+.container > hr {
     margin: 2rem 0;
 }
 
@@ -72,8 +85,22 @@ body {
     .header {
         margin-bottom: 2rem;
     }
+    .header h3 {
+        display: block;
+    }
     /* Remove the bottom border on the jumbotron for visual effect */
     .jumbotron {
         border-bottom: 0;
+    }
+
+    .blog-main, .blog-sidebar {
+        margin-top: 0;
+    }
+    .bg-guest-form-holder, .bg-member-holder {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 3rem;
+        padding: 1.5rem;
+        border-width: .2rem;
     }
 }
