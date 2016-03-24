@@ -1,17 +1,24 @@
 var express = require('express');
-//var winston = require('winston');
 
 var middleware = require('./middleware');
-
-// load default modules
-var site = require('../module/site');
+var themePackage = require('../module/' + BLITITOR.config.site.theme);
 
 var router = express.Router();
+var routeList = themePackage.menu.data();
 
 router.use(middleware.exposeParameter);
+router.use(themePackage.menu.expose);
 
-router.use(site.exposeMenu);
-router.use(site.exposeRoute);
-// router.use(site.exposeParameter);
+routeList.map(function (item) {
+    // expose middleware for each
+    if (item.middleware.length) {
+        var m = item.middleware;
+        m.map(function (item) {
+            if (item) router.use(middleware[item]);
+        });
+    }
+
+    router[item.type](item.url, themePackage.page[item.page]);
+});
 
 module.exports = router;

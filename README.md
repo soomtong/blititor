@@ -40,10 +40,3 @@ bower install
 ```shell
 node app
 ```
-
-## todo next
-
-- select css framework
-- start up to admin page
-- save database config file
-- redirect main page

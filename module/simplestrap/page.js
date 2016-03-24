@@ -1,8 +1,11 @@
+var winston = require('winston');
 
 function index(req, res) {
     var params = {
         title: "Home"
     };
+
+    winston.info(req.path);
 
     //500 Error
     //throw Error('make noise!');
@@ -18,7 +21,8 @@ function pages(req, res) {
         page: req.path
     };
 
-    console.log(res.locals.menu, req.path);
+    winston.info(req.path);
+    // console.log(res.locals.menu);
 
     var isPage = req.path.indexOf('/') == 0 && req.path.length > 1;
 
