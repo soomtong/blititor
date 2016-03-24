@@ -14,7 +14,7 @@ var BLITITOR = {
     route: {},
     config: {
         site: {
-            theme: 'none',
+            theme: '',
             host: '',
             url_prefix: '/',
             port: 3010
@@ -113,7 +113,7 @@ try {
 }
 
 // load route setup
-misc.setRoutePage();
+misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
 var routeTable = misc.routeTable();
 
 var route = require('./route');

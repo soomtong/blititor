@@ -6,7 +6,7 @@
     "**/*.txt"
   ],
   "dependencies": {
-    "Materialize": "materialize#~0.97.1"
+    "jquery": "^2.2.2"
   },
   "devDependencies": {}
 }
