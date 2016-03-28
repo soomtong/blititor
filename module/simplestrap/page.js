@@ -33,6 +33,29 @@ function pages(req, res) {
     }
 }
 
+function signIn(req, res) {
+    // sign in and grant user access level
+    var prevLocation = '/';
+
+
+
+    res.redirect(prevLocation);
+}
+
+function signUp(req, res) {
+    var prevLocation = '/';
+
+
+
+    res.redirect(prevLocation);
+}
+
+function signOut(req, res) {
+
+
+    res.redirect('/');
+}
+
 module.exports = {
     index: index,
     blog: pages,
@@ -40,7 +63,7 @@ module.exports = {
     about: pages,
     write: pages,
     pages: pages,
-    sign_in: pages,
-    sign_up: pages,
-    sign_out: pages,
+    sign_in: signIn,
+    sign_up: signUp,
+    sign_out: signOut,
 };
