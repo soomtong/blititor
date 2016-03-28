@@ -1,4 +1,5 @@
 var express = require('express');
+var winston = require('winston');
 
 var middleware = require('./middleware');
 var themePackage = require('../module/' + BLITITOR.config.site.theme);
@@ -17,6 +18,8 @@ routeList.map(function (item) {
             if (item) router.use(middleware[item]);
         });
     }
+
+    winston.verbose(item);
 
     router[item.type](item.url, themePackage.page[item.page]);
 });

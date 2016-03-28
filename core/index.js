@@ -113,7 +113,7 @@ try {
 }
 
 // load route setup
-misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
+// misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
 var routeTable = misc.routeTable();
 
 var route = require('./route');

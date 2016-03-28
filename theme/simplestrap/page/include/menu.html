@@ -1,10 +1,20 @@
 {% import './menu_item.html' as Menu %}
 <nav>
-    {% set user = { level: 1, grant: M } %}
+    {% set user = { level: 4, grant: 'M' } %}
     <ul class="nav nav-pills pull-xs-right">
     {% for item in menu %}
-        {% if not item.level and not item.grant %}{{ Menu.item(item, site) }}{% endif %}
-        {% if user and item.level and item.level <= user.level %}{{ Menu.itemGranted(item, site) }}{% endif %}
+        {% if not item.logged %}
+            {{ Menu.item(item, site) }}
+        {% else %}
+            {% if user and user.level and item.logged > 0 %}
+                {% if item.level %}
+                {% if user.level >= item.level %}{{ Menu.itemGranted(item, site) }}{% endif %}
+                {% else %}
+                {{ Menu.item(item, site) }}
+                {% endif %}
+            {% endif %}
+            {% if (not user or not user.level) and 0 > item.logged %}{{ Menu.item(item, site) }}{% endif %}
+        {% endif %}
     {% endfor %}
     </ul>
 </nav>

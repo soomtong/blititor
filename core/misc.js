@@ -14,16 +14,22 @@ var defaultRoute = {
 
 
 function routeTable() {
+    BLITITOR.route = defaultRoute;
+
     return BLITITOR.route;
 }
 
+/*
 function setRoutePage() {
     var theme = BLITITOR.config.site.theme;
     BLITITOR.route = defaultRoute;
 
     //read theme page folder and merge default route
+    //todo: this method will be removed
     try {
         var files = fs.readdirSync('./theme/' + theme + '/page');
+
+        winston.verbose('pages in page folder', files);
 
         BLITITOR.route.pages = files.filter(function (file) {
             return file.indexOf('.html') && file.indexOf('_') !== 0 && file.indexOf('include') == -1
@@ -35,6 +41,7 @@ function setRoutePage() {
         winston.error('Default theme is not exist');
     }
 }
+*/
 
 function siteThemeType() {
     return {
@@ -64,7 +71,7 @@ function showRouteTable(routeTable) {
 
 module.exports = {
     routeTable: routeTable,
-    setRoutePage: setRoutePage,
+    // setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     showRouteTable: showRouteTable
 };

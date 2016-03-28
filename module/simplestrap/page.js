@@ -40,4 +40,7 @@ module.exports = {
     about: pages,
     write: pages,
     pages: pages,
+    sign_in: pages,
+    sign_up: pages,
+    sign_out: pages,
 };
