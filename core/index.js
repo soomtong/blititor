@@ -57,7 +57,6 @@ var lusca = require('lusca');
 var nunjucks = require('nunjucks');
 var winston = require('winston');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 
 // set log
 winston.remove(winston.transports.Console);
@@ -160,17 +159,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-app.use(passport.initialize());
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
+app.use(passport.initialize());
 app.use(passport.session());
-app.use(lusca.csrf());  // default key: _csrf
-
-// passport config
-var Account = require('../module/passport/model/account');
-var PassportUtil = require('../module/passport/util');
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(PassportUtil.serializer);
-passport.deserializeUser(PassportUtil.deserializer);
+// app.use(lusca.csrf());  // default key: _csrf
 
 // set static files
 var staticOptions = {
