@@ -25,13 +25,7 @@ function pages(req, res) {
     winston.info(req.path, params);
     // console.log(res.locals.menu);
 
-    var isPage = req.path.indexOf('/') == 0 && req.path.length > 1;
-
-    if (isPage) {
-        res.render(BLITITOR.config.site.theme + '/page' + params.page, params);
-    } else {
-        res.render(BLITITOR.config.site.theme + '/page/index', params);
-    }
+    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
 function signIn(req, res) {
