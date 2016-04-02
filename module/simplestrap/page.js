@@ -18,16 +18,17 @@ function index(req, res) {
 function pages(req, res) {
     var params = {
         title: "Home",
-        page: req.path
+        path: req.path,
+        page: req.path.match(/\/([^\/]+)\/?$/)[1].replace(/-/g,'_')
     };
 
-    winston.info(req.path);
+    winston.info(req.path, params);
     // console.log(res.locals.menu);
 
     var isPage = req.path.indexOf('/') == 0 && req.path.length > 1;
 
     if (isPage) {
-        res.render(BLITITOR.config.site.theme + '/page' + req.path, params);
+        res.render(BLITITOR.config.site.theme + '/page' + params.page, params);
     } else {
         res.render(BLITITOR.config.site.theme + '/page/index', params);
     }
