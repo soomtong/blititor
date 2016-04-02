@@ -4,6 +4,20 @@
 
 should use lower case for all file system, not camel case, also snake case
 
+incorrect
+
+```
+fileName.html
+file-name.html
+```
+
+correct
+
+```
+file_name.html
+filename.html
+```
+
 ### variable name
 
 can use any style, camelcase recommended from many javascript code style
@@ -11,6 +25,20 @@ can use any style, camelcase recommended from many javascript code style
 ### route name
 
 use lower case for source code, make dash for space or separation for significant
+
+incorrect
+
+```
+/account/signUp
+/account/sign_up
+```
+
+correct
+
+```
+/account/sign-in
+/account/signin
+```
 
 ## theme
 
