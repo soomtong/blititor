@@ -1,6 +1,6 @@
 var winston = require('winston');
 
-var site = require('../site');
+var site = require('../../core/site');
 
 function index(req, res) {
     var params = {

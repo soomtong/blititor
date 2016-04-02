@@ -1,6 +1,6 @@
 var winston = require('winston');
 
-module.exports = function pages(req, res) {
+function pages(req, res) {
     var params = {
         title: "Home",
         path: req.path,
@@ -11,4 +11,8 @@ module.exports = function pages(req, res) {
     // console.log(res.locals.menu);
 
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
+}
+
+module.exports = {
+    pages: pages
 };
