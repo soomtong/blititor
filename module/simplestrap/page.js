@@ -1,5 +1,7 @@
 var winston = require('winston');
 
+var site = require('../site');
+
 function index(req, res) {
     var params = {
         title: "Home"
@@ -13,19 +15,6 @@ function index(req, res) {
     // load recent articles
 
     res.render(BLITITOR.config.site.theme + '/page/index', params);
-}
-
-function pages(req, res) {
-    var params = {
-        title: "Home",
-        path: req.path,
-        page: req.path.match(/\/([^\/]+)\/?$/)[1].replace(/-/g,'_')
-    };
-
-    winston.info(req.path, params);
-    // console.log(res.locals.menu);
-
-    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
 function signIn(req, res) {
@@ -53,11 +42,11 @@ function signOut(req, res) {
 
 module.exports = {
     index: index,
-    blog: pages,
-    guest: pages,
-    about: pages,
-    write: pages,
-    pages: pages,
+    blog: site.pages,
+    guest: site.pages,
+    about: site.pages,
+    write: site.pages,
+    pages: site.pages,
     sign_in: signIn,
     sign_up: signUp,
     sign_out: signOut,
