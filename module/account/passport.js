@@ -1,7 +1,7 @@
 // serialize and deserialize
 function serializeUser(user, done) {
     console.log('serialize account' + user);
-    done(null, user);
+    done(null, user.id);
 }
 
 function deserializeUser(id, done) {
