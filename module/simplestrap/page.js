@@ -1,6 +1,6 @@
 var winston = require('winston');
-
 var site = require('../../core/site');
+var common = require('../../lib/common');
 
 function index(req, res) {
     var params = {
@@ -21,9 +21,15 @@ function signIn(req, res) {
     // sign in and grant user access level
     var prevLocation = '/';
 
+    // res.redirect(prevLocation);
+
+    var params = {
+        title: "Home",
+    };
 
 
-    res.redirect(prevLocation);
+    res.render(BLITITOR.config.site.theme + '/page/account/sign_in', params);
+
 }
 
 function signUp(req, res) {

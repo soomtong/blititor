@@ -53,7 +53,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
 var lusca = require('lusca');
-//var swig = require('swig');       // replace nunjucks
 var nunjucks = require('nunjucks');
 var winston = require('winston');
 var passport = require('passport');
@@ -162,7 +161,7 @@ app.use(session({
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(lusca.csrf());  // default key: _csrf
+app.use(lusca.csrf());  // default key: _csrf
 
 // set static files
 var staticOptions = {
