@@ -3,7 +3,7 @@ var path = require('path');
 var winston = require('winston');
 
 var database = require('./database');
-var databaseDefault = require('./database_default');
+var databaseDefault = require('./../config/database_default');
 
 var misc = require('../misc');
 var routeTable = misc.routeTable();

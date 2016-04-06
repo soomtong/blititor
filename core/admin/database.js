@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var knex = require('knex');
 var winston = require('winston');
 
-var databaseDefault = require('./database_default');
+var databaseDefault = require('./../config/database_default');
 
 var tables = {
     user: 'user',

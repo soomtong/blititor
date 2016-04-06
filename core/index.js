@@ -72,7 +72,7 @@ winston.add(winston.transports.Console, {
 var misc = require('./misc');
 
 // load DB configuration
-var databaseDefault = require('./admin/database_default');
+var databaseDefault = require('./config/database_default');
 var databaseFile = databaseDefault.config_file;
 
 // use sync function for convenience. it's initialization
