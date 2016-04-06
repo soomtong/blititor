@@ -1,7 +1,7 @@
 // global bind
 var BLITITOR = {
     env: process.env['NODE_ENV'] || 'development',
-    logLevel: 'verbose',
+    logLevel: 'debug',
     /* winston log level
      error: 0,
      warn: 1,

@@ -6,9 +6,10 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-function Strategy(username, password, done) {
-    console.log('strategy:');
-    console.log(username, password, done);
+var common = require('../../lib/common');
+
+function Strategy(username, password, done) {   // done(error, user, info)
+    winston.debug(username, password);
     /*User.findOne({ username: username }, function (err, user) {
      if (err) { return done(err); }
      if (!user) {
@@ -18,14 +19,17 @@ function Strategy(username, password, done) {
      return done(null, false, { message: 'Incorrect password.' });
      }
      });*/
-    var user = {id: 123412341234, username: 'passport', password: '1234'};
 
-    return done(null, user);
+    if (username == 'soomtong@gmail.com') {
+        return done(null, common.testUser);
+    } else {
+        return done(null, false, {message: 'Incorrect username or password'});
+    }
 }
 
 // serialize and deserialize
 function serializeUser(user, done) {
-    console.log('serialize account' + user);
+    winston.debug('serialize account' + user);
     done(null, user.id);
 }
 
@@ -35,7 +39,7 @@ function deserializeUser(id, done) {
      if(!err) done(null, user);
      else done(err, null);
      });*/
-    console.log('deserialize by', id);
+    winston.debug('deserialize by', id);
     var user = {username: 'passport', password: '1234'};
     done(null, user);
 }
