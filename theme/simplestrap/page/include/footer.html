@@ -1,3 +1,12 @@
 <footer class="footer">
-    <p>© Company 2016</p>
+    <div class="row">
+        <div class="col-sm-8">
+            <p class="text-sm-left">© Company 2016</p>
+        </div>
+        <div class="col-sm-4">
+            {% if user and user.username %}
+            <p class="text-xs-right">{{ user.username }}</p>
+            {% endif %}
+        </div>
+    </div>
 </footer>

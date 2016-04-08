@@ -161,6 +161,7 @@ app.use(session({
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('remember-me'));
 app.use(lusca.csrf());  // default key: _csrf
 
 // set static files

@@ -8,7 +8,8 @@ function pages(req, res) {
     var params = {
         title: "Home",
         path: req.path,
-        page: req.path.match(filter.page)[1].replace(/-/g, '_')
+        page: req.path.match(filter.page)[1].replace(/-/g, '_'),
+        user: req.user
     };
 
     // winston.info(req.path, params, req.path.match(filter.page));

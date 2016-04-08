@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>{{ title }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/{{site.theme}}/common/style.css"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+
+        {% include '../include/menu.html' %}
+
+        <h3 class="text-muted">Blititor</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="bg-guest-form-holder">
+
+                <h4>Sign In</h4>
+                <form method="post" action="/account/join">
+                    <fieldset class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <small class="text-muted">We'll never share your email with anyone else.</small>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </fieldset>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember this account
+                        </label>
+                    </div>
+
+                    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+            {% if messages.error %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Warning!</strong> {{messages.error}}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Subheading</h4>
+            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+            <h5>Blog heroes</h5>
+            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+            <ul>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+            </ul>
+        </div>
+    </div>
+
+    {% include '../include/footer.html' %}
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

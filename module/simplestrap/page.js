@@ -4,7 +4,8 @@ var common = require('../../lib/common');
 
 function index(req, res) {
     var params = {
-        title: "Home"
+        title: "Home",
+        user: req.user
     };
 
     winston.info(req.path);
@@ -25,6 +26,8 @@ function signIn(req, res) {
 
     var params = {
         title: "Home",
+        user: req.user
+
     };
 
 
