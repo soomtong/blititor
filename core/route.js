@@ -18,17 +18,15 @@ var routeList = themePackage.menu.data();
 routeList.map(function (item) {
     // expose middleware for each
     if (item.middleware.length) {
-        var m = item.middleware;
-        m.map(function (item) {
-            if (item) router.use(middleware[item]);
-        });
+        router[item.type](item.url, item.middleware, themePackage.page[item.page]);
+    } else {
+        router[item.type](item.url, themePackage.page[item.page]);
     }
 
     winston.verbose(item);
-
-    router[item.type](item.url, themePackage.page[item.page]);
 });
 
+// bind!
 router.use(Account.route);
 
 module.exports = router;
