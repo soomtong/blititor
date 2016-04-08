@@ -30,6 +30,7 @@ function signIn(req, res) {
 
     };
 
+    // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
 
     res.render(BLITITOR.config.site.theme + '/page/account/sign_in', params);
 
@@ -44,9 +45,11 @@ function signUp(req, res) {
 }
 
 function signOut(req, res) {
-
-
+    // clear the remember me cookie when logging out
+    res.clearCookie('remember_me');
+    req.logout();
     res.redirect('/');
+    winston.info('signed out');
 }
 
 module.exports = {

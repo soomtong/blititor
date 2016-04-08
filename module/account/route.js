@@ -5,16 +5,15 @@ var router = express.Router();
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var RememberMeStrategy = require('passport-remember-me').Strategy;
 
 var common = require('../../lib/common');
 
 /* Fake, in-memory database of users */
 
 var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com', level: 1 }
-    , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com', level: 1 }
-    , { id: 3, username: 'soomtong@gmail.com', password: '123', email: 'soomtong@example.com', level: 9 }
+    {id: 1, username: 'bob', password: 'secret', email: 'bob@example.com', level: 1},
+    {id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com', level: 1},
+    {id: 3, username: 'soomtong@gmail.com', password: '123', email: 'soomtong@example.com', level: 9}
 ];
 
 function findById(id, fn) {
@@ -94,26 +93,6 @@ passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password
     }
 ));
 
-// Remember Me cookie strategy
-//   This strategy consumes a remember me token, supplying the user the
-//   token was originally issued to.  The token is single-use, so a new
-//   token is then issued to replace it.
-passport.use(new RememberMeStrategy(
-    function(token, done) {
-        consumeRememberMeToken(token, function(err, uid) {
-            if (err) { return done(err); }
-            if (!uid) { return done(null, false); }
-
-            findById(uid, function(err, user) {
-                if (err) { return done(err); }
-                if (!user) { return done(null, false); }
-                return done(null, user);
-            });
-        });
-    },
-    issueToken
-));
-
 function issueToken(user, done) {
     var token = common.randomString(64);
     saveRememberMeToken(token, user.id, function(err) {
@@ -125,16 +104,18 @@ function issueToken(user, done) {
 
 router.post('/account/login',
     passport.authenticate('local', {
-        successRedirect: '/',
         failureRedirect: '/account/sign-in',
         badRequestMessage: '아이디 또는 비밀번호를 입력해주세요.',
         failureFlash: '아이디 또는 비밀번호가 정확하지 않습니다!'
     }),
     function(req, res, next) {
+        winston.verbose('Log in ---- process ---- done');
         // Issue a remember me cookie if the option was checked
         if (!req.body.remember_me) { return next(); }
 
         issueToken(req.user, function(err, token) {
+            winston.info('Issue Cookie Token', token);
+
             if (err) { return next(err); }
             res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
             return next();
@@ -144,12 +125,5 @@ router.post('/account/login',
         res.redirect('/');
     }
 );
-
-router.get('/account/logout', function(req, res){
-    // clear the remember me cookie when logging out
-    res.clearCookie('remember_me');
-    req.logout();
-    res.redirect('/');
-});
 
 module.exports = router;
