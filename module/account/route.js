@@ -51,47 +51,28 @@ function saveRememberMeToken(token, uid, fn) {
     return fn();
 }
 
+function authenticate(username, password, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
 
-
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    findById(id, function (err, user) {
-        done(err, user);
+        // Find the user by username.  If there is no user with the given
+        // username, or the password is not correct, set the user to `false` to
+        // indicate failure and set a flash message.  Otherwise, return the
+        // authenticated `user`.
+        findByUsername(username, function (err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                return done(null, false, {message: 'Unknown user ' + username});
+            }
+            if (user.password != password) {
+                return done(null, false, {message: 'Invalid password'});
+            }
+            return done(null, user);
+        })
     });
-});
-
-
-// Use the LocalStrategy within Passport.
-//   Strategies in passport require a `verify` function, which accept
-//   credentials (in this case, a username and password), and invoke a callback
-//   with a user object.  In the real world, this would query a database;
-//   however, in this example we are using a baked-in set of users.
-passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'},
-    function(username, password, done) {
-        // asynchronous verification, for effect...
-        process.nextTick(function () {
-
-            // Find the user by username.  If there is no user with the given
-            // username, or the password is not correct, set the user to `false` to
-            // indicate failure and set a flash message.  Otherwise, return the
-            // authenticated `user`.
-            findByUsername(username, function(err, user) {
-                if (err) { return done(err); }
-                if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-                if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-                return done(null, user);
-            })
-        });
-    }
-));
+}
 
 function issueToken(user, done) {
     var token = common.randomString(64);
@@ -101,6 +82,22 @@ function issueToken(user, done) {
     });
 }
 
+function serialize(user, done) {
+    done(null, user.id);
+}
+
+function deserialize(id, done) {
+    findById(id, function (err, user) {
+        done(err, user);
+    });
+}
+
+// Passport session setup.
+passport.serializeUser(serialize);
+passport.deserializeUser(deserialize);
+
+// Use the LocalStrategy within Passport.
+passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, authenticate));
 
 router.post('/account/login',
     passport.authenticate('local', {
@@ -125,5 +122,19 @@ router.post('/account/login',
         res.redirect('/');
     }
 );
+
+router.post('/account/register', function (req, res) {
+    req.assert('email', 'Email field is not valid').isEmail();
+    req.assert('password', 'Password must be at least 4 characters long').len(4);
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        console.log(errors);
+        req.flash('errors', errors);
+        return res.redirect('back');
+    }
+
+});
 
 module.exports = router;

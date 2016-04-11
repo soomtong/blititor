@@ -26,8 +26,8 @@ function signIn(req, res) {
 
     var params = {
         title: "Home",
-        user: req.user
-
+        user: req.user,
+        message: req.flash()
     };
 
     // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
@@ -37,17 +37,21 @@ function signIn(req, res) {
 }
 
 function signUp(req, res) {
-    var prevLocation = '/';
+    // var prevLocation = '/';
+    // res.redirect(prevLocation);
 
+    var params = {
+        title: "Home",
+        user: req.user
 
+    };
 
-    res.redirect(prevLocation);
+    res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);
 }
 
 function signOut(req, res) {
-    // clear the remember me cookie when logging out
-    res.clearCookie('remember_me');
-    req.logout();
+    res.clearCookie('remember_me');     // clear the remember me cookie when logging out
+    req.logOut();   // it aliased as req.logout()
     res.redirect('/');
     winston.info('signed out');
 }

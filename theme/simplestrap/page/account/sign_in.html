@@ -49,9 +49,9 @@
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
-            {% if messages.error %}
+            {% if message.error %}
             <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{messages.error}}
+                <strong>{{message.error}}</strong>
             </div>
             {% endif %}
         </div>
