@@ -42,9 +42,11 @@ function signUp(req, res) {
 
     var params = {
         title: "Home",
-        user: req.user
-
+        user: req.user,
+        message: req.flash()
     };
+
+    console.log(params);
 
     res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);
 }

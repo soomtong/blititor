@@ -28,10 +28,14 @@
         <div class="col-lg-12">
             <div class="bg-guest-form-holder">
 
-                <h4>Sign In</h4>
+                <h4>Sign Up</h4>
                 <form method="post" action="/account/register">
                     <fieldset class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
+                        <label for="exampleInputEmail1">Screen Name</label>
+                        <input name="nickname" type="text" class="form-control" id="exampleInputName" placeholder="Enter screen name">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="exampleInputEmail1">User ID</label>
                         <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                         <small class="text-muted">We'll never share your email with anyone else.</small>
                     </fieldset>
@@ -39,20 +43,20 @@
                         <label for="exampleInputPassword1">Password</label>
                         <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                     </fieldset>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Remember this account
-                        </label>
-                    </div>
+                    <fieldset class="form-group">
+                        <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
+                    </fieldset>
 
                     <input type="hidden" name="_csrf" value="{{_csrf}}"/>
-                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
             </div>
-            {% if messages.error %}
+            {% if message.error %}
+            {% for error in message.error %}
             <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{messages.error}}
+                <strong>Warning!</strong> {{error.msg}}
             </div>
+            {% endfor %}
             {% endif %}
         </div>
     </div>

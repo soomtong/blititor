@@ -124,17 +124,22 @@ router.post('/account/login',
 );
 
 router.post('/account/register', function (req, res) {
+    req.assert('nickname', 'Nickname is required').notEmpty();
+    req.assert('email', 'Email is required').notEmpty();
     req.assert('email', 'Email field is not valid').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
+    req.assert('password_check', 'Password must be at least 4 characters long').len(4);
+
+    req.sanitize('nickname').escape();
 
     var errors = req.validationErrors();
 
     if (errors) {
-        console.log(errors);
-        req.flash('errors', errors);
+        req.flash('error', errors);
         return res.redirect('back');
     }
 
+    res.redirect('/');
 });
 
 module.exports = router;

@@ -69,6 +69,7 @@ winston.add(winston.transports.Console, {
 });
 
 // load custom library
+var common = require('../lib/common');
 var misc = require('./misc');
 
 // load DB configuration
@@ -148,7 +149,7 @@ app.use(favicon('public/favicon.ico'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compress({}));    // compress all for default
-app.use(expressValidator());
+app.use(expressValidator({errorFormatter: common.errorFormatter}));
 //app.use(methodOverride());
 
 // init session
