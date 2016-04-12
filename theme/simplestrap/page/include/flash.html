@@ -1,0 +1,7 @@
+{% if message.info %}
+{% for info in message.info %}
+<div class="alert alert-info" role="alert">
+    <strong>{{info}}</strong>
+</div>
+{% endfor %}
+{% endif %}

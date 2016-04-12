@@ -124,11 +124,10 @@ router.post('/account/login',
 );
 
 router.post('/account/register', function (req, res) {
-    req.assert('nickname', 'Nickname is required').notEmpty();
-    req.assert('email', 'Email is required').notEmpty();
-    req.assert('email', 'Email field is not valid').isEmail();
+    req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
+    req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('password_check', 'Password must be at least 4 characters long').len(4);
+    req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
 
     req.sanitize('nickname').escape();
 
@@ -139,6 +138,7 @@ router.post('/account/register', function (req, res) {
         return res.redirect('back');
     }
 
+    req.flash('info', 'Saved Account by ' + req.body.nickname);
     res.redirect('/');
 });
 

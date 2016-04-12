@@ -5,7 +5,8 @@ var common = require('../../lib/common');
 function index(req, res) {
     var params = {
         title: "Home",
-        user: req.user
+        user: req.user,
+        message: req.flash()
     };
 
     winston.info(req.path);
