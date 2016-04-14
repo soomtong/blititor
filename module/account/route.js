@@ -1,3 +1,4 @@
+var bcrypt = require('bcrypt');
 var express = require('express');
 var winston = require('winston');
 
@@ -7,6 +8,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var common = require('../../lib/common');
+
+var salt = bcrypt.genSaltSync(10);
 
 /* Fake, in-memory database of users */
 
@@ -138,7 +141,9 @@ router.post('/account/register', function (req, res) {
         return res.redirect('back');
     }
 
-    req.flash('info', 'Saved Account by ' + req.body.nickname);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+
+    req.flash('info', 'Saved Account by ' + req.body.nickname, hash);
     res.redirect('/');
 });
 
