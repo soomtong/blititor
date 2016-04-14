@@ -8,6 +8,7 @@ var databaseDefault = require('./../config/database_default');
 
 var tables = {
     user: 'user',
+    auth: 'auth',
     site: 'site',
     point: 'point'
 };
@@ -133,6 +134,7 @@ function deleteScheme(connection, callback) {
     connection.schema
         .dropTableIfExists(tables.point)
         .dropTableIfExists(tables.user)
+        .dropTableIfExists(tables.auth)
         .dropTableIfExists(tables.site)
         .then(function (error, results) {
             callback(connection);
@@ -148,6 +150,7 @@ function createScheme(connection) {
 
     connection.schema
         .createTableIfNotExists(tables.site, siteTable)
+        .createTableIfNotExists(tables.auth, authTable)
         .createTableIfNotExists(tables.user, userTable)
         .createTableIfNotExists(tables.point, pointTable)
         .then(function (result) {
@@ -173,13 +176,19 @@ function siteTable(table) {
     table.dateTime('created_at');
 }
 
+function authTable(table) {
+    winston.info('make table', tables.auth);
+    table.increments();
+    table.string('user_id', 64).unique().notNullable();
+    table.string('user_password').notNullable();
+}
+
 function userTable(table) {
     winston.info('make table', tables.user);
     table.increments();
     table.uuid('uuid').unique().notNullable();
     table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(tables.site);
-    table.string('user_id', 64).unique().notNullable();
-    table.string('user_password').notNullable();
+    table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(tables.auth);
     table.string('nickname', 64);
     table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
     table.string('photo');
