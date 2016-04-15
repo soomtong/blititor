@@ -14,6 +14,7 @@ var BLITITOR = {
     route: {},
     config: {
         site: {
+            id: 1,
             theme: '',
             host: '',
             url_prefix: '/',

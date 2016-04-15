@@ -4,14 +4,7 @@ var mysql = require('mysql');
 var knex = require('knex');
 var winston = require('winston');
 
-var databaseDefault = require('./../config/database_default');
-
-var tables = {
-    user: 'user',
-    auth: 'auth',
-    site: 'site',
-    point: 'point'
-};
+var common = require('../../lib/common');
 
 //view page for routeTable.admin_root.database_setup
 function databaseSetupView(req, res) {
@@ -26,7 +19,7 @@ function databaseSetupView(req, res) {
 function databaseSetup(req, res) {
     var params = {
         dbHost: req.body['db_host'],
-        dbPort: req.body['db_port'] || databaseDefault.port,
+        dbPort: req.body['db_port'] || common.databaseDefault.port,
         dbName: req.body['db_name'],
         dbUserID: req.body['db_user_id'],
         dbUserPassword: req.body['db_user_password']
@@ -34,7 +27,7 @@ function databaseSetup(req, res) {
 
     var connection = mysql.createConnection({
         host: params.dbHost,
-        port: params.dbPort || databaseDefault.port,
+        port: params.dbPort || common.databaseDefault.port,
         database: params.dbName || undefined,
         user: params.dbUserID,
         password: params.dbUserPassword
@@ -46,7 +39,7 @@ function databaseSetup(req, res) {
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
         } else {
             // save params to database.json
-            var databaseFile = databaseDefault.config_file;
+            var databaseFile = common.databaseDefault.config_file;
 
             fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
 
@@ -68,7 +61,7 @@ function databaseInitView(req, res) {
 
 function databaseInit(req, res) {
     var params = {
-        dbName: req.body['db_name'] || databaseDefault.database
+        dbName: req.body['db_name'] || common.databaseDefault.database
     };
 
     // make database
@@ -76,7 +69,7 @@ function databaseInit(req, res) {
 
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,
-        port: connectionInfo.dbPort || databaseDefault.port,
+        port: connectionInfo.dbPort || common.databaseDefault.port,
         database: connectionInfo.dbName,
         user: connectionInfo.dbUserID,
         password: connectionInfo.dbUserPassword
@@ -107,15 +100,15 @@ function makeDefaultScheme(options) {
     if (!options) options = { reset: false };
 
     var databaseConfiguration = BLITITOR.config.database;
-    winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', databaseDefault);
+    winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', common.databaseDefault);
 
     var connection = knex({
         debug: true,
         client: 'mysql',
         connection: {
             host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || databaseDefault.port,
-            database: databaseConfiguration.dbName || databaseDefault.database,
+            port: databaseConfiguration.dbPort || common.databaseDefault.port,
+            database: databaseConfiguration.dbName || common.databaseDefault.database,
             user: databaseConfiguration.dbUserID,
             password: databaseConfiguration.dbUserPassword
         }
@@ -132,10 +125,10 @@ function deleteScheme(connection, callback) {
     winston.info('-- drop exist tables --');
 
     connection.schema
-        .dropTableIfExists(tables.point)
-        .dropTableIfExists(tables.user)
-        .dropTableIfExists(tables.auth)
-        .dropTableIfExists(tables.site)
+        .dropTableIfExists(common.tables.point)
+        .dropTableIfExists(common.tables.user)
+        .dropTableIfExists(common.tables.auth)
+        .dropTableIfExists(common.tables.site)
         .then(function (error, results) {
             callback(connection);
         })
@@ -149,13 +142,28 @@ function createScheme(connection) {
     winston.info('-- make tables if not exist --');
 
     connection.schema
-        .createTableIfNotExists(tables.site, siteTable)
-        .createTableIfNotExists(tables.auth, authTable)
-        .createTableIfNotExists(tables.user, userTable)
-        .createTableIfNotExists(tables.point, pointTable)
+        .createTableIfNotExists(common.tables.site, siteTable)
+        .createTableIfNotExists(common.tables.auth, authTable)
+        .createTableIfNotExists(common.tables.user, userTable)
+        .createTableIfNotExists(common.tables.point, pointTable)
         .then(function (result) {
             winston.info(result);
-            connection.destroy();
+
+            connection('site').insert({
+                title: "simplestrap demo",
+                created_at: new Date()
+            }).then(function (id) {
+                winston.info('inserted new site id:', id);
+
+                // bind new site id to GLOBAL
+                BLITITOR.config.site.id = id;
+
+                connection.destroy();
+            }).catch(function (error) {
+                winston.error('insert new site id failed', error);
+
+                connection.destroy();
+            });
         })
         .catch(function (error) {
             winston.error(error);
@@ -166,7 +174,7 @@ function createScheme(connection) {
 
 /* table specs */
 function siteTable(table) {
-    winston.info('make table', tables.site);
+    winston.info('make table', common.tables.site);
     table.increments();
     table.string('title', 64);
     table.string('icon');
@@ -177,18 +185,18 @@ function siteTable(table) {
 }
 
 function authTable(table) {
-    winston.info('make table', tables.auth);
+    winston.info('make table', common.tables.auth);
     table.increments();
     table.string('user_id', 64).unique().notNullable();
     table.string('user_password').notNullable();
 }
 
 function userTable(table) {
-    winston.info('make table', tables.user);
+    winston.info('make table', common.tables.user);
     table.increments();
     table.uuid('uuid').unique().notNullable();
-    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(tables.site);
-    table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(tables.auth);
+    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(common.tables.site);
+    table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(common.tables.auth);
     table.string('nickname', 64);
     table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
     table.string('photo');
@@ -201,10 +209,10 @@ function userTable(table) {
 }
 
 function pointTable(table) {
-    winston.info('make table', tables.point);
+    winston.info('make table', common.tables.point);
     table.increments();
-    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(tables.site);
-    table.integer('user_id').index('user_id').unsigned().notNullable().references('id').inTable(tables.user);
+    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(common.tables.site);
+    table.integer('user_id').index('user_id').unsigned().notNullable().references('id').inTable(common.tables.user);
     table.integer('amount');
     table.string('reason');
     table.dateTime('created_at');
@@ -213,23 +221,23 @@ function pointTable(table) {
 /*
 function createIndex(connection) {
     winston.info('make index');
-    connection.schema.table(tables.user, function (table) {
+    connection.schema.table(common.tables.user, function (table) {
         table.dropIndex('user_uuid').index('user_uuid');
         table.dropIndex('user_id').index('user_id');
-        //table.dropForeign('site_id').foreign('site_id').references('id').inTable(tables.site);
+        //table.dropForeign('site_id').foreign('site_id').references('id').inTable(common.tables.site);
     }).then(function (error, results) {
         winston.info(results);
     }).catch(function (error) {
-        winston.error(tables.user, 'indexing', error);
+        winston.error(common.tables.user, 'indexing', error);
     });
-    connection.schema.table(tables.point, function (table) {
+    connection.schema.table(common.tables.point, function (table) {
         table.dropIndex('site_id').index('site_id');
         table.dropIndex('user_uuid').index('user_uuid');
-        //table.dropForeign('user_id').foreign('user_id').references('id').inTable(tables.user);
+        //table.dropForeign('user_id').foreign('user_id').references('id').inTable(common.tables.user);
     }).then(function (error, results) {
         winston.info(results);
     }).catch(function (error) {
-        winston.error(tables.point, 'indexing', error);
+        winston.error(common.tables.point, 'indexing', error);
     });
 }
 */

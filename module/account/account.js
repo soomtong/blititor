@@ -1,8 +1,10 @@
 var bcrypt = require('bcrypt');
+var knex = require('knex');
 
 var winston = require('winston');
 
 var common = require('../../lib/common');
+var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
@@ -127,8 +129,53 @@ function register(req, res) {
 
     var hash = bcrypt.hashSync(req.body.password, salt);
 
-    req.flash('info', 'Saved Account by ' + req.body.nickname, hash);
-    res.redirect('/');
+    var authData = {
+        user_id: req.body.email,
+        user_password: hash
+    };
+
+    // save to auth table
+    var db = connection.get();
+
+    db('auth').insert(authData).then(function (auth_id) {
+        req.flash('info', 'Saved Account by ' + req.body.nickname, hash);
+
+        winston.info('inserted', auth_id, 'auth id user');
+
+        // save to user table
+        var userData = {
+            site_id: BLITITOR.config.site.id,
+            auth_id: auth_id,
+            nickname: req.body.nickname
+        };
+
+        db('user').insert(userData).then(function (rows) {
+            console.log(rows);
+
+            res.redirect('/');
+        }).catch(function (error) {
+            req.flash('error', {msg: 'User Database operation failed'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        });
+
+    }).catch(function (error) {
+        req.flash('error', {msg: 'Auth Database operation failed'});
+
+        winston.error(error);
+
+        res.redirect('back');
+    });
+
+
+
+
+
+
+
+
 }
 
 module.exports = {
