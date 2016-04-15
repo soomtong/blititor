@@ -137,19 +137,21 @@ function register(req, res) {
     // save to auth table
     var db = connection.get();
 
-    db('auth').insert(authData).then(function (auth_id) {
+    db.insert(authData).into('auth').then(function (auth_id) {
         req.flash('info', 'Saved Account by ' + req.body.nickname, hash);
 
         winston.info('inserted', auth_id, 'auth id user');
 
         // save to user table
         var userData = {
+            uuid: common.UUID(),
             site_id: BLITITOR.config.site.id,
             auth_id: auth_id,
-            nickname: req.body.nickname
+            nickname: req.body.nickname,
+            created_at: new Date()
         };
 
-        db('user').insert(userData).then(function (rows) {
+        db.insert(userData).into('user').then(function (rows) {
             console.log(rows);
 
             res.redirect('/');

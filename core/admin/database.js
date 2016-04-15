@@ -117,7 +117,7 @@ function makeDefaultScheme(options) {
     if (options.reset) {
         deleteScheme(connection, createScheme);
     } else {
-        createScheme(connection);
+        createScheme(connection, options.reset);
     }
 }
 
@@ -130,7 +130,7 @@ function deleteScheme(connection, callback) {
         .dropTableIfExists(common.tables.auth)
         .dropTableIfExists(common.tables.site)
         .then(function (error, results) {
-            callback(connection);
+            callback(connection, true);
         })
         .catch(function (error) {
             winston.error(error);
@@ -138,7 +138,7 @@ function deleteScheme(connection, callback) {
         });
 }
 
-function createScheme(connection) {
+function createScheme(connection, reset) {
     winston.info('-- make tables if not exist --');
 
     connection.schema
@@ -149,21 +149,29 @@ function createScheme(connection) {
         .then(function (result) {
             winston.info(result);
 
-            connection('site').insert({
-                title: "simplestrap demo",
-                created_at: new Date()
-            }).then(function (id) {
-                winston.info('inserted new site id:', id);
+            connection
+                .insert({
+                    title: "simplestrap demo",
+                    created_at: new Date()
+                }, 'id')
+                .into('site')
+                .then(function (id) {
+                    winston.info('inserted new site id:', id[0]);
 
-                // bind new site id to GLOBAL
-                BLITITOR.config.site.id = id;
+                    // bind new site id to GLOBAL
+                    if (reset) {
 
-                connection.destroy();
-            }).catch(function (error) {
-                winston.error('insert new site id failed', error);
+                    } else {
+                        BLITITOR.config.site.id = id;
+                    }
 
-                connection.destroy();
-            });
+                    connection.destroy();
+                })
+                .catch(function (error) {
+                    winston.error('insert new site id failed', error);
+
+                    connection.destroy();
+                });
         })
         .catch(function (error) {
             winston.error(error);
