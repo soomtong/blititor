@@ -145,7 +145,6 @@ function register(req, res) {
         // save to user table
         var userData = {
             uuid: common.UUID(),
-            site_id: BLITITOR.config.site.id,
             auth_id: auth_id,
             nickname: req.body.nickname,
             created_at: new Date()

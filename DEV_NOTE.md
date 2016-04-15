@@ -1,3 +1,15 @@
+# Dev Note
+
+## Development Log
+
+### site id
+
+blititor had a site id for multiple theme site for only one web service before
+today, site id removed, no site id exist. it's not necessary for that blititor to be.
+
+use just another database and node.js application for each service.
+it's more concise.
+
 ## Convention
 
 ### file name

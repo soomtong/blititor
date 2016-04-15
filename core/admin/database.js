@@ -151,24 +151,18 @@ function createScheme(connection, reset) {
 
             connection
                 .insert({
-                    title: "simplestrap demo",
+                    var: "title",
+                    value: "simplestrap demo",
                     created_at: new Date()
                 }, 'id')
                 .into('site')
-                .then(function (id) {
-                    winston.info('inserted new site id:', id[0]);
-
-                    // bind new site id to GLOBAL
-                    if (reset) {
-
-                    } else {
-                        BLITITOR.config.site.id = id;
-                    }
+                .then(function (rows) {
+                    winston.info('inserted new site', rows[0]);
 
                     connection.destroy();
                 })
                 .catch(function (error) {
-                    winston.error('insert new site id failed', error);
+                    winston.error('insert new site title failed', error);
 
                     connection.destroy();
                 });
@@ -184,11 +178,8 @@ function createScheme(connection, reset) {
 function siteTable(table) {
     winston.info('make table', common.tables.site);
     table.increments();
-    table.string('title', 64);
-    table.string('icon');
-    table.string('start_page', 128);
-    table.string('layout', 128);
-    table.text('desc');
+    table.string('var', 64);  // compact var = value
+    table.string('value', 256);
     table.dateTime('created_at');
 }
 
@@ -203,7 +194,6 @@ function userTable(table) {
     winston.info('make table', common.tables.user);
     table.increments();
     table.uuid('uuid').unique().notNullable();
-    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(common.tables.site);
     table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(common.tables.auth);
     table.string('nickname', 64);
     table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
@@ -219,7 +209,6 @@ function userTable(table) {
 function pointTable(table) {
     winston.info('make table', common.tables.point);
     table.increments();
-    table.integer('site_id').index('site_id').unsigned().notNullable().references('id').inTable(common.tables.site);
     table.integer('user_id').index('user_id').unsigned().notNullable().references('id').inTable(common.tables.user);
     table.integer('amount');
     table.string('reason');
