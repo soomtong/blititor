@@ -8,33 +8,24 @@ var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
-function authByID(id, callback) {
+function findByUUID(uuid, callback) {
     var db = connection.get();
 
-    // db.where({id: id}).select('id','nickname','email','level','grant').from('auth').then(function (error, results) {
-    db.where({id: id}).select('id','user_id').from('auth').then(function (error, results) {
+    db.where({uuid: uuid}).select('id','nickname','photo','level','grant').from('user').then(function (error, results) {
         console.log(error, results);
 
         callback(error, results[0]);
     });
-
-    /*
-    var idx = id - 1;
-    if (users[idx]) {
-        callback(null, users[idx]);
-    } else {
-        callback(new Error('User ' + id + ' does not exist'));
-    }*/
 }
 
-function authByUserID(userID, fn) {
-    for (var i = 0, len = users.length; i < len; i++) {
-        var user = users[i];
-        if (user.username === userID) {
-            return fn(null, user);
-        }
-    }
-    return fn(null, null);
+function authByUserID(userID, callback) {
+    var db = connection.get();
+
+    db.where({user_id: userID}).select('id', 'user_id', 'user_password').from('auth').then(function (results) {
+        callback(null, results[0]);
+    }).catch(function (error) {
+        callback(error);
+    });
 }
 
 /* Fake, in-memory database of remember me tokens */
@@ -53,27 +44,25 @@ function saveRememberMeToken(token, uid, fn) {
     return fn();
 }
 
-function authenticate(username, password, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
+function authenticate(userID, password, done) {
+    var hash = bcrypt.hashSync(password, salt);
 
-        // Find the user by username.  If there is no user with the given
-        // username, or the password is not correct, set the user to `false` to
-        // indicate failure and set a flash message.  Otherwise, return the
-        // authenticated `user`.
-        authByUserID(username, function (err, user) {
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                return done(null, false, {message: 'Unknown user ' + username});
-            }
-            if (user.password != password) {
-                return done(null, false, {message: 'Invalid password'});
-            }
-            return done(null, user);
-        })
-    });
+    authByUserID(userID, function (err, auth) {
+        if (err) {
+            return done(err);
+        }
+        if (!auth) {
+            return done(null, false, {message: 'Unknown user ' + userID});
+        }
+
+        if (bcrypt.compareSync(auth.user_password,hash)) {
+            winston.verbose('user given password not exactly same with authorized hash');
+
+            return done(null, false, {message: 'Invalid password'});
+        }
+
+        return done(null, auth);
+    })
 }
 
 function issueToken(user, done) {
@@ -85,11 +74,13 @@ function issueToken(user, done) {
 }
 
 function serialize(user, done) {
-    done(null, user.id);
+    winston.verbose('Serialize in ---- process ---- done');
+    done(null, user.uuid);
 }
 
-function deserialize(id, done) {
-    authByID(id, function (err, user) {
+function deserialize(uuid, done) {
+    winston.verbose('DeSerialize in ---- process ---- done');
+    findByUUID(uuid, function (err, user) {
         done(err, user);
     });
 }
