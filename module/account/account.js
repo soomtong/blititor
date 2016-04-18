@@ -8,13 +8,23 @@ var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
+function findByID(id, callback) {
+    var db = connection.get();
+
+    db.where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
+        callback(null, results[0]);
+    }).catch(function (error) {
+        callback(error);
+    });
+}
+
 function findByUUID(uuid, callback) {
     var db = connection.get();
 
-    db.where({uuid: uuid}).select('id','nickname','photo','level','grant').from('user').then(function (error, results) {
-        console.log(error, results);
-
-        callback(error, results[0]);
+    db.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
+        callback(null, results[0]);
+    }).catch(function (error) {
+        callback(error);
     });
 }
 
@@ -74,12 +84,16 @@ function issueToken(user, done) {
 }
 
 function serialize(user, done) {
-    winston.verbose('Serialize in ---- process ---- done');
-    done(null, user.uuid);
+    winston.verbose('Serialize in ---- process ---- for', user);
+
+    findByID(user.id, function (error, user) {
+        done(error, user.uuid);
+    });
 }
 
 function deserialize(uuid, done) {
-    winston.verbose('DeSerialize in ---- process ---- done');
+    winston.verbose('DeSerialize in ---- process ---- for', uuid);
+
     findByUUID(uuid, function (err, user) {
         done(err, user);
     });
