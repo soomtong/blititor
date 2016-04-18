@@ -8,28 +8,29 @@ var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
+function authByID(id, callback) {
+    var db = connection.get();
 
-/* Fake, in-memory database of users */
+    // db.where({id: id}).select('id','nickname','email','level','grant').from('auth').then(function (error, results) {
+    db.where({id: id}).select('id','user_id').from('auth').then(function (error, results) {
+        console.log(error, results);
 
-var users = [
-    {id: 1, username: 'bob', password: 'secret', email: 'bob@example.com', level: 1},
-    {id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com', level: 1},
-    {id: 3, username: 'soomtong@gmail.com', password: '123', email: 'soomtong@example.com', level: 9}
-];
+        callback(error, results[0]);
+    });
 
-function findById(id, fn) {
+    /*
     var idx = id - 1;
     if (users[idx]) {
-        fn(null, users[idx]);
+        callback(null, users[idx]);
     } else {
-        fn(new Error('User ' + id + ' does not exist'));
-    }
+        callback(new Error('User ' + id + ' does not exist'));
+    }*/
 }
 
-function findByUsername(username, fn) {
+function authByUserID(userID, fn) {
     for (var i = 0, len = users.length; i < len; i++) {
         var user = users[i];
-        if (user.username === username) {
+        if (user.username === userID) {
             return fn(null, user);
         }
     }
@@ -60,7 +61,7 @@ function authenticate(username, password, done) {
         // username, or the password is not correct, set the user to `false` to
         // indicate failure and set a flash message.  Otherwise, return the
         // authenticated `user`.
-        findByUsername(username, function (err, user) {
+        authByUserID(username, function (err, user) {
             if (err) {
                 return done(err);
             }
@@ -88,7 +89,7 @@ function serialize(user, done) {
 }
 
 function deserialize(id, done) {
-    findById(id, function (err, user) {
+    authByID(id, function (err, user) {
         done(err, user);
     });
 }
@@ -134,9 +135,9 @@ function register(req, res) {
         user_password: hash
     };
 
-    // save to auth table
     var db = connection.get();
 
+    // save to auth table
     db.insert(authData, 'id').into('auth').then(function (authResults) {
         var auth_id = Array.isArray(authResults) ? authResults.pop() : authResults;
         winston.info('inserted', auth_id, 'auth id user');
@@ -146,13 +147,36 @@ function register(req, res) {
             uuid: common.UUID(),
             auth_id: auth_id,
             nickname: req.body.nickname,
+            level: 1,
+            grant: '',
+            login_counter: 1,
+            last_logged_at: new Date(),
             created_at: new Date()
         };
 
-        db.insert(userData, 'id').into('user').then(function (userResults) {
-            req.flash('info', 'Saved Account by ' + req.body.nickname, '(' + req.body.email + ')');
+        req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-            res.redirect('/');
+        db.insert(userData, 'id').into('user').then(function (userResults) {
+
+            var user = {
+                uuid: userData.uuid,
+                user_id: authData.user_id,
+                nickname: userData.nickname,
+                level: userData.level,
+                grant: userData.grant
+            };
+
+            req.logIn(user, function (err) {
+                if (err) {
+                    req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+                    winston.error(error);
+
+                    return res.redirect('back');
+                }
+
+                res.redirect('/');
+            });
         }).catch(function (error) {
             req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 

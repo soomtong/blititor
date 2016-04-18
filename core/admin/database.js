@@ -196,7 +196,8 @@ function userTable(table) {
     table.uuid('uuid').unique().notNullable();
     table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(common.tables.auth);
     table.string('nickname', 64);
-    table.string('level', 1);   // site admin: A, site manager: M, content manager: C and user level 1 to 9
+    table.string('level', 1);   // user level 1 to 9
+    table.string('grant', 1);   // site admin: A, site manager: M, content manager: C
     table.string('photo');
     table.integer('point');
     table.integer('login_counter');
