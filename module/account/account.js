@@ -137,9 +137,8 @@ function register(req, res) {
     // save to auth table
     var db = connection.get();
 
-    db.insert(authData).into('auth').then(function (auth_id) {
-        req.flash('info', 'Saved Account by ' + req.body.nickname, hash);
-
+    db.insert(authData, 'id').into('auth').then(function (authResults) {
+        var auth_id = Array.isArray(authResults) ? authResults.pop() : authResults;
         winston.info('inserted', auth_id, 'auth id user');
 
         // save to user table
@@ -150,12 +149,12 @@ function register(req, res) {
             created_at: new Date()
         };
 
-        db.insert(userData).into('user').then(function (rows) {
-            console.log(rows);
+        db.insert(userData, 'id').into('user').then(function (userResults) {
+            req.flash('info', 'Saved Account by ' + req.body.nickname, '(' + req.body.email + ')');
 
             res.redirect('/');
         }).catch(function (error) {
-            req.flash('error', {msg: 'User Database operation failed'});
+            req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
             winston.error(error);
 
@@ -163,7 +162,7 @@ function register(req, res) {
         });
 
     }).catch(function (error) {
-        req.flash('error', {msg: 'Auth Database operation failed'});
+        req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
         winston.error(error);
 
