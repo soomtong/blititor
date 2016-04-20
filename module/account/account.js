@@ -198,13 +198,29 @@ function register(req, res) {
         res.redirect('back');
     });
 
+}
+
+function showInfo(req, res) {
+    var params = {
+
+    };
+
+    findByUUID(req.user.uuid, function (error, user) {
+        if (error) {
+            req.flash('error', {msg: '세션 정보를 찾을 수 없습니다.'});
+            return res.redirect('back');
+        }
+
+        params.userInfo = user;
+
+        res.render(BLITITOR.config.site.theme + '/page/account/info', params);
+    });
+}
+
+function updateInfo(req, res) {
 
 
-
-
-
-
-
+    return res.end();
 }
 
 module.exports = {
@@ -213,5 +229,7 @@ module.exports = {
     authenticate: authenticate,
     loginSuccess: loginSuccess,
     loginDone: loginDone,
-    register: register
+    register: register,
+    infoForm: showInfo,
+    info: updateInfo,
 };

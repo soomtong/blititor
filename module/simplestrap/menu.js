@@ -18,7 +18,7 @@ var Menu = [
     {page: 'about', type: 'get', url: '/about', middleware: [], name: '소개'},
     {page: 'write', type: 'get', url: '/blog/write', middleware: [middleware.checkSignedIn], name: '새글쓰기', logged: 1, level: 2, grant: 'AMC'},
     {page: 'sign_in', type: 'get', url: '/account/sign-in', middleware: [], name: '로그인', logged: -1},
-    {page: 'sign_up', type: 'get', url: '/account/sign-up', middleware: [], name: '가입하기', logged: -1},
+    {page: 'sign_up', type: 'get', url: '/account/sign-up', middleware: [middleware.checkLoggedSession], name: '가입하기', logged: -1},
     {page: 'sign_out', type: 'get', url: '/account/sign-out', middleware: [], name: '로그아웃', logged: 1},
 ];
 
