@@ -46,6 +46,7 @@ var expressValidator = require('express-validator');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var mysqlSession = require('express-mysql-session');
 var flash = require('connect-flash');
 //var methodOverride = require('method-override');      // need this? let me know
 var compress = require('compression');
@@ -152,13 +153,32 @@ app.use(compress({}));    // compress all for default
 app.use(expressValidator({errorFormatter: common.errorFormatter}));
 //app.use(methodOverride());
 
-// init session
-app.use(cookieParser(BLITITOR.config.cookieSecret, {}));
-app.use(session({
+
+// prepare session store
+var mysqlStore = mysqlSession(session);
+var databaseConfiguration = BLITITOR.config.database;
+var sessionStore;
+var sessionOptions = {
     secret: BLITITOR.config.sessionSecret,
     resave: true,
     saveUninitialized: true
-}));
+};
+
+if (databaseConfiguration) {
+    sessionStore = new mysqlStore({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
+    });
+
+    sessionOptions.store = sessionStore;
+}
+
+// init session
+app.use(cookieParser(BLITITOR.config.cookieSecret, {}));
+app.use(session(sessionOptions));
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
