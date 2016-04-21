@@ -8,8 +8,9 @@ var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
+var db = connection.get();
+
 function findByID(id, callback) {
-    var db = connection.get();
 
     db.where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
         callback(null, results[0]);
@@ -19,9 +20,8 @@ function findByID(id, callback) {
 }
 
 function findByUUID(uuid, callback) {
-    var db = connection.get();
 
-    db.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
+    db.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').from('user').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -29,7 +29,6 @@ function findByUUID(uuid, callback) {
 }
 
 function authByUserID(userID, callback) {
-    var db = connection.get();
 
     db.where({user_id: userID}).select('id', 'user_id', 'user_password').from('auth').then(function (results) {
         callback(null, results[0]);
@@ -139,8 +138,6 @@ function register(req, res) {
         user_id: req.body.email,
         user_password: hash
     };
-
-    var db = connection.get();
 
     // save to auth table
     db.insert(authData, 'id').into('auth').then(function (authResults) {

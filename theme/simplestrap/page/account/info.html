@@ -1,2 +1,91 @@
-<h2>update user info that could be changed</h2>
-{{ userInfo | dump }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '../include/header.html' %}
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+
+        {% include '../include/menu.html' %}
+
+        <h3 class="text-muted">Blititor</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="bg-guest-form-holder">
+
+                <h4>Account Info</h4>
+                <div class="card">
+                    <div class="card-block" style="min-height: 200px;">
+                        <img src="/{{site.theme}}/common/asset/photo-user1.png" class="img-rounded pull-xs-right" alt="{{userInfo.nickname}} profile">
+                        <h4 class="card-title">{{userInfo.nickname}}</h4>
+                        <p class="card-text">
+                            <span class="label label-pill label-success">{{ userInfo.level }}</span>
+                            <span class="label label-pill label-info">{{ userInfo.grant }}</span>
+                        </p>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text">
+                            {{ userInfo.created_at }}
+                        </p>
+                    </div>
+                </div>
+
+                <h4>Update Account Info</h4>
+                <form method="post" action="/account/info">
+                    <fieldset class="form-group">
+                        <label for="exampleInputName">Screen Name</label>
+                        <input name="nickname" type="text" class="form-control" id="exampleInputName" value="{{userInfo.nickname}}">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
+                    </fieldset>
+
+                    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+            {% if message.error %}
+            {% for error in message.error %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Warning!</strong> {{error.msg}}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Subheading</h4>
+            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+            <h5>Blog heroes</h5>
+            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+            <ul>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+            </ul>
+        </div>
+    </div>
+
+    {% include '../include/footer.html' %}
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

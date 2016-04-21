@@ -7,6 +7,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var account = require('./account');
+var middleware = require('./middleware');
 
 // Passport Stuffs
 passport.serializeUser(account.serialize);
@@ -22,7 +23,7 @@ router.post('/account/login', passport.authenticate('local', {
 
 router.post('/account/register', account.register);
 
-router.get('/account/info', account.infoForm);
-router.post('/account/info', account.info);
+router.get('/account/info', middleware.checkSignedIn, account.infoForm);
+router.post('/account/info', middleware.checkSignedIn, account.info);
 
 module.exports = router;

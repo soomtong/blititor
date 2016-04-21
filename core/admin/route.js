@@ -5,6 +5,8 @@ var database = require('./database');
 var theme = require('./theme');
 var middleware = require('./middleware');
 
+var connection = require('../../lib/connection');
+
 var router = express.Router();
 var routeTable = misc.routeTable();
 
@@ -13,6 +15,8 @@ var redirect = {
         res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
     }
 };
+
+var db = connection.get();
 
 router.use(middleware.exposeParameter);
 
@@ -25,5 +29,12 @@ router.post(routeTable.admin.database_init, database.databaseInit);
 
 router.get(routeTable.admin.theme_setup, theme.themeSetupView);
 router.post(routeTable.admin.theme_setup, theme.themeSetup);
+
+// utility
+router.get('/connections', function (req, res) {
+    console.log(db.client.pool.stats());
+
+    res.send(db.client.pool.stats());
+});
 
 module.exports = router;

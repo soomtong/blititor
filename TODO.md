@@ -4,3 +4,4 @@
 - [ ] connect mysql by socket
 - [ ] use macro, layout for advanced template
 - [ ] 2 depth menu
+- [ ] replace session store by redis
