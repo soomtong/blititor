@@ -8,11 +8,10 @@ var connection = require('../../lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 
-var db = connection.get();
-
 function findByID(id, callback) {
+    var mysql = connection.get();
 
-    db.where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
+    mysql.where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -20,8 +19,9 @@ function findByID(id, callback) {
 }
 
 function findByUUID(uuid, callback) {
+    var mysql = connection.get();
 
-    db.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').from('user').then(function (results) {
+    mysql.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').from('user').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -29,8 +29,9 @@ function findByUUID(uuid, callback) {
 }
 
 function authByUserID(userID, callback) {
+    var mysql = connection.get();
 
-    db.where({user_id: userID}).select('id', 'user_id', 'user_password').from('auth').then(function (results) {
+    mysql.where({user_id: userID}).select('id', 'user_id', 'user_password').from('auth').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -139,8 +140,10 @@ function register(req, res) {
         user_password: hash
     };
 
+    var mysql = connection.get();
+
     // save to auth table
-    db.insert(authData, 'id').into('auth').then(function (authResults) {
+    mysql.insert(authData, 'id').into('auth').then(function (authResults) {
         var auth_id = Array.isArray(authResults) ? authResults.pop() : authResults;
         winston.info('inserted', auth_id, 'auth id user');
 
@@ -158,7 +161,7 @@ function register(req, res) {
 
         req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-        db.insert(userData, 'id').into('user').then(function (userResults) {
+        mysql.insert(userData, 'id').into('user').then(function (userResults) {
 
             var user = {
                 uuid: userData.uuid,
