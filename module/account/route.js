@@ -24,6 +24,6 @@ router.post('/account/login', passport.authenticate('local', {
 router.post('/account/register', account.register);
 
 router.get('/account/info', middleware.checkSignedIn, account.infoForm);
-router.post('/account/info', middleware.checkSignedIn, account.info);
+router.post('/account/info', middleware.checkSignedIn, account.updateInfo);
 
 module.exports = router;

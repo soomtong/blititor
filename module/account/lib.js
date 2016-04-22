@@ -38,10 +38,6 @@ function authByUserID(userID, callback) {
     });
 }
 
-/* Fake, in-memory database of remember me tokens */
-
-var tokens = {};
-
 function consumeRememberMeToken(token, fn) {
     var uid = tokens[token];
     // invalidate the single-use token
@@ -50,7 +46,7 @@ function consumeRememberMeToken(token, fn) {
 }
 
 function saveRememberMeToken(token, uid, fn) {
-    tokens[token] = uid;
+    // tokens[token] = uid;
     return fn();
 }
 
@@ -218,9 +214,65 @@ function showInfo(req, res) {
 }
 
 function updateInfo(req, res) {
+    var params = {
+        updatePassword: false
+    };
 
+    req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
-    return res.end();
+    if (req.body.password && req.body.password.toString().length > 2) {
+        req.assert('password', 'Password must be at least 4 characters long').len(4);
+        req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
+
+        params.updatePassword = true;
+        params.password = bcrypt.hashSync(req.body.password, salt);
+    }
+
+    req.sanitize('nickname').escape();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+        return res.redirect('back');
+    }
+
+    var UUID = req.user.uuid;
+
+    if (!UUID) return Error('No Session Info Exist!');
+
+    var userData = {
+        nickname: req.body.nickname,
+        level: 2,
+        grant: 'M',
+        updated_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    mysql.where({uuid: UUID}).select('auth_id').from('user').then(function (authResult1) {
+
+        var authID = authResult1[0].auth_id;
+
+        if (params.updatePassword) {
+            // update auth table
+            mysql.where({id: authID}).update({user_password: params.password}).from('auth').then(function (authResult2) {
+                winston.warn('Updated user password into `auth` table record:', authResult2);
+            });
+        }
+
+        // update user table
+        mysql.where({uuid: UUID}).update(userData).from('user').then(function (userResult) {
+            winston.warn('Updated user info into `user` table record:', userResult);
+
+            return res.redirect('/account/info');
+        });
+    }).catch(function (error) {
+        winston.error(error);
+        req.flash('error', {msg: error});
+
+        return res.redirect('back');
+    });
 }
 
 module.exports = {
@@ -231,5 +283,5 @@ module.exports = {
     loginDone: loginDone,
     register: register,
     infoForm: showInfo,
-    info: updateInfo,
+    updateInfo: updateInfo,
 };
