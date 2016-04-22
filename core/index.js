@@ -13,6 +13,7 @@ var BLITITOR = {
     root: __dirname + '/../',
     route: {},
     config: {
+        locale: 'ko',
         site: {
             theme: '',
             host: '',
@@ -57,6 +58,7 @@ var lusca = require('lusca');
 var nunjucks = require('nunjucks');
 var winston = require('winston');
 var passport = require('passport');
+var moment = require('moment');
 
 // set log
 winston.remove(winston.transports.Console);
@@ -113,6 +115,9 @@ try {
 
     winston.verbose('Set site theme to', BLITITOR.config.site.theme);
 }
+
+// set locale
+moment.locale(BLITITOR.config.locale);
 
 // load route setup
 // misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page

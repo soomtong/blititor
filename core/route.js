@@ -23,7 +23,7 @@ routeList.map(function (item) {
         router[item.type](item.url, themePackage.page[item.page]);
     }
 
-    winston.verbose(item);
+    // winston.verbose(item);
 });
 
 // bind!

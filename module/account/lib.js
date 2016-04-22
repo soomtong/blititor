@@ -1,6 +1,7 @@
 var bcrypt = require('bcrypt');
 var knex = require('knex');
 
+var moment = require('moment');
 var winston = require('winston');
 
 var common = require('../../lib/common');
@@ -199,13 +200,14 @@ function register(req, res) {
 function showInfo(req, res) {
     var params = {};
 
-    findByUUID(req.user.uuid, function (error, user) {
+    findByUUID(req.user.uuid, function (error, userData) {
         if (error) {
             req.flash('error', {msg: '세션 정보를 찾을 수 없습니다.'});
             return res.redirect('back');
         }
 
-        params.userInfo = user;
+        params.userInfo = userData;
+        params.userInfo.created_at = moment(new Date(userData.created_at)).format('LLL');
 
         res.render(BLITITOR.config.site.theme + '/page/account/info', params);
     });
