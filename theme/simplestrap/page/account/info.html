@@ -33,6 +33,14 @@
                     </div>
                 </div>
 
+                {% if message.info %}
+                {% for info in message.info %}
+                <div class="alert alert-info" role="alert">
+                    <strong>Info!</strong> {{info.msg}}
+                </div>
+                {% endfor %}
+                {% endif %}
+
                 <h4>Update Account Info</h4>
                 <form method="post" action="/account/info">
                     <fieldset class="form-group">

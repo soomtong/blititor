@@ -11,7 +11,7 @@ var salt = bcrypt.genSaltSync(10);
 function findByID(id, callback) {
     var mysql = connection.get();
 
-    mysql.where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').from('user').then(function (results) {
+    mysql('user').where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -21,7 +21,7 @@ function findByID(id, callback) {
 function findByUUID(uuid, callback) {
     var mysql = connection.get();
 
-    mysql.where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').from('user').then(function (results) {
+    mysql('user').where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -31,7 +31,7 @@ function findByUUID(uuid, callback) {
 function authByUserID(userID, callback) {
     var mysql = connection.get();
 
-    mysql.where({user_id: userID}).select('id', 'user_id', 'user_password').from('auth').then(function (results) {
+    mysql('auth').where({user_id: userID}).select('id', 'user_id', 'user_password').then(function (results) {
         callback(null, results[0]);
     }).catch(function (error) {
         callback(error);
@@ -139,7 +139,7 @@ function register(req, res) {
     var mysql = connection.get();
 
     // save to auth table
-    mysql.insert(authData, 'id').into('auth').then(function (authResults) {
+    mysql('auth').insert(authData).then(function (authResults) {
         var auth_id = Array.isArray(authResults) ? authResults.pop() : authResults;
         winston.info('inserted', auth_id, 'auth id user');
 
@@ -157,7 +157,7 @@ function register(req, res) {
 
         req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-        mysql.insert(userData, 'id').into('user').then(function (userResults) {
+        mysql('user').insert(userData).then(function (userResults) {
 
             var user = {
                 uuid: userData.uuid,
@@ -198,7 +198,8 @@ function register(req, res) {
 
 function showInfo(req, res) {
     var params = {
-
+        user: req.user,
+        message: req.flash()
     };
 
     findByUUID(req.user.uuid, function (error, user) {
@@ -215,12 +216,14 @@ function showInfo(req, res) {
 
 function updateInfo(req, res) {
     var params = {
+        user: req.user,
+        message: req.flash(),
         updatePassword: false
     };
 
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
-    if (req.body.password && req.body.password.toString().length > 2) {
+    if (req.body.password && (req.body.password.toString().length >= 4)) {
         req.assert('password', 'Password must be at least 4 characters long').len(4);
         req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
 
@@ -233,13 +236,18 @@ function updateInfo(req, res) {
     var errors = req.validationErrors();
 
     if (errors) {
+        winston.error(errors, errors.length);
         req.flash('error', errors);
         return res.redirect('back');
     }
 
     var UUID = req.user.uuid;
 
-    if (!UUID) return Error('No Session Info Exist!');
+    if (!UUID) {
+        req.flash('error', {msg: 'No Session Info Exist!'});
+
+        return res.redirect('back');
+    }
 
     var userData = {
         nickname: req.body.nickname,
@@ -250,20 +258,22 @@ function updateInfo(req, res) {
 
     var mysql = connection.get();
 
-    mysql.where({uuid: UUID}).select('auth_id').from('user').then(function (authResult1) {
+    mysql('user').where({uuid: UUID}).select('auth_id').then(function (authResult1) {
 
         var authID = authResult1[0].auth_id;
 
         if (params.updatePassword) {
             // update auth table
-            mysql.where({id: authID}).update({user_password: params.password}).from('auth').then(function (authResult2) {
+            mysql('auth').where({id: authID}).update({user_password: params.password}).then(function (authResult2) {
                 winston.warn('Updated user password into `auth` table record:', authResult2);
             });
         }
 
         // update user table
-        mysql.where({uuid: UUID}).update(userData).from('user').then(function (userResult) {
+        mysql('user').where({uuid: UUID}).update(userData).then(function (userResult) {
             winston.warn('Updated user info into `user` table record:', userResult);
+
+            req.flash('info', {msg: '개인 정보가 갱신되었습니다.'});
 
             return res.redirect('/account/info');
         });
