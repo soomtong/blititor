@@ -14,7 +14,15 @@ function ensureClearSession(req, res, next) {
     res.redirect('/account/info');
 }
 
+function exposeLocals(req, res, next) {
+    res.locals.user = req.user;
+    res.locals.message = req.flash();
+
+    next();
+}
+
 module.exports = {
     checkSignedIn: ensureAuthenticated,
-    checkLoggedSession: ensureClearSession
+    checkLoggedSession: ensureClearSession,
+    exposeLocals: exposeLocals
 };

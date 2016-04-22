@@ -197,10 +197,7 @@ function register(req, res) {
 }
 
 function showInfo(req, res) {
-    var params = {
-        user: req.user,
-        message: req.flash()
-    };
+    var params = {};
 
     findByUUID(req.user.uuid, function (error, user) {
         if (error) {
@@ -216,8 +213,6 @@ function showInfo(req, res) {
 
 function updateInfo(req, res) {
     var params = {
-        user: req.user,
-        message: req.flash(),
         updatePassword: false
     };
 

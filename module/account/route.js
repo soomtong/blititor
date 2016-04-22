@@ -14,6 +14,8 @@ passport.serializeUser(account.serialize);
 passport.deserializeUser(account.deserialize);
 passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, account.authenticate));
 
+router.use(middleware.exposeLocals);
+
 router.post('/account/login', passport.authenticate('local', {
         failureRedirect: '/account/sign-in',
         badRequestMessage: '아이디 또는 비밀번호를 입력해주세요.',
