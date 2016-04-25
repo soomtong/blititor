@@ -218,6 +218,8 @@ function updateInfo(req, res) {
         updatePassword: false
     };
 
+    console.log(req.body);
+
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
     if (req.body.password && (req.body.password.toString().length >= 4)) {
@@ -248,6 +250,7 @@ function updateInfo(req, res) {
 
     var userData = {
         nickname: req.body.nickname,
+        photo: req.body.profile_image || undefined,
         level: 2,
         grant: 'M',
         updated_at: new Date()

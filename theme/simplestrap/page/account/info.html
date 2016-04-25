@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-block" style="min-height: 200px;">
                         <img src="/{{site.theme}}/common/asset/photo-user1.png" class="img-rounded pull-xs-right" alt="{{userInfo.nickname}} profile">
-                        <h4 class="card-title">{{userInfo.nickname}}</h4>
+                        <h5 class="card-title">{{userInfo.nickname}}</h5>
                         <p class="card-text">
                             <span class="label label-pill label-success">{{ userInfo.level }}</span>
                             <span class="label label-pill label-info">{{ userInfo.grant }}</span>
@@ -41,7 +41,7 @@
                 {% endfor %}
                 {% endif %}
 
-                <h4>Update Account Info</h4>
+                <h4 style="margin-top: 2em;">Update</h4>
                 <form method="post" action="/account/info">
                     <fieldset class="form-group">
                         <label for="exampleInputName">Screen Name</label>
@@ -54,9 +54,16 @@
                     <fieldset class="form-group">
                         <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
                     </fieldset>
+                    <label>Profile Image</label>
+                    <fieldset class="form-group">
+                        <label class="file">
+                            <input name="profile_image" type="file" id="file">
+                            <span class="file-custom"></span>
+                        </label>
+                    </fieldset>
 
                     <input type="hidden" name="_csrf" value="{{_csrf}}"/>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <button type="submit" class="btn btn-primary">Change</button>
                 </form>
             </div>
             {% if message.error %}
