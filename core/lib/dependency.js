@@ -1,5 +1,5 @@
 // referenced https://github.com/TryGhost/Ghost/core/server/utils/startup-check.js
-var packages = require('../package.json');
+var packages = require('../../package.json');
 
 function moduleInstalled(B) {
     console.info('=== check module dependency ...', Object.keys(packages['dependencies']).length, 'packages');

@@ -74,5 +74,5 @@ module.exports = {
         password: '1234'
     },
     tables: databaseTables,
-    databaseDefault: require('../core/config/database_default')
+    databaseDefault: require('../config/database_default')
 };

@@ -4,8 +4,8 @@ var knex = require('knex');
 var moment = require('moment');
 var winston = require('winston');
 
-var common = require('../../lib/common');
-var connection = require('../../lib/connection');
+var common = require('../../core/lib/common');
+var connection = require('../../core/lib/connection');
 
 var salt = bcrypt.genSaltSync(10);
 

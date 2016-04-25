@@ -37,7 +37,7 @@ var WEEK = DAY * 7;
 global.BLITITOR = BLITITOR;
 
 // check modules for npm, bower
-require('../lib/dependency')(BLITITOR);
+require('./lib/dependency')(BLITITOR);
 
 // load common library
 var fs = require('fs');
@@ -72,7 +72,7 @@ winston.add(winston.transports.Console, {
 });
 
 // load custom library
-var common = require('../lib/common');
+var common = require('./lib/common');
 var misc = require('./misc');
 
 // load DB configuration

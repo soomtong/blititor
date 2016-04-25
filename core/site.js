@@ -1,5 +1,5 @@
 var winston = require('winston');
-var common = require('../lib/common');
+var common = require('./lib/common');
 
 var filter = common.regexFilter();
 

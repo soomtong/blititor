@@ -5,7 +5,7 @@ var database = require('./database');
 var theme = require('./theme');
 var middleware = require('./middleware');
 
-var connection = require('../../lib/connection');
+var connection = require('../lib/connection');
 
 var router = express.Router();
 var routeTable = misc.routeTable();

@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var knex = require('knex');
 var winston = require('winston');
 
-var common = require('../../lib/common');
+var common = require('../lib/common');
 
 //view page for routeTable.admin_root.database_setup
 function databaseSetupView(req, res) {

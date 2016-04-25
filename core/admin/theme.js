@@ -2,7 +2,7 @@ var fs = require('fs');
 var async = require('neo-async');
 var winston = require('winston');
 
-var common = require('../../lib/common');
+var common = require('../lib/common');
 
 function themeSetupView(req, res) {
     var params = {
