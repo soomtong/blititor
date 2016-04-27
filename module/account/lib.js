@@ -1,5 +1,4 @@
 var bcrypt = require('bcrypt');
-var knex = require('knex');
 
 var moment = require('moment');
 var winston = require('winston');
@@ -12,30 +11,33 @@ var salt = bcrypt.genSaltSync(10);
 function findByID(id, callback) {
     var mysql = connection.get();
 
-    mysql('user').where({id: id}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant').then(function (results) {
-        callback(null, results[0]);
-    }).catch(function (error) {
-        callback(error);
+    var sql = 'select ?? from ?? where `id` = ?';
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant'];
+
+    mysql.query(sql, [field, 'user', id], function (err, rows) {
+        callback(null, rows[0]);
     });
 }
 
 function findByUUID(uuid, callback) {
     var mysql = connection.get();
 
-    mysql('user').where({uuid: uuid}).select('id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at').then(function (results) {
-        callback(null, results[0]);
-    }).catch(function (error) {
-        callback(error);
+    var sql = 'select ?? from ?? where `uuid` = ?';
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+
+    mysql.query(sql, [field, 'user', uuid], function (err, rows) {
+        callback(err, rows[0]);
     });
 }
 
 function authByUserID(userID, callback) {
     var mysql = connection.get();
 
-    mysql('auth').where({user_id: userID}).select('id', 'user_id', 'user_password').then(function (results) {
-        callback(null, results[0]);
-    }).catch(function (error) {
-        callback(error);
+    var sql = 'select ?? from ?? where `user_id` = ?';
+    var field = ['id', 'user_id', 'user_password'];
+
+    mysql.query(sql, [field, 'auth', userID], function (err, rows) {
+        callback(err, rows[0]);
     });
 }
 
@@ -140,9 +142,16 @@ function register(req, res) {
     var mysql = connection.get();
 
     // save to auth table
-    mysql('auth').insert(authData).then(function (authResults) {
-        var auth_id = Array.isArray(authResults) ? authResults.pop() : authResults;
-        winston.info('inserted', auth_id, 'auth id user');
+    mysql.query('INSERT INTO ?? SET ?', ['auth', authData], function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        var auth_id = result['insertId'];
 
         // save to user table
         var userData = {
@@ -158,9 +167,19 @@ function register(req, res) {
 
         req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-        mysql('user').insert(userData).then(function (userResults) {
+        mysql.query('insert into ?? SET ?', ['user', userData], function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
+
+                winston.error(error);
+
+                res.redirect('back');
+            }
+
+            var id = result['insertId'];
 
             var user = {
+                id: id,
                 uuid: userData.uuid,
                 user_id: authData.user_id,
                 nickname: userData.nickname,
@@ -179,22 +198,8 @@ function register(req, res) {
 
                 res.redirect('/');
             });
-        }).catch(function (error) {
-            req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
-
-            winston.error(error);
-
-            res.redirect('back');
         });
-
-    }).catch(function (error) {
-        req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
-
-        winston.error(error);
-
-        res.redirect('back');
     });
-
 }
 
 function showInfo(req, res) {

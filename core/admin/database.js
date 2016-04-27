@@ -101,16 +101,6 @@ function makeDefaultScheme(options) {
     var databaseConfiguration = BLITITOR.config.database;
     winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', common.databaseDefault);
 
-/*
-    var connection = mysql.createConnection({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
-    });
-*/
-
     if (options.reset) {
         deleteScheme(createScheme);
     } else {
@@ -155,7 +145,7 @@ function createScheme() {
 
     var sql_site = 'CREATE TABLE IF NOT EXISTS `site` ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`var` varchar(64), `value` varchar(256), ' +
+        '`title` varchar(64), `value` varchar(256), ' +
         '`created_at` datetime)';
     var sql_auth = 'CREATE TABLE IF NOT EXISTS `auth` ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
@@ -185,15 +175,22 @@ function createScheme() {
         'add constraint point_user_id_foreign foreign key (`user_id`) ' +
         'references `user` (`id`)';
 
-    connection.query(sql_site, function (error, results, fields) {
-        connection.query(sql_auth, function (error, results, fields) {
-            connection.query(sql_user, function (error, results, fields) {
-                connection.query(sql_point, function (error, results, fields) {
+    connection.query(sql_site, function (error, result) {
+        connection.query(sql_auth, function (error, result) {
+            connection.query(sql_user, function (error, result) {
+                connection.query(sql_point, function (error, result) {
                     // bind foreign key
-                    connection.query(sql_fkey_user_auth, function (error, results, fields) {
-                        connection.query(sql_fkey_point_user, function (error, results, fields) {
-                            // close connection
-                            connection.destroy();
+                    connection.query(sql_fkey_user_auth, function (error, result) {
+                        connection.query(sql_fkey_point_user, function (error, result) {
+                            connection.query('insert into `site` SET ?', {
+                                'created_at': new Date(),
+                                'title': 'title',
+                                'value': 'simplestrap demo'
+                            }, function (error, result) {
+                                // close connection
+                                connection.destroy();
+                            });
+
                         })
                     })
                 });

@@ -1,5 +1,4 @@
 var fs = require('fs');
-var knex = require('knex');
 var winston = require('winston');
 var Account = require('../account');
 

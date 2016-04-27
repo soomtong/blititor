@@ -1,5 +1,5 @@
 var winston = require('winston');
-var knex = require('knex');
+var driver = require('mysql');
 
 var common = require('./common');
 
@@ -14,16 +14,12 @@ function initConnection() {
     function createInstance() {
         winston.warn('Get database connection by new one');
 
-        return knex({
-            // debug: true,
-            client: 'mysql',
-            connection: {
-                host: databaseConfiguration.dbHost,
-                port: databaseConfiguration.dbPort || common.databaseDefault.port,
-                database: databaseConfiguration.dbName || common.databaseDefault.database,
-                user: databaseConfiguration.dbUserID,
-                password: databaseConfiguration.dbUserPassword
-            }
+        return driver.createConnection({
+            host: databaseConfiguration.dbHost,
+            port: databaseConfiguration.dbPort || common.databaseDefault.port,
+            database: databaseConfiguration.dbName || common.databaseDefault.database,
+            user: databaseConfiguration.dbUserID,
+            password: databaseConfiguration.dbUserPassword
         });
     }
 
