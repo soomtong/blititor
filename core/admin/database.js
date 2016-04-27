@@ -1,7 +1,6 @@
 var fs = require('fs');
 var misc = require('../misc');
 var mysql = require('mysql');
-var knex = require('knex');
 var winston = require('winston');
 
 var common = require('../lib/common');
@@ -102,143 +101,106 @@ function makeDefaultScheme(options) {
     var databaseConfiguration = BLITITOR.config.database;
     winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', common.databaseDefault);
 
-    var connection = knex({
-        debug: true,
-        client: 'mysql',
-        connection: {
-            host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || common.databaseDefault.port,
-            database: databaseConfiguration.dbName || common.databaseDefault.database,
-            user: databaseConfiguration.dbUserID,
-            password: databaseConfiguration.dbUserPassword
-        }
+/*
+    var connection = mysql.createConnection({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
     });
+*/
 
     if (options.reset) {
-        deleteScheme(connection, createScheme);
+        deleteScheme(createScheme);
     } else {
-        createScheme(connection, options.reset);
+        createScheme();
     }
 }
 
-function deleteScheme(connection, callback) {
+function deleteScheme(callback) {
     winston.info('-- drop exist tables --');
 
-    connection.schema
-        .dropTableIfExists(common.tables.point)
-        .dropTableIfExists(common.tables.user)
-        .dropTableIfExists(common.tables.auth)
-        .dropTableIfExists(common.tables.site)
-        .then(function (error, results) {
-            callback(connection, true);
-        })
-        .catch(function (error) {
-            winston.error(error);
-            connection.destroy();
-        });
+    var databaseConfiguration = BLITITOR.config.database;
+
+    var connection = mysql.createConnection({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
+    });
+
+    var sql = "DROP TABLE IF EXISTS ??";
+    var tables = [[common.tables.point, common.tables.user, common.tables.auth, common.tables.site]];
+
+    connection.query(sql, tables, function (error, results, fields) {
+        connection.destroy();
+        callback();
+    });
 }
 
-function createScheme(connection, reset) {
+function createScheme() {
     winston.info('-- make tables if not exist --');
 
-    connection.schema
-        .createTableIfNotExists(common.tables.site, siteTable)
-        .createTableIfNotExists(common.tables.auth, authTable)
-        .createTableIfNotExists(common.tables.user, userTable)
-        .createTableIfNotExists(common.tables.point, pointTable)
-        .then(function (result) {
-            winston.info(result);
+    var databaseConfiguration = BLITITOR.config.database;
 
-            connection
-                .insert({
-                    var: "title",
-                    value: "simplestrap demo",
-                    created_at: new Date()
-                }, 'id')
-                .into('site')
-                .then(function (rows) {
-                    winston.info('inserted new site', rows[0]);
+    var connection = mysql.createConnection({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
+    });
 
-                    connection.destroy();
-                })
-                .catch(function (error) {
-                    winston.error('insert new site title failed', error);
+    var sql_site = 'CREATE TABLE IF NOT EXISTS `site` ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`var` varchar(64), `value` varchar(256), ' +
+        '`created_at` datetime)';
+    var sql_auth = 'CREATE TABLE IF NOT EXISTS `auth` ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`user_id` varchar(64) not null, `user_password` varchar(255) not null, ' +
+        'UNIQUE auth_user_id_unique(`user_id`))';
+    var sql_user = 'CREATE TABLE IF NOT EXISTS `user` ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
+        '`nickname` varchar(64), `level` varchar(1), `grant` varchar(1), ' +
+        '`photo` varchar(255), `point` int, ' +
+        '`login_counter` int, `logout_counter` int, ' +
+        '`desc` text, ' +
+        '`last_logged_at` datetime, ' +
+        '`created_at` datetime, ' +
+        '`updated_at` datetime, ' +
+        'UNIQUE user_uuid_unique(`uuid`), ' +
+        'INDEX auth_id(`auth_id`))';
+    var sql_point = 'CREATE TABLE IF NOT EXISTS `point` ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`user_id` int unsigned not null, `amount` int, `reason` varchar(255), ' +
+        '`created_at` datetime, INDEX user_id(`user_id`))';
 
-                    connection.destroy();
+    var sql_fkey_user_auth = 'alter table `user` ' +
+        'add constraint user_auth_id_foreign foreign key (`auth_id`) ' +
+        'references `auth` (`id`)';
+    var sql_fkey_point_user = 'alter table `point` ' +
+        'add constraint point_user_id_foreign foreign key (`user_id`) ' +
+        'references `user` (`id`)';
+
+    connection.query(sql_site, function (error, results, fields) {
+        connection.query(sql_auth, function (error, results, fields) {
+            connection.query(sql_user, function (error, results, fields) {
+                connection.query(sql_point, function (error, results, fields) {
+                    // bind foreign key
+                    connection.query(sql_fkey_user_auth, function (error, results, fields) {
+                        connection.query(sql_fkey_point_user, function (error, results, fields) {
+                            // close connection
+                            connection.destroy();
+                        })
+                    })
                 });
-        })
-        .catch(function (error) {
-            winston.error(error);
-            connection.destroy();
+            });
         });
-}
-
-
-/* table specs */
-function siteTable(table) {
-    winston.info('make table', common.tables.site);
-    table.increments();
-    table.string('var', 64);  // compact var = value
-    table.string('value', 256);
-    table.dateTime('created_at');
-}
-
-function authTable(table) {
-    winston.info('make table', common.tables.auth);
-    table.increments();
-    table.string('user_id', 64).unique().notNullable();
-    table.string('user_password').notNullable();
-}
-
-function userTable(table) {
-    winston.info('make table', common.tables.user);
-    table.increments();
-    table.uuid('uuid').unique().notNullable();
-    table.integer('auth_id').index('auth_id').unsigned().notNullable().references('id').inTable(common.tables.auth);
-    table.string('nickname', 64);
-    table.string('level', 1);   // user level 1 to 9
-    table.string('grant', 1);   // site admin: A, site manager: M, content manager: C
-    table.string('photo');
-    table.integer('point');
-    table.integer('login_counter');
-    table.integer('logout_counter');
-    table.text('desc');
-    table.dateTime('last_logged_at');
-    table.timestamps();
-}
-
-function pointTable(table) {
-    winston.info('make table', common.tables.point);
-    table.increments();
-    table.integer('user_id').index('user_id').unsigned().notNullable().references('id').inTable(common.tables.user);
-    table.integer('amount');
-    table.string('reason');
-    table.dateTime('created_at');
-}
-
-/*
-function createIndex(connection) {
-    winston.info('make index');
-    connection.schema.table(common.tables.user, function (table) {
-        table.dropIndex('user_uuid').index('user_uuid');
-        table.dropIndex('user_id').index('user_id');
-        //table.dropForeign('site_id').foreign('site_id').references('id').inTable(common.tables.site);
-    }).then(function (error, results) {
-        winston.info(results);
-    }).catch(function (error) {
-        winston.error(common.tables.user, 'indexing', error);
-    });
-    connection.schema.table(common.tables.point, function (table) {
-        table.dropIndex('site_id').index('site_id');
-        table.dropIndex('user_uuid').index('user_uuid');
-        //table.dropForeign('user_id').foreign('user_id').references('id').inTable(common.tables.user);
-    }).then(function (error, results) {
-        winston.info(results);
-    }).catch(function (error) {
-        winston.error(common.tables.point, 'indexing', error);
     });
 }
-*/
 
 module.exports = {
     databaseSetupView: databaseSetupView,
