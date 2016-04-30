@@ -263,30 +263,39 @@ function updateInfo(req, res) {
 
     var mysql = connection.get();
 
-    mysql('user').where({uuid: UUID}).select('auth_id').then(function (authResult1) {
+    mysql.query('select ?? from `user` where `uuid` = ?', ['auth_id', UUID], function (err, rows) {
+        if (err) {
+            winston.error(err);
+            req.flash('error', {msg: err});
 
-        var authID = authResult1[0].auth_id;
+            return res.redirect('back');
+        }
 
+        var authID = rows[0].auth_id;
+
+        // update auth table
         if (params.updatePassword) {
-            // update auth table
-            mysql('auth').where({id: authID}).update({user_password: params.password}).then(function (authResult2) {
-                winston.warn('Updated user password into `auth` table record:', authResult2);
+            var authData = {user_password: params.password};
+
+            mysql.query('update `auth` set ? where `id` = ?', [authData, authID], function (err, result) {
+                winston.warn('Updated user password into `auth` table record:', result);
             });
         }
 
-        // update user table
-        mysql('user').where({uuid: UUID}).update(userData).then(function (userResult) {
-            winston.warn('Updated user info into `user` table record:', userResult);
+        mysql.query('update `user` set ? where `uuid` = ?', [userData, UUID], function (err, result) {
+            if (err) {
+                winston.error(err);
+                req.flash('error', {msg: err});
+
+                return res.redirect('back');
+            }
+
+            winston.warn('Updated user info into `user` table record:', result);
 
             req.flash('info', {msg: '개인 정보가 갱신되었습니다.'});
 
             return res.redirect('/account/info');
         });
-    }).catch(function (error) {
-        winston.error(error);
-        req.flash('error', {msg: error});
-
-        return res.redirect('back');
     });
 }
 
