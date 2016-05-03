@@ -148,11 +148,21 @@ if (BLITITOR.env == 'production') {
 
 // use express middleware
 var logFile = fs.createWriteStream('log/express.log', {flags: 'a'});
+
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, 'public/upload/temp');
+    },
+    filename: function (req, file, callback) {
+        var filename = Date.now() + '==' + file.originalname.replace(/\W+/g, '-');
+        callback(null, filename);   //can refer file.mimetype.split('/')[1]
+    }
+});
+
 var multerUploader = multer({
-    dest: '../public/upload/',
-    rename: function (fieldName, fileName) {
-        winston.info(fieldName, fileName);
-        return fileName.replace(/\W+/g, '-').toLowerCase() + Date.now()
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 1024
     }
 });
 
