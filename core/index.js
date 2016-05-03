@@ -44,12 +44,12 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var expressValidator = require('express-validator');
+var multer = require('multer');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var mysqlSession = require('express-mysql-session');
 var flash = require('connect-flash');
-//var methodOverride = require('method-override');      // need this? let me know
 var compress = require('compression');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -148,16 +148,22 @@ if (BLITITOR.env == 'production') {
 
 // use express middleware
 var logFile = fs.createWriteStream('log/express.log', {flags: 'a'});
+var multerUploader = multer({
+    dest: '../public/upload/',
+    rename: function (fieldName, fileName) {
+        winston.info(fieldName, fileName);
+        return fileName.replace(/\W+/g, '-').toLowerCase() + Date.now()
+    }
+});
 
 app.use(logger('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
 app.use(favicon('public/favicon.ico'));
+app.use(multerUploader.any());  // should set before csrf middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compress({}));    // compress all for default
 app.use(expressValidator({errorFormatter: common.errorFormatter}));
-//app.use(methodOverride());
-
 
 // prepare session store
 var mysqlStore = mysqlSession(session);

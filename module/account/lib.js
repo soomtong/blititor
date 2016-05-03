@@ -223,7 +223,7 @@ function updateInfo(req, res) {
         updatePassword: false
     };
 
-    console.log(req.body);
+    console.log(req.body, req.files);
 
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 

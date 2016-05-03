@@ -22,6 +22,7 @@
     "method-override": "^2.3.5",
     "moment": "^2.13.0",
     "morgan": "^1.6.1",
+    "multer": "^1.1.0",
     "mysql": "latest",
     "neo-async": "^1.7.4",
     "nunjucks": "^2.4.0",
