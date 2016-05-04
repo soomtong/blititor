@@ -6,7 +6,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var account = require('./lib');
+var account = require('./lib/account');
 var middleware = require('./middleware');
 
 // Passport Stuffs
