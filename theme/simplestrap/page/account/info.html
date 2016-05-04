@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     {% include '../include/header.html' %}
+    <style>
+        .file-changed:after {
+            content: attr(data-content);
+        }
+    </style>
 </head>
 <body>
 
@@ -101,6 +106,18 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#file').on('change', function () {
+            var file = $(this).val().split('\\');
+            var fileName = file.indexOf(file.length - 1);
+            $('#file').siblings('.file-custom').addClass('file-changed').attr('data-content', fileName);
+        });
+    })
+</script>
 </body>
 </html>
