@@ -1,5 +1,5 @@
 var bcrypt = require('bcrypt');
-
+var mkdirp = require('mkdirp');
 var moment = require('moment');
 var winston = require('winston');
 
@@ -252,9 +252,18 @@ function updateInfo(req, res) {
         return res.redirect('back');
     }
 
+    mkdirp('./public/upload/' + UUID, function (err) {
+        if (err) winston.error('Error in Make user folder');
+
+        // move to user folder from temp
+
+        // set file info to database
+
+    });
+
     var userData = {
         nickname: req.body.nickname,
-        photo: req.body.profile_image || undefined,
+        photo: req.files[0] && req.files[0].fieldname == 'profile_image' ? req.files[0].filename : undefined,
         level: 2,
         grant: 'M',
         updated_at: new Date()

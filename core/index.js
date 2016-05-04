@@ -59,6 +59,7 @@ var nunjucks = require('nunjucks');
 var winston = require('winston');
 var passport = require('passport');
 var moment = require('moment');
+var mkdirp = require('mkdirp');
 
 // set log
 winston.remove(winston.transports.Console);
@@ -165,6 +166,12 @@ var multerUploader = multer({
         fileSize: 1024 * 1024 * 1024
     }
 });
+
+try {
+    mkdirp.sync('./public/upload/temp');
+} catch (e) {
+    winston.warn('file upload folder not exist');
+}
 
 app.use(logger('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
