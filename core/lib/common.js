@@ -58,7 +58,11 @@ function errorFormatter(param, msg, value) {
     };
 }
 
-function uuid() {
+function uuid1() {
+    return uuid.v1();
+}
+
+function uuid4() {
     return uuid.v4();
 }
 
@@ -67,7 +71,8 @@ module.exports = {
     destructMarkdown: destructMarkdown,
     regexFilter: regexFilter,
     randomString: randomString,
-    UUID: uuid,
+    UUID1: uuid1,
+    UUID4: uuid4,
     testUser: {
         id: 123412341234,
         username: 'soomtong@gmail.com',

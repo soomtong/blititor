@@ -155,7 +155,7 @@ function register(req, res) {
 
         // save to user table
         var userData = {
-            uuid: common.UUID(),
+            uuid: common.UUID4(),
             auth_id: auth_id,
             nickname: req.body.nickname,
             level: 1,
@@ -303,7 +303,7 @@ function updateInfo(req, res) {
         // update file associate table
         if (params.updateProfileImage) {
             // replace new profile photo to old one
-            
+
         }
 
         mysql.query(query.updateUserByUUID, [userData, UUID], function (err, result) {
