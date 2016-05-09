@@ -7,7 +7,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var account = require('./lib/account');
-var middleware = require('./middleware');
+var middleware = require('./lib/middleware');
 
 // Passport Stuffs
 passport.serializeUser(account.serialize);

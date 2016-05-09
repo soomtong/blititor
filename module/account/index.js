@@ -1,5 +1,5 @@
 var route = require('./route');
-var middleware = require('./middleware');
+var middleware = require('./lib/middleware');
 
 module.exports = {
     route: route,

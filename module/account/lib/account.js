@@ -1,3 +1,4 @@
+var fs = require('fs');
 var bcrypt = require('bcrypt');
 var mkdirp = require('mkdirp');
 var moment = require('moment');
@@ -219,8 +220,11 @@ function showInfo(req, res) {
 
 function updateInfo(req, res) {
     var params = {
-        updatePassword: false
+        updatePassword: false,
+        updateProfileImage: false,
     };
+
+    var profileImage = null;
 
     console.log(req.body, req.files);
 
@@ -252,22 +256,28 @@ function updateInfo(req, res) {
         return res.redirect('back');
     }
 
-    mkdirp('./public/upload/' + UUID, function (err) {
-        if (err) winston.error('Error in Make user folder');
-
-        // move to user folder from temp
-
-        // set file info to database
-
-    });
-
     var userData = {
         nickname: req.body.nickname,
-        photo: req.files[0] && req.files[0].fieldname == 'profile_image' ? req.files[0].filename : undefined,
         level: 2,
         grant: 'M',
         updated_at: new Date()
     };
+
+    if (req.files[0] && req.files[0].fieldname == 'profile_image') {
+        params.updateProfileImage = true;
+
+        profileImage = req.files[0];
+
+        mkdirp('./public/upload/' + UUID, function (err) {
+            if (err) winston.error('Error in Make user folder');
+
+            // move to user folder from temp
+            fs.renameSync(req.files[0].path, './public/upload/' + UUID + '/' + profileImage.filename);
+
+            // set file info to database
+            userData.photo = profileImage.filename;
+        });
+    }
 
     var mysql = connection.get();
 
@@ -288,6 +298,12 @@ function updateInfo(req, res) {
             mysql.query(query.updateAuthByID, [authData, authID], function (err, result) {
                 winston.warn('Updated user password into `auth` table record:', result);
             });
+        }
+
+        // update file associate table
+        if (params.updateProfileImage) {
+            // replace new profile photo to old one
+            
         }
 
         mysql.query(query.updateUserByUUID, [userData, UUID], function (err, result) {

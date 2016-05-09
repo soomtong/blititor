@@ -60,6 +60,7 @@ var winston = require('winston');
 var passport = require('passport');
 var moment = require('moment');
 var mkdirp = require('mkdirp');
+var uuid = require('uuid');
 
 // set log
 winston.remove(winston.transports.Console);
@@ -155,7 +156,10 @@ var storage = multer.diskStorage({
         callback(null, 'public/upload/temp');
     },
     filename: function (req, file, callback) {
-        var filename = Date.now() + '==' + file.originalname.replace(/\W+/g, '-');
+        if (!file.mimetype) return Error('Uploaded file is not Acceptable');
+
+        var arrExt = file.originalname.split('.');
+        var filename = uuid.v1() + '.' + arrExt[arrExt.length - 1];
         callback(null, filename);   //can refer file.mimetype.split('/')[1]
     }
 });
