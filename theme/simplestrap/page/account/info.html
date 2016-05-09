@@ -114,7 +114,7 @@
     $(document).ready(function () {
         $('#file').on('change', function () {
             var file = $(this).val().split('\\');
-            var fileName = file.indexOf(file.length - 1);
+            var fileName = file[file.length - 1];
             $('#file').siblings('.file-custom').addClass('file-changed').attr('data-content', fileName);
         });
     })
