@@ -104,3 +104,7 @@ body {
         border-width: .2rem;
     }
 }
+
+.user-profile-photo {
+    max-width: 200px;
+}

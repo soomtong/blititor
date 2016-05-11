@@ -214,7 +214,7 @@ function showInfo(req, res) {
         params.userInfo = userData;
         params.userInfo.created_at = moment(new Date(userData.created_at)).format('LLL');
 
-        res.render(BLITITOR.config.site.theme + '/page/account/info', params);
+        res.render(BLITITOR.config.site.theme + '/page/account/user_info', params);
     });
 }
 

@@ -25,7 +25,11 @@
                 <h4>Account Info</h4>
                 <div class="card">
                     <div class="card-block" style="min-height: 200px;">
-                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded pull-xs-right" alt="{{ userInfo.nickname }} profile">
+                        {% if userInfo.photo %}
+                        <img src="/upload/{{ userInfo.uuid }}/{{ userInfo.photo }}" class="img-rounded pull-xs-right user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        {% else %}
+                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded pull-xs-right user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        {% endif %}
                         <h5 class="card-title">{{ userInfo.nickname }}</h5>
                         <p class="card-text">
                             <span class="label label-pill label-success">{{ userInfo.level }}</span>
