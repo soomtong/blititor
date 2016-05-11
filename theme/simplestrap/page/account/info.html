@@ -25,8 +25,8 @@
                 <h4>Account Info</h4>
                 <div class="card">
                     <div class="card-block" style="min-height: 200px;">
-                        <img src="/{{site.theme}}/common/asset/photo-user1.png" class="img-rounded pull-xs-right" alt="{{userInfo.nickname}} profile">
-                        <h5 class="card-title">{{userInfo.nickname}}</h5>
+                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded pull-xs-right" alt="{{ userInfo.nickname }} profile">
+                        <h5 class="card-title">{{ userInfo.nickname }}</h5>
                         <p class="card-text">
                             <span class="label label-pill label-success">{{ userInfo.level }}</span>
                             <span class="label label-pill label-info">{{ userInfo.grant }}</span>
@@ -41,16 +41,16 @@
                 {% if message.info %}
                 {% for info in message.info %}
                 <div class="alert alert-info" role="alert">
-                    <strong>Info!</strong> {{info.msg}}
+                    <strong>Info!</strong> {{ info.msg }}
                 </div>
                 {% endfor %}
                 {% endif %}
 
                 <h4 style="margin-top: 2em;">Update</h4>
-                <form method="post" action="/account/info" enctype="multipart/form-data">
+                <form method="post" action="{{ route.account_root + route.account.updateInfo }}" enctype="multipart/form-data">
                     <fieldset class="form-group">
                         <label for="exampleInputName">Screen Name</label>
-                        <input name="nickname" type="text" class="form-control" id="exampleInputName" value="{{userInfo.nickname}}">
+                        <input name="nickname" type="text" class="form-control" id="exampleInputName" value="{{ userInfo.nickname }}">
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="exampleInputPassword1">Password</label>
@@ -67,14 +67,14 @@
                         </label>
                     </fieldset>
 
-                    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Change</button>
                 </form>
             </div>
             {% if message.error %}
             {% for error in message.error %}
             <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{error.msg}}
+                <strong>Warning!</strong> {{ error.msg }}
             </div>
             {% endfor %}
             {% endif %}

@@ -18,7 +18,7 @@
             <div class="bg-guest-form-holder">
 
                 <h4>Sign In</h4>
-                <form method="post" action="/account/login">
+                <form method="post" action="{{ route.account_root + route.account.login }}">
                     <fieldset class="form-group">
                         <label for="exampleInputEmail1">Username</label>
                         <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
@@ -34,13 +34,13 @@
                         </label>
                     </div>
 
-                    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
             {% if message.error %}
             <div class="alert alert-warning" role="alert">
-                <strong>{{message.error}}</strong>
+                <strong>{{ message.error }}</strong>
             </div>
             {% endif %}
         </div>

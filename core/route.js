@@ -3,8 +3,16 @@ var winston = require('winston');
 
 var router = express.Router();
 
+var misc = require('./lib/misc');
+var adminRoute = require('./admin/route');
+
 var middleware = require('./middleware');
 var themePackage = require('../module/' + BLITITOR.config.site.theme);
+
+var routeTable = misc.routeTable();
+
+// bind admin(manager) route
+router.use(routeTable.admin_root, adminRoute);
 
 // passport config
 var Account = require('../module/account');
@@ -12,7 +20,7 @@ var Account = require('../module/account');
 router.use(middleware.exposeParameter);
 router.use(themePackage.menu.expose);
 
-// route for each modules
+// route for Theme's module
 var routeList = themePackage.menu.data();
 
 routeList.map(function (item) {
@@ -26,7 +34,7 @@ routeList.map(function (item) {
     // winston.verbose(item);
 });
 
-// bind!
-router.use(Account.route);
+// bind global module
+router.use(routeTable.account_root, Account.route);
 
 module.exports = router;

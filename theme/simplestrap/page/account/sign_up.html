@@ -18,7 +18,7 @@
             <div class="bg-guest-form-holder">
 
                 <h4>Sign Up</h4>
-                <form method="post" action="/account/register">
+                <form method="post" action="{{ route.account_root + route.account.register }}">
                     <fieldset class="form-group">
                         <label for="exampleInputName">Screen Name</label>
                         <input name="nickname" type="text" class="form-control" id="exampleInputName" placeholder="Enter screen name">
@@ -36,14 +36,14 @@
                         <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
                     </fieldset>
 
-                    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
             </div>
             {% if message.error %}
             {% for error in message.error %}
             <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{error.msg}}
+                <strong>Warning!</strong> {{ error.msg }}
             </div>
             {% endfor %}
             {% endif %}

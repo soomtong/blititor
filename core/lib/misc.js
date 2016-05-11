@@ -1,5 +1,6 @@
 var fs = require('fs');
 var winston = require('winston');
+
 var defaultRoute = {
     "root": "/",
     "admin_root": "/admin",
@@ -8,6 +9,13 @@ var defaultRoute = {
         "database_setup": "/make-db-config",
         "database_init": "/make-db-init",
         "theme_setup": "/theme-config"
+    },
+    "account_root": "/account",
+    "account": {
+        "login": "/login",
+        "register": "/register",
+        "info": "/info",
+        "updateInfo": "/update"
     },
     "pages": []
 };

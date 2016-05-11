@@ -2,7 +2,8 @@
 //var path = require('path');
 //var winston = require('winston');
 
-var misc = require('./misc');
+var misc = require('./lib/misc');
+
 var routeTable = misc.routeTable();
 var siteThemeType = misc.siteThemeType();
 
@@ -15,6 +16,8 @@ function exposeParameter(req, res, next) {
         url: req.path
     };
     res.locals.route = routeTable;
+
+    console.log(routeTable);
 
     next();
 }

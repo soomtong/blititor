@@ -74,7 +74,7 @@ winston.add(winston.transports.Console, {
 
 // load custom library
 var common = require('./lib/common');
-var misc = require('./misc');
+var misc = require('./lib/misc');
 
 // load DB configuration
 var databaseDefault = require('./config/database_default');
@@ -125,7 +125,6 @@ moment.locale(BLITITOR.config.locale);
 var routeTable = misc.routeTable();
 
 var route = require('./route');
-var adminRoute = require('./admin/route');
 
 // ready Express
 var app = express();
@@ -223,9 +222,6 @@ var staticOptions = {
 
 app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
-
-// bind admin(manager) route
-app.use(routeTable.admin_root, adminRoute);
 
 // bind route
 app.use(route);
