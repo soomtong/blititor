@@ -17,8 +17,6 @@ function exposeParameter(req, res, next) {
     };
     res.locals.route = routeTable;
 
-    console.log(routeTable);
-
     next();
 }
 
@@ -32,5 +30,5 @@ function checkDatabaseConfig(req, res, next) {
 
 module.exports = {
     exposeParameter: exposeParameter,
-    databaseCheck: checkDatabaseConfig
+    checkDatabase: checkDatabaseConfig
 };

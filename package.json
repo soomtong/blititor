@@ -36,6 +36,7 @@
     "mkdirp": "latest"
   },
   "scripts": {
+    "setup": "node core/setup.js all",
     "start": "node core/index.js",
     "prod": "echo \"set production\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"

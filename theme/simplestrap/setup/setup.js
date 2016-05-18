@@ -126,7 +126,7 @@ blititor.dbInit = {
         var formFields = form.find('input[name=db_name]');
         var formSummitButton = form.find('button:submit');
 
-        formSummitButton.attr('disabled', true);
+        // formSummitButton.attr('disabled', true);
 
         formFields.keyup(function (e) {
             var pass = true;

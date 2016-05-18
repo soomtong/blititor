@@ -18,6 +18,7 @@ router.use(routeTable.admin_root, adminRoute);
 var Account = require('../module/account');
 
 router.use(middleware.exposeParameter);
+router.use(middleware.checkDatabase);
 router.use(themePackage.menu.expose);
 
 // route for Theme's module

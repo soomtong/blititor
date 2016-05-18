@@ -16,22 +16,24 @@ var redirect = {
     }
 };
 
-var db = connection.get();
-
 router.use(middleware.exposeParameter);
 
+/*
 router.get(routeTable.admin.install, redirect.databaseSetup);
 router.get(routeTable.admin.database_setup, middleware.checkDatabaseConfiguration, database.databaseSetupView);
 router.post(routeTable.admin.database_setup, database.databaseSetup);
 
 router.get(routeTable.admin.database_init, middleware.checkDatabaseInitialization, database.databaseInitView);
 router.post(routeTable.admin.database_init, database.databaseInit);
+*/
 
 router.get(routeTable.admin.theme_setup, theme.themeSetupView);
 router.post(routeTable.admin.theme_setup, theme.themeSetup);
 
 // utility
 router.get('/connections', function (req, res) {
+    var db = connection.get();
+
     console.log(db.client.pool.stats());
 
     res.send(db.client.pool.stats());

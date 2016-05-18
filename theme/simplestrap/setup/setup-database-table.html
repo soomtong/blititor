@@ -59,7 +59,19 @@
 <script src="/{{site.theme}}/{{site.themeType.setup}}/{{site.themeType.setup}}.js"></script>
 <script>
     $(document).ready(function () {
+        var $form = $('#database_info');
 
+        blititor.dbInit.initForm($form);
+
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            if (blititor.dbInit.checkForm()) {
+                blititor.dbInit.submitForm(blititor.dbInit.saveDone, blititor.dbInit.saveFail);
+            } else {
+                blititor.dbInit.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
+            }
+            return false;
+        });
     });
 </script>
 </body>
