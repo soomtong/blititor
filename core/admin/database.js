@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var misc = require('../lib/misc');
 var mysql = require('mysql');
 var winston = require('winston');
@@ -42,6 +43,9 @@ function databaseSetup(req, res) {
 
             fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
 
+            // load database configuration
+            BLITITOR.config.database = require(path.join('../..', databaseFile));
+
             res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-done', params);
         }
         connection.destroy();
@@ -65,6 +69,7 @@ function databaseInit(req, res) {
 
     // make database
     var connectionInfo = BLITITOR.config.database;
+    console.log(connectionInfo);
 
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,

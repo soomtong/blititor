@@ -23,7 +23,10 @@ function exposeParameter(req, res, next) {
 }
 
 function passDatabaseConfig(req, res, next) {
-    if (!BLITITOR.tweak.passDBCheckMiddleware && BLITITOR.config.database) {
+    if (BLITITOR.tweak.passDBCheckMiddleware) return next();
+
+    if (BLITITOR.config.database) {
+/*
         var databaseConfiguration = BLITITOR.config.database;
         var mysql = require('mysql');
         var connection = mysql.createConnection({
@@ -35,34 +38,47 @@ function passDatabaseConfig(req, res, next) {
         });
 
         connection.connect(function(err) {
+            console.log('pass db config');
             if (err) {
                 winston.log('invalid configuration', err);
 
                 var today = new Date().toISOString().substr(0,10);
 
+                connection.destroy();
+
                 fs.rename(path.join('.', databaseDefault.config_file), path.join('.', databaseDefault.config_file + '.' + today), function (err, data) {
                     BLITITOR.config.database = undefined;
+
                     res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
                 });
+
             } else {
-                if (BLITITOR.config.database.dbName) {
+                /!*if (BLITITOR.config.database.dbName) {
                     // check database status and scheme
-                    database.makeDefaultScheme();
+                    // database.makeDefaultScheme();
 
                     res.redirect(routeTable.admin_root + routeTable.admin.theme_setup);
                 } else {
                     res.redirect(routeTable.admin_root + routeTable.admin.database_init);
-                }
+                }*!/
+                connection.destroy();
+
+                next();
             }
-            connection.destroy();
         });
+*/
+        res.redirect(routeTable.admin_root + routeTable.admin.database_init);
+
     } else {
         next();
     }
 }
 
 function passDatabaseInit(req, res, next) {
-    if (!BLITITOR.tweak.passDBCheckMiddleware && BLITITOR.config.database) {
+    if (BLITITOR.tweak.passDBCheckMiddleware) return next();
+
+    if (!BLITITOR.config.database) {
+/*
         var databaseConfiguration = BLITITOR.config.database;
         var mysql = require('mysql');
         var connection = mysql.createConnection({
@@ -74,15 +90,20 @@ function passDatabaseInit(req, res, next) {
         });
 
         connection.connect(function(err) {
+            console.log('pass db init');
             if (err) {
+                winston.error("database connection failed. then move to re-make config file");
                 res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
             } else {
                 next();
             }
             connection.destroy();
         });
-    } else {
+*/
         res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
+
+    } else {
+        next();
     }
 }
 module.exports = {

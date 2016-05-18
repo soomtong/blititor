@@ -31,7 +31,7 @@
 
             <form id="theme_list" method="post" action="{{site.url}}">
                 <div class="row">
-                        {% for theme in themeList %}
+                    {% for theme in themeList %}
                     <div class="col-md-4 col-sm-6">
                         <div class="card" title="{{ theme.folderName }}">
                             <img class="card-img-top img-fluid" src="/{{theme.folderName}}/screenshot.jpg" alt="{{ theme.folderName }}">
@@ -100,7 +100,7 @@
     });
     $(document).ready(function () {
         // template page tweaks
-        common.setMaxHeight($('.card'));
+//        common.setMaxHeight($('.card'));
     });
 </script>
 </body>

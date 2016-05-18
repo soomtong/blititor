@@ -6,7 +6,7 @@ var common = require('./common');
 var connection = initConnection();
 
 function initConnection() {
-    winston.warn('Access database connection');
+    winston.info('Access database connection');
 
     var databaseConfiguration = BLITITOR.config.database;
     var instance;

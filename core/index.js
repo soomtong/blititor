@@ -85,6 +85,7 @@ try {
     fs.accessSync(databaseFile, fs.R_OK);
 
     BLITITOR.config.database = require(path.join('..', databaseFile));
+    winston.warn('database config file loaded');
 } catch (e) {
     winston.warn('database config file not exist');
 }
@@ -204,6 +205,8 @@ if (databaseConfiguration) {
     });
 
     sessionOptions.store = sessionStore;
+} else {
+    winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");
 }
 
 // init session
@@ -251,6 +254,7 @@ app.use(function(err, req, res, next){
     // we may use properties of the error object
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
+    winston.error(err);
     res.status(err.status || 500);
     res.render('../theme/simplestrap/page/_500', { error: err });
 });
