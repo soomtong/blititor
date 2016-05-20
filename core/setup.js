@@ -13,12 +13,13 @@ blititor> node core/setup init
 blititor> node core/setup template
 */
 
-var params = process.argv;
-
-console.log(params[2]);
+var params = process.argv[2];
 
 var prompt = require('prompt');
+var colors = require('colors');
 var async = require('neo-async');
+
+prompt.message = colors.green("Blititor");
 
 switch (params) {
     case 'config':
@@ -27,7 +28,7 @@ switch (params) {
     case 'init':
         makeDatabaseTable();
         break;
-    case 'templage':
+    case 'template':
         makeThemeConfigFile();
         makeThemeTemplage();
         break;
@@ -40,16 +41,15 @@ switch (params) {
 }
 
 function makeDatabaseConfigFile() {
-    console.log('=== make database config file ===');
-
     prompt.start();
+    console.log(" = Make database configuration".rainbow);
 
     var configScheme = {
         properties: {
             db_host: {
                 description: 'Enter mysql(maria) host',
                 type: 'string',
-                pattern: /^\w+$/,
+                pattern: /^(?!(https?:\/\/))\w+.+$/,
                 message: 'Host name must be only letters',
                 required: true
             },
