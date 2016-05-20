@@ -19,6 +19,12 @@ var prompt = require('prompt');
 var colors = require('colors');
 var async = require('neo-async');
 
+var fs = require('fs');
+var path = require('path');
+var mysql = require('mysql');
+
+var common = require('./lib/common');
+
 prompt.message = colors.green("Blititor");
 
 switch (params) {
@@ -41,8 +47,9 @@ switch (params) {
 }
 
 function makeDatabaseConfigFile() {
-    prompt.start();
     console.log(" = Make database configuration".rainbow);
+
+    prompt.start();
 
     var configScheme = {
         properties: {
@@ -88,14 +95,41 @@ function makeDatabaseConfigFile() {
     };
 
     prompt.get(configScheme, function (err, result) {
-        // 
-        // Log the results. 
-        // 
-        console.log('Command-line input received:');
-        console.log(result);
+        var params = {
+            dbHost: result['db_host'],
+            dbPort: result['db_port'] || common.databaseDefault.port,
+            dbName: result['db_name'],
+            dbUserID: result['db_user_id'],
+            dbUserPassword: result['db_user_password']
+        };
+
+        var connection = mysql.createConnection({
+            host: params.dbHost,
+            port: params.dbPort || common.databaseDefault.port,
+            database: params.dbName || undefined,
+            user: params.dbUserID,
+            password: params.dbUserPassword
+        });
+
+        connection.connect(function(err) {
+            console.log(' = Verify configuration data...'.blue);
+
+            if (err) {
+                console.log(' = Verify configuration data... Failed'.red);
+
+                console.error('error connecting: ' + err.stack);
+            } else {
+                // save params to database.json
+                var databaseFile = common.databaseDefault.config_file;
+
+                fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
+
+                console.log(' = Verify configuration data... Done'.green);
+            }
+            
+            connection.destroy();
+        });
     });
-
-
 }
 
 function makeDatabaseTable() {
