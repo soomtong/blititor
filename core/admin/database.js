@@ -1,123 +1,9 @@
-var fs = require('fs');
-var path = require('path');
-var misc = require('../lib/misc');
 var mysql = require('mysql');
 var winston = require('winston');
 
 var common = require('../lib/common');
 
-//view page for routeTable.admin_root.database_setup
-function databaseSetupView(req, res) {
-    var params = {
-
-    };
-
-    // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-database', params);
-}
-
-function databaseSetup(req, res) {
-    var params = {
-        dbHost: req.body['db_host'],
-        dbPort: req.body['db_port'] || common.databaseDefault.port,
-        dbName: req.body['db_name'],
-        dbUserID: req.body['db_user_id'],
-        dbUserPassword: req.body['db_user_password']
-    };
-
-    var connection = mysql.createConnection({
-        host: params.dbHost,
-        port: params.dbPort || common.databaseDefault.port,
-        database: params.dbName || undefined,
-        user: params.dbUserID,
-        password: params.dbUserPassword
-    });
-
-    connection.connect(function(err) {
-        if (err) {
-            winston.error('error connecting: ' + err.stack);
-            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
-        } else {
-            // save params to database.json
-            var databaseFile = common.databaseDefault.config_file;
-
-            fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
-
-            // load database configuration
-            BLITITOR.config.database = require(path.join('../..', databaseFile));
-
-            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-done', params);
-        }
-        connection.destroy();
-    });
-}
-
-//view page for routeTable.admin_root.database_init
-function databaseInitView(req, res) {
-    var params = {
-
-    };
-
-    // load theme folder as it's condition
-    res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/setup-database-table', params);
-}
-
-function databaseInit(req, res) {
-    var params = {
-        dbName: req.body['db_name'] || common.databaseDefault.database
-    };
-
-    // make database
-    var connectionInfo = BLITITOR.config.database;
-    console.log(connectionInfo);
-
-    var connection = mysql.createConnection({
-        host: connectionInfo.dbHost,
-        port: connectionInfo.dbPort || common.databaseDefault.port,
-        database: connectionInfo.dbName,
-        user: connectionInfo.dbUserID,
-        password: connectionInfo.dbUserPassword
-    });
-
-    connection.connect(function(err) {
-        if (err) {
-            winston.error('error connecting: ' + err.stack);
-            res.render(res.locals.site.theme + '/' + res.locals.site.themeType.setup + '/partial/setup-database-error', params);
-        } else {
-            // make database by given name
-            var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';
-            connection.query(sql, [params.dbName, 'utf8'], function (err, results) {
-                BLITITOR.config.database.dbName = params.dbName;
-
-                connection.destroy();
-
-                // if has argument then execute callback
-                makeDefaultScheme({});
-
-                res.redirect(res.locals.route.admin_root + res.locals.route.admin.theme_setup);
-            });
-        }
-    });
-}
-
-function makeDefaultScheme(options) {
-    if (!options) options = { reset: false };
-
-    var databaseConfiguration = BLITITOR.config.database;
-    winston.info('== make default scheme. here we go! \n', databaseConfiguration, '\n', common.databaseDefault);
-
-    if (options.reset) {
-        deleteScheme(createScheme);
-    } else {
-        createScheme();
-    }
-}
-
-function deleteScheme(callback) {
-    winston.info('-- drop exist tables --');
-
-    var databaseConfiguration = BLITITOR.config.database;
-
+function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -131,15 +17,11 @@ function deleteScheme(callback) {
 
     connection.query(sql, tables, function (error, results, fields) {
         connection.destroy();
-        callback();
+        callback(databaseConfiguration);
     });
 }
 
-function createScheme() {
-    winston.info('-- make tables if not exist --');
-
-    var databaseConfiguration = BLITITOR.config.database;
-
+function createScheme(databaseConfiguration) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -205,9 +87,6 @@ function createScheme() {
 }
 
 module.exports = {
-    databaseSetupView: databaseSetupView,
-    databaseSetup: databaseSetup,
-    databaseInitView: databaseInitView,
-    databaseInit: databaseInit,
-    makeDefaultScheme: makeDefaultScheme
+    deleteScheme: deleteScheme,
+    createScheme: createScheme
 };
