@@ -10,6 +10,7 @@ var path = require('path');
 var mysql = require('mysql');
 
 var database = require('./admin/database');
+var theme = require('./admin/theme');
 var common = require('./lib/common');
 
 var databaseFile = common.databaseDefault['config_file'];
@@ -26,8 +27,10 @@ switch (params) {
     case 'reset':
         makeDatabaseTable({reset: true});
         break;
-    case 'template':
+    case 'theme':
         makeThemeConfigFile();
+        break;
+    case 'template':
         makeThemeTemplate();
         break;
     case 'all':
@@ -203,7 +206,40 @@ function makeDatabaseTable(done) {
 }
 
 function makeThemeConfigFile() {
+    console.log(" = Make Theme configuration \n".rainbow);
 
+    theme.getThemeList('theme', function (themeList) {
+        console.log('');
+
+        prompt.start();
+
+        var description = themeList.map(function (item, idx) {
+            return "\n " + (idx + 1) + ". " +
+                (item.description.title || '무제') +
+                "(" + (item.folderName || '') + ")\n" +
+                (item.description.quote || '설명이 없습니다.') + "\n" +
+                (item.description.credit || '제작자 불분명');
+        });
+
+        var configScheme = {
+            properties: {
+                ask: {
+                    description: "테마를 골라주세요...".white + description.join('\n') + "\n 선택".green,
+                    default: '3',
+                    type: 'integer',
+                    pattern: /^[0-9]+$/,
+                    message: 'Port number must be only number',
+                    required: true
+                }
+            }
+        };
+
+        prompt.get(configScheme, function (err, result) {
+            console.log(result);
+            
+            
+        });
+    });
 }
 
 function makeThemeTemplate() {

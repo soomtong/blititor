@@ -51,9 +51,11 @@ function getThemeList(themeFolder, callback) {
 }
 
 function getThemeInfo(directory, done) {
-    var getScreenshot = function (done) {
+    console.log(' = Processed directory...', directory);
+
+    function getScreenshot(done) {
         var screenshot;
-        var file = BLITITOR.root + 'theme/' + directory + '/screenshot.jpg';
+        var file = 'theme/' + directory + '/screenshot.jpg';
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);
@@ -62,10 +64,11 @@ function getThemeInfo(directory, done) {
             }
             done(null, screenshot);
         });
-    };
-    var getDescription = function (done) {
+    }
+    
+    function getDescription(done) {
         var description = {}, md;
-        var file = BLITITOR.root + 'theme/' + directory + '/description.md';
+        var file = 'theme/' + directory + '/description.md';
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);
@@ -75,7 +78,7 @@ function getThemeInfo(directory, done) {
             }
             done(null, description);
         });
-    };
+    }
 
     async.parallel([getScreenshot, getDescription], function (error, result) {
         var themeInfo = {
@@ -93,7 +96,5 @@ function makeDefaultThemeConfiguration(options) {
 }
 
 module.exports = {
-    themeSetupView: themeSetupView,
-    themeSetup: themeSetup,
-    makeDefaultThemeConfiguration: makeDefaultThemeConfiguration
+    getThemeList: getThemeList,
 };
