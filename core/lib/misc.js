@@ -5,6 +5,7 @@ var defaultRoute = {
     "root": "/",
     "admin_root": "/admin",
     "admin": {
+        "login": "/login",
         "install": "/install",
         "database_setup": "/make-db-config",
         "database_init": "/make-db-init",

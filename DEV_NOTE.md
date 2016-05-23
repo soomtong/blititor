@@ -10,6 +10,25 @@ today, site id removed, no site id exist. it's not necessary for that blititor t
 use just another database and node.js application for each service.
 it's more concise.
 
+### make db stuffs
+
+use just cli command. it is more convenience for developers and do not have a session trouble. it's not `php`
+blititor is not suitable for every one who is not a web developer.
+
+```
+blititor> node core/setup
+```
+or
+```
+blititor> node core/setup all
+```
+is equals
+```
+blititor> node core/setup config
+blititor> node core/setup init
+blititor> node core/setup template
+```
+
 ## Convention
 
 ### file name

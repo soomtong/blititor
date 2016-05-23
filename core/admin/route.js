@@ -11,8 +11,8 @@ var router = express.Router();
 var routeTable = misc.routeTable();
 
 var redirect = {
-    databaseSetup: function (req, res) {
-        res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
+    login: function (req, res) {
+        res.redirect(routeTable.admin_root + routeTable.admin.login);
     }
 };
 

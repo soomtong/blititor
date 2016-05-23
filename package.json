@@ -20,6 +20,7 @@
     "knex": "^0.9.0",
     "lusca": "^1.3.0",
     "method-override": "^2.3.5",
+    "mkdirp": "latest",
     "moment": "^2.13.0",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
@@ -28,12 +29,13 @@
     "nunjucks": "^2.4.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "prompt": "^1.0.0",
     "semver": "^5.0.3",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.3.6",
     "uuid": "^2.0.2",
     "winston": "^2.1.1",
-    "mkdirp": "latest"
+    "colors": "latest"
   },
   "scripts": {
     "setup": "node core/setup.js all",
