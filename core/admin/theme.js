@@ -84,7 +84,8 @@ function getThemeInfo(directory, done) {
         var themeInfo = {
             folderName: directory,
             screenshot: result[0],
-            description: result[1]
+            description: result[1],
+            included: ['A', 'M', 'S']   // admin, manage, site 
         };
 
         done(null, themeInfo);

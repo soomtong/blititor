@@ -235,9 +235,17 @@ function makeThemeConfigFile() {
         };
 
         prompt.get(configScheme, function (err, result) {
-            console.log(result);
-            
-            
+            console.log(result, themeList[result.ask - 1].folderName);
+
+            var themeData = {
+                "setupTheme": "simplestrap",
+                "adminTheme": "simplestrap",
+                "manageTheme": "simplestrap",
+                "siteTheme": themeList[result.ask - 1].folderName || "simplestrap"
+            };
+
+            fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
+
         });
     });
 }
