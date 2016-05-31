@@ -17,6 +17,9 @@ var databaseFile = common.databaseDefault['config_file'];
 
 prompt.message = colors.green(" B");
 
+// todo: refactor for each module's CLI config process, that exposed each
+// or just go in to a web interface except these setups.
+// register new module then admin get noticed by file system or something others
 switch (params) {
     case 'config':
         makeDatabaseConfigFile();
@@ -33,14 +36,27 @@ switch (params) {
     case 'template':
         makeThemeTemplate();
         break;
+    case 'admin':
+        makeAdminAccount();
+        break;
     case 'all':
-    default:
-        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeThemeTemplate];
+        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
-            console.log(res); // [1, 2, 3, 4];
-            console.log(order); // [1, 2, 3, 4]
+            console.log(res);
         });
+
+        break;
+    default:
+        console.log(" = run setup script by each configuration \n".rainbow);
+        console.log(" > node core/setup config".white);
+        console.log(" > node core/setup init".white);
+        console.log(" or ( > node core/setup reset ) for reset".white);
+        console.log(" > node core/setup theme".white);
+        console.log(" > node core/setup template".white);
+        console.log(" > node core/setup admin \n".white);
+        console.log(" or \n".gray);
+        console.log(" > node core/setup all \n".white);
 }
 
 function makeDatabaseConfigFile(done) {
@@ -251,5 +267,23 @@ function makeThemeConfigFile() {
 }
 
 function makeThemeTemplate() {
+    console.log(" = Make Theme template data \n".rainbow);
+
+    // load theme config file
+
+    // load theme data from sql text
+
+    // prompt action
+
+    // dump theme data to database
+
+}
+
+function makeAdminAccount() {
+    console.log(" = Make Administrator account \n".rainbow);
+
+    // prompt id and password
+
+    // save administrator account to user table
 
 }
