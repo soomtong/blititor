@@ -1,9 +1,8 @@
 {
-  "selectUserByID": "SELECT ?? FROM ?? WHERE `id` = ?",
-  "selectUserByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
-  "selectAuthByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
-  "insertIntoAuth": "INSERT INTO ?? SET ?",
-  "insertIntoUser": "INSERT INTO ?? SET ?",
-  "updateAuthByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "updateUserByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
+  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
+  "insertInto": "INSERT INTO ?? SET ?",
+  "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "updateByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
 }
