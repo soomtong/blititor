@@ -1,10 +1,10 @@
 var uuid = require('uuid');
 
 var databaseTables = {
-    user: 'user',
-    auth: 'auth',
-    site: 'site',
-    point: 'point'
+    user: 'b_user',
+    auth: 'b_auth',
+    site: 'b_site',
+    point: 'b_point'
 };
 
 function destructMarkdown(markdownText) {

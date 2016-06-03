@@ -119,7 +119,7 @@ function makeDatabaseConfigFile(done) {
         var connection = mysql.createConnection({
             host: params.dbHost,
             port: params.dbPort || common.databaseDefault.port,
-            database: params.dbName || undefined,
+            // database: params.dbName || undefined,
             user: params.dbUserID,
             password: params.dbUserPassword
         });
@@ -137,9 +137,9 @@ function makeDatabaseConfigFile(done) {
                 fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
 
                 console.log(' = Verify configuration data... Done \n'.green);
-            }
 
-            connection.destroy();
+                database.createDatabase(connection, params.dbName);
+            }
 
             if (done && typeof done === 'function') done(null, 'step 1 callback');
         });
@@ -283,7 +283,104 @@ function makeAdminAccount() {
     console.log(" = Make Administrator account \n".rainbow);
 
     // prompt id and password
+    prompt.start();
 
-    // save administrator account to user table
+    var configScheme = {
+        properties: {
+            id: {
+                description: "관리자 아이디를 입력해주세요...".white,
+                default: 'admin',
+                type: 'string',
+                message: 'Password must be letters',
+                required: true
+            },
+            password: {
+                description: 'Enter administrator password',
+                type: 'string',
+                message: 'Password must be letters',
+                hidden: true,
+                replace: '*',
+                required: true
+            }
+        }
+    };
 
+    prompt.get(configScheme, function (err, result) {
+        var bcrypt = require('bcrypt');
+        var query = require('../module/account/lib/query');
+
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(result.password, salt);
+
+        var authData = {
+            user_id: result.id,
+            user_password: hash
+        };
+
+        // save administrator account to user table
+        var connectionInfo = require(path.join('..', databaseFile));
+
+        var connection = mysql.createConnection({
+            host: connectionInfo.dbHost,
+            port: connectionInfo.dbPort || common.databaseDefault.port,
+            database: connectionInfo.dbName || common.databaseDefault.database,
+            user: connectionInfo.dbUserID,
+            password: connectionInfo.dbUserPassword
+        });
+
+        connection.connect(function (error) {
+            if (error) {
+                console.log(' = Verify connection parameters... Failed'.red);
+
+                connection.destroy();
+
+                console.error('error connecting: ' + err.stack);
+            } else {
+                console.log(' = Make administrator account...'.blue);
+
+                // make database by given name
+                connection.query(query.insertIntoAuth, [common.tables.auth, authData], function (err, result) {
+                    if (err) {
+                        console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
+
+                        connection.destroy();
+
+                        return;
+                    }
+
+                    var auth_id = result['insertId'];
+
+                    console.log(' = New Auth ID Generated...', auth_id);
+
+                    // save to user table
+                    var userData = {
+                        uuid: common.UUID4(),
+                        auth_id: auth_id,
+                        nickname: '관리자',
+                        level: 9,
+                        grant: 'A',
+                        login_counter: 1,
+                        last_logged_at: new Date(),
+                        created_at: new Date()
+                    };
+
+                    connection.query(query.insertIntoUser, [common.tables.user, userData], function (err, result) {
+                        if (err) {
+                            console.log(' = 관리자 계정 정보 저장에 실패했습니다.'.red);
+
+                            connection.destroy();
+
+                            return;
+                        }
+
+                        var id = result['insertId'];
+
+                        console.log(' = New User ID Generated...', id);
+
+                        connection.destroy();
+                    });
+                });
+            }
+        });
+    });
 }
