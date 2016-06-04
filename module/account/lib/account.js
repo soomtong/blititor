@@ -17,6 +17,11 @@ function findByID(id, callback) {
     var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
 
     mysql.query(query.selectByID, [field, common.tables.user, id], function (err, rows) {
+        if (err || !rows) {
+            // return Error("Can't Find by This UUID");
+            return callback(err, null);
+        }
+
         callback(null, rows[0]);
     });
 }
@@ -27,6 +32,11 @@ function findByUUID(UUID, callback) {
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
     mysql.query(query.selectByUUID, [field, common.tables.user, UUID], function (err, rows) {
+        if (err || !rows) {
+            // return Error("Can't Find by This UUID");
+            return callback(err, null);
+        }
+
         callback(err, rows[0]);
     });
 }
@@ -36,7 +46,13 @@ function authByUserID(userID, callback) {
 
     var field = ['id', 'user_id', 'user_password'];
 
-    mysql.query(query.selectByUserID, [field, common.tables.user, userID], function (err, rows) {
+    mysql.query(query.selectByUserID, [field, common.tables.auth, userID], function (err, rows) {
+        if (err || !rows) {
+            // return Error("Can't Auth by This userID");
+            return callback(err, null);
+
+        }
+
         callback(err, rows[0]);
     });
 }
