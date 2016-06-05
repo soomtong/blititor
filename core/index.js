@@ -201,7 +201,10 @@ if (databaseConfiguration) {
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
         database: databaseConfiguration.dbName || common.databaseDefault.database,
         user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
+        password: databaseConfiguration.dbUserPassword,
+        schema: {
+            tableName: 'b_session'
+        }
     });
 
     sessionOptions.store = sessionStore;

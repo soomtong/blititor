@@ -288,8 +288,8 @@ function makeAdminAccount() {
     var configScheme = {
         properties: {
             id: {
-                description: "관리자 아이디를 입력해주세요...".white,
-                default: 'admin',
+                description: "관리자 아이디를 입력해주세요... (E-Mail 형태를 사용합니다.)".white,
+                default: 'admin@blititor.com',
                 type: 'string',
                 message: 'Password must be letters',
                 required: true
