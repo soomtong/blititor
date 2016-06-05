@@ -85,7 +85,7 @@ try {
     fs.accessSync(databaseFile, fs.R_OK);
 
     BLITITOR.config.database = require(path.join('..', databaseFile));
-    winston.warn('database config file loaded');
+    winston.info('database config file loaded');
 } catch (e) {
     winston.warn('database config file not exist');
 }
@@ -127,7 +127,7 @@ var routeTable = misc.routeTable();
 
 var route = require('./route');
 
-// ready Express
+// ready Express server
 var app = express();
 
 // set express app
@@ -194,19 +194,34 @@ var sessionOptions = {
     resave: true,
     saveUninitialized: true
 };
+/*
+var storeOption = {
+    autoReconnect: true,
+    useConnectionPooling: true,
+    schema: {
+        tableName: 'b_session'
+    }
+};
+*/
 
 if (databaseConfiguration) {
+
     sessionStore = new mysqlStore({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
         database: databaseConfiguration.dbName || common.databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword,
+        autoReconnect: false,
+        useConnectionPooling: true,
         schema: {
             tableName: 'b_session'
         }
     });
 
+    // var connection = require('./lib/connection');
+
+    // sessionStore = new mysqlStore(storeOption);
     sessionOptions.store = sessionStore;
 } else {
     winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");

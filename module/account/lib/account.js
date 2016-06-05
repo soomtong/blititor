@@ -16,13 +16,15 @@ function findByID(id, callback) {
 
     var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
 
-    mysql.query(query.selectByID, [field, common.tables.user, id], function (err, rows) {
-        if (err || !rows) {
-            // return Error("Can't Find by This UUID");
-            return callback(err, null);
-        }
+    connection.get(function (mysql) {
+        mysql.query(query.selectByID, [field, common.tables.user, id], function (err, rows) {
+            if (err || !rows) {
+                // return Error("Can't Find by This UUID");
+                return callback(err, null);
+            }
 
-        callback(null, rows[0]);
+            callback(null, rows[0]);
+        });
     });
 }
 

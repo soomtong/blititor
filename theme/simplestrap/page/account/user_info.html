@@ -26,9 +26,9 @@
                 <div class="card">
                     <div class="card-block" style="min-height: 200px;">
                         {% if userInfo.photo %}
-                        <img src="/upload/{{ userInfo.uuid }}/{{ userInfo.photo }}" class="img-rounded pull-xs-right user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        <img src="/upload/{{ userInfo.uuid }}/{{ userInfo.photo }}" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
                         {% else %}
-                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded pull-xs-right user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
                         {% endif %}
                         <h5 class="card-title">{{ userInfo.nickname }}</h5>
                         <p class="card-text">

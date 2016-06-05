@@ -1,5 +1,5 @@
 var winston = require('winston');
-var driver = require('mysql');
+var MySQLConnectionManager = require('mysql-connection-manager');
 
 var common = require('./common');
 
@@ -14,13 +14,32 @@ function initConnection() {
     function createInstance() {
         winston.warn('Get database connection by new one');
 
-        return driver.createConnection({
+        var manager = new MySQLConnectionManager({
             host: databaseConfiguration.dbHost,
             port: databaseConfiguration.dbPort || common.databaseDefault.port,
             database: databaseConfiguration.dbName || common.databaseDefault.database,
             user: databaseConfiguration.dbUserID,
-            password: databaseConfiguration.dbUserPassword
+            password: databaseConfiguration.dbUserPassword,
+            pool: {
+                maxConnections: 50,
+                maxIdleTime: 30
+            }
         });
+
+        manager.on('connect', function(connection) {
+            console.log('\n데이터베이스 커넥션 완료:');
+        });
+
+        manager.on('error', function (err) {
+            console.log('\n데이터베이스 커넥션 에러:', err);
+            if (err.code == 'PROTOCOL_CONNECTION_LOST') {
+                console.error('커넥션 로스트!!!\n');
+            } else {
+                throw err;
+            }
+        });
+
+        return manager;
     }
 
     return {
