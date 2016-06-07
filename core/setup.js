@@ -309,8 +309,7 @@ function makeAdminAccount() {
         var bcrypt = require('bcrypt');
         var query = require('../module/account/lib/query');
 
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(result.password, salt);
+        var hash = bcrypt.hashSync(result.password, common.salt());
 
         var authData = {
             user_id: result.id,

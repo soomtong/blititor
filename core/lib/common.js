@@ -1,4 +1,5 @@
 var uuid = require('uuid');
+var bcrypt = require('bcrypt');
 
 var databaseTables = {
     user: 'b_user',
@@ -58,12 +59,16 @@ function errorFormatter(param, msg, value) {
     };
 }
 
-function uuid1() {
+function getUUID1() {
     return uuid.v1();
 }
 
-function uuid4() {
+function getUUID4() {
     return uuid.v4();
+}
+
+function getSalt() {
+    return bcrypt.genSaltSync(10);
 }
 
 module.exports = {
@@ -71,8 +76,9 @@ module.exports = {
     destructMarkdown: destructMarkdown,
     regexFilter: regexFilter,
     randomString: randomString,
-    UUID1: uuid1,
-    UUID4: uuid4,
+    UUID1: getUUID1,
+    UUID4: getUUID4,
+    salt: getSalt,
     testUser: {
         id: 123412341234,
         username: 'soomtong@gmail.com',

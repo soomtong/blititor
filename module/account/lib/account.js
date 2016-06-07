@@ -9,8 +9,6 @@ var connection = require('../../../core/lib/connection');
 
 var query = require('./query');
 
-var salt = bcrypt.genSaltSync(10);
-
 function findByID(id, callback) {
     var mysql = connection.get();
 
@@ -70,7 +68,7 @@ function saveRememberMeToken(token, uid, fn) {
 }
 
 function authenticate(userID, password, done) {
-    var hash = bcrypt.hashSync(password, salt);
+    var hash = bcrypt.hashSync(password, common.salt());
 
     authByUserID(userID, function (err, auth) {
         if (err) {
@@ -148,7 +146,7 @@ function register(req, res) {
         return res.redirect('back');
     }
 
-    var hash = bcrypt.hashSync(req.body.password, salt);
+    var hash = bcrypt.hashSync(req.body.password, common.salt());    
 
     var authData = {
         user_id: req.body.email,
