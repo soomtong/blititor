@@ -16,6 +16,7 @@ router.use(routeTable.admin_root, adminRoute);
 
 // passport config
 var Account = require('../module/account');
+var Guestbook = require('../module/guestbook');
 
 router.use(middleware.exposeParameter);
 router.use(middleware.checkDatabase);
@@ -37,5 +38,6 @@ routeList.map(function (item) {
 
 // bind global module
 router.use(routeTable.account_root, Account.route);
+router.use(routeTable.account_root, Guestbook.route);
 
 module.exports = router;

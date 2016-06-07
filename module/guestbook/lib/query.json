@@ -1,0 +1,8 @@
+{
+  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
+  "insertInto": "INSERT INTO ?? SET ?",
+  "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "updateByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
+}

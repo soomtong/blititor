@@ -18,19 +18,23 @@
             <div class="bg-guest-form-holder">
 
                 <h4>Guest Book</h4>
-                <form>
+                <form method="post" action="{{ route.guestbook_root + route.guestbook.register }}">
                     <fieldset class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email">
                         <small class="text-muted">We'll never share your email with anyone else.</small>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="exampleTextarea">Example textarea</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                        <label for="nickname">Nickname</label>
+                        <input type="password" class="form-control" id="nickname" placeholder="Anonymous">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="exampleTextarea">Message</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="4"></textarea>
                     </fieldset>
                     <div class="checkbox">
                         <label>

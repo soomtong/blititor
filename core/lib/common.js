@@ -5,7 +5,8 @@ var databaseTables = {
     user: 'b_user',
     auth: 'b_auth',
     site: 'b_site',
-    point: 'b_point'
+    point: 'b_point',
+    guestbook: 'b_guestbook'
 };
 
 var salt = bcrypt.genSaltSync(10);

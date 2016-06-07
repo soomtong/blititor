@@ -30,6 +30,9 @@ switch (params) {
     case 'reset':
         makeDatabaseTable({reset: true});
         break;
+    case 'init-guestbook':
+        makeGuestbook();
+        break;
     case 'theme':
         makeThemeConfigFile();
         break;
@@ -219,6 +222,16 @@ function makeDatabaseTable(done) {
             });
         }
     });
+}
+
+function makeGuestbook() {
+    console.log(" = Make database tables for guestbook module \n".rainbow);
+
+    var connectionInfo = require(path.join('..', databaseFile));
+
+    var guestbook = require('../module/guestbook/lib/database');
+
+    guestbook.createScheme(connectionInfo);
 }
 
 function makeThemeConfigFile() {
