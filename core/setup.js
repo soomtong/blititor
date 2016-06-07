@@ -306,10 +306,9 @@ function makeAdminAccount() {
     };
 
     prompt.get(configScheme, function (err, result) {
-        var bcrypt = require('bcrypt');
         var query = require('../module/account/lib/query');
 
-        var hash = bcrypt.hashSync(result.password, common.salt());
+        var hash = common.hash(result.password);
 
         var authData = {
             user_id: result.id,

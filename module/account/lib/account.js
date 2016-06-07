@@ -1,5 +1,4 @@
 var fs = require('fs');
-var bcrypt = require('bcrypt');
 var mkdirp = require('mkdirp');
 var moment = require('moment');
 var winston = require('winston');
@@ -68,7 +67,7 @@ function saveRememberMeToken(token, uid, fn) {
 }
 
 function authenticate(userID, password, done) {
-    var hash = bcrypt.hashSync(password, common.salt());
+    var hash = common.hash(password);
 
     authByUserID(userID, function (err, auth) {
         if (err) {
@@ -146,7 +145,7 @@ function register(req, res) {
         return res.redirect('back');
     }
 
-    var hash = bcrypt.hashSync(req.body.password, common.salt());    
+    var hash = common.hash(req.body.password);
 
     var authData = {
         user_id: req.body.email,

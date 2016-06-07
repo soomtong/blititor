@@ -8,6 +8,8 @@ var databaseTables = {
     point: 'b_point'
 };
 
+var salt = bcrypt.genSaltSync(10);
+
 function destructMarkdown(markdownText) {
     var title = markdownText.toString().match(/^##[^#].+/m)[0].trim();
     var quote = markdownText.toString().match(/^>.+/m)[0].trim();
@@ -67,8 +69,8 @@ function getUUID4() {
     return uuid.v4();
 }
 
-function getSalt() {
-    return bcrypt.genSaltSync(10);
+function getHash(password) {
+    return bcrypt.hashSync(password, salt);
 }
 
 module.exports = {
@@ -78,7 +80,7 @@ module.exports = {
     randomString: randomString,
     UUID1: getUUID1,
     UUID4: getUUID4,
-    salt: getSalt,
+    hash: getHash,
     testUser: {
         id: 123412341234,
         username: 'soomtong@gmail.com',
