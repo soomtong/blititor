@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include './include/header.html' %}
+    {% include '../include/header.html' %}
 </head>
 <body>
 
 <div class="container">
     <div class="header clearfix">
 
-        {% include './include/menu.html' %}
+        {% include '../include/menu.html' %}
 
         <h3 class="text-muted">Blititor</h3>
     </div>
@@ -41,10 +41,19 @@
                             <input type="checkbox"> Hidden
                         </label>
                     </div>
+
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
 
             </div>
+            {% if message.error %}
+            {% for error in message.error %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Warning!</strong> {{ error.msg }}
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 
@@ -77,7 +86,7 @@
         </div>
     </div>
 
-    {% include './include/footer.html' %}
+    {% include '../include/footer.html' %}
 
 </div>
 <!-- Bootstrap core JavaScript

@@ -136,9 +136,7 @@ function register(req, res) {
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
     req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
-
-    req.sanitize('nickname').escape();
-
+    
     var errors = req.validationErrors();
 
     if (errors) {
@@ -146,6 +144,8 @@ function register(req, res) {
         return res.redirect('back');
     }
 
+    req.sanitize('nickname').escape();
+    
     var hash = common.hash(req.body.password);
 
     var authData = {
@@ -217,7 +217,9 @@ function register(req, res) {
 }
 
 function showInfo(req, res) {
-    var params = {};
+    var params = {
+        title: '정보수정'
+    };
 
     findByUUID(req.user.uuid, function (error, userData) {
         if (error) {
@@ -251,9 +253,7 @@ function updateInfo(req, res) {
         params.updatePassword = true;
         params.password = common.hash(req.body.password);
     }
-
-    req.sanitize('nickname').escape();
-
+    
     var errors = req.validationErrors();
 
     if (errors) {
@@ -262,6 +262,8 @@ function updateInfo(req, res) {
         return res.redirect('back');
     }
 
+    req.sanitize('nickname').escape();
+    
     var UUID = req.user.uuid;
 
     if (!UUID) {

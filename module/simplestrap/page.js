@@ -62,7 +62,6 @@ function signOut(req, res) {
 module.exports = {
     index: index,
     blog: site.pages,
-    guest: site.pages,
     about: site.pages,
     write: site.pages,
     pages: site.pages,

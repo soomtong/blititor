@@ -7,20 +7,31 @@ var connection = require('../../../core/lib/connection');
 
 var query = require('./query');
 
+function guestbookForm(req, res) {
+    var params = {
+        title: '방명록'
+    };
+
+    console.log(res.locals.message);
+
+    res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
+}
+
 function register(req, res) {
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
     req.assert('message', 'message is required').len(10).withMessage('Must be 10 chars over').notEmpty();
-
-    req.sanitize('nickname').escape();
-    req.sanitize('message').escape();
-
+    
     var errors = req.validationErrors();
 
     if (errors) {
+        console.log(errors);
         req.flash('error', errors);
         return res.redirect('back');
     }
+
+    req.sanitize('nickname').escape();
+    req.sanitize('message').escape();
 
     var hash = common.hash(req.body.password);
 
@@ -52,5 +63,6 @@ function register(req, res) {
 }
 
 module.exports = {
+    guestbook: guestbookForm,
     register: register
 };

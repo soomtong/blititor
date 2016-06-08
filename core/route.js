@@ -27,10 +27,12 @@ var routeList = themePackage.menu.data();
 
 routeList.map(function (item) {
     // expose middleware for each
-    if (item.middleware.length) {
-        router[item.type](item.url, item.middleware, themePackage.page[item.page]);
-    } else {
-        router[item.type](item.url, themePackage.page[item.page]);
+    if (item.route) {
+        if (item.middleware.length) {
+            router[item.type](item.url, item.middleware, themePackage.page[item.page]);
+        } else {
+            router[item.type](item.url, themePackage.page[item.page]);
+        }
     }
 
     // winston.verbose(item);
@@ -38,6 +40,6 @@ routeList.map(function (item) {
 
 // bind global module
 router.use(routeTable.account_root, Account.route);
-router.use(routeTable.account_root, Guestbook.route);
+router.use(routeTable.guestbook_root, Guestbook.route);
 
 module.exports = router;

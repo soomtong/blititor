@@ -11,6 +11,7 @@ var routeTable = misc.routeTable();
 
 router.use(middleware.exposeLocals);
 
-router.post(routeTable.account.register, guestbook.register);
+router.get(routeTable.guestbook.form, guestbook.guestbook);
+router.post(routeTable.guestbook.register, guestbook.register);
 
 module.exports = router;

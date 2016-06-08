@@ -18,8 +18,9 @@ var defaultRoute = {
         "info": "/info",
         "updateInfo": "/update"
     },
-    "guestbook_root": "/guestbook",
+    "guestbook_root": "/guest",
     "guestbook": {
+        "form": "/",
         "register": "/register"
     },
     "pages": []
