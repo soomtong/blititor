@@ -1,4 +1,5 @@
 var fs = require('fs');
+var bcrypt = require('bcrypt');
 var mkdirp = require('mkdirp');
 var moment = require('moment');
 var winston = require('winston');
@@ -77,7 +78,7 @@ function authenticate(userID, password, done) {
             return done(null, false, {message: 'Unknown user ' + userID});
         }
 
-        if (bcrypt.compareSync(auth.user_password,hash)) {
+        if (bcrypt.compareSync(auth.user_password, hash)) {
             winston.verbose('user given password not exactly same with authorized hash');
 
             return done(null, false, {message: 'Invalid password'});
@@ -248,7 +249,7 @@ function updateInfo(req, res) {
         req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
 
         params.updatePassword = true;
-        params.password = bcrypt.hashSync(req.body.password, salt);
+        params.password = common.hash(req.body.password);
     }
 
     req.sanitize('nickname').escape();
