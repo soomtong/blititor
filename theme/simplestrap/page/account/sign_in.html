@@ -28,6 +28,13 @@
                         <label for="exampleInputPassword1">Password</label>
                         <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                     </fieldset>
+
+                    {% if message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>{{ message.error }}</strong>
+                    </div>
+                    {% endif %}
+
                     <div class="checkbox">
                         <label>
                             <input name="remember_me" type="checkbox" value="yes"> Remember this account
@@ -38,11 +45,6 @@
                     <button type="submit" class="btn btn-primary">Sign In</button>
                 </form>
             </div>
-            {% if message.error %}
-            <div class="alert alert-warning" role="alert">
-                <strong>{{ message.error }}</strong>
-            </div>
-            {% endif %}
         </div>
     </div>
 

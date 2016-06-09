@@ -71,17 +71,18 @@
                         </label>
                     </fieldset>
 
+                    {% if message.error %}
+                    {% for error in message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> {{ error.msg }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
                     <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Change</button>
                 </form>
             </div>
-            {% if message.error %}
-            {% for error in message.error %}
-            <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{ error.msg }}
-            </div>
-            {% endfor %}
-            {% endif %}
         </div>
     </div>
 

@@ -3,9 +3,12 @@ var moment = require('moment');
 var winston = require('winston');
 
 var common = require('../../../core/lib/common');
+var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');
 
 var query = require('./query');
+
+var tables = misc.databaseTable();
 
 function guestbookForm(req, res) {
     var params = {
@@ -25,8 +28,8 @@ function register(req, res) {
     var errors = req.validationErrors();
 
     if (errors) {
-        console.log(errors);
         req.flash('error', errors);
+
         return res.redirect('back');
     }
 
@@ -45,7 +48,7 @@ function register(req, res) {
     var mysql = connection.get();
 
     // save to guestbook table
-    mysql.query(query.insertInto, [common.tables.guestbook, guestbookData], function (err, result) {
+    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 

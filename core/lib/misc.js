@@ -26,11 +26,22 @@ var defaultRoute = {
     "pages": []
 };
 
+var databaseTables = {
+    user: 'b_user',
+    auth: 'b_auth',
+    site: 'b_site',
+    point: 'b_point',
+    guestbook: 'b_guestbook',
+};
 
 function routeTable() {
     BLITITOR.route = defaultRoute;
 
     return BLITITOR.route;
+}
+
+function databaseTable() {
+    return databaseTables;
 }
 
 /*
@@ -85,6 +96,7 @@ function showRouteTable(routeTable) {
 
 module.exports = {
     routeTable: routeTable,
+    databaseTable: databaseTable,
     // setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     showRouteTable: showRouteTable

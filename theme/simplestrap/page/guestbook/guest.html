@@ -36,6 +36,15 @@
                         <label for="exampleTextarea">Message</label>
                         <textarea class="form-control" id="exampleTextarea" rows="4"></textarea>
                     </fieldset>
+
+                    {% if message.error %}
+                    {% for error in message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> {{ error.msg }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"> Hidden
@@ -47,13 +56,6 @@
                 </form>
 
             </div>
-            {% if message.error %}
-            {% for error in message.error %}
-            <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{ error.msg }}
-            </div>
-            {% endfor %}
-            {% endif %}
         </div>
     </div>
 

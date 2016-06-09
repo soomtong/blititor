@@ -5,16 +5,19 @@ var moment = require('moment');
 var winston = require('winston');
 
 var common = require('../../../core/lib/common');
+var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');
 
 var query = require('./query');
+
+var tables = misc.databaseTable();
 
 function findByID(id, callback) {
     var mysql = connection.get();
 
     var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
 
-    mysql.query(query.selectByID, [field, common.tables.user, id], function (err, rows) {
+    mysql.query(query.selectByID, [field, tables.user, id], function (err, rows) {
         if (err || !rows) {
             // return Error("Can't Find by This UUID");
             return callback(err, null);
@@ -29,7 +32,7 @@ function findByUUID(UUID, callback) {
 
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
-    mysql.query(query.selectByUUID, [field, common.tables.user, UUID], function (err, rows) {
+    mysql.query(query.selectByUUID, [field, tables.user, UUID], function (err, rows) {
         if (err || !rows) {
             // return Error("Can't Find by This UUID");
             return callback(err, null);
@@ -44,11 +47,10 @@ function authByUserID(userID, callback) {
 
     var field = ['id', 'user_id', 'user_password'];
 
-    mysql.query(query.selectByUserID, [field, common.tables.auth, userID], function (err, rows) {
+    mysql.query(query.selectByUserID, [field, tables.auth, userID], function (err, rows) {
         if (err || !rows) {
             // return Error("Can't Auth by This userID");
             return callback(err, null);
-
         }
 
         callback(err, rows[0]);
@@ -156,7 +158,7 @@ function register(req, res) {
     var mysql = connection.get();
 
     // save to auth table
-    mysql.query(query.insertInto, [common.tables.auth, authData], function (err, result) {
+    mysql.query(query.insertInto, [tables.auth, authData], function (err, result) {
         if (err) {
             req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
@@ -181,7 +183,7 @@ function register(req, res) {
 
         req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-        mysql.query(query.insertInto, [common.tables.user, userData], function (err, result) {
+        mysql.query(query.insertInto, [tables.user, userData], function (err, result) {
             if (err) {
                 req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
@@ -246,7 +248,7 @@ function updateInfo(req, res) {
 
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
-    if (req.body.password && (req.body.password.toString().length >= 4)) {
+    if (req.body.password/* && (req.body.password.toString().length >= 4)*/) {
         req.assert('password', 'Password must be at least 4 characters long').len(4);
         req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
 
@@ -297,10 +299,11 @@ function updateInfo(req, res) {
 
     var mysql = connection.get();
 
-    mysql.query(query.selectByUUID, ['auth_id', common.tables.user, UUID], function (err, rows) {
+    mysql.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
         if (err) {
-            winston.error(err);
             req.flash('error', {msg: err});
+            
+            winston.error(err);
 
             return res.redirect('back');
         }
@@ -311,7 +314,7 @@ function updateInfo(req, res) {
         if (params.updatePassword) {
             var authData = {user_password: params.password};
 
-            mysql.query(query.updateByID, [common.tables.auth, authData, authID], function (err, result) {
+            mysql.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
                 winston.warn('Updated user password into `auth` table record:', result);
             });
         }
@@ -322,10 +325,11 @@ function updateInfo(req, res) {
 
         }
 
-        mysql.query(query.updateByUUID, [common.tables.user, userData, UUID], function (err, result) {
+        mysql.query(query.updateByUUID, [tables.user, userData, UUID], function (err, result) {
             if (err) {
-                winston.error(err);
                 req.flash('error', {msg: err});
+                
+                winston.error(err);
 
                 return res.redirect('back');
             }

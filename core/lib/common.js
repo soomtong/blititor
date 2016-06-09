@@ -1,14 +1,6 @@
 var uuid = require('uuid');
 var bcrypt = require('bcrypt');
 
-var databaseTables = {
-    user: 'b_user',
-    auth: 'b_auth',
-    site: 'b_site',
-    point: 'b_point',
-    guestbook: 'b_guestbook'
-};
-
 var salt = bcrypt.genSaltSync(10);
 
 function destructMarkdown(markdownText) {
@@ -82,11 +74,5 @@ module.exports = {
     UUID1: getUUID1,
     UUID4: getUUID4,
     hash: getHash,
-    testUser: {
-        id: 123412341234,
-        username: 'soomtong@gmail.com',
-        password: '1234'
-    },
-    tables: databaseTables,
     databaseDefault: require('../config/database_default')
 };

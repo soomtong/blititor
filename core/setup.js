@@ -12,6 +12,9 @@ var mysql = require('mysql');
 var database = require('./admin/database');
 var theme = require('./admin/theme');
 var common = require('./lib/common');
+var misc = require('./lib/misc');
+
+var tables = misc.databaseTable();
 
 var databaseFile = common.databaseDefault['config_file'];
 
@@ -350,7 +353,7 @@ function makeAdminAccount() {
                 console.log(' = Make administrator account...'.blue);
 
                 // make database by given name
-                connection.query(query.insertInto, [common.tables.auth, authData], function (err, result) {
+                connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
                         console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
 
@@ -375,7 +378,7 @@ function makeAdminAccount() {
                         created_at: new Date()
                     };
 
-                    connection.query(query.insertInto, [common.tables.user, userData], function (err, result) {
+                    connection.query(query.insertInto, [tables.user, userData], function (err, result) {
                         if (err) {
                             console.log(' = 관리자 계정 정보 저장에 실패했습니다.'.red);
 

@@ -2,6 +2,9 @@ var mysql = require('mysql');
 var winston = require('winston');
 
 var common = require('../../../core/lib/common');
+var misc = require('../../../core/lib/misc');
+
+var tables = misc.databaseTable();
 
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
@@ -13,7 +16,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tables = [common.tables.guestbook];
+    var tables = [tables.guestbook];
 
     connection.query(sql, tables, function (error, results, fields) {
         connection.destroy();
@@ -37,7 +40,7 @@ function createScheme(databaseConfiguration) {
         '`message` text, ' +
         '`created_at` datetime)';
 
-    connection.query(sql_guestbook, common.tables.guestbook, function (error, result) {
+    connection.query(sql_guestbook, tables.guestbook, function (error, result) {
         // close connection
         connection.destroy();
     });

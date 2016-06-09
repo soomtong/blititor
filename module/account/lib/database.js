@@ -2,7 +2,9 @@ var mysql = require('mysql');
 var winston = require('winston');
 
 var common = require('../../../core/lib/common');
-var tableName = 'b_guestbook';
+var misc = require('../../../core/lib/misc');
+
+var tables = misc.databaseTable();
 
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
@@ -14,7 +16,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tables = [tableName];
+    var tables = [[tables.point, tables.user, tables.auth]];
 
     connection.query(sql, tables, function (error, results, fields) {
         connection.destroy();
@@ -31,16 +33,45 @@ function createScheme(databaseConfiguration) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var sql_guestbook = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    var sql_auth = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`email` varchar(64) not null, `password` varchar(255) not null, ' +
-        '`nickname` varchar(64) ' +
-        '`message` text, ' +
-        '`created_at` datetime)';
+        '`user_id` varchar(64) not null, `user_password` varchar(255) not null, ' +
+        'UNIQUE auth_user_id_unique(`user_id`))';
+    var sql_user = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
+        '`nickname` varchar(64), `level` varchar(1), `grant` varchar(1), ' +
+        '`photo` varchar(255), `point` int, ' +
+        '`login_counter` int, `logout_counter` int, ' +
+        '`desc` text, ' +
+        '`last_logged_at` datetime, ' +
+        '`created_at` datetime, ' +
+        '`updated_at` datetime, ' +
+        'UNIQUE user_uuid_unique(`uuid`), ' +
+        'INDEX auth_id(`auth_id`))';
+    var sql_point = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`user_id` int unsigned not null, `amount` int, `reason` varchar(255), ' +
+        '`created_at` datetime, INDEX user_id(`user_id`))';
 
-    connection.query(sql_guestbook, tableName, function (error, result) {
-        // close connection
-        connection.destroy();
+    var sql_fkey_user_auth = 'alter table ?? ' +
+        'add constraint user_auth_id_foreign foreign key (`auth_id`) ' +
+        'references ?? (`id`)';
+    var sql_fkey_point_user = 'alter table ?? ' +
+        'add constraint point_user_id_foreign foreign key (`user_id`) ' +
+        'references ?? (`id`)';
+
+    connection.query(sql_auth, tables.auth, function (error, result) {
+        connection.query(sql_user, tables.user, function (error, result) {
+            connection.query(sql_point, tables.point, function (error, result) {
+                // bind foreign key
+                connection.query(sql_fkey_user_auth, [tables.user, tables.auth], function (error, result) {
+                    connection.query(sql_fkey_point_user, [tables.point, tables.user], function (error, result) {
+                        connection.destroy();
+                    })
+                })
+            });
+        });
     });
 }
 

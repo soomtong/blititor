@@ -32,6 +32,15 @@
                         <label for="exampleInputPassword1">Password</label>
                         <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                     </fieldset>
+
+                    {% if message.error %}
+                    {% for error in message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> {{ error.msg }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
                     <fieldset class="form-group">
                         <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
                     </fieldset>
@@ -40,13 +49,6 @@
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
             </div>
-            {% if message.error %}
-            {% for error in message.error %}
-            <div class="alert alert-warning" role="alert">
-                <strong>Warning!</strong> {{ error.msg }}
-            </div>
-            {% endfor %}
-            {% endif %}
         </div>
     </div>
 
