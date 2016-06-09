@@ -6,14 +6,23 @@ var Guestbook = require('../guestbook');
 var accountMiddleware = Account.middleware;
 var guestbookMiddleware = Guestbook.middleware;
 
+function testMiddleware1(req, res, next) {
+    console.log('Route Middleware Test Method 1');
+    next();
+}
+
+function testMiddleware2(req, res, next) {
+    console.log('Route Middleware Test Method 2');
+    next();
+}
+
 var Menu = [
-    {page: 'index', type: 'get', url: '/', middleware: [function (req, res, next) {
-        console.log('md 1');
-        next();
-    }, function (req, res, next) {
-        console.log('md 2');
-        next();
-    }], name: '홈'},
+    {
+        name: '홈',
+        page: 'index', type: 'get', url: '/',
+        middleware: [testMiddleware1, testMiddleware2],
+        route: true,
+    },
     {
         name: '팀 블로그',
         page: 'blog', type: 'get', url: '/blog',
@@ -22,8 +31,7 @@ var Menu = [
     },
     {
         name: '방명록',
-        page: 'guestbook', type: 'get', url: '/guest',
-        middleware: [],
+        url: '/guest',
         route: false,
     },
     {
