@@ -21,20 +21,20 @@
                 <form method="post" action="{{ route.guestbook_root + route.guestbook.register }}">
                     <fieldset class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
                         <small class="text-muted">We'll never share your email with anyone else.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="nickname">Nickname</label>
-                        <input type="password" class="form-control" id="nickname" placeholder="Anonymous">
+                        <input type="text" name="nickname" class="form-control" id="nickname" placeholder="Anonymous">
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="exampleTextarea">Message</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="4"></textarea>
+                        <textarea class="form-control" name="message" id="exampleTextarea" rows="4"></textarea>
                     </fieldset>
 
                     {% if message.error %}
@@ -47,7 +47,7 @@
 
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"> Hidden
+                            <input type="checkbox" name="hidden"> Hidden
                         </label>
                     </div>
 

@@ -15,8 +15,6 @@ function guestbookForm(req, res) {
         title: '방명록'
     };
 
-    console.log(res.locals.message);
-
     res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
 }
 
@@ -43,6 +41,7 @@ function register(req, res) {
         email: req.body.email,
         password: hash,
         message: req.body.message,
+        flag: req.body.hidden ? '1' : ''  // todo: subtract common flag module using bitwise
     };
 
     var mysql = connection.get();
