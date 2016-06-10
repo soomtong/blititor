@@ -2,6 +2,8 @@
   "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
+  "countAll": "SELECT count(id) as `count` FROM ??",
+  "selectByPage": "SELECT ?? FROM ?? LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "updateByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"

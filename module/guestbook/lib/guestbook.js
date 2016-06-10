@@ -13,10 +13,26 @@ var tables = misc.databaseTable();
 // todo: experiment, receive ws push in a guestbook page
 function guestbookForm(req, res) {
     var params = {
-        title: '방명록'
+        title: '방명록',
+        page: req.params['page'] || 0
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
+    var mysql = connection.get();
+
+    mysql.query(query.selectByPage, [['id', 'nickname', 'message'], tables.guestbook, params.page, 10], function (err, rows) {
+        if (err) {
+            req.flash('error', {msg: '방명록 정보 읽기에 실패했습니다.'});
+
+            winston.error(err);
+
+            res.redirect('back');
+        }
+
+        console.log(rows);
+        params.list = rows;
+        
+        res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
+    });
 }
 
 // todo: experiment, bind ajax call and emit event
@@ -54,7 +70,7 @@ function register(req, res) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 
-            winston.error(error);
+            winston.error(err);
 
             res.redirect('back');
         }

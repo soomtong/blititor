@@ -39,7 +39,9 @@ function createScheme(databaseConfiguration) {
         '`nickname` varchar(64), ' +
         '`flag` varchar(1), ' +
         '`message` text, ' +
-        '`created_at` datetime)';
+        '`reply` text, ' +
+        '`created_at` datetime, ' +
+        '`replied_at` datetime)';
 
     connection.query(sql_guestbook, tables.guestbook, function (error, result) {
         // close connection
