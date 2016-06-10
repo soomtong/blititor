@@ -10,6 +10,7 @@ var query = require('./query');
 
 var tables = misc.databaseTable();
 
+// todo: experiment, receive ws push in a guestbook page
 function guestbookForm(req, res) {
     var params = {
         title: '방명록'
@@ -18,6 +19,7 @@ function guestbookForm(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
 }
 
+// todo: experiment, bind ajax call and emit event
 function register(req, res) {
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
@@ -41,7 +43,8 @@ function register(req, res) {
         email: req.body.email,
         password: hash,
         message: req.body.message,
-        flag: req.body.hidden ? '1' : ''  // todo: subtract common flag module using bitwise
+        flag: req.body.hidden ? '1' : '',  // todo: subtract common flag module using bitwise
+        created_at: new Date()
     };
 
     var mysql = connection.get();
@@ -61,6 +64,10 @@ function register(req, res) {
 
         // save to user table
         req.flash('info', 'Saved Guestbook by ' + (guestbookData.nickname || guestbookData.email));
+
+        var routeTable = misc.routeTable();
+
+        res.redirect(routeTable.guestbook_root);
     });
 }
 
