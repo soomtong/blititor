@@ -1,6 +1,6 @@
 // setup blititor process for command line interface
 var param1 = process.argv[2];
-var param2 = process.argv[3] || null;
+var param2 = process.argv[3] || '';
 
 var prompt = require('prompt');
 var colors = require('colors');
@@ -31,19 +31,19 @@ switch (param1) {
     case 'init':
         switch (param2) {
             case 'guestbook':
-                makeGuestbook();
+                makeModuleDatabaseTable(param2);
                 break;
             default:
-                makeDatabaseTable();
+                makeDefaultDatabaseTable();
         }
         break;
     case 'reset':
         switch (param2) {
             case 'guestbook':
-                makeGuestbook({reset: true});
+                makeModuleDatabaseTable(param2, {reset: true});
                 break;
             default:
-                makeDatabaseTable({reset: true});
+                makeDefaultDatabaseTable({reset: true});
         }
         break;
     case 'theme':
@@ -56,7 +56,7 @@ switch (param1) {
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
+        var tasks = [makeDatabaseConfigFile, makeDefaultDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
@@ -162,7 +162,7 @@ function makeDatabaseConfigFile(done) {
     });
 }
 
-function makeDatabaseTable(done) {
+function makeDefaultDatabaseTable(done) {
     var reset = false;
 
     if (done && typeof done !== 'function') {
@@ -237,14 +237,14 @@ function makeDatabaseTable(done) {
     });
 }
 
-function makeGuestbook() {
-    console.log(" = Make database tables for guestbook module \n".rainbow);
+function makeModuleDatabaseTable(moduleName, option) {
+    console.log(" = Make database tables for " + moduleName + " module \n".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
 
-    var guestbook = require('../module/guestbook/lib/database');
+    var module = require('../module/'+ moduleName + '/lib/database');
 
-    guestbook.createScheme(connectionInfo);
+    module.createScheme(connectionInfo);
 }
 
 function makeThemeConfigFile() {
