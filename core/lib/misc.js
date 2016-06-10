@@ -26,7 +26,7 @@ var defaultRoute = {
     "pages": []
 };
 
-var databaseTables = {
+var databaseTables = {  //todo: extract from `core/admin/module.js`
     user: 'b_user',
     auth: 'b_auth',
     site: 'b_site',

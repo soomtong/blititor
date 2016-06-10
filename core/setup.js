@@ -1,5 +1,6 @@
 // setup blititor process for command line interface
-var params = process.argv[2];
+var param1 = process.argv[2];
+var param2 = process.argv[3] || null;
 
 var prompt = require('prompt');
 var colors = require('colors');
@@ -23,18 +24,27 @@ prompt.message = colors.green(" B");
 // todo: refactor for each module's CLI config process, that exposed each
 // or just go in to a web interface except these setups.
 // register new module then admin get noticed by file system or something others
-switch (params) {
+switch (param1) {
     case 'config':
         makeDatabaseConfigFile();
         break;
     case 'init':
-        makeDatabaseTable();
+        switch (param2) {
+            case 'guestbook':
+                makeGuestbook();
+                break;
+            default:
+                makeDatabaseTable();
+        }
         break;
     case 'reset':
-        makeDatabaseTable({reset: true});
-        break;
-    case 'init-guestbook':
-        makeGuestbook();
+        switch (param2) {
+            case 'guestbook':
+                makeGuestbook({reset: true});
+                break;
+            default:
+                makeDatabaseTable({reset: true});
+        }
         break;
     case 'theme':
         makeThemeConfigFile();
