@@ -13,6 +13,7 @@ router.use(middleware.exposeLocals);
 
 router.get(routeTable.guestbook.form, guestbook.guestbook);
 router.get(routeTable.guestbook.form + ':page', guestbook.guestbook);
-router.post(routeTable.guestbook.register, guestbook.register);
+router.post(routeTable.guestbook.message, guestbook.registerMessage);
+router.post(routeTable.guestbook.reply, guestbook.registerReply);
 
 module.exports = router;

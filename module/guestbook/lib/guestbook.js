@@ -19,7 +19,7 @@ function guestbookForm(req, res) {
 
     var mysql = connection.get();
 
-    mysql.query(query.selectByPage, [['id', 'nickname', 'message'], tables.guestbook, params.page, 10], function (err, rows) {
+    mysql.query(query.selectByPage, [['id', 'nickname', 'message', 'reply', 'created_at', 'replied_at'], tables.guestbook, params.page, 10], function (err, rows) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 읽기에 실패했습니다.'});
 
@@ -28,7 +28,6 @@ function guestbookForm(req, res) {
             res.redirect('back');
         }
 
-        console.log(rows);
         params.list = rows;
         
         res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
@@ -36,7 +35,7 @@ function guestbookForm(req, res) {
 }
 
 // todo: experiment, bind ajax call and emit event
-function register(req, res) {
+function registerMessage(req, res) {
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
     req.assert('message', 'message is required').len(10).withMessage('Must be 10 chars over').notEmpty();
@@ -89,5 +88,6 @@ function register(req, res) {
 
 module.exports = {
     guestbook: guestbookForm,
-    register: register
+    registerMessage: registerMessage,
+    registerReply: registerMessage
 };

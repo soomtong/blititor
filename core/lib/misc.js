@@ -21,7 +21,8 @@ var defaultRoute = {
     "guestbook_root": "/guest",
     "guestbook": {
         "form": "/",
-        "register": "/register"
+        "message": "/register",
+        "reply": "/register/reply"
     },
     "pages": []
 };

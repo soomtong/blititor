@@ -62,19 +62,43 @@
     <hr>
 
     <div class="row">
+        {% for item in list %}
         <div class="col-lg-12">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>{{ item.nickname | default('Anonymous') }}</h4>
+            <h5>{{ item.created_at }}</h5>
+            <p>
+                {{ item.message | striptags(true) | replace('\n', '<br>') | safe }}
+            </p>
 
-            <h5>Blog heroes</h5>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            {% if user %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <fieldset class="form-group">
+                        <label for="reply">Reply</label>
+                        <textarea class="form-control" name="reply" id="reply" rows="4">{{ item.reply }}</textarea>
+                    </fieldset>
 
-            <ul>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ul>
+                    <div class="pull-lg-right">
+                        <button type="submit" class="btn btn-info">Reply</button>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {% if item.reply %}
+            <div class="card">
+                <div class="card-block">
+                    {{ item.reply | default('Display reply if there were replied') }}
+                    <p>{{ item.replied_at }}</p>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+
+            {% if not loop.last %}
+            <hr class="hr">
+            {% endif %}
         </div>
+        {% endfor %}
     </div>
 
     <div class="row">
