@@ -28,6 +28,10 @@ switch (param1) {
     case 'config':
         makeDatabaseConfigFile();
         break;
+    case 'module':
+        // load all modules then save module config file to `config/module_list.json`
+        // modify this module_list.json to configure this web site
+        break;
     case 'init':
         switch (param2) {
             case 'guestbook':
@@ -407,4 +411,8 @@ function makeAdminAccount() {
             }
         });
     });
+}
+
+function loadModuleList(callback) {
+
 }
