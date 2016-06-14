@@ -31,6 +31,7 @@ switch (param1) {
     case 'module':
         // load all modules then save module config file to `config/module_list.json`
         // modify this module_list.json to configure this web site
+        loadModuleList();        
         break;
     case 'init':
         switch (param2) {
@@ -413,6 +414,32 @@ function makeAdminAccount() {
     });
 }
 
-function loadModuleList(callback) {
+function loadModuleList() {
+    // generate module list
+    var folderName = 'module';
 
+    function collectData(item, callback) {
+        var moduleData = {
+            folder: item,
+            useDatabase: true,
+            ignore: true
+        };
+
+        fs.stat(path.join('.', folderName, item, 'lib', 'database.js'), function (err, stat) {
+            if (err) {
+                moduleData.useDatabase = false;
+            } else {
+                moduleData.tables = require(path.join('..', folderName, item, 'lib', 'database.js')).tables || {};
+            }
+
+            callback(null, moduleData);
+        });
+    }
+
+    fs.readdir(path.join('.', folderName), function (err, files) {
+        async.map(files, collectData, function (err, results) {
+            // console.log(results);
+            fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(results, null, 4));
+        });
+    });
 }

@@ -1,0 +1,25 @@
+[
+    {
+        "folder": "account",
+        "useDatabase": true,
+        "ignore": true,
+        "tables": {
+            "user": "b_user",
+            "auth": "b_auth",
+            "point": "b_point"
+        }
+    },
+    {
+        "folder": "guestbook",
+        "useDatabase": true,
+        "ignore": true,
+        "tables": {
+            "guestbook": "b_guestbook"
+        }
+    },
+    {
+        "folder": "simplestrap",
+        "useDatabase": false,
+        "ignore": true
+    }
+]

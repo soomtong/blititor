@@ -5,6 +5,11 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = misc.databaseTable();
+var tables = {
+    user: 'b_user',
+    auth: 'b_auth',
+    point: 'b_point',
+};
 
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
@@ -77,5 +82,6 @@ function createScheme(databaseConfiguration) {
 
 module.exports = {
     deleteScheme: deleteScheme,
-    createScheme: createScheme
+    createScheme: createScheme,
+    tables: tables
 };
