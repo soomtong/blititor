@@ -1,7 +1,7 @@
 // todo: move to page module, site module
 
 var winston = require('winston');
-var site = require('../../core/site');
+var site = require('../site/lib/site');
 var common = require('../../core/lib/common');
 
 function index(req, res) {

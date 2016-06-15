@@ -263,7 +263,7 @@ function makeDatabaseTable(done) {
 }
 
 function makeModuleDatabaseTable(moduleName, option) {
-    console.log(" = Make database tables for " + moduleName + " module \n".rainbow);
+    console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
 

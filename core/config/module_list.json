@@ -23,5 +23,14 @@
         "folder": "simplestrap",
         "useDatabase": false,
         "ignore": false
+    },
+    {
+        "folder": "site",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "site": "b_site"
+        },
+        "core": false
     }
 ]

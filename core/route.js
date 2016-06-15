@@ -17,6 +17,7 @@ router.use(routeTable.admin_root, adminRoute);
 // passport config
 var Account = require('../module/account');
 var Guestbook = require('../module/guestbook');
+var Site = require('../module/site');
 
 router.use(middleware.exposeParameter);
 router.use(middleware.checkDatabase);
@@ -27,11 +28,12 @@ var routeList = themePackage.menu.data();
 
 routeList.map(function (item) {
     // expose middleware for each
+    console.log(item);
     if (item.route) {
         if (item.middleware.length) {
-            router[item.type](item.url, item.middleware, themePackage.page[item.page]);
+            router[item.type](item.url, item.middleware, Site.page[item.page]);
         } else {
-            router[item.type](item.url, themePackage.page[item.page]);
+            router[item.type](item.url, Site.page[item.page]);
         }
     }
 

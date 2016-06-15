@@ -14,7 +14,7 @@ var tables = misc.databaseTable();
 function guestbookForm(req, res) {
     var params = {
         title: '방명록',
-        page: req.params['page'] || 0
+        page: req.params['plainPage'] || 0
     };
 
     var mysql = connection.get();
