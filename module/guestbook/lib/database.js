@@ -4,7 +4,6 @@ var winston = require('winston');
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
-// var tables = misc.databaseTable();
 var tables = {
     guestbook: 'b_guestbook'
 };
@@ -19,9 +18,9 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tables = [tables.guestbook];
+    var tableList = [tables.guestbook];
 
-    connection.query(sql, tables, function (error, results, fields) {
+    connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
         callback(databaseConfiguration);
     });

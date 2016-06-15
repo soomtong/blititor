@@ -38,7 +38,7 @@ switch (param1) {
                 makeModuleDatabaseTable(param2);
                 break;
             default:
-                makeDefaultDatabaseTable();
+                makeDatabaseTable();
         }
         break;
     case 'reset':
@@ -47,7 +47,7 @@ switch (param1) {
                 makeModuleDatabaseTable(param2, {reset: true});
                 break;
             default:
-                makeDefaultDatabaseTable({reset: true});
+                makeDatabaseTable({reset: true});
         }
         break;
     case 'theme':
@@ -60,7 +60,7 @@ switch (param1) {
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [makeDatabaseConfigFile, makeDefaultDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
+        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
@@ -166,7 +166,7 @@ function makeDatabaseConfigFile(done) {
     });
 }
 
-function makeDefaultDatabaseTable(done) {
+function makeDatabaseTable(done) {
     var reset = false;
 
     if (done && typeof done !== 'function') {
@@ -223,22 +223,36 @@ function makeDefaultDatabaseTable(done) {
 
                     prompt.get(configScheme, function (err, result) {
                         if (result.ask.toUpperCase() == 'YES') {
-                            database.deleteScheme(connectionInfo, database.createScheme);
+                            async.mapSeries(moduleInfo, function (item, callback) {
 
-                            console.log(' = Make database tables... Done with clean \n'.green);
+                                if (!item.ignore && item.useDatabase) {
+                                    var moduleName = item.folder;
+
+                                    makeModuleDatabaseTable(moduleName, {reset: true});
+
+                                }
+
+                                callback(null, moduleName);
+
+                            }, function (err, result) {
+                                console.log(' = Make database tables... Done with clean \n'.green);
+                            });
+
                         } else {
                             console.log(' = Make database tables request canceled... \n'.green);
                         }
                     });
                 } else {
                     async.mapSeries(moduleInfo, function (item, callback) {
-                        if (item.useDatabase) {
+                        if (!item.ignore && item.useDatabase) {
                             var moduleName = item.folder;
 
                             makeModuleDatabaseTable(moduleName);
 
-                            callback(null, moduleName);
                         }
+                        callback(null, moduleName);
+                    }, function (err, result) {
+                        console.log(' = Make database tables... Done \n'.green);
                     });
                 }
 
@@ -255,7 +269,11 @@ function makeModuleDatabaseTable(moduleName, option) {
 
     var module = require('../module/'+ moduleName + '/lib/database');
 
-    module.createScheme(connectionInfo);
+    if (option && option.reset) {
+        module.deleteScheme(connectionInfo, module.createScheme);
+    } else {
+        module.createScheme(connectionInfo);
+    }
 }
 
 function makeThemeConfigFile() {

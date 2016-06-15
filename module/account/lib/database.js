@@ -4,11 +4,10 @@ var winston = require('winston');
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
-var tables = misc.databaseTable();
 var tables = {
     user: 'b_user',
     auth: 'b_auth',
-    point: 'b_point',
+    point: 'b_point'
 };
 
 function deleteScheme(databaseConfiguration, callback) {
@@ -21,9 +20,9 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tables = [[tables.point, tables.user, tables.auth]];
+    var tableList = [tables.point, tables.user, tables.auth];
 
-    connection.query(sql, tables, function (error, results, fields) {
+    connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
         callback(databaseConfiguration);
     });
