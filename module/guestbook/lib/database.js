@@ -55,5 +55,7 @@ function createScheme(databaseConfiguration) {
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
-    tables: tables
+    option: {
+        tables: tables
+    }
 };

@@ -2,24 +2,26 @@
     {
         "folder": "account",
         "useDatabase": true,
-        "ignore": true,
+        "ignore": false,
         "tables": {
             "user": "b_user",
             "auth": "b_auth",
             "point": "b_point"
-        }
+        },
+        "core": true
     },
     {
         "folder": "guestbook",
         "useDatabase": true,
-        "ignore": true,
+        "ignore": false,
         "tables": {
             "guestbook": "b_guestbook"
-        }
+        },
+        "core": false
     },
     {
         "folder": "simplestrap",
         "useDatabase": false,
-        "ignore": true
+        "ignore": false
     }
 ]

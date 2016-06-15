@@ -18,6 +18,7 @@ var misc = require('./lib/misc');
 var tables = misc.databaseTable();
 
 var databaseFile = common.databaseDefault['config_file'];
+var moduleFile = 'module_list.json';
 
 prompt.message = colors.green(" B");
 
@@ -29,9 +30,7 @@ switch (param1) {
         makeDatabaseConfigFile();
         break;
     case 'module':
-        // load all modules then save module config file to `config/module_list.json`
-        // modify this module_list.json to configure this web site
-        loadModuleList();        
+        loadModuleList();
         break;
     case 'init':
         switch (param2) {
@@ -177,6 +176,7 @@ function makeDefaultDatabaseTable(done) {
     console.log(" = Make database tables for blititor \n".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
+    var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,
@@ -196,7 +196,7 @@ function makeDefaultDatabaseTable(done) {
 
             console.error('error connecting: ' + err.stack);
         } else {
-            console.log(' = Make database tables...'.blue);
+            console.log(' = Make database tables...\n'.blue);
 
             // make database by given name
             var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';
@@ -231,9 +231,15 @@ function makeDefaultDatabaseTable(done) {
                         }
                     });
                 } else {
-                    database.createScheme(connectionInfo);
+                    async.mapSeries(moduleInfo, function (item, callback) {
+                        if (item.useDatabase) {
+                            var moduleName = item.folder;
 
-                    console.log(' = Make database tables... Done \n'.green);
+                            makeModuleDatabaseTable(moduleName);
+
+                            callback(null, moduleName);
+                        }
+                    });
                 }
 
                 if (done && typeof done === 'function') done(null, 'step 2 callback');
@@ -415,6 +421,8 @@ function makeAdminAccount() {
 }
 
 function loadModuleList() {
+    console.log(" = Gathering Modules Info for Database \n".rainbow);
+
     // generate module list
     var folderName = 'module';
 
@@ -422,14 +430,19 @@ function loadModuleList() {
         var moduleData = {
             folder: item,
             useDatabase: true,
-            ignore: true
+            ignore: false
         };
+
+        console.log(' = Gathering...', item);
 
         fs.stat(path.join('.', folderName, item, 'lib', 'database.js'), function (err, stat) {
             if (err) {
                 moduleData.useDatabase = false;
             } else {
-                moduleData.tables = require(path.join('..', folderName, item, 'lib', 'database.js')).tables || {};
+                var module = require(path.join('..', folderName, item, 'lib', 'database.js'));
+
+                moduleData.tables = module.option.tables || {};
+                moduleData.core = module.option.core || false;
             }
 
             callback(null, moduleData);
@@ -438,7 +451,8 @@ function loadModuleList() {
 
     fs.readdir(path.join('.', folderName), function (err, files) {
         async.map(files, collectData, function (err, results) {
-            // console.log(results);
+            console.log(' = Module Data Gathering... Done \n'.green);
+
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(results, null, 4));
         });
     });

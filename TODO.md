@@ -1,3 +1,4 @@
+- [ ] bind global root folder for setup and init process
 - [ ] default set (blititor basic theme)
 - [ ] theme select to file
 - [ ] insert initial data to `site` table for selected theme
