@@ -37,11 +37,5 @@ function plainPage(req, res) {
 
 module.exports = {
     index: indexPage,
-    blog: plainPage,
-    about: plainPage,
-    write: plainPage,
     pages: plainPage,
-    sign_in: plainPage,
-    sign_up: plainPage,
-    sign_out: plainPage,
 };

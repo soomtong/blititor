@@ -16,7 +16,6 @@ function ensureClearSession(req, res, next) {
 
 function exposeLocals(req, res, next) {
     res.locals.user = req.user;
-    res.locals.message = req.flash();
 
     next();
 }

@@ -343,6 +343,46 @@ function updateInfo(req, res) {
     });
 }
 
+function signIn(req, res) {
+    // sign in and grant user access level
+    var prevLocation = '/';
+
+    // res.redirect(prevLocation);
+
+    var params = {
+        title: "Home",
+        user: req.user,
+        message: req.flash()
+    };
+
+    // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
+
+    res.render(BLITITOR.config.site.theme + '/page/account/sign_in', params);
+
+}
+
+function signUp(req, res) {
+    // var prevLocation = '/';
+    // res.redirect(prevLocation);
+
+    var params = {
+        title: "Home",
+        user: req.user,
+        message: req.flash()
+    };
+
+    console.log(params);
+
+    res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);
+}
+
+function signOut(req, res) {
+    res.clearCookie('remember_me');     // clear the remember me cookie when logging out
+    req.logOut();   // it aliased as req.logout()
+    res.redirect('/');
+    winston.info('signed out');
+}
+
 module.exports = {
     serialize: serialize,
     deserialize: deserialize,
@@ -352,4 +392,7 @@ module.exports = {
     register: register,
     infoForm: showInfo,
     updateInfo: updateInfo,
+    signIn: signIn,
+    signUp: signUp,
+    signOut: signOut,
 };

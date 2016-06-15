@@ -1,8 +1,10 @@
 var fs = require('fs');
 var winston = require('winston');
+var Site = require('../site');
 var Account = require('../account');
 var Guestbook = require('../guestbook');
 
+var siteMiddleware = Site.middleware;
 var accountMiddleware = Account.middleware;
 var guestbookMiddleware = Guestbook.middleware;
 
