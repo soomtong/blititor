@@ -82,6 +82,19 @@ var databaseFile = databaseDefault.config_file;
 
 // use sync function for convenience. it's initialization
 try {
+    fs.accessSync('./core/config/module_list.json', fs.R_OK);
+
+    BLITITOR.config.moduleList = require('./config/module_list.json');
+
+    winston.info('module data file loaded', BLITITOR.config.moduleList.length, 'modules here');
+} catch (e) {
+    winston.error('module data file should be existed');
+    winston.error('run your setup script `node core/setup module` in your console');
+
+    process.exit(1);
+}
+
+try {
     fs.accessSync(databaseFile, fs.R_OK);
 
     BLITITOR.config.database = require(path.join('..', databaseFile));

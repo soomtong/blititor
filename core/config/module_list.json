@@ -11,6 +11,11 @@
         "core": true
     },
     {
+        "folder": "editor",
+        "useDatabase": false,
+        "ignore": false
+    },
+    {
         "folder": "guestbook",
         "useDatabase": true,
         "ignore": false,
@@ -31,6 +36,6 @@
         "tables": {
             "site": "b_site"
         },
-        "core": false
+        "core": true
     }
 ]
