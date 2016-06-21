@@ -41,13 +41,20 @@ function createScheme(databaseConfiguration) {
         '`created_at` datetime)';
 
     connection.query(sql_site, tables.site, function (error, result) {
-        connection.query('insert into ?? SET ?', [tables.site ,{
-            'created_at': new Date(),
-            'title': 'title',
-            'value': 'simplestrap demo'
-        }], function (error, result) {
-            // close connection
-            connection.destroy();
+        connection.query('select count(id) as `count` from ?? where `title` = ?', [tables.site, 'title'], function (error, rows) {
+            if (rows[0].count > 0) {
+                // close connection
+                connection.destroy();
+            } else {
+                connection.query('insert into ?? SET ?', [tables.site ,{
+                    'created_at': new Date(),
+                    'title': 'title',
+                    'value': 'simplestrap demo'
+                }], function (error, result) {
+                    // close connection
+                    connection.destroy();
+                });
+            }
         });
     });
 }

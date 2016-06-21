@@ -22,52 +22,6 @@ function createDatabase(connection, dbName) {
     });
 }
 
-function deleteScheme(databaseConfiguration, callback) {
-    var connection = mysql.createConnection({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
-    });
-
-    var sql = "DROP TABLE IF EXISTS ??";
-    var tables = [tables.site];
-
-    connection.query(sql, tables, function (error, results, fields) {
-        connection.destroy();
-        callback(databaseConfiguration);
-    });
-}
-
-function createScheme(databaseConfiguration) {
-    var connection = mysql.createConnection({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
-    });
-
-    var sql_site = 'CREATE TABLE IF NOT EXISTS ?? ' +
-        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`title` varchar(64), `value` varchar(256), ' +
-        '`created_at` datetime)';
-
-    connection.query(sql_site, tables.site, function (error, result) {
-        connection.query('insert into `site` SET ?', {
-            'created_at': new Date(),
-            'title': 'title',
-            'value': 'simplestrap demo'
-        }, function (error, result) {
-            // close connection
-            connection.destroy();
-        });
-    });
-}
-
 module.exports = {
     createDatabase: createDatabase,
-    deleteScheme: deleteScheme,
-    createScheme: createScheme
 };
