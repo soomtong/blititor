@@ -124,6 +124,8 @@
 <script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
 <script src="/{{site.theme}}/common/script.js"></script>
+<!-- version 2 we use this pattern -->
+<script src="/lib/editor.js"></script>
 <script>
     $(document).ready(function () {
         var $form = $('#message_form');
@@ -139,6 +141,25 @@
                 guestbook.showMessage('<strong>불량!</strong> 입력 내용을 확인해주세요.')
             }
             return false;
+        });
+*/
+
+/* version 1
+        $.getScript("/lib/editor.js")
+                .done(function (script, textStatus) {
+                    console.log(textStatus);
+                })
+                .fail(function (jqxhr, settings, exception) {
+                    console.log(jqxhr, settings, exception);
+                });
+*/
+
+/* version 1
+        $.getScript('/lib/editor.js', function( data, textStatus, jqxhr ) {
+            console.log(data); // Data returned
+            console.log(textStatus); // Success
+            console.log(jqxhr.status); // 200
+            console.log("Load was performed.");
         });
 */
     });

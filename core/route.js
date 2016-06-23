@@ -18,6 +18,7 @@ router.use(routeTable.admin_root, adminRoute);
 var Site = require('../module/site');
 var Account = require('../module/account');
 var Guestbook = require('../module/guestbook');
+var Editor = require('../module/editor');
 
 router.use(middleware.exposeParameter);
 router.use(middleware.checkDatabase);
@@ -47,5 +48,6 @@ routeList.map(function (item) {
 // todo: filtering by ignore flag in `module_list.json`
 router.use(routeTable.account_root, Account.route);
 router.use(routeTable.guestbook_root, Guestbook.route);
+router.use('/lib', Editor.route);
 
 module.exports = router;
