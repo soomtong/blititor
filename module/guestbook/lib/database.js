@@ -1,3 +1,7 @@
+var fs = require('fs');
+var async = require('neo-async');
+var colors = require('colors');
+
 var mysql = require('mysql');
 var winston = require('winston');
 
@@ -46,8 +50,22 @@ function createScheme(databaseConfiguration) {
         '`replied_at` datetime)';
 
     connection.query(sql_guestbook, tables.guestbook, function (error, result) {
-        // close connection
-        connection.destroy();
+        // check dummy json
+        // todo: refactoring global path
+        fs.stat('./module/guestbook/lib/dummy.json', function (error, result) {
+
+            if (!error && result.size > 2) {
+                var dummy = require('./dummy.json');
+
+                console.log(dummy);
+
+                // make dummy records
+                console.log(' = Make default records...'.blue);
+            }
+
+            // close connection
+            connection.destroy();
+        });        
     });
 }
 
