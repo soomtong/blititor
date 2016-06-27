@@ -1,25 +1,29 @@
-var mysql = require('mysql');
-var winston = require('winston');
+var colors = require('colors');
 
-var common = require('../lib/common');
-var misc = require('../lib/misc');
+function createDatabase(connection, dbName, callback) {
+    connection.connect(function(err) {
+        console.log(' = Verify connection parameters...'.blue);
 
-var tables = misc.databaseTable();
+        if (err) {
+            console.log(' = Verify connection parameters... Failed'.red);
 
-function createDatabase(connection, dbName) {
-    var sql_database = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';   // utf8
+            connection.destroy();
 
-    connection.query(sql_database, [dbName, 'utf8'], function (error, result) {
-        if (error) {
-            console.log(' = Create database... Failed. Make Database yourself'.red);
-
-            console.error('error connecting: ' + error);
+            console.error('error connecting: ' + err.stack);
         } else {
-            console.log(' = Create database... Done \n'.green);
-        }
+            console.log(' = Make database tables...\n'.blue);
 
-        connection.destroy();
+            // make database by given name
+            var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';
+            connection.query(sql, [dbName, 'utf8'], function (err, results) {
+                connection.destroy();
+
+                // if has argument then execute callback
+                callback();
+            });
+        }
     });
+
 }
 
 module.exports = {

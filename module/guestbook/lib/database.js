@@ -30,7 +30,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 }
 
-function createScheme(databaseConfiguration) {
+function createScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -51,27 +51,45 @@ function createScheme(databaseConfiguration) {
 
     connection.query(sql_guestbook, tables.guestbook, function (error, result) {
         // check dummy json
-        // todo: refactoring global path
-        fs.stat('./module/guestbook/lib/dummy.json', function (error, result) {
+        callback && callback(databaseConfiguration);        
+        
+        // close connection
+        connection.destroy();
+    });
+}
 
-            if (!error && result.size > 2) {
-                var dummy = require('./dummy.json');
+function insertDummy(databaseConfiguration) {
+    var connection = mysql.createConnection({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
+    });
 
-                console.log(dummy);
+    // todo: refactoring global path
+    fs.stat('./module/guestbook/lib/dummy.json', function (error, result) {
 
-                // make dummy records
-                console.log(' = Make default records...'.blue);
-            }
+        if (!error && result.size > 2) {
+            var dummy = require('./dummy.json');
+
+            console.log(dummy);
+
+            // make dummy records
+            console.log(' = Make default records...'.blue);
+
 
             // close connection
             connection.destroy();
-        });        
+        }
     });
+
 }
 
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
+    insertDummy: insertDummy,
     option: {
         tables: tables
     }

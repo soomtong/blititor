@@ -44,10 +44,10 @@ switch (param1) {
     case 'reset':
         switch (param2) {
             case 'guestbook':
-                makeModuleDatabaseTable(param2, {reset: true});
+                makeModuleDatabaseTableWithReset(param2);
                 break;
             default:
-                makeDatabaseTable({reset: true});
+                makeDatabaseTableWithReset();
         }
         break;
     case 'theme':
@@ -166,13 +166,7 @@ function makeDatabaseConfigFile(done) {
     });
 }
 
-function makeDatabaseTable(done) {
-    var reset = false;
-
-    if (done && typeof done !== 'function') {
-        reset = done.reset;
-    }
-    
+function makeDatabaseTable() {
     console.log(" = Make database tables for blititor \n".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
@@ -186,94 +180,94 @@ function makeDatabaseTable(done) {
         password: connectionInfo.dbUserPassword
     });
 
-    connection.connect(function(err) {
-        console.log(' = Verify connection parameters...'.blue);
+    database.createDatabase(connection, connectionInfo.dbName, function () {
+        // make tables!
+        async.mapSeries(moduleInfo, function (item, callback) {
+            if (!item.ignore && item.useDatabase) {
+                var moduleName = item.folder;
 
-        if (err) {
-            console.log(' = Verify connection parameters... Failed'.red);
-
-            connection.destroy();
-
-            console.error('error connecting: ' + err.stack);
-        } else {
-            console.log(' = Make database tables...\n'.blue);
-
-            // make database by given name
-            var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';
-            connection.query(sql, [connectionInfo.dbName, 'utf8'], function (err, results) {
-                connection.destroy();
-
-                // if has argument then execute callback
-                if (reset) {
-                    prompt.start();
-
-                    console.log('');
-
-                    var configScheme = {
-                        properties: {
-                            ask: {
-                                description: "It'll delete all your data in blititor tables, Input YES if you are Sure",
-                                type: 'string',
-                                pattern: /^[yesYESnoNO]+$/,
-                                message: 'Host name must be yes or YES',
-                                required: true
-                            }
-                        }
-                    };
-
-                    prompt.get(configScheme, function (err, result) {
-                        if (result.ask.toUpperCase() == 'YES') {
-                            async.mapSeries(moduleInfo, function (item, callback) {
-
-                                if (!item.ignore && item.useDatabase) {
-                                    var moduleName = item.folder;
-
-                                    makeModuleDatabaseTable(moduleName, {reset: true});
-
-                                }
-
-                                callback(null, moduleName);
-
-                            }, function (err, result) {
-                                console.log(' = Make database tables... Done with clean \n'.green);
-                            });
-
-                        } else {
-                            console.log(' = Make database tables request canceled... \n'.green);
-                        }
-                    });
-                } else {
-                    async.mapSeries(moduleInfo, function (item, callback) {
-                        if (!item.ignore && item.useDatabase) {
-                            var moduleName = item.folder;
-
-                            makeModuleDatabaseTable(moduleName);
-
-                        }
-                        callback(null, moduleName);
-                    }, function (err, result) {
-                        console.log(' = Make database tables... Done \n'.green);
-                    });
-                }
-
-                if (done && typeof done === 'function') done(null, 'step 2 callback');
-            });
-        }
+                makeModuleDatabaseTable(moduleName);
+            }
+            callback(null, moduleName);
+        }, function (err, result) {
+            console.log(' = Make database tables... Done \n'.green);
+        });
     });
 }
 
-function makeModuleDatabaseTable(moduleName, option) {
+function makeDatabaseTableWithReset() {
+    console.log(" = Reset database tables for blititor \n".rainbow);
+
+    var connectionInfo = require(path.join('..', databaseFile));
+    var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
+
+    var connection = mysql.createConnection({
+        host: connectionInfo.dbHost,
+        port: connectionInfo.dbPort || common.databaseDefault.port,
+        database: connectionInfo.dbName || common.databaseDefault.database,
+        user: connectionInfo.dbUserID,
+        password: connectionInfo.dbUserPassword
+    });
+
+    database.createDatabase(connection, connectionInfo.dbName, function () {
+        prompt.start();
+
+        console.log('');
+
+        var configScheme = {
+            properties: {
+                ask: {
+                    description: "It'll delete all your data in blititor tables, Input YES if you are Sure",
+                    type: 'string',
+                    pattern: /^[yesYESnoNO]+$/,
+                    message: 'Host name must be yes or YES',
+                    required: true
+                }
+            }
+        };
+
+        prompt.get(configScheme, function (err, result) {
+            if (result.ask.toUpperCase() == 'YES') {
+                async.mapSeries(moduleInfo, function (item, callback) {
+
+                    if (!item.ignore && item.useDatabase) {
+                        var moduleName = item.folder;
+
+                        makeModuleDatabaseTableWithReset(moduleName);
+
+                    }
+
+                    callback(null, moduleName);
+
+                }, function (err, result) {
+                    console.log(' = Make database tables... Done with clean \n'.green);
+                });
+
+            } else {
+                console.log(' = Make database tables request canceled... \n'.green);
+            }
+        });
+    });
+}
+
+function makeModuleDatabaseTable(moduleName) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
 
     var module = require('../module/'+ moduleName + '/lib/database');
 
-    if (option && option.reset) {
-        module.deleteScheme(connectionInfo, module.createScheme);
-    } else {
-        module.createScheme(connectionInfo);
-    }
+    module.createScheme(connectionInfo, module.insertDummy);
+}
+
+function makeModuleDatabaseTableWithReset(moduleName) {
+    console.log(" = Make database tables for " + moduleName + " module".rainbow);
+
+    var connectionInfo = require(path.join('..', databaseFile));
+
+    var module = require('../module/'+ moduleName + '/lib/database');
+
+    module.deleteScheme(connectionInfo, module.createScheme);
 }
 
 function makeThemeConfigFile() {
