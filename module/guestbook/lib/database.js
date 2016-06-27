@@ -112,6 +112,7 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
+    createMessage: createMessage,
     option: {
         tables: tables
     }
