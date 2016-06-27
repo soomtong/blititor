@@ -180,7 +180,7 @@ function makeDatabaseTable() {
         password: connectionInfo.dbUserPassword
     });
 
-    var iterateAsync = function (item, callback) {
+    var iteratorAsync = function (item, callback) {
         if (!item.ignore && item.useDatabase) {
             var moduleName = item.folder;
 
@@ -195,7 +195,7 @@ function makeDatabaseTable() {
 
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
-        async.mapSeries(moduleInfo, iterateAsync, resultAsync);
+        async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
     });
 }
 
@@ -213,7 +213,7 @@ function makeDatabaseTableWithReset() {
         password: connectionInfo.dbUserPassword
     });
 
-    var iterateAsync = function (item, callback) {
+    var iteratorAsync = function (item, callback) {
         if (!item.ignore && item.useDatabase) {
             var moduleName = item.folder;
 
@@ -246,7 +246,7 @@ function makeDatabaseTableWithReset() {
         prompt.get(configScheme, function (err, result) {
             if (result.ask.toUpperCase() == 'YES') {
                 // reset tables!
-                async.mapSeries(moduleInfo, iterateAsync, resultAsync);
+                async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
             } else {
                 console.log(' = Make database tables request canceled... \n'.green);
             }

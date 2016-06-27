@@ -4,7 +4,7 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
-var connection = require('../../../core/lib/connection');
+var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
 var query = require('./query');
 
@@ -36,6 +36,7 @@ function guestbookForm(req, res) {
 
 // todo: experiment, bind ajax call and emit event
 function registerMessage(req, res) {
+    console.log('hi');
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
     req.assert('message', 'message is required').len(10).withMessage('Must be 10 chars over').notEmpty();
@@ -65,7 +66,7 @@ function registerMessage(req, res) {
     var mysql = connection.get();
 
     // save to guestbook table
-    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
+    createMessage(mysql, guestbookData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 
@@ -83,6 +84,12 @@ function registerMessage(req, res) {
         var routeTable = misc.routeTable();
 
         res.redirect(routeTable.guestbook_root);
+    });
+}
+
+function createMessage(mysql, guestbookData, callback) {
+    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
+        callback(err, result);
     });
 }
 

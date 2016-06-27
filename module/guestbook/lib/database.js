@@ -12,6 +12,8 @@ var tables = {
     guestbook: 'b_guestbook'
 };
 
+var query = require('./query');
+
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
@@ -59,31 +61,51 @@ function createScheme(databaseConfiguration, callback) {
 }
 
 function insertDummy(databaseConfiguration) {
-    var connection = mysql.createConnection({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
-    });
-
-    // todo: refactoring global path
-    fs.stat('./module/guestbook/lib/dummy.json', function (error, result) {
-
+    fs.stat(__dirname + '/dummy.json', function (error, result) {
         if (!error && result.size > 2) {
+            var connection = mysql.createConnection({
+                host: databaseConfiguration.dbHost,
+                port: databaseConfiguration.dbPort || common.databaseDefault.port,
+                database: databaseConfiguration.dbName || common.databaseDefault.database,
+                user: databaseConfiguration.dbUserID,
+                password: databaseConfiguration.dbUserPassword
+            });
+
             var dummy = require('./dummy.json');
+            var iteratorAsync = function (item, callback) {
+                var guestbookData = {
+                    nickname: item.nickname,
+                    email: item.email,
+                    password: 'hash_0$0zVQQ3ovSe1I0DYFpv4czeDuXxNsGdOuKZJKoHliMi/V0VV/./sMm',
+                    message: item.message,
+                    flag: '',
+                    created_at: new Date(),
+                    reply: item.reply || undefined,
+                    replied_at: item.reply ? new Date() : undefined
+                };
 
-            console.log(dummy);
+                createMessage(connection, guestbookData, function (err, result) {
+                    console.log('   inserted records...'.white, result.insertId);
 
-            // make dummy records
-            console.log(' = Make default records...'.blue);
+                    callback(null, result);
+                });
+            };
+            var resultAsync = function (err, result) {
+                console.log(' = Make default records...'.blue);
 
+                // close connection
+                connection.destroy();
+            };
 
-            // close connection
-            connection.destroy();
+            async.mapSeries(dummy, iteratorAsync, resultAsync);
         }
     });
+}
 
+function createMessage(mysql, guestbookData, callback) {
+    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
+        callback(err, result);
+    });
 }
 
 module.exports = {
