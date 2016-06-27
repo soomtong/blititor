@@ -180,18 +180,22 @@ function makeDatabaseTable() {
         password: connectionInfo.dbUserPassword
     });
 
+    var iterateAsync = function (item, callback) {
+        if (!item.ignore && item.useDatabase) {
+            var moduleName = item.folder;
+
+            makeModuleDatabaseTable(moduleName);
+        }
+        callback(null, moduleName);
+    };
+
+    var resultAsync = function (err, result) {
+        console.log(' = Make database tables... Done \n'.green);
+    };
+
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
-        async.mapSeries(moduleInfo, function (item, callback) {
-            if (!item.ignore && item.useDatabase) {
-                var moduleName = item.folder;
-
-                makeModuleDatabaseTable(moduleName);
-            }
-            callback(null, moduleName);
-        }, function (err, result) {
-            console.log(' = Make database tables... Done \n'.green);
-        });
+        async.mapSeries(moduleInfo, iterateAsync, resultAsync);
     });
 }
 
@@ -208,6 +212,19 @@ function makeDatabaseTableWithReset() {
         user: connectionInfo.dbUserID,
         password: connectionInfo.dbUserPassword
     });
+
+    var iterateAsync = function (item, callback) {
+        if (!item.ignore && item.useDatabase) {
+            var moduleName = item.folder;
+
+            makeModuleDatabaseTableWithReset(moduleName);
+        }
+        callback(null, moduleName);
+    };
+
+    var resultAsync = function (err, result) {
+        console.log(' = Make database tables... Done with clean \n'.green);
+    };
 
     database.createDatabase(connection, connectionInfo.dbName, function () {
         prompt.start();
@@ -228,21 +245,8 @@ function makeDatabaseTableWithReset() {
 
         prompt.get(configScheme, function (err, result) {
             if (result.ask.toUpperCase() == 'YES') {
-                async.mapSeries(moduleInfo, function (item, callback) {
-
-                    if (!item.ignore && item.useDatabase) {
-                        var moduleName = item.folder;
-
-                        makeModuleDatabaseTableWithReset(moduleName);
-
-                    }
-
-                    callback(null, moduleName);
-
-                }, function (err, result) {
-                    console.log(' = Make database tables... Done with clean \n'.green);
-                });
-
+                // reset tables!
+                async.mapSeries(moduleInfo, iterateAsync, resultAsync);
             } else {
                 console.log(' = Make database tables request canceled... \n'.green);
             }
@@ -254,9 +258,9 @@ function makeModuleDatabaseTable(moduleName) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
-
     var module = require('../module/'+ moduleName + '/lib/database');
 
+    // inset dummy data after create table
     module.createScheme(connectionInfo, module.insertDummy);
 }
 
@@ -264,9 +268,9 @@ function makeModuleDatabaseTableWithReset(moduleName) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
-
     var module = require('../module/'+ moduleName + '/lib/database');
 
+    // delete scheme before create table
     module.deleteScheme(connectionInfo, module.createScheme);
 }
 
