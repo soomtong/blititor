@@ -1,5 +1,4 @@
 var fs = require('fs');
-var bcrypt = require('bcrypt');
 var mkdirp = require('mkdirp');
 var moment = require('moment');
 var winston = require('winston');
@@ -10,127 +9,47 @@ var connection = require('../../../core/lib/connection');
 
 var query = require('./query');
 
+var db = require('./database');
+
 var tables = misc.databaseTable();
 
 function findByID(id, callback) {
     var mysql = connection.get();
 
-    var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
-
-    mysql.query(query.selectByID, [field, tables.user, id], function (err, rows) {
-        if (err || !rows) {
+    db.readAccountByID(mysql, id, function (err, account) {
+        if (err || !account) {
             // return Error("Can't Find by This UUID");
             return callback(err, null);
         }
 
-        callback(null, rows[0]);
+        callback(null, account);
     });
 }
 
 function findByUUID(UUID, callback) {
     var mysql = connection.get();
 
-    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
-
-    mysql.query(query.selectByUUID, [field, tables.user, UUID], function (err, rows) {
-        if (err || !rows) {
+    db.readAccountByUUID(mysql, UUID, function (err, account) {
+        if (err || !account) {
             // return Error("Can't Find by This UUID");
             return callback(err, null);
         }
 
-        callback(err, rows[0]);
+        callback(err, account);
     });
 }
 
 function authByUserID(userID, callback) {
     var mysql = connection.get();
 
-    var field = ['id', 'user_id', 'user_password'];
-
-    mysql.query(query.selectByUserID, [field, tables.auth, userID], function (err, rows) {
-        if (err || !rows) {
+    db.readAuthByUserID(mysql, userID, function (err, auth) {
+        if (err || !auth) {
             // return Error("Can't Auth by This userID");
             return callback(err, null);
         }
 
-        callback(err, rows[0]);
+        callback(err, auth);
     });
-}
-
-function consumeRememberMeToken(token, fn) {
-    var uid = tokens[token];
-    // invalidate the single-use token
-    delete tokens[token];
-    return fn(null, uid);
-}
-
-function saveRememberMeToken(token, uid, fn) {
-    // tokens[token] = uid;
-    return fn();
-}
-
-function authenticate(userID, password, done) {
-    var hash = common.hash(password);
-
-    authByUserID(userID, function (err, auth) {
-        if (err) {
-            return done(err);
-        }
-        if (!auth) {
-            return done(null, false, {message: 'Unknown user ' + userID});
-        }
-
-        if (bcrypt.compareSync(auth.user_password, hash)) {
-            winston.verbose('user given password not exactly same with authorized hash');
-
-            return done(null, false, {message: 'Invalid password'});
-        }
-
-        return done(null, auth);
-    })
-}
-
-function issueToken(user, done) {
-    var token = common.randomString(64);
-    saveRememberMeToken(token, user.id, function(err) {
-        if (err) { return done(err); }
-        return done(null, token);
-    });
-}
-
-function serialize(user, done) {
-    winston.verbose('Serialize in ---- process ---- for', user);
-
-    findByID(user.id, function (error, user) {
-        done(error, user.uuid);
-    });
-}
-
-function deserialize(uuid, done) {
-    winston.verbose('DeSerialize in ---- process ---- for', uuid);
-
-    findByUUID(uuid, function (err, user) {
-        done(err, user);
-    });
-}
-
-
-function loginSuccess(req, res, next) {
-    winston.verbose('Log in ---- process ---- done');
-    // Issue a remember me cookie if the option was checked
-    if (!req.body.remember_me) { return next(); }
-
-    issueToken(req.user, function(err, token) {
-        winston.info('Issue Cookie Token', token);
-
-        if (err) { return next(err); }
-        res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
-        return next();
-    });
-}
-
-function loginDone(req, res) {
-    res.redirect('/');
 }
 
 function register(req, res) {
@@ -158,7 +77,7 @@ function register(req, res) {
     var mysql = connection.get();
 
     // save to auth table
-    mysql.query(query.insertInto, [tables.auth, authData], function (err, result) {
+    db.writeAuth(mysql, authData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
@@ -183,7 +102,7 @@ function register(req, res) {
 
         req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-        mysql.query(query.insertInto, [tables.user, userData], function (err, result) {
+        db.writeAccount(mysql, userData, function (err, result) {
             if (err) {
                 req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
@@ -299,16 +218,16 @@ function updateInfo(req, res) {
 
     var mysql = connection.get();
 
-    mysql.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
+    db.readAuthIDByUUID(mysql, UUID, function (err, account) {
         if (err) {
             req.flash('error', {msg: err});
-            
+
             winston.error(err);
 
             return res.redirect('back');
         }
 
-        var authID = rows[0].auth_id;
+        var authID = account.auth_id;
 
         // update auth table
         if (params.updatePassword) {
@@ -325,10 +244,10 @@ function updateInfo(req, res) {
 
         }
 
-        mysql.query(query.updateByUUID, [tables.user, userData, UUID], function (err, result) {
+        db.updateAccountByUUID(mysql, userData, UUID, function (err, result) {
             if (err) {
                 req.flash('error', {msg: err});
-                
+
                 winston.error(err);
 
                 return res.redirect('back');
@@ -371,8 +290,6 @@ function signUp(req, res) {
         message: req.flash()
     };
 
-    console.log(params);
-
     res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);
 }
 
@@ -384,15 +301,13 @@ function signOut(req, res) {
 }
 
 module.exports = {
-    serialize: serialize,
-    deserialize: deserialize,
-    authenticate: authenticate,
-    loginSuccess: loginSuccess,
-    loginDone: loginDone,
     register: register,
     infoForm: showInfo,
     updateInfo: updateInfo,
     signIn: signIn,
     signUp: signUp,
     signOut: signOut,
+    authByUserID: authByUserID,
+    findByID: findByID,
+    findByUUID: findByUUID
 };

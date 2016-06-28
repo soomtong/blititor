@@ -10,8 +10,6 @@ var query = require('./query');
 
 var db = require('./database');
 
-var tables = misc.databaseTable();
-
 // todo: experiment, receive ws push in a guestbook page
 function guestbookForm(req, res) {
     var params = {
@@ -20,8 +18,8 @@ function guestbookForm(req, res) {
     };
 
     var mysql = connection.get();
-
-    mysql.query(query.selectByPage, [['id', 'nickname', 'message', 'reply', 'created_at', 'replied_at'], tables.guestbook, params.page, 10], function (err, rows) {
+    
+    db.readGuestbook(mysql, params.page, function (err, guestbookList) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 읽기에 실패했습니다.'});
 
@@ -30,8 +28,8 @@ function guestbookForm(req, res) {
             res.redirect('back');
         }
 
-        params.list = rows;
-        
+        params.list = guestbookList;
+
         res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
     });
 }
@@ -67,7 +65,7 @@ function registerMessage(req, res) {
     var mysql = connection.get();
 
     // save to guestbook table
-    db.createMessage(mysql, guestbookData, function (err, result) {
+    db.writeMessage(mysql, guestbookData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 
@@ -88,16 +86,12 @@ function registerMessage(req, res) {
     });
 }
 
-/*
-function createMessage(mysql, guestbookData, callback) {
-    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
-        callback(err, result);
-    });
+function updateReply(req, res) {
+
 }
-*/
 
 module.exports = {
     guestbook: guestbookForm,
     registerMessage: registerMessage,
-    registerReply: registerMessage
+    registerReply: updateReply
 };

@@ -4,5 +4,5 @@
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "updateByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
+  "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
 }

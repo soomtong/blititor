@@ -10,6 +10,8 @@ var tables = {
     point: 'b_point'
 };
 
+var query = require('./query');
+
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
@@ -28,7 +30,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 }
 
-function createScheme(databaseConfiguration) {
+function createScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -71,6 +73,8 @@ function createScheme(databaseConfiguration) {
                 // bind foreign key
                 connection.query(sql_fkey_user_auth, [tables.user, tables.auth], function (error, result) {
                     connection.query(sql_fkey_point_user, [tables.point, tables.user], function (error, result) {
+                        callback && callback(databaseConfiguration);
+
                         connection.destroy();
                     })
                 })
@@ -79,9 +83,70 @@ function createScheme(databaseConfiguration) {
     });
 }
 
+function insertDummy(databaseConfiguration) {
+    "use strict";
+
+}
+
+function selectByID(connection, id, callback) {
+    var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
+
+    connection.query(query.selectByID, [field, tables.user, id], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
+function selectByUUID(connection, uuid, callback) {
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+
+    connection.query(query.selectByUUID, [field, tables.user, uuid], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
+function selectByUserID(connection, userID, callback) {
+    var field = ['id', 'user_id', 'user_password'];
+
+    connection.query(query.selectByUserID, [field, tables.auth, userID], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
+function insertAuth(connection, authData, callback) {
+    connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function insertAccount(connection, userData, callback) {
+    connection.query(query.insertInto, [tables.user, userData], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function selectAuthIDByUUID(connection, UUID, callback) {
+    connection.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
+function updateByUUID(connection, userData, UUID, callback) {
+    connection.query(query.updateAccountByUUID, [tables.user, userData, UUID], function (err, result) {
+        callback(err, result);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
+    insertDummy: insertDummy,
+    readAccountByID: selectByID,
+    readAccountByUUID: selectByUUID,
+    readAuthByUserID: selectByUserID,
+    writeAuth: insertAuth,
+    writeAccount: insertAccount,
+    readAuthIDByUUID: selectAuthIDByUUID,
+    updateAccountByUUID: updateByUUID,
     option: {
         tables: tables,
         core: true

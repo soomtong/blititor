@@ -15,6 +15,7 @@ function exposeParameter(req, res, next) {
         title: BLITITOR.config.revision,
         url: req.path
     };
+    
     res.locals.route = routeTable;
 
     next();

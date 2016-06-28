@@ -84,7 +84,7 @@ function insertDummy(databaseConfiguration) {
                     replied_at: item.reply ? new Date() : undefined
                 };
 
-                createMessage(connection, guestbookData, function (err, result) {
+                insertMessage(connection, guestbookData, function (err, result) {
                     console.log('   inserted records...'.white, result.insertId);
 
                     callback(null, result);
@@ -102,8 +102,17 @@ function insertDummy(databaseConfiguration) {
     });
 }
 
-function createMessage(mysql, guestbookData, callback) {
-    mysql.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
+function selectByPage(connection, pageData, callback) {
+    var pageSize = 10;
+    var fields = ['id', 'nickname', 'message', 'reply', 'created_at', 'replied_at'];
+    
+    connection.query(query.readGuestbook, [fields, tables.guestbook, pageData, pageSize], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function insertMessage(connection, guestbookData, callback) {
+    connection.query(query.insertInto, [tables.guestbook, guestbookData], function (err, result) {
         callback(err, result);
     });
 }
@@ -112,7 +121,8 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    createMessage: createMessage,
+    readGuestbook: selectByPage,
+    writeMessage: insertMessage,
     option: {
         tables: tables
     }
