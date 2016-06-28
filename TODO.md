@@ -1,3 +1,4 @@
+- [ ] redesign exposing locals for flash
 - [ ] bind global root folder for setup and init process
 - [ ] default set (blititor basic theme)
 - [ ] theme select to file
