@@ -2,6 +2,28 @@
 
 ## Development Log
 
+### module structure
+
+each module has below structure
+
+```
+┌──────────┐ ┌──────────────────┐
+│  index   │ │      route       │
+└──────────┘ └──────────────────┘
+             ┌──────────────────┐
+             │    menu, page    │
+             └──────────────────┘
+             ┌─────────────┐ ┌──────────────────┐
+             │     lib     │ │   core library   │
+             └─────────────┘ └──────────────────┘
+                             ┌──────────────────┐
+                             │    middleware    │
+                             └──────────────────┘
+                             ┌──────────────────┐ ┌────────────────────────┐
+                             │     database     │ │   query, dummy json    │
+                             └──────────────────┘ └────────────────────────┘
+```
+
 ### site id
 
 blititor had a site id for multiple theme site for only one web service before
