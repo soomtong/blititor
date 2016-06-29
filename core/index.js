@@ -161,7 +161,7 @@ if (BLITITOR.env == 'production') {
 }
 
 // use express middleware
-var logFile = fs.createWriteStream('log/express.log', {flags: 'a'});
+var logFile = fs.createWriteStream('core/log/express.log', {flags: 'a'});
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
