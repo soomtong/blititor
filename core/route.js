@@ -7,7 +7,7 @@ var misc = require('./lib/misc');
 var adminRoute = require('./admin/route');
 
 var middleware = require('./middleware');
-var application = require('../app');
+var application = require('../app/' + BLITITOR.config.site.theme);
 
 var routeTable = misc.routeTable();
 

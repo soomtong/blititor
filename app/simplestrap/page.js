@@ -1,9 +1,9 @@
 // todo: move to page module, site module
 
 var winston = require('winston');
-var common = require('../core/lib/common');
-var site = require('../module/site/lib/site');
-var account = require('../module/account/lib/account');
+var common = require('../../core/lib/common');
+var site = require('../../module/site/lib/site');
+var account = require('../../module/account/lib/account');
 
 module.exports = {
     index: site.index,
