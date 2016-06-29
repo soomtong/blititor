@@ -1,6 +1,6 @@
 //var fs = require('fs');
 //var path = require('path');
-//var winston = require('winston');
+var winston = require('winston');
 
 var misc = require('./lib/misc');
 
@@ -18,7 +18,7 @@ function exposeLocals(req, res, next) {
     
     res.locals.route = routeTable;
 
-    console.log('bind locals middleware in core: {site, route}');
+    winston.verbose('bind locals in core: {site, route}');
     next();
 }
 

@@ -7,7 +7,7 @@ var misc = require('./lib/misc');
 var adminRoute = require('./admin/route');
 
 var middleware = require('./middleware');
-var themePackage = require('../module/' + BLITITOR.config.site.theme);
+var application = require('../app');
 
 var routeTable = misc.routeTable();
 
@@ -23,14 +23,14 @@ var Editor = require('../module/editor');
 // Global middleware
 router.use(middleware.exposeLocals);
 router.use(middleware.checkDatabase);
-router.use(themePackage.menu.expose);
+router.use(application.menu.expose);
 
 // Theme's middleware
 router.use(Site.middleware.exposeLocals);
 
 // route for Theme's module
-var routeList = themePackage.menu.data();
-var pageList = themePackage.page;
+var routeList = application.menu.data();
+var pageList = application.page;
 
 routeList.map(function (item) {
     // expose middleware for each

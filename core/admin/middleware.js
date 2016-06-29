@@ -19,7 +19,7 @@ function exposeParameter(req, res, next) {
     };
     res.locals.route = routeTable;
 
-    console.log('bind locals middleware in admin: {site, route}');
+    winston.verbose('bind locals in admin: {site, route}');
     next();
 }
 
