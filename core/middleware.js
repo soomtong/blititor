@@ -8,7 +8,7 @@ var routeTable = misc.routeTable();
 var siteThemeType = misc.siteThemeType();
 
 // bind common parameters
-function exposeParameter(req, res, next) {
+function exposeLocals(req, res, next) {
     res.locals.site = {
         theme: BLITITOR.config.site.theme,
         themeType: siteThemeType,
@@ -18,6 +18,7 @@ function exposeParameter(req, res, next) {
     
     res.locals.route = routeTable;
 
+    console.log('bind locals middleware in core: {site, route}');
     next();
 }
 
@@ -30,6 +31,6 @@ function checkDatabaseConfig(req, res, next) {
 }
 
 module.exports = {
-    exposeParameter: exposeParameter,
+    exposeLocals: exposeLocals,
     checkDatabase: checkDatabaseConfig
 };

@@ -139,7 +139,8 @@ function register(req, res) {
 
 function showInfo(req, res) {
     var params = {
-        title: '정보수정'
+        title: '정보수정',
+        message: req.flash()
     };
 
     findByUUID(req.user.uuid, function (error, userData) {
@@ -270,8 +271,6 @@ function signIn(req, res) {
 
     var params = {
         title: "Home",
-        user: req.user,
-        message: req.flash()
     };
 
     // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
@@ -286,8 +285,6 @@ function signUp(req, res) {
 
     var params = {
         title: "Home",
-        user: req.user,
-        message: req.flash()
     };
 
     res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);

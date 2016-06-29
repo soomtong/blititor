@@ -15,8 +15,9 @@ function ensureClearSession(req, res, next) {
 }
 
 function exposeLocals(req, res, next) {
-    res.locals.user = req.user;
+    // res.locals.user = req.user;  moved to site module
 
+    console.log('bind locals middleware in account: {}');
     next();
 }
 

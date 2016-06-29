@@ -20,11 +20,12 @@ var Account = require('../module/account');
 var Guestbook = require('../module/guestbook');
 var Editor = require('../module/editor');
 
-router.use(middleware.exposeParameter);
+// Global middleware
+router.use(middleware.exposeLocals);
 router.use(middleware.checkDatabase);
 router.use(themePackage.menu.expose);
 
-// global middleware
+// Theme's middleware
 router.use(Site.middleware.exposeLocals);
 
 // route for Theme's module

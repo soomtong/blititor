@@ -16,7 +16,7 @@ var redirect = {
     }
 };
 
-router.use(middleware.exposeParameter);
+router.use(middleware.exposeLocals);
 
 /*
 router.get(routeTable.admin.install, redirect.databaseSetup);

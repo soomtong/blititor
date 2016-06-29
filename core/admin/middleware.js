@@ -19,6 +19,7 @@ function exposeParameter(req, res, next) {
     };
     res.locals.route = routeTable;
 
+    console.log('bind locals middleware in admin: {site, route}');
     next();
 }
 
@@ -107,7 +108,7 @@ function passDatabaseInit(req, res, next) {
     }
 }
 module.exports = {
-    exposeParameter: exposeParameter,
+    exposeLocals: exposeParameter,
     checkDatabaseConfiguration: passDatabaseConfig,
     checkDatabaseInitialization: passDatabaseInit,
 };
