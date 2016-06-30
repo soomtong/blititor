@@ -102,12 +102,31 @@ function insertDummy(databaseConfiguration) {
     });
 }
 
-function selectByPage(connection, pageData, callback) {
+function selectByPage(connection, page, callback) {
     var pageSize = 10;
     var fields = ['id', 'nickname', 'message', 'reply', 'created_at', 'replied_at'];
-    
-    connection.query(query.readGuestbook, [fields, tables.guestbook, pageData, pageSize], function (err, result) {
-        callback(err, result);
+    var result = {
+        total: 0,
+        page: Number(page),
+        index: 0,
+        pageSize: pageSize,
+        guestbookList: []
+    };
+
+    connection.query(query.countAll, [tables.guestbook], function (err, rows) {
+        result.total = rows[0]['count'] || 0;
+
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.index = Number(result.page) * pageSize;
+
+        connection.query(query.readGuestbook, [fields, tables.guestbook, result.index, pageSize], function (err, rows) {
+            result.guestbookList = rows;
+            callback(err, result);
+        });
     });
 }
 

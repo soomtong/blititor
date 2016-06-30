@@ -11,15 +11,16 @@ var query = require('./query');
 var db = require('./database');
 
 // todo: experiment, receive ws push in a guestbook page
+// todo: ajax load version when receive query param in page number (like ?p=10)
 function guestbookForm(req, res) {
     var params = {
         title: '방명록',
-        page: req.params['plainPage'] || 0
+        page: Number(req.params['page'] || 0)
     };
 
     var mysql = connection.get();
     
-    db.readGuestbook(mysql, params.page, function (err, guestbookList) {
+    db.readGuestbook(mysql, Number(params.page), function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 읽기에 실패했습니다.'});
 
@@ -28,9 +29,12 @@ function guestbookForm(req, res) {
             res.redirect('back');
         }
 
-        params.list = guestbookList;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.page = result.page;  // prevent when wrong page number assigned
+        params.list = result.guestbookList;
 
-        res.render(BLITITOR.config.site.theme + '/page/guestbook/guest', params);
+        res.render(BLITITOR.config.site.theme + '/page/guestbook/guestbook', params);
     });
 }
 

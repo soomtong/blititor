@@ -3,7 +3,7 @@
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
-  "readGuestbook": "SELECT ?? FROM ?? LIMIT ?, ?",
+  "readGuestbook": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
