@@ -109,7 +109,11 @@
                     <li><a href="{{ route.guestbook_root + route.guestbook.form }}{{page + 1}}">이전</a></li>
                     {% endif %}
                     {% if hasPrev %}
+                    {% if page > 1 %}
                     <li><a href="{{ route.guestbook_root + route.guestbook.form }}{{page - 1}}">다음</a></li>
+                    {% else %}
+                    <li><a href="{{ route.guestbook_root + route.guestbook.form }}">다음</a></li>
+                    {% endif %}
                     {% endif %}
                 </ul>
             </nav>

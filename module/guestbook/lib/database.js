@@ -107,7 +107,7 @@ function selectByPage(connection, page, callback) {
     var fields = ['id', 'nickname', 'message', 'reply', 'created_at', 'replied_at'];
     var result = {
         total: 0,
-        page: Number(page),
+        page: Math.abs(Number(page)),
         index: 0,
         pageSize: pageSize,
         guestbookList: []
@@ -122,6 +122,7 @@ function selectByPage(connection, page, callback) {
         }
 
         result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
 
         connection.query(query.readGuestbook, [fields, tables.guestbook, result.index, pageSize], function (err, rows) {
             result.guestbookList = rows;

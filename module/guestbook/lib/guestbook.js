@@ -15,7 +15,8 @@ var db = require('./database');
 function guestbookForm(req, res) {
     var params = {
         title: '방명록',
-        page: Number(req.params['page'] || 0)
+        page: Number(req.params['page'] || 0),
+        p: Number(req.query['p'] || 0)
     };
 
     var mysql = connection.get();
