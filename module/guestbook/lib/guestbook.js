@@ -84,7 +84,6 @@ function registerMessage(req, res) {
         var guestbook_id = result['insertId'];
         winston.info('Saved guestbook id', guestbook_id);
 
-        // save to user table
         req.flash('info', 'Saved Guestbook by ' + (guestbookData.nickname || guestbookData.email));
 
         res.redirect(routeTable.guestbook_root);
@@ -92,7 +91,41 @@ function registerMessage(req, res) {
 }
 
 function updateReply(req, res) {
+    req.assert('id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
+    req.assert('reply', 'reply message is required').len(2).withMessage('Must be 2 chars over').notEmpty();
 
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('id').escape();
+    req.sanitize('reply').escape();
+
+    var replyData = {
+        reply: req.body.reply,
+        replied_at: new Date()
+    };
+
+    var mysql = connection.get();
+    db.writeReply(mysql, req.body.id, replyData, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
+
+            winston.error(err);
+
+            res.redirect('back');
+        }
+
+        console.log(result);
+        
+        req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
+
+        res.redirect(routeTable.guestbook_root);
+    });
 }
 
 module.exports = {

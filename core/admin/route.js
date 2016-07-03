@@ -1,5 +1,4 @@
 var express = require('express');
-var misc = require('../lib/misc');
 
 var database = require('./database');
 var theme = require('./theme');

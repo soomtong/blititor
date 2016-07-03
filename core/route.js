@@ -3,7 +3,6 @@ var winston = require('winston');
 
 var router = express.Router();
 
-var misc = require('./lib/misc');
 var adminRoute = require('./admin/route');
 
 var middleware = require('./middleware');

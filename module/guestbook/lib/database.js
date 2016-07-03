@@ -137,12 +137,19 @@ function insertMessage(connection, guestbookData, callback) {
     });
 }
 
+function updateMessage(connection, guestbookID, replyData, callback) {
+    connection.query(query.updateByID, [tables.guestbook, replyData, guestbookID], function (err, result) {
+        callback(err, result);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
     readGuestbook: selectByPage,
     writeMessage: insertMessage,
+    writeReply: updateMessage,
     option: {
         tables: tables
     }

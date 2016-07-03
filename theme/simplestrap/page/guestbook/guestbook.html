@@ -70,17 +70,25 @@
                 {{ item.message | striptags(true) | replace('\n', '<br>') | safe }}
             </p>
 
-            {% if user %}
+            {% if user and user.grant %}
             <div class="row">
                 <div class="col-lg-12">
-                    <fieldset class="form-group">
-                        <label for="reply">Reply</label>
-                        <textarea class="form-control" name="reply" id="reply" rows="4">{{ item.reply }}</textarea>
-                    </fieldset>
+                    <form id="reply_form" method="post" action="{{ route.guestbook_root + route.guestbook.reply }}">
+                        <fieldset class="form-group">
+                            <label for="reply">Reply</label>
+                            <textarea class="form-control" name="reply" id="reply" rows="4">{{ item.reply }}</textarea>
+                        </fieldset>
 
-                    <div class="pull-lg-right">
-                        <button type="submit" class="btn btn-info">Reply</button>
-                    </div>
+                        <div class="pull-lg-right">
+                            <input type="hidden" name="id" value="{{ item.id }}"/>
+                            <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                            {% if item.reply or item.replied_at %}
+                            <button type="submit" class="btn btn-info">Update</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-info">Reply</button>
+                            {% endif %}
+                        </div>
+                    </form>
                 </div>
             </div>
             {% else %}
