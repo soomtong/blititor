@@ -8,6 +8,9 @@ var siteMiddleware = Site.middleware;
 var accountMiddleware = Account.middleware;
 var guestbookMiddleware = Guestbook.middleware;
 
+var misc = require('../../core/lib/misc');
+var routeTable = BLITITOR.route;
+
 function testMiddleware1(req, res, next) {
     console.log('Route Middleware Test Method 1');
     next();
@@ -33,7 +36,7 @@ var Menu = [
     },
     {
         name: '방명록',
-        url: '/guest',
+        url: routeTable.guestbook_root,
         route: false,
     },
     {
@@ -52,21 +55,21 @@ var Menu = [
     },
     {
         name: '로그인',
-        page: 'sign_in', type: 'get', url: '/account/sign-in',
+        page: 'sign_in', type: 'get', url: routeTable.account_root + routeTable.account.signIn,
         middleware: [],
         route: true,
         logged: -1
     },
     {
         name: '가입하기',
-        page: 'sign_up', type: 'get', url: '/account/sign-up',
+        page: 'sign_up', type: 'get', url: routeTable.account_root + routeTable.account.signUp,
         middleware: [accountMiddleware.checkLoggedSession],
         route: true,
         logged: -1
     },
     {
         name: '로그아웃',
-        page: 'sign_out', type: 'get', url: '/account/sign-out',
+        page: 'sign_out', type: 'get', url: routeTable.account_root + routeTable.account.signOut,
         middleware: [],
         route: true,
         logged: 1

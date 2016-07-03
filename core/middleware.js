@@ -4,7 +4,7 @@ var winston = require('winston');
 
 var misc = require('./lib/misc');
 
-var routeTable = misc.routeTable();
+var routeTable = BLITITOR.route;
 var siteThemeType = misc.siteThemeType();
 
 // bind common parameters

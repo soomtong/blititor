@@ -8,7 +8,7 @@ var middleware = require('./middleware');
 var connection = require('../lib/connection');
 
 var router = express.Router();
-var routeTable = misc.routeTable();
+var routeTable = BLITITOR.route;
 
 var redirect = {
     login: function (req, res) {

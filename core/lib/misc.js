@@ -13,12 +13,15 @@ var defaultRoute = {
     },
     "account_root": "/account",
     "account": {
+        "signIn": "/sign-in",
+        "signUp": "/sign-up",
+        "signOut": "/sign-out",
         "login": "/login",
         "register": "/register",
         "info": "/info",
         "updateInfo": "/update"
     },
-    "guestbook_root": "/guest",
+    "guestbook_root": "/guestbook",
     "guestbook": {
         "form": "/",
         "message": "/register",
@@ -35,7 +38,7 @@ var databaseTables = {  //todo: extract from `core/admin/module.js`
     guestbook: 'b_guestbook',
 };
 
-function routeTable() {
+function setRouteTable() {
     BLITITOR.route = defaultRoute;
 
     return BLITITOR.route;
@@ -96,7 +99,7 @@ function showRouteTable(routeTable) {
 }
 
 module.exports = {
-    routeTable: routeTable,
+    setRouteTable: setRouteTable,
     databaseTable: databaseTable,
     // setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,

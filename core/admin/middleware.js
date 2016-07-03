@@ -6,7 +6,7 @@ var database = require('./database');
 var databaseDefault = require('./../config/database_default');
 
 var misc = require('../lib/misc');
-var routeTable = misc.routeTable();
+var routeTable = BLITITOR.route;
 var siteThemeType = misc.siteThemeType();
 
 // bind common parameters

@@ -6,17 +6,19 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
+var routeTable = BLITITOR.route;
+
 var query = require('./query');
 
 var db = require('./database');
+
 
 // todo: experiment, receive ws push in a guestbook page
 // todo: ajax load version when receive query param in page number (like ?p=10)
 function guestbookForm(req, res) {
     var params = {
         title: '방명록',
-        page: Number(req.params['page'] || 0),
-        p: Number(req.query['p'] || 0)
+        page: Number(req.params['page'] || Number(req.query['p'] || 0))
     };
 
     var mysql = connection.get();
@@ -84,8 +86,6 @@ function registerMessage(req, res) {
 
         // save to user table
         req.flash('info', 'Saved Guestbook by ' + (guestbookData.nickname || guestbookData.email));
-
-        var routeTable = misc.routeTable();
 
         res.redirect(routeTable.guestbook_root);
     });

@@ -1,5 +1,4 @@
 var express = require('express');
-var winston = require('winston');
 
 var router = express.Router();
 
@@ -7,7 +6,7 @@ var guestbook = require('./lib/guestbook');
 var middleware = require('./lib/middleware');
 
 var misc = require('../../core/lib/misc');
-var routeTable = misc.routeTable();
+var routeTable = BLITITOR.route;
 
 router.use(middleware.exposeLocals);
 

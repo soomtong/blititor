@@ -11,7 +11,7 @@ var middleware = require('./lib/middleware');
 var passport = require('./lib/passoprt');
 
 var misc = require('../../core/lib/misc');
-var routeTable = misc.routeTable();
+var routeTable = BLITITOR.route;
 
 // Passport Stuffs
 Passport.serializeUser(passport.serialize);

@@ -136,7 +136,7 @@ moment.locale(BLITITOR.config.locale);
 
 // load route setup
 // misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
-var routeTable = misc.routeTable();
+misc.setRouteTable();
 
 var route = require('./route');
 
@@ -294,7 +294,7 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function () {
     winston.info("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
     // display default route table
-    misc.showRouteTable(routeTable);
+    misc.showRouteTable(BLITITOR.route);
 });
 
 if (!process.send) {
