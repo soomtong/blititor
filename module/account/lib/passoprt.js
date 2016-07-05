@@ -15,15 +15,27 @@ function authenticate(userID, password, done) {
             return done(null, false, {message: 'Unknown user ' + userID});
         }
 
-        // winston.verbose(auth);
-        
+        winston.verbose(auth);
+        winston.verbose(password, hash);
+
+        bcrypt.compare(auth.user_password, hash, function (err, result) {
+            if (!result) {
+                winston.verbose('user given password not exactly same with authorized hash');
+
+                return done(null, false, {message: 'Invalid password'});
+            } else {
+                return done(null, auth);
+            }
+        });
+
+/*
         if (bcrypt.compareSync(auth.user_password, hash)) {
             winston.verbose('user given password not exactly same with authorized hash');
 
             return done(null, false, {message: 'Invalid password'});
         }
+*/
 
-        return done(null, auth);
     })
 }
 
