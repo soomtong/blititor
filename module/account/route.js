@@ -19,6 +19,10 @@ Passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password
 
 router.use(middleware.exposeLocals);
 
+router.get(routeTable.account.signIn, account.signIn);
+router.get(routeTable.account.signUp, middleware.checkLoggedSession, account.signUp);
+router.get(routeTable.account.signOut, account.signOut);
+
 router.post(routeTable.account.login, Passport.authenticate('local', {
         failureRedirect: '/account/sign-in',
         badRequestMessage: '아이디 또는 비밀번호를 입력해주세요.',

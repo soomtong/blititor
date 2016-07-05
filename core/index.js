@@ -138,8 +138,6 @@ moment.locale(BLITITOR.config.locale);
 // misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
 misc.setRouteTable();
 
-var route = require('./route');
-
 // ready Express server
 var app = express();
 
@@ -258,6 +256,8 @@ app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
 // bind route
+var route = require('./route');
+
 app.use(route);
 
 // Handle 404

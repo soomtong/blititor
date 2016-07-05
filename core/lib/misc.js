@@ -27,6 +27,12 @@ var defaultRoute = {
         "message": "/register",
         "reply": "/register/reply"
     },
+    "teamblog_root": "/blog",
+    "teamblog": {
+        "list": "/",
+        "write": "/write",
+        "view": "/view"
+    },
     "pages": []
 };
 

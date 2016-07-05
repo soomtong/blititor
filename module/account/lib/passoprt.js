@@ -15,6 +15,8 @@ function authenticate(userID, password, done) {
             return done(null, false, {message: 'Unknown user ' + userID});
         }
 
+        // winston.verbose(auth);
+        
         if (bcrypt.compareSync(auth.user_password, hash)) {
             winston.verbose('user given password not exactly same with authorized hash');
 
