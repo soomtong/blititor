@@ -24,6 +24,41 @@ each module has below structure
                              └──────────────────┘ └────────────────────────┘
 ```
 
+### router structure
+
+router has a hierarchy. sub-system router has own Router() instance.
+it return and export to the top. and finally bind a express application.
+
+```
+┌─────────────┐
+│    index    │ express.js Application
+└─────────────┘
+       │
+       └───┐
+           ▼   core/route.js
+    ┌─────────────┐    ┌─────────────┐
+    │             │◀───│ middleware  │ core/middleware.js
+    │ core router │    ├─────────────┤
+    │             │◀───│ static page │
+    └─────────────┘    └─────────────┘
+           │
+           └───┐
+               ▼   application/{moduleName}/{menu.js, page.js}
+        ┌──────────────┐
+        │     each     │
+        │ applications │     ┌──────────────┐
+        │    router    │◀────│ bind methods │  module/{moduleName}/route.js
+        └──────────────┘     └──────────────┘
+                │
+        ┌───────┴─────────┬─────────────────┐  module/{moduleName}/lib/{moduleName}.js
+        ▼                 ▼                 ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│     each     │  │     each     │  │     each     │ ◀────┌──────────────┐
+│   modules    │  │   modules    │  │   modules    │ ◀────│  middleware  │
+│    router    │  │    router    │  │    router    │ ◀────└──────────────┘
+└──────────────┘  └──────────────┘  └──────────────┘
+```
+
 ### site id
 
 blititor had a site id for multiple theme site for only one web service before
