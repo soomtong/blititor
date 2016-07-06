@@ -66,7 +66,8 @@ function register(req, res) {
     }
 
     req.sanitize('nickname').escape();
-    
+    req.sanitize('password').trim();
+
     var hash = common.hash(req.body.password);
 
     var authData = {

@@ -1,7 +1,7 @@
 var uuid = require('uuid');
 var bcrypt = require('bcrypt');
 
-var salt = bcrypt.genSaltSync(10);
+var salt = bcrypt.genSaltSync(8);
 
 function destructMarkdown(markdownText) {
     var title = markdownText.toString().match(/^##[^#].+/m)[0].trim();

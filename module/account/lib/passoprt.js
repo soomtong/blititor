@@ -5,8 +5,6 @@ var common = require('../../../core/lib/common');
 var account = require('./account');
 
 function authenticate(userID, password, done) {
-    var hash = common.hash(password);
-
     account.authByUserID(userID, function (err, auth) {
         if (err) {
             return done(err);
@@ -15,27 +13,15 @@ function authenticate(userID, password, done) {
             return done(null, false, {message: 'Unknown user ' + userID});
         }
 
-        winston.verbose(auth);
-        winston.verbose(password, hash);
-
-        bcrypt.compare(auth.user_password, hash, function (err, result) {
-            if (!result) {
-                winston.verbose('user given password not exactly same with authorized hash');
-
-                return done(null, false, {message: 'Invalid password'});
-            } else {
-                return done(null, auth);
-            }
-        });
-
-/*
-        if (bcrypt.compareSync(auth.user_password, hash)) {
+        winston.verbose(auth, userID, password);
+        
+        if (!bcrypt.compareSync(password, auth.user_password)) {
             winston.verbose('user given password not exactly same with authorized hash');
 
             return done(null, false, {message: 'Invalid password'});
+        } else {
+            return done(null, auth);
         }
-*/
-
     })
 }
 
