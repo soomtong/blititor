@@ -62,8 +62,12 @@ function getUUID4() {
     return uuid.v4();
 }
 
-function getHash(password) {
-    return bcrypt.hashSync(password, salt);
+function getHash(password, callback) {
+    if (!callback || typeof callback !== 'function') {
+        return bcrypt.hashSync(password, salt);
+    } else {
+        return bcrypt.hash(password, salt, callback);
+    }
 }
 
 module.exports = {

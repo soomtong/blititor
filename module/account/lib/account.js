@@ -68,74 +68,76 @@ function register(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('password').trim();
 
-    var hash = common.hash(req.body.password);
-
-    var authData = {
-        user_id: req.body.email,
-        user_password: hash
-    };
-
-    var mysql = connection.get();
-
-    // save to auth table
-    db.writeAuth(mysql, authData, function (err, result) {
-        if (err) {
-            req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
-
-            winston.error(error);
-
-            res.redirect('back');
-        }
-
-        var auth_id = result['insertId'];
-
-        // save to user table
-        var userData = {
-            uuid: common.UUID4(),
-            auth_id: auth_id,
-            nickname: req.body.nickname,
-            level: 1,
-            grant: '',
-            login_counter: 1,
-            last_logged_at: new Date(),
-            created_at: new Date()
+    // var hash = common.hash(req.body.password);
+    common.hash(req.body.password, function (err, hash) {
+        var authData = {
+            user_id: req.body.email,
+            user_password: hash
         };
 
-        req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
+        var mysql = connection.get();
 
-        db.writeAccount(mysql, userData, function (err, result) {
+        // save to auth table
+        db.writeAuth(mysql, authData, function (err, result) {
             if (err) {
-                req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
+                req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
                 winston.error(error);
 
                 res.redirect('back');
             }
 
-            var id = result['insertId'];
+            var auth_id = result['insertId'];
 
-            var user = {
-                id: id,
-                uuid: userData.uuid,
-                user_id: authData.user_id,
-                nickname: userData.nickname,
-                level: userData.level,
-                grant: userData.grant
+            // save to user table
+            var userData = {
+                uuid: common.UUID4(),
+                auth_id: auth_id,
+                nickname: req.body.nickname,
+                level: 1,
+                grant: '',
+                login_counter: 1,
+                last_logged_at: new Date(),
+                created_at: new Date()
             };
 
-            req.logIn(user, function (err) {
+            req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
+
+            db.writeAccount(mysql, userData, function (err, result) {
                 if (err) {
-                    req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+                    req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
                     winston.error(error);
 
-                    return res.redirect('back');
+                    res.redirect('back');
                 }
 
-                res.redirect('/');
+                var id = result['insertId'];
+
+                var user = {
+                    id: id,
+                    uuid: userData.uuid,
+                    user_id: authData.user_id,
+                    nickname: userData.nickname,
+                    level: userData.level,
+                    grant: userData.grant
+                };
+
+                req.logIn(user, function (err) {
+                    if (err) {
+                        req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+                        winston.error(error);
+
+                        return res.redirect('back');
+                    }
+
+                    res.redirect('/');
+                });
             });
         });
     });
+
 }
 
 function showInfo(req, res) {
@@ -165,7 +167,7 @@ function updateInfo(req, res) {
 
     var profileImage = null;
 
-    console.log(req.body, req.files);
+    // console.log(req.body, req.files);
 
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
@@ -174,7 +176,7 @@ function updateInfo(req, res) {
         req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
 
         params.updatePassword = true;
-        params.password = common.hash(req.body.password);
+        // params.password = common.hash(req.body.password);
     }
     
     var errors = req.validationErrors();
@@ -231,12 +233,24 @@ function updateInfo(req, res) {
 
         var authID = account.auth_id;
 
-        // update auth table
+        // update auth table, it is async routine
         if (params.updatePassword) {
-            var authData = {user_password: params.password};
+            common.hash(req.body.password, function (err, hash) {
+                if (err) {
+                    req.flash('error', {msg: err});
 
-            mysql.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
-                winston.warn('Updated user password into `auth` table record:', result);
+                    winston.error(err);
+
+                    // if password update routine was broken
+                    // then pass this process for next login
+                    // it can use before password
+                } else {
+                    var authData = {user_password: hash};
+
+                    mysql.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
+                        winston.warn('Updated user password into `auth` table record:', result);
+                    });
+                }
             });
         }
 

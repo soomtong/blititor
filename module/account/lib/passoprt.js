@@ -13,16 +13,23 @@ function authenticate(userID, password, done) {
             return done(null, false, {message: 'Unknown user ' + userID});
         }
 
-        winston.verbose(auth, userID, password);
-        
-        if (!bcrypt.compareSync(password, auth.user_password)) {
-            winston.verbose('user given password not exactly same with authorized hash');
+        // winston.verbose(auth, userID, password);
 
-            return done(null, false, {message: 'Invalid password'});
-        } else {
-            return done(null, auth);
-        }
-    })
+        bcrypt.compare(password, auth.user_password, function (err, result) {
+            if (err) {
+                winston.error("bcrypt system error", err);
+
+                return done(err);
+            }
+            if (!result) {
+                winston.verbose('user given password not exactly same with authorized hash', result);
+
+                return done(null, false, {message: 'Invalid password'});
+            } else {
+                return done(null, auth);
+            }
+        });
+    });
 }
 
 function serialize(user, done) {
