@@ -30,7 +30,19 @@ function checkDatabaseConfig(req, res, next) {
     }
 }
 
+function testMiddleware1(req, res, next) {
+    console.log('Route Middleware Test Method 1');
+    next();
+}
+
+function testMiddleware2(req, res, next) {
+    console.log('Route Middleware Test Method 2');
+    next();
+}
+
 module.exports = {
+    test1: testMiddleware1,
+    test2: testMiddleware2,
     exposeLocals: exposeLocals,
     checkDatabase: checkDatabaseConfig
 };

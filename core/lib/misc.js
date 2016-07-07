@@ -3,6 +3,7 @@ var winston = require('winston');
 
 var defaultRoute = {
     "root": "/",
+    "about": "/about",
     "admin_root": "/admin",
     "admin": {
         "login": "/login",

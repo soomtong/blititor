@@ -6,8 +6,6 @@ var filter = common.regexFilter();
 function indexPage(req, res) {
     var params = {
         title: "Home",
-        user: req.user,
-        message: req.flash()
     };
 
     winston.info(req.path);
@@ -26,7 +24,6 @@ function plainPage(req, res) {
         title: "Home",
         path: req.path,
         page: req.path.match(filter.page)[1].replace(/-/g, '_'),
-        user: req.user
     };
 
     // winston.info(req.path, params, req.path.match(filter.page));
@@ -37,5 +34,5 @@ function plainPage(req, res) {
 
 module.exports = {
     index: indexPage,
-    pages: plainPage,
+    others: plainPage,
 };
