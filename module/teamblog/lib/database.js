@@ -47,6 +47,7 @@ function createScheme(databaseConfiguration, callback) {
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
         '`nickname` varchar(64), ' +
         '`flag` varchar(1), ' +
+        '`title` varchar(256), ' +
         '`post` text, ' +
         '`tags` text, ' +
         '`created_at` datetime, ' +
@@ -81,30 +82,43 @@ function insertDummy(databaseConfiguration) {
                 password: databaseConfiguration.dbUserPassword
             });
 
-            var dummy = require('./dummy.json');
-            var iteratorAsync = function (item, callback) {
-                var teamblogData = {
-                    nickname: item.nickname,
-                    post: item.post,
-                    tags: '',
-                    created_at: new Date()
+            getAnyAuthor(connection, function (err, author) {
+                var dummy = require('./dummy.json');
+
+                var iteratorAsync = function (item, callback) {
+                    var teamblogData = {
+                        user_uuid: author.uuid,
+                        user_id: author.id,
+                        nickname: author.nickname,
+                        post: item.post,
+                        tags: '',
+                        created_at: new Date()
+                    };
+
+                    insertPost(connection, teamblogData, function (err, result) {
+                        console.log('   inserted records...'.white, result.insertId);
+
+                        callback(null, result);
+                    });
+                };
+                var resultAsync = function (err, result) {
+                    console.log(' = Make default records...'.blue);
+
+                    // close connection
+                    connection.destroy();
                 };
 
-                insertPost(connection, teamblogData, function (err, result) {
-                    console.log('   inserted records...'.white, result.insertId);
-
-                    callback(null, result);
-                });
-            };
-            var resultAsync = function (err, result) {
-                console.log(' = Make default records...'.blue);
-
-                // close connection
-                connection.destroy();
-            };
-
-            async.mapSeries(dummy, iteratorAsync, resultAsync);
+                async.mapSeries(dummy, iteratorAsync, resultAsync);
+            });
         }
+    });
+}
+
+function getAnyAuthor(connection, callback) {
+    var fields = ['id', 'uuid', 'nickname'];
+
+    connection.query(query.anyAuthor, [fields, tables.user], function (error, results) {
+        callback(error, results[0]);
     });
 }
 

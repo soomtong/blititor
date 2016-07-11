@@ -1,10 +1,10 @@
 {
   "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
-  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
   "readTeamblog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
+  "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
 }

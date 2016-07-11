@@ -89,10 +89,12 @@ router
  │         │   
  │         ├── router                              /^\/blog\/?(?=\/|$)/                                        
  │         │   router                                                                                          
+ │         │    ├── exposeLocals                   *                                                           
  │         │    ├── bound dispatch                 /                                                           GET
  │         │    │    └── listPost                  /                                                           GET
  │         │    │   
  │         │    └── bound dispatch                 /write                                                      GET
+ │         │         ├── ensureAuthenticated       /                                                           GET
  │         │         └── writePost                 /                                                           GET
  │         │        
  │         │   
