@@ -1,18 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
-
-    <title>{{ title }}</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="/{{site.theme}}/common/style.css"/>
+<html lang="en">
+<head>
+    {% include '../include/header.html' %}
 </head>
 <body>
 
@@ -29,25 +18,40 @@
             <div class="bg-guest-form-holder">
 
                 <h4>Guest Book</h4>
-                <form>
+                <form id="message_form" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
                     <fieldset class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <label for="email">Email address</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
                         <small class="text-muted">We'll never share your email with anyone else.</small>
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="exampleTextarea">Example textarea</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                        <label for="nickname">Nickname</label>
+                        <input type="text" name="nickname" class="form-control" id="nickname" placeholder="Anonymous">
                     </fieldset>
+                    <fieldset class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" name="message" id="message" rows="4"></textarea>
+                    </fieldset>
+
+                    {% if message.error %}
+                    {% for error in message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> {{ error.msg }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"> Hidden
+                            <input type="checkbox" name="hidden"> Hidden
                         </label>
                     </div>
+
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
 
@@ -57,33 +61,6 @@
 
     <hr>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-            <h5>Blog heroes</h5>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-            <ul>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <nav>
-                <ul class="pager">
-                    <li><a href="#">Previous</a></li>
-                    <li><a href="#">Next</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-
     {% include '../include/footer.html' %}
 
 </div>
@@ -92,5 +69,15 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+<script src="/{{site.theme}}/common/script.js"></script>
+<!-- version 2 we use this pattern -->
+<script src="/lib/editor.js"></script>
+<script>
+    $(document).ready(function () {
+
+    });
+</script></body>
 </html>
