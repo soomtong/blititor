@@ -33,21 +33,17 @@ switch (param1) {
         loadModuleList();
         break;
     case 'init':
-        switch (param2) {
-            case 'guestbook':
-                makeModuleDatabaseTable(param2);
-                break;
-            default:
-                makeDatabaseTable();
+        if (!param2) {
+            makeDatabaseTable();
+        } else {
+            makeModuleDatabaseTable(param2);
         }
         break;
     case 'reset':
-        switch (param2) {
-            case 'guestbook':
-                makeModuleDatabaseTableWithReset(param2);
-                break;
-            default:
-                makeDatabaseTableWithReset();
+        if (!param2) {
+            makeDatabaseTableWithReset();
+        } else {
+            makeModuleDatabaseTableWithReset(param2);
         }
         break;
     case 'theme':
