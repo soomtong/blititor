@@ -33,7 +33,7 @@ function listPost(req, res) {
         params.hasPrev = result.page > 0;
         params.page = result.page;  // prevent when wrong page number assigned
         params.list = result.teamblogList;  // todo: convert markdown to html
-
+        
         res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
     });
 }

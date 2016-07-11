@@ -90,6 +90,7 @@ function insertDummy(databaseConfiguration) {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
+                        title: item.title,
                         post: item.post,
                         tags: '',
                         created_at: new Date()
@@ -124,7 +125,7 @@ function getAnyAuthor(connection, callback) {
 
 function selectByPage(connection, page, callback) {
     var pageSize = 10;
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'post', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),

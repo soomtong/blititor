@@ -16,6 +16,16 @@
     <div class="row">
 
         <div class="col-sm-9 blog-main">
+            {% for item in list %}
+            <div class="blog-post">
+                <h2 class="blog-post-title">{{ item.title }}</h2>
+                <p class="blog-post-meta">{{ item.created_at }} by <a href="#">{{ item.nickname }}</a></p>
+                <div class="markdown">{{ item.post }}</div>
+                {% if item.tags %}
+                <p class="tags">{{ item.tags }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
 
             <div class="blog-post">
                 <h2 class="blog-post-title">Sample blog post</h2>
