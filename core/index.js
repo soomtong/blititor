@@ -205,15 +205,6 @@ var sessionOptions = {
     resave: true,
     saveUninitialized: true
 };
-/*
-var storeOption = {
-    autoReconnect: true,
-    useConnectionPooling: true,
-    schema: {
-        tableName: 'b_session'
-    }
-};
-*/
 
 if (databaseConfiguration) {
 
@@ -261,7 +252,7 @@ var route = require('./route');
 app.use(route);
 
 // Handle 404
-app.use(function(req, res, next){
+app.use(function _404Handler(req, res, next){
     res.status(404);
 
     // respond with html page
@@ -281,7 +272,7 @@ app.use(function(req, res, next){
 });
 
 // Handle 500
-app.use(function(err, req, res, next){
+app.use(function _500Handler(err, req, res, next){
     // we may use properties of the error object
     // here and next(err) appropriately, or if
     // we possibly recovered from the error, simply next().
@@ -303,4 +294,8 @@ if (!process.send) {
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
     winston.info('This is free software, and you are welcome to redistribute it under certain conditions.');
     //winston.info('');
+
+    if (BLITITOR.env == 'development') { // Only in dev environment
+        require('express-print-routes')(app, path.join(__dirname, './log/routes.txt'));
+    }
 }

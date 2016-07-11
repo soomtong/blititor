@@ -44,5 +44,7 @@
     "prod": "echo \"set production\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "express-print-routes": "^1.0.0"
+  }
 }
