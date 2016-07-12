@@ -143,14 +143,17 @@ function selectByPage(connection, page, callback) {
             result.page = maxPage;
         }
 
-        console.log(maxPage);
         result.maxPage = maxPage;
         result.index = Number(result.page) * pageSize;
         if (result.index < 0) result.index = 0;
 
-        connection.query(query.readTeamblog, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
-            result.teamblogList = rows;
-            callback(err, result);
+        connection.query(query.countAllGroupByMonth, ['created_at', 'created_at', tables.teamblog, 'created_at', 'created_at', 'created_at'], function (err, results) {
+            result.postGroupList = results;
+
+            connection.query(query.readTeamblog, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
+                result.teamblogList = rows;
+                callback(err, result);
+            });
         });
     });
 }

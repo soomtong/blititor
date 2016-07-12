@@ -46,7 +46,8 @@ function listPost(req, res) {
         params.maxPage = result.maxPage + 1;
         params.page = result.page + 1;  // prevent when wrong page number assigned
         params.list = result.teamblogList;  // todo: convert markdown to html
-        
+        params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+
         res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
     });
 }

@@ -3,6 +3,7 @@
   "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
+  "countAllGroupByMonth": "SELECT month(??) as `month`, year(??) as `year`, count(`id`) as `count` FROM ?? GROUP BY month(??), year(??) ORDER BY ?? DESC",
   "readTeamblog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
