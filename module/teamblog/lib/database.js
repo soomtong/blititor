@@ -92,7 +92,7 @@ function insertDummy(databaseConfiguration) {
                         nickname: author.nickname,
                         title: item.title,
                         post: item.post,
-                        tags: '',
+                        tags: item.tags,
                         created_at: new Date()
                     };
 

@@ -1,6 +1,7 @@
 var fs = require('fs');
 var moment = require('moment');
 var winston = require('winston');
+var markdownIt = require('markdown-it');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -15,10 +16,16 @@ var db = require('./database');
 function listPost(req, res) {
     var params = {
         title: '팀블로그',
+        useMarkdown: true,
         page: Number(req.params['page'] || Number(req.query['p'] || 0))
     };
 
     var mysql = connection.get();
+    var md = markdownIt({
+        breaks: true,
+        linkify: true,
+        langPrefix: 'language-'
+    });
 
     db.readTeamblog(mysql, Number(params.page), function (err, result) {
         if (err) {
@@ -28,6 +35,11 @@ function listPost(req, res) {
 
             res.redirect('back');
         }
+
+        // render markdown
+        result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
+            item.post = md.render(item.post);
+        });
 
         params.hasNext = result.total > (result.page + 1) * result.pageSize;
         params.hasPrev = result.page > 0;

@@ -38,6 +38,32 @@ body {
     border-width: .2rem 0 0;
 }
 
+.blog-post .blog-post-title {
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.blog-post .blog-post-meta {
+    font-size: 0.8em;
+    color: #999;
+    margin-bottom: 16px;
+}
+
+.blog-post .markdown-body {
+    text-align: justify;
+}
+
+.blog-post .blog-post-tags {
+    margin: 1em 0;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.blog-post .blog-post-feedback {
+    margin: 1em 0 3em;
+}
+
 .footer {
     padding-top: 1.5rem;
     color: #777;
