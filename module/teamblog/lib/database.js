@@ -124,12 +124,13 @@ function getAnyAuthor(connection, callback) {
 }
 
 function selectByPage(connection, page, callback) {
-    var pageSize = 10;
+    var pageSize = 5;
     var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
         index: 0,
+        maxPage: 0,
         pageSize: pageSize,
         teamblogList: []
     };
@@ -142,6 +143,8 @@ function selectByPage(connection, page, callback) {
             result.page = maxPage;
         }
 
+        console.log(maxPage);
+        result.maxPage = maxPage;
         result.index = Number(result.page) * pageSize;
         if (result.index < 0) result.index = 0;
 

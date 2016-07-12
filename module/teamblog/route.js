@@ -12,6 +12,7 @@ var routeTable = BLITITOR.route;
 router.use(middleware.exposeLocals);
 
 router.get(routeTable.teamblog.list, teamblog.list);
+router.get(routeTable.teamblog.list + ':page', teamblog.list);
 router.get(routeTable.teamblog.write, AccountMiddleware.checkSignedIn, teamblog.write);
 
 module.exports = router;
