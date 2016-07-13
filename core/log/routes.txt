@@ -90,12 +90,16 @@ router
  │         ├── router                              /^\/blog\/?(?=\/|$)/                                        
  │         │   router                                                                                          
  │         │    ├── exposeLocals                   *                                                           
- │         │    ├── bound dispatch                 /                                                           GET
- │         │    │    └── listPost                  /                                                           GET
- │         │    │   
  │         │    ├── bound dispatch                 /write                                                      GET
  │         │    │    ├── ensureAuthenticated       /                                                           GET
  │         │    │    └── writePost                 /                                                           GET
+ │         │    │   
+ │         │    ├── bound dispatch                 /write                                                      POST
+ │         │    │    ├── ensureAuthenticated       /                                                           POST
+ │         │    │    └── savePost                  /                                                           POST
+ │         │    │   
+ │         │    ├── bound dispatch                 /                                                           GET
+ │         │    │    └── listPost                  /                                                           GET
  │         │    │   
  │         │    ├── bound dispatch                 /:page                                                      GET
  │         │    │    └── listPost                  /                                                           GET

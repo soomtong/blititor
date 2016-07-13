@@ -77,7 +77,7 @@ function listPost(req, res) {
     }
 }
 
-function writePost(req, res) {
+function writeForm(req, res) {
     var params = {
         title: '팀블로그',
     };
@@ -85,8 +85,14 @@ function writePost(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/teamblog/write', params);
 }
 
+function savePost(req, res) {
+
+
+    res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
+}
 
 module.exports = {
     list: listPost,
-    write: writePost
+    write: writeForm,
+    save: savePost
 };

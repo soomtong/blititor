@@ -11,8 +11,10 @@ var routeTable = BLITITOR.route;
 
 router.use(middleware.exposeLocals);
 
-router.get(routeTable.teamblog.list, teamblog.list);
 router.get(routeTable.teamblog.write, AccountMiddleware.checkSignedIn, teamblog.write); // in order to avoid conflict with `:page` params
+router.post(routeTable.teamblog.write, AccountMiddleware.checkSignedIn, teamblog.save);
+
+router.get(routeTable.teamblog.list, teamblog.list);
 router.get(routeTable.teamblog.list + ':page', teamblog.list);
 router.get(routeTable.teamblog.list + ':year/:month', teamblog.list);
 
