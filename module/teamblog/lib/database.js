@@ -151,7 +151,7 @@ function selectByPage(connection, page, callback) {
             result.postGroupList = results;
 
             connection.query(query.readTeamblog, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
-                result.teamblogList = rows;
+                if (!err) result.teamblogList = rows;
                 callback(err, result);
             });
         });
