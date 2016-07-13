@@ -96,6 +96,9 @@ router
  │         │    ├── bound dispatch                 /:page                                                      GET
  │         │    │    └── listPost                  /                                                           GET
  │         │    │   
+ │         │    ├── bound dispatch                 /:year/:month                                               GET
+ │         │    │    └── listPost                  /                                                           GET
+ │         │    │   
  │         │    └── bound dispatch                 /write                                                      GET
  │         │         ├── ensureAuthenticated       /                                                           GET
  │         │         └── writePost                 /                                                           GET

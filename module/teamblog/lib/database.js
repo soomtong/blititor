@@ -158,6 +158,28 @@ function selectByPage(connection, page, callback) {
     });
 }
 
+function selectAllByMonth(connection, year, month, callback) {
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
+    var result = {
+        total: 0,
+        teamblogList: []
+    };
+
+    connection.query(query.countAllGroupByMonth, ['created_at', 'created_at', tables.teamblog, 'created_at', 'created_at', 'created_at'], function (err, results) {
+        result.postGroupList = results;
+
+        if (year < 1900 || year > 3000) year = Date.now().getFullYear();
+        if (month < 0 || month > 12) month = Date.now().getMonth() + 1;
+
+        console.log(year, month);
+
+        connection.query(query.readTeamblogMonthlyAll, [fields, tables.teamblog, 'created_at', year, 'created_at', month], function (err, rows) {
+            result.teamblogList = rows;
+            callback(err, result);
+        });
+    });
+}
+
 function insertPost(connection, teamblogData, callback) {
     connection.query(query.insertInto, [tables.teamblog, teamblogData], function (err, result) {
         callback(err, result);
@@ -175,6 +197,7 @@ module.exports = {
     createScheme: createScheme,
     insertDummy: insertDummy,
     readTeamblog: selectByPage,
+    readTeamblogAll: selectAllByMonth,
     writePost: insertPost,
     updatePost: updatePost,
     option: {

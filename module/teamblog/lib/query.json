@@ -5,6 +5,7 @@
   "countAll": "SELECT count(id) as `count` FROM ??",
   "countAllGroupByMonth": "SELECT month(??) as `month`, year(??) as `year`, count(`id`) as `count` FROM ?? GROUP BY month(??), year(??) ORDER BY ?? DESC",
   "readTeamblog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
+  "readTeamblogMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"

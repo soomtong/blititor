@@ -17,7 +17,9 @@ function listPost(req, res) {
     var params = {
         title: '팀블로그',
         useMarkdown: true,
-        page: Number(req.params['page'] || Number(req.query['p'] || 1))
+        page: Number(req.params['page'] || Number(req.query['p'] || 1)),
+        month: req.params['month'],
+        year: req.params['month'] ? req.params['year'] : undefined
     };
 
     var mysql = connection.get();
@@ -27,29 +29,52 @@ function listPost(req, res) {
         langPrefix: 'language-'
     });
 
-    db.readTeamblog(mysql, Number(params.page - 1), function (err, result) {
-        if (err) {
-            req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
+    if (params.month) {
+        db.readTeamblogAll(mysql, Number(params.year), Number(params.month), function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
-            winston.error(err);
+                winston.error(err);
 
-            res.redirect('back');
-        }
+                res.redirect('back');
+            }
 
-        // render markdown
-        result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-            item.post = md.render(item.post);
+            // render markdown
+            result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
+                item.post = md.render(item.post);
+            });
+
+            params.list = result.teamblogList;  // todo: convert markdown to html
+            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+
+            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
         });
+    } else {
+        db.readTeamblog(mysql, Number(params.page - 1), function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
-        params.list = result.teamblogList;  // todo: convert markdown to html
-        params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+                winston.error(err);
 
-        res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
-    });
+                res.redirect('back');
+            }
+
+            // render markdown
+            result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
+                item.post = md.render(item.post);
+            });
+
+            params.pagination = true;
+            params.hasNext = result.total > (result.page + 1) * result.pageSize;
+            params.hasPrev = result.page > 0;
+            params.maxPage = result.maxPage + 1;
+            params.page = result.page + 1;  // prevent when wrong page number assigned
+            params.list = result.teamblogList;  // todo: convert markdown to html
+            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+
+            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+        });
+    }
 }
 
 function writePost(req, res) {
