@@ -32,13 +32,11 @@ router
  │    └── router                                   *                                                           
  │        router                                                                                               
  │         ├── exposeLocals                        *                                                           
- │         ├── bound dispatch                      /                                                           GET
- │         │    ├── testMiddleware1                /                                                           GET
- │         │    ├── testMiddleware2                /                                                           GET
- │         │    └── indexPage                      /                                                           GET
- │         │   
  │         ├── bound dispatch                      /about                                                      GET
  │         │    └── plainPage                      /                                                           GET
+ │         │   
+ │         ├── bound dispatch                      /                                                           _ALL
+ │         │    └── indexPage                      /                                                           
  │         │   
  │         ├── router                              /^\/account\/?(?=\/|$)/                                     
  │         │   router                                                                                          
@@ -92,7 +90,7 @@ router
  │         │    ├── exposeLocals                   *                                                           
  │         │    ├── bound dispatch                 /write                                                      GET
  │         │    │    ├── ensureAuthenticated       /                                                           GET
- │         │    │    └── writePost                 /                                                           GET
+ │         │    │    └── writeForm                 /                                                           GET
  │         │    │   
  │         │    ├── bound dispatch                 /write                                                      POST
  │         │    │    ├── ensureAuthenticated       /                                                           POST

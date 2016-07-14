@@ -91,8 +91,14 @@ function savePost(req, res) {
     res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
 }
 
+function recentPost(params, callback) {
+
+    callback(null, params);
+}
+
 module.exports = {
     list: listPost,
     write: writeForm,
-    save: savePost
+    save: savePost,
+    recentPost: recentPost
 };
