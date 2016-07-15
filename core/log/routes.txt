@@ -32,11 +32,11 @@ router
  │    └── router                                   *                                                           
  │        router                                                                                               
  │         ├── exposeLocals                        *                                                           
- │         ├── bound dispatch                      /about                                                      GET
- │         │    └── plainPage                      /                                                           GET
- │         │   
  │         ├── bound dispatch                      /                                                           _ALL
  │         │    └── indexPage                      /                                                           
+ │         │   
+ │         ├── bound dispatch                      /about                                                      GET
+ │         │    └── plainPage                      /                                                           GET
  │         │   
  │         ├── router                              /^\/account\/?(?=\/|$)/                                     
  │         │   router                                                                                          

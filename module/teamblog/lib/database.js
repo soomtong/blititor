@@ -150,7 +150,7 @@ function selectByPage(connection, page, callback) {
         connection.query(query.countAllGroupByMonth, ['created_at', 'created_at', tables.teamblog, 'created_at', 'created_at', 'created_at'], function (err, results) {
             result.postGroupList = results;
 
-            connection.query(query.readTeamblog, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
+            connection.query(query.readTeamblogByPage, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
                 if (!err) result.teamblogList = rows;
                 callback(err, result);
             });
@@ -180,6 +180,14 @@ function selectAllByMonth(connection, year, month, callback) {
     });
 }
 
+function selectPost(connection, limit, callback) {
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
+
+    connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
+        callback(err, rows);
+    })
+}
+
 function insertPost(connection, teamblogData, callback) {
     connection.query(query.insertInto, [tables.teamblog, teamblogData], function (err, result) {
         callback(err, result);
@@ -196,8 +204,9 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    readTeamblog: selectByPage,
+    readTeamblogByPage: selectByPage,
     readTeamblogAll: selectAllByMonth,
+    readTeamblogRecently: selectPost,
     writePost: insertPost,
     updatePost: updatePost,
     option: {

@@ -50,7 +50,7 @@ function listPost(req, res) {
             res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
         });
     } else {
-        db.readTeamblog(mysql, Number(params.page - 1), function (err, result) {
+        db.readTeamblogByPage(mysql, Number(params.page - 1), function (err, result) {
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
@@ -91,9 +91,13 @@ function savePost(req, res) {
     res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
 }
 
+// used outside of this module, just export them
 function recentPost(params, callback) {
+    var mysql = connection.get();
 
-    callback(null, params);
+    db.readTeamblogRecently(mysql, params.recentPostCount, function (err, result) {
+        callback(err, result);
+    });
 }
 
 module.exports = {

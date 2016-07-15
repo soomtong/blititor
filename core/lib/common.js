@@ -1,5 +1,6 @@
 var uuid = require('uuid');
 var bcrypt = require('bcrypt');
+var removeMarkdown = require('remove-markdown');
 
 var salt = bcrypt.genSaltSync(8);
 
@@ -70,6 +71,28 @@ function getHash(password, callback) {
     }
 }
 
+function getHeaderTextFromMarkdown(markdown, limit) {
+    var arr = markdown.split(/\r*\n/), len = arr.length;
+    var text = [];
+
+    limit = limit || 30;
+
+    for (var i = 0; i < len; i++) {
+        var temp = '';
+
+        temp = removeMarkdown(arr[i]);
+
+        if (temp) {
+            text.push(temp);
+        }
+
+        // check count length
+        if (text.join('\n').length > limit) break;
+    }
+
+    return text.join('\n').substr(0, limit).trim();
+}
+
 module.exports = {
     errorFormatter: errorFormatter,
     destructMarkdown: destructMarkdown,
@@ -78,5 +101,6 @@ module.exports = {
     UUID1: getUUID1,
     UUID4: getUUID4,
     hash: getHash,
+    getHeaderTextFromMarkdown: getHeaderTextFromMarkdown,
     databaseDefault: require('../config/database_default')
 };
