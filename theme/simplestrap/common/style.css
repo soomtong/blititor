@@ -21,6 +21,10 @@ body {
     display: none;
 }
 
+.header .top-logo {
+    width: 48px;
+}
+
 .blog-main {
     margin-top: 2rem;
     border-right: .05rem solid #e5e5e5;
@@ -84,6 +88,11 @@ body {
 .jumbotron {
     text-align: center;
     border-bottom: .05rem solid #e5e5e5;
+}
+.jumbotron p.lead {
+    padding: 1em 2em;
+    line-height: 1.75em;
+    text-align: justify;
 }
 .jumbotron .btn {
     padding: .75rem 1.5rem;
