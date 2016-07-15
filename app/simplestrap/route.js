@@ -16,7 +16,7 @@ var Teamblog = require('../../module/teamblog');
 var Editor = require('../../module/editor');
 
 // load own template
-var homePage = require('./page/home');
+var page = require('./page');
 
 winston.info('Bind router for each modules');
 
@@ -24,7 +24,7 @@ winston.info('Bind router for each modules');
 router.use(Site.middleware.exposeLocals);
 
 // separated page
-router.all(routeTable.root, homePage.index);
+router.all(routeTable.root, page.indexPage);
 
 // bind static page
 // router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);

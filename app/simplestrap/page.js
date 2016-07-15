@@ -1,5 +1,5 @@
-var Teamblog = require('../../../module/teamblog');
-var common = require('../../../core/lib/common');
+var Teamblog = require('../../module/teamblog/index');
+var common = require('../../core/lib/common');
 
 function indexPage(req, res) {
     var params = {
@@ -24,5 +24,5 @@ function indexPage(req, res) {
 }
 
 module.exports = {
-    index: indexPage
+    indexPage: indexPage
 };
