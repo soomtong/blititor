@@ -13,6 +13,10 @@ var Menu = [
         url: '/marketing'
     },
     {
+        name: '맴버',
+        url: '/marketing/professional'
+    },
+    {
         name: '소개',
         url: routeTable.about
     }

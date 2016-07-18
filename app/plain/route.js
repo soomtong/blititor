@@ -17,21 +17,15 @@ var Account = require('../../module/account');  // this is necessary for session
 // Theme's middleware
 
 // bind static page
-router.all(routeTable.root, Site.index);
-
-// todo: design like this
+// router.all(routeTable.root, Site.index);
+// todo: design like this, simpler
 // router.use(Site.bindPlain(router, menu.expose));
-
 menu.map(function (item) {
-    console.log(item);
     if (item.middleware && item.middleware.length) {
         router[item.type || 'get'](item.url, item.middleware, Site.plain);
     } else {
         router[item.type || 'get'](item.url, Site.plain);
     }
 });
-
-// bind module
-// router.use(routeTable.account_root, Account.route);
 
 module.exports = router;

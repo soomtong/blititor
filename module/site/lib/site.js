@@ -23,7 +23,7 @@ function plainPage(req, res) {
     var params = {
         title: "Plain",
         path: req.path,
-        page: req.path.match(filter.page)[1].replace(/-/g, '_'),
+        page: req.path == '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
 
     // winston.info(req.path, params, req.path.match(filter.page));

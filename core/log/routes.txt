@@ -31,13 +31,13 @@ router
  │    ├── menuExpose                               *                                                           
  │    └── router                                   *                                                           
  │        router                                                                                               
- │         ├── bound dispatch                      /                                                           _ALL
- │         │    └── indexPage                      /                                                           
- │         │   
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
  │         ├── bound dispatch                      /marketing                                                  GET
+ │         │    └── plainPage                      /                                                           GET
+ │         │   
+ │         ├── bound dispatch                      /marketing/professional                                     GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
  │         └── bound dispatch                      /about                                                      GET
