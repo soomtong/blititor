@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Plain Demo</title>
+    {% include '../include/style.html' %}
 </head>
 <body>
-<h1>{{title}}</h1>
-
-<h3>Menu</h3>
-<ul>
-    {% for item in menu %}
-    <li><a href="{{item.url}}">{{item.name}}</a></li>
-    {% endfor %}
-</ul>
+<div class="pure-g">
+    <div class="pure-u-1">
+        <h1>{{title}}</h1>
+        <h2>This is a simple plain demo page, and it's the index page</h2>
+        <p>Note: You can use template tags with <a href="http://mozilla.github.io/nunjucks/" target="_blank">Nunjucks Template Engine</a> in a html page</p>
+        <h3>Menu</h3>
+        <ul>
+            {% for item in menu %}
+            <li><a href="{{item.url}}">{{item.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 </body>
 </html>

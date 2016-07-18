@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Marketing</title>
+    {% include '../include/style.html' %}
 </head>
 <body>
-<h2>{{title}}</h2>
-<dl>
-    <dt>Path</dt>
-    <dd>{{path}}</dd>
-</dl>
-<dl>
-    <dt>Page</dt>
-    <dd>{{page}}</dd>
-</dl>
+<div class="pure-g">
+    <div class="pure-u-1">
+        <h2>{{title}}</h2>
+        <dl>
+            <dt>Path</dt>
+            <dd>{{path}}</dd>
+        </dl>
+        <dl>
+            <dt>Page</dt>
+            <dd>{{page}}</dd>
+        </dl>
 
-<h3>Menu</h3>
-<ul>
-    {% for item in menu %}
-    <li><a href="{{item.url}}">{{item.name}}</a></li>
-    {% endfor %}
-</ul>
+        <h3>Menu</h3>
+        <ul>
+            {% for item in menu %}
+            <li><a href="{{item.url}}">{{item.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 </body>
 </html>
