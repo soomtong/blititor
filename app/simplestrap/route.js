@@ -28,7 +28,7 @@ router.all(routeTable.root, page.indexPage);
 
 // bind static page
 // router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);
-router.get(routeTable.about, Site.page.others);
+router.get(routeTable.about, Site.plain);
 
 // bind module
 router.use(routeTable.account_root, Account.route);

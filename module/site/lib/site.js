@@ -21,7 +21,7 @@ function indexPage(req, res) {
 function plainPage(req, res) {
 
     var params = {
-        title: "Home",
+        title: "Plain",
         path: req.path,
         page: req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
@@ -34,5 +34,5 @@ function plainPage(req, res) {
 
 module.exports = {
     index: indexPage,
-    others: plainPage,
+    plain: plainPage,
 };
