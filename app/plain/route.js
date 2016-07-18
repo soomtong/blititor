@@ -7,25 +7,17 @@ var routeTable = BLITITOR.route;
 
 var menu = require('./menu');
 
-// core middleware
-var middleware = require('../../core/middleware');
+// custom middleware
 
 // load modules for router
 var Site = require('../../module/site');
-var Account = require('../../module/account');  // this is necessary for session system
-
-// Theme's middleware
-
-// bind static page
-// router.all(routeTable.root, Site.index);
-// todo: design like this, simpler
-// router.use(Site.bindPlain(router, menu.expose));
-menu.map(function (item) {
-    if (item.middleware && item.middleware.length) {
-        router[item.type || 'get'](item.url, item.middleware, Site.plain);
-    } else {
+var Account = require('../../module/account');  // mandatory for session system
+var bindRouter = function () {
+    menu.map(function (item) {
         router[item.type || 'get'](item.url, Site.plain);
-    }
-});
+    });
+};
+// bind static page
+bindRouter();
 
 module.exports = router;
