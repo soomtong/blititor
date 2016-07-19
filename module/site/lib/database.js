@@ -5,7 +5,7 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    site: 'b_site'
+    site: common.databaseDefault.prefix + 'site'
 };
 
 function deleteScheme(databaseConfiguration, callback) {

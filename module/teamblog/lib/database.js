@@ -9,8 +9,8 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    teamblog: 'b_teamblog',
-    user: 'b_user'  // refer `module/account/lib/database.js`
+    teamblog: common.databaseDefault.prefix + 'teamblog',
+    user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var query = require('./query');

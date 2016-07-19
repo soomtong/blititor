@@ -37,22 +37,14 @@ var defaultRoute = {
     "pages": []
 };
 
-var databaseTables = {  //todo: extract from `core/admin/module.js`
-    user: 'b_user',
-    auth: 'b_auth',
-    site: 'b_site',
-    point: 'b_point',
-    guestbook: 'b_guestbook',
-};
-
 function setRouteTable() {
     BLITITOR.route = defaultRoute;
 
     return BLITITOR.route;
 }
 
-function databaseTable() {
-    return databaseTables;
+function databaseTablePrefix() {
+    return common.databaseDefault.prefix;
 }
 
 /*
@@ -107,7 +99,7 @@ function showRouteTable(routeTable) {
 
 module.exports = {
     setRouteTable: setRouteTable,
-    databaseTable: databaseTable,
+    databaseTablePrefix: databaseTablePrefix,
     // setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     showRouteTable: showRouteTable

@@ -5,9 +5,9 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    user: 'b_user',
-    auth: 'b_auth',
-    point: 'b_point'
+    user: common.databaseDefault.prefix + 'user',
+    auth: common.databaseDefault.prefix + 'auth',
+    point: common.databaseDefault.prefix + 'point'
 };
 
 var query = require('./query');
@@ -136,6 +136,12 @@ function updateByUUID(connection, userData, UUID, callback) {
     });
 }
 
+function updateAuthByID(connection, authData, authID, callback) {
+    connection.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
+        callback(err, result);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
@@ -147,6 +153,7 @@ module.exports = {
     writeAccount: insertAccount,
     readAuthIDByUUID: selectAuthIDByUUID,
     updateAccountByUUID: updateByUUID,
+    updateAuthByID: updateAuthByID,
     option: {
         tables: tables,
         core: true

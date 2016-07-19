@@ -2,6 +2,8 @@ var uuid = require('uuid');
 var bcrypt = require('bcrypt');
 var removeMarkdown = require('remove-markdown');
 
+var databaseConfiguration = require('../config/database_default');
+
 var salt = bcrypt.genSaltSync(8);
 
 function destructMarkdown(markdownText) {
@@ -93,6 +95,10 @@ function getHeaderTextFromMarkdown(markdown, limit) {
     return text.join('\n').substr(0, limit).trim();
 }
 
+function getDatabaseDefault() {
+    return databaseConfiguration;
+}
+
 module.exports = {
     errorFormatter: errorFormatter,
     destructMarkdown: destructMarkdown,
@@ -102,5 +108,5 @@ module.exports = {
     UUID4: getUUID4,
     hash: getHash,
     getHeaderTextFromMarkdown: getHeaderTextFromMarkdown,
-    databaseDefault: require('../config/database_default')
+    databaseDefault: getDatabaseDefault()
 };

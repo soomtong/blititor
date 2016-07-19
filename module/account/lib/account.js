@@ -11,8 +11,6 @@ var query = require('./query');
 
 var db = require('./database');
 
-var tables = misc.databaseTable();
-
 function findByID(id, callback) {
     var mysql = connection.get();
 
@@ -247,7 +245,7 @@ function updateInfo(req, res) {
                 } else {
                     var authData = {user_password: hash};
 
-                    mysql.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
+                    db.updateAuthByID(mysql, authData, authID, function (err, result) {
                         winston.warn('Updated user password into `auth` table record:', result);
                     });
                 }
