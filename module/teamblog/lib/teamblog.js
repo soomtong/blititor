@@ -91,6 +91,11 @@ function savePost(req, res) {
     res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
 }
 
+function viewPost(req, res) {
+    console.log(req.params);
+    res.send('hi');
+}
+
 // used outside of this module, just export them
 function recentPost(params, callback) {
     var mysql = connection.get();
@@ -104,5 +109,6 @@ module.exports = {
     list: listPost,
     write: writeForm,
     save: savePost,
+    view: viewPost,
     recentPost: recentPost
 };

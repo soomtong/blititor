@@ -33,7 +33,7 @@ router.get(routeTable.about, Site.plain);
 // bind module
 router.use(routeTable.account_root, Account.route);
 router.use(routeTable.guestbook_root, Guestbook.route);
-router.use(routeTable.teamblog_root, Teamblog.route);
+router.use(Teamblog.route);
 router.use('/lib', Editor.route);   //todo: for test at this time
 
 module.exports = router;

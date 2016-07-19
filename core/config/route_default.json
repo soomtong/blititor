@@ -28,7 +28,7 @@
   "teamblog_root": "/blog",
   "teamblog": {
     "list": "/",
-    "write": "/write",
-    "view": "/view"
-  }
+    "write": "/write"
+  },
+  "teamblog_post": "/post"
 }
