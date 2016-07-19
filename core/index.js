@@ -12,44 +12,6 @@ var BLITITOR = {
      */
     root: __dirname + '/../',
     // route: {},   //todo: remove this, just use for code assist in webstorm
-    route: {
-        "root": "/",
-        "about": "/about",
-        "admin_root": "/admin",
-        "admin": {
-            "login": "/login",
-            "install": "/install",
-            "database_setup": "/make-db-config",
-            "database_init": "/make-db-init",
-            "theme_setup": "/theme-config"
-        },
-        "manager_root": "/manager",
-        "manager": {
-            "login": "/login"
-        },
-        "account_root": "/account",
-        "account": {
-            "signIn": "/sign-in",
-            "signUp": "/sign-up",
-            "signOut": "/sign-out",
-            "login": "/login",
-            "register": "/register",
-            "info": "/info",
-            "updateInfo": "/update"
-        },
-        "guestbook_root": "/guestbook",
-        "guestbook": {
-            "form": "/",
-            "message": "/register",
-            "reply": "/register/reply"
-        },
-        "teamblog_root": "/blog",
-        "teamblog": {
-            "list": "/",
-            "write": "/write"
-        },
-        "teamblog_post": "/post"
-    },
     config: {
         locale: 'ko',
         site: {

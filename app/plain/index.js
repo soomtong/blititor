@@ -1,4 +1,4 @@
-// load default modules
+// load default modules for exports
 var menu = require('./menu');
 var route = require('./route');
 

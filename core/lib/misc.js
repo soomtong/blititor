@@ -10,6 +10,10 @@ function setUserPrivilege() {
     return BLITITOR.userPrivilege;
 }
 
+function getRouteTable() {
+    return defaultRoute;
+}
+
 function setRouteTable() {
     BLITITOR.route = defaultRoute;
 
@@ -54,6 +58,7 @@ function showRouteTable(routeTable) {
 }
 
 module.exports = {
+    getRouteTable: getRouteTable,
     setRouteTable: setRouteTable,
     setUserPrivilege: setUserPrivilege,
     setRoutePage: setRoutePage,

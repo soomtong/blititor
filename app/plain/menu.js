@@ -1,7 +1,12 @@
 var fs = require('fs');
 var winston = require('winston');
 
-var routeTable = BLITITOR.route;
+var misc = require('../../core/lib/misc');
+
+var routeTable = misc.getRouteTable();
+// var routeTable = require('../../core/config/route_default');
+// or sometime need to make your own routeTable
+// and update own route table
 
 var Menu = [
     {
@@ -18,7 +23,7 @@ var Menu = [
     },
     {
         name: '소개',
-        url: routeTable.about
+        url: routeTable['about']
     }
 ];
 
