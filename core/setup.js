@@ -15,8 +15,6 @@ var theme = require('./admin/theme');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
-var tables = misc.databaseTable();
-
 var databaseFile = common.databaseDefault['config_file'];
 var moduleFile = 'module_list.json';
 
@@ -290,7 +288,7 @@ function makeThemeConfigFile() {
             properties: {
                 ask: {
                     description: "테마를 골라주세요...".white + description.join('\n') + "\n 선택".green,
-                    default: '3',
+                    default: themeList.length,
                     type: 'integer',
                     pattern: /^[0-9]+$/,
                     message: 'Port number must be only number',
@@ -300,13 +298,12 @@ function makeThemeConfigFile() {
         };
 
         prompt.get(configScheme, function (err, result) {
-            console.log(result, themeList[result.ask - 1].folderName);
+            // console.log(result, themeList[result.ask - 1].folderName);
 
             var themeData = {
-                "setupTheme": "simplestrap",
+                "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "adminTheme": "simplestrap",
-                "manageTheme": "simplestrap",
-                "siteTheme": themeList[result.ask - 1].folderName || "simplestrap"
+                "manageTheme": "simplestrap"
             };
 
             fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
@@ -359,6 +356,7 @@ function makeAdminAccount() {
 
         var hash = common.hash(result.password);
 
+        var tables = require('../module/account').option.tables;
         var authData = {
             user_id: result.id,
             user_password: hash

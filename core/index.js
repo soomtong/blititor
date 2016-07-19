@@ -90,6 +90,8 @@ try {
     fs.accessSync('./theme/' + themeFile.siteTheme, fs.R_OK);
 
     BLITITOR.config.site.theme = themeFile.siteTheme;
+    BLITITOR.config.site.adminTheme = themeFile.adminTheme;
+    BLITITOR.config.site.manageTheme = themeFile.manageTheme;
 
     winston.verbose('Set site theme to', BLITITOR.config.site.theme);
 } catch (e) {

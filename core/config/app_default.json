@@ -3,6 +3,8 @@
   "logLevel": "debug",
   "site": {
     "theme": "",
+    "adminTheme": "",
+    "manageTheme": "",
     "host": "",
     "url_prefix": "/",
     "port": 3010

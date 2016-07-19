@@ -1,6 +1,5 @@
 {
-    "setupTheme": "simplestrap",
+    "siteTheme": "simplestrap",
     "adminTheme": "simplestrap",
-    "manageTheme": "simplestrap",
-    "siteTheme": "plain"
+    "manageTheme": "simplestrap"
 }
