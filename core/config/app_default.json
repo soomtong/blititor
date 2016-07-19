@@ -1,0 +1,13 @@
+{
+  "locale": "ko",
+  "site": {
+    "theme": "",
+    "host": "",
+    "url_prefix": "/",
+    "port": 3010
+  },
+  "author": "soomtong",
+  "revision": "0.0.0",
+  "cookieSecret": "blititor",
+  "sessionSecret": "blititor"
+}
