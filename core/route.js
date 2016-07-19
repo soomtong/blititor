@@ -3,7 +3,7 @@ var winston = require('winston');
 
 var router = express.Router();
 
-var adminRoute = require('./admin/route');
+// var adminRoute = require('./admin/route');
 
 var middleware = require('./middleware');
 var application = require('../app/' + BLITITOR.config.site.theme);
@@ -11,7 +11,7 @@ var application = require('../app/' + BLITITOR.config.site.theme);
 var routeTable = BLITITOR.route;
 
 // bind admin(manager) route
-router.use(routeTable.admin_root, adminRoute);
+// router.use(routeTable.admin_root, adminRoute);
 
 // Global middleware
 router.use(middleware.exposeLocals);

@@ -19,101 +19,36 @@ router
  ├── serveStatic                                   *                                                           
  ├── router                                        *                                                           
  │   router                                                                                                    
- │    ├── router                                   /^\/admin\/?(?=\/|$)/                                       
- │    │   router                                                                                               
- │    │    ├── exposeParameter                     *                                                           
- │    │    └── bound dispatch                      /connections                                                GET
- │    │         └── <anonymous>                    /                                                           GET
- │    │        
- │    │   
  │    ├── exposeLocals                             *                                                           
  │    ├── checkDatabaseConfig                      *                                                           
  │    ├── menuExpose                               *                                                           
  │    └── router                                   *                                                           
  │        router                                                                                               
- │         ├── exposeLocals                        *                                                           
- │         ├── bound dispatch                      /                                                           _ALL
- │         │    └── indexPage                      /                                                           
+ │         ├── ensureAdminAuthenticated            /^\/admin\/?(?=\/|$)/                                       
+ │         ├── router                              /^\/admin\/?(?=\/|$)/                                       
+ │         │   router                                                                                          
+ │         │    └── bound dispatch                 /                                                           GET
+ │         │         └── <anonymous>               /                                                           GET
+ │         │        
  │         │   
- │         ├── bound dispatch                      /about                                                      GET
+ │         ├── ensureManagerAuthenticated          /^\/manager\/?(?=\/|$)/                                     
+ │         ├── router                              /^\/manager\/?(?=\/|$)/                                     
+ │         │   router                                                                                          
+ │         │    └── bound dispatch                 /                                                           GET
+ │         │         └── <anonymous>               /                                                           GET
+ │         │        
+ │         │   
+ │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
- │         ├── router                              /^\/account\/?(?=\/|$)/                                     
- │         │   router                                                                                          
- │         │    ├── exposeLocals                   *                                                           
- │         │    ├── bound dispatch                 /sign-in                                                    GET
- │         │    │    └── signIn                    /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /sign-up                                                    GET
- │         │    │    ├── ensureClearSession        /                                                           GET
- │         │    │    └── signUp                    /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /sign-out                                                   GET
- │         │    │    └── signOut                   /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /login                                                      POST
- │         │    │    ├── authenticate              /                                                           POST
- │         │    │    ├── loginSuccess              /                                                           POST
- │         │    │    └── loginDone                 /                                                           POST
- │         │    │   
- │         │    ├── bound dispatch                 /register                                                   POST
- │         │    │    └── register                  /                                                           POST
- │         │    │   
- │         │    ├── bound dispatch                 /info                                                       GET
- │         │    │    ├── ensureAuthenticated       /                                                           GET
- │         │    │    └── showInfo                  /                                                           GET
- │         │    │   
- │         │    └── bound dispatch                 /update                                                     POST
- │         │         ├── ensureAuthenticated       /                                                           POST
- │         │         └── updateInfo                /                                                           POST
- │         │        
+ │         ├── bound dispatch                      /marketing                                                  GET
+ │         │    └── plainPage                      /                                                           GET
  │         │   
- │         ├── router                              /^\/guestbook\/?(?=\/|$)/                                   
- │         │   router                                                                                          
- │         │    ├── exposeLocals                   *                                                           
- │         │    ├── bound dispatch                 /                                                           GET
- │         │    │    └── guestbookForm             /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /:page                                                      GET
- │         │    │    └── guestbookForm             /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /register                                                   POST
- │         │    │    └── registerMessage           /                                                           POST
- │         │    │   
- │         │    └── bound dispatch                 /register/reply                                             POST
- │         │         ├── ensureAuthenticated       /                                                           POST
- │         │         └── updateReply               /                                                           POST
- │         │        
+ │         ├── bound dispatch                      /marketing/professional                                     GET
+ │         │    └── plainPage                      /                                                           GET
  │         │   
- │         ├── router                              *                                                           
- │         │   router                                                                                          
- │         │    ├── exposeLocals                   *                                                           
- │         │    ├── bound dispatch                 /post/:postNumber                                           GET
- │         │    │    └── viewPost                  /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /blog/write                                                 GET
- │         │    │    ├── ensureAuthenticated       /                                                           GET
- │         │    │    └── writeForm                 /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /blog/write                                                 POST
- │         │    │    ├── ensureAuthenticated       /                                                           POST
- │         │    │    └── savePost                  /                                                           POST
- │         │    │   
- │         │    ├── bound dispatch                 /blog/                                                      GET
- │         │    │    └── listPost                  /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /blog/:page                                                 GET
- │         │    │    └── listPost                  /                                                           GET
- │         │    │   
- │         │    └── bound dispatch                 /blog/:year/:month                                          GET
- │         │         └── listPost                  /                                                           GET
- │         │        
- │         │   
- │         └── router                              /^\/lib\/?(?=\/|$)/                                         
- │             router                                                                                          
- │              └── bound dispatch                 /editor.js                                                  GET
- │                   └── <anonymous>               /                                                           GET
- │                  
+ │         └── bound dispatch                      /about                                                      GET
+ │              └── plainPage                      /                                                           GET
  │             
  │        
  │   

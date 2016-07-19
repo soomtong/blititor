@@ -1,7 +1,14 @@
 var fs = require('fs');
 var winston = require('winston');
 
+var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
+
+function setUserPrivilege() {
+    BLITITOR.userPrivilege = userPrivilege;
+
+    return BLITITOR.userPrivilege;
+}
 
 function setRouteTable() {
     BLITITOR.route = defaultRoute;
@@ -48,6 +55,7 @@ function showRouteTable(routeTable) {
 
 module.exports = {
     setRouteTable: setRouteTable,
+    setUserPrivilege: setUserPrivilege,
     setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     showRouteTable: showRouteTable
