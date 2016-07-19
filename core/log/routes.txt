@@ -24,11 +24,20 @@ router
  │    ├── menuExpose                               *                                                           
  │    └── router                                   *                                                           
  │        router                                                                                               
- │         ├── ensureAdminAuthenticated            /^\/admin\/?(?=\/|$)/                                       
- │         ├── router                              /^\/admin\/?(?=\/|$)/                                       
+ │         ├── exposeLocals                        *                                                           
+ │         ├── exposeMenu                          *                                                           
+ │         ├── exposeMenu                          *                                                           
+ │         ├── router                              *                                                           
  │         │   router                                                                                          
- │         │    └── bound dispatch                 /                                                           GET
- │         │         └── <anonymous>               /                                                           GET
+ │         │    ├── bound dispatch                 /admin                                                      _ALL
+ │         │    │    ├── ensureAdminAuthenticated  /                                                           
+ │         │    │    └── indexPage                 /                                                           
+ │         │    │   
+ │         │    ├── bound dispatch                 /admin/login                                                GET
+ │         │    │    └── loginForm                 /                                                           GET
+ │         │    │   
+ │         │    └── bound dispatch                 /admin/login                                                POST
+ │         │         └── loginProcess              /                                                           POST
  │         │        
  │         │   
  │         ├── ensureManagerAuthenticated          /^\/manager\/?(?=\/|$)/                                     

@@ -1,14 +1,18 @@
 var express = require('express');
 var winston = require('winston');
 
+var administrator = require('./lib/administrator');
+var middleware = require('./lib/middleware');
+
+var AccountMiddleware = require('../account/lib/middleware');
+
 var router = express.Router();
 
 var routeTable = BLITITOR.route;
 
-router.get('/', function (req, res) {
-    console.log(req.path);
+router.all(routeTable.admin_root, AccountMiddleware.checkAdministrator, administrator.index);
 
-    res.send('hi');
-});
+router.get(routeTable.admin_root + routeTable.admin.login, administrator.loginForm);
+router.post(routeTable.admin_root + routeTable.admin.login, administrator.loginProcess);
 
 module.exports = router;

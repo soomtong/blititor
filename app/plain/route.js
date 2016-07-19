@@ -13,7 +13,7 @@ var menu = require('./menu');
 var Site = require('../../module/site');
 var Account = require('../../module/account');  // mandatory for session system
 var Admin = require('../../module/administrator');
-var Manager = require('../../module/manager')
+var Manager = require('../../module/manager');
 
 var bindRouter = function () {
     menu.map(function (item) {
@@ -21,7 +21,11 @@ var bindRouter = function () {
     });
 };
 
-router.use(routeTable.admin_root, Account.middleware.checkAdministrator, Admin.route);       // manage accounts
+router.use(Site.middleware.exposeLocals);
+router.use(Admin.middleware.exposeMenu);
+router.use(Manager.middleware.exposeMenu);
+
+router.use(Admin.route);       // manage accounts
 router.use(routeTable.manager_root, Account.middleware.checkManager, Manager.route);     // to view log module
 
 // bind static page
