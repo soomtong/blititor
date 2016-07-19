@@ -1,5 +1,6 @@
 {
   "locale": "ko",
+  "logLevel": "debug",
   "site": {
     "theme": "",
     "host": "",

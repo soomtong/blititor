@@ -1,30 +1,8 @@
 // global bind
 var BLITITOR = {
     env: process.env['NODE_ENV'] || 'development',
-    logLevel: 'debug',
-    /* winston log level
-     error: 0,
-     warn: 1,
-     info: 2,
-     verbose: 3,
-     debug: 4,
-     silly: 5
-     */
     root: __dirname + '/../',
-    // route: {},   //todo: remove this, just use for code assist in webstorm
-    config: {
-        locale: 'ko',
-        site: {
-            theme: '',
-            host: '',
-            url_prefix: '/',
-            port: 3010
-        },
-        author: 'soomtong',
-        revision: '0.0.0',  // will be bind next process
-        cookieSecret: 'blititor',
-        sessionSecret: 'blititor'
-    },
+    config: require('./config/app_default.json'),
     tweak: {
         passDBCheckMiddleware: false    // for speed
     }
@@ -69,7 +47,7 @@ winston.add(winston.transports.Console, {
         var date = new Date();
         return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
     },
-    level: BLITITOR.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
+    level: BLITITOR.config.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
 });
 
 // load custom library
