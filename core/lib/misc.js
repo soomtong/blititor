@@ -5,7 +5,22 @@ var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
 
 function getUserPrivilege() {
-    return userPrivilege;
+    // return userPrivilege;
+    // for code assist
+    return {
+        "siteAdmin": "A",
+        "siteManager": "M",
+        "contentManager": "C",
+        "userLevel_1": "1",
+        "userLevel_2": "2",
+        "userLevel_3": "3",
+        "userLevel_4": "4",
+        "userLevel_5": "5",
+        "userLevel_6": "6",
+        "userLevel_7": "7",
+        "userLevel_8": "8",
+        "userLevel_9": "9"
+    };
 }
 
 function setUserPrivilege() {
@@ -28,8 +43,8 @@ function getRouteTable() {
             "database_init": "/make-db-init",
             "theme_setup": "/theme-config"
         },
-        "manager_root": "/manager",
-        "manager": {
+        "manage_root": "/manage",
+        "manage": {
             "login": "/login"
         },
         "account_root": "/account",

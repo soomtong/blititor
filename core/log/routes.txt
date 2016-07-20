@@ -40,11 +40,17 @@ router
  │         │         └── loginProcess              /                                                           POST
  │         │        
  │         │   
- │         ├── ensureManagerAuthenticated          /^\/manager\/?(?=\/|$)/                                     
- │         ├── router                              /^\/manager\/?(?=\/|$)/                                     
+ │         ├── router                              *                                                           
  │         │   router                                                                                          
- │         │    └── bound dispatch                 /                                                           GET
- │         │         └── <anonymous>               /                                                           GET
+ │         │    ├── bound dispatch                 /manage                                                     _ALL
+ │         │    │    ├── ensureManagerAuthenticated /                                                           
+ │         │    │    └── indexPage                 /                                                           
+ │         │    │   
+ │         │    ├── bound dispatch                 /manage/login                                               GET
+ │         │    │    └── loginForm                 /                                                           GET
+ │         │    │   
+ │         │    └── bound dispatch                 /manage/login                                               POST
+ │         │         └── loginProcess              /                                                           POST
  │         │        
  │         │   
  │         ├── bound dispatch                      /                                                           GET

@@ -46,7 +46,7 @@ function createScheme(databaseConfiguration, callback) {
     var sql_user = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
-        '`nickname` varchar(64), `level` varchar(1), `grant` varchar(1), ' +
+        '`nickname` varchar(64), `level` varchar(3), `grant` varchar(3), ' +
         '`photo` varchar(255), `point` int, ' +
         '`login_counter` int, `logout_counter` int, ' +
         '`desc` text, ' +

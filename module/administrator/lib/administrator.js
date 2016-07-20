@@ -110,9 +110,4 @@ module.exports = {
     index: indexPage,
     loginForm: loginForm,
     loginProcess: loginProcess
-    // list: listPost,
-    // write: writeForm,
-    // save: savePost,
-    // view: viewPost,
-    // recentPost: recentPost
 };

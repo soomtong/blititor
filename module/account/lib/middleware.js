@@ -34,7 +34,7 @@ function ensureManagerAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect(routeTable.manager_root + routeTable.manager.login);
+    res.redirect(routeTable.manage_root + routeTable.manage.login);
 }
 
 function exposeLocals(req, res, next) {

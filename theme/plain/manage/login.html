@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    {% include '../include/style.html' %}
+</head>
+<body>
+<div class="pure-g">
+    <div class="pure-u-1">
+        <h1>ACCESS MANAGER ONLY</h1>
+        <h2>manage user account and access logs</h2>
+
+        <form class="pure-form pure-form-stacked" method="post" action="{{ route.manage_root + route.manage.login }}">
+            <fieldset>
+                <legend>Manager Login</legend>
+
+                <div class="pure-g">
+                    <div class="pure-u-1 pure-u-md-1-2">
+                        <label for="id">Manager ID</label>
+                        <input id="id" name="id" class="pure-u-23-24" type="email" placeholder="Username(Email Address)">
+                    </div>
+
+                    <div class="pure-u-1 pure-u-md-1-2">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Password" class="pure-u-23-24">
+                    </div>
+
+                </div>
+
+                <label for="terms" class="pure-checkbox">
+                    <input id="terms" type="checkbox"> Save Session for Next Login
+                </label>
+
+                {% if message.error %}
+                {% for error in message.error %}
+                <div class="alert alert-login">
+                    <strong>Warning!</strong> {{ error.msg }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

@@ -9,8 +9,8 @@
     "database_init": "/make-db-init",
     "theme_setup": "/theme-config"
   },
-  "manager_root": "/manager",
-  "manager": {
+  "manage_root": "/manager",
+  "manage": {
     "login": "/login"
   },
   "account_root": "/account",

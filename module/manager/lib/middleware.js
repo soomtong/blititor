@@ -4,8 +4,8 @@ var misc = require('../../../core/lib/misc');
 var routeTable = misc.getRouteTable();
 
 function exposeMenu(req, res, next) {
-    res.locals.managerMenu = {
-        root: routeTable.manager_root
+    res.locals.manageMenu = {
+        root: routeTable.manage_root
     };
 
     next();

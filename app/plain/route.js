@@ -7,7 +7,6 @@ var misc = require('../../core/lib/misc');
 
 // load modules
 var Site = require('../../module/site');
-var Account = require('../../module/account');  // mandatory for session system
 var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
 
@@ -24,8 +23,8 @@ router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
 
 // route
-router.use(Admin.route);       // manage accounts
-router.use(routeTable.manager_root, Account.middleware.checkManager, Manager.route);     // to view log module
+router.use(Admin.route);       // to manage accounts
+router.use(Manager.route);     // to view log module
 
 // bind static page
 bindRouter();
