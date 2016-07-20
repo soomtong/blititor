@@ -2,6 +2,7 @@
   "locale": "ko",
   "logLevel": "debug",
   "site": {
+    "app": "",
     "theme": "",
     "adminTheme": "",
     "manageTheme": "",
@@ -9,8 +10,10 @@
     "url_prefix": "/",
     "port": 3010
   },
+  "databaseConfig": "database.json",
+  "themeConfig": "theme.json",
   "author": "soomtong",
-  "revision": "0.0.0",
+  "revision": "0.1.0",
   "cookieSecret": "blititor",
   "sessionSecret": "blititor"
 }

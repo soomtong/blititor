@@ -1,0 +1,79 @@
+{
+    "env": "development",
+    "root": "/Users/sven/Repository/blititor/core/../",
+    "tweak": {
+        "passDBCheckMiddleware": false
+    },
+    "config": {
+        "locale": "ko",
+        "logLevel": "debug",
+        "site": {
+            "app": "plain",
+            "theme": "plain",
+            "adminTheme": "plain",
+            "manageTheme": "plain",
+            "host": "",
+            "url_prefix": "/",
+            "port": 3010
+        },
+        "databaseConfig": "database.json",
+        "themeConfig": "theme.json",
+        "author": "soomtong",
+        "revision": "0.1.0",
+        "cookieSecret": "blititor",
+        "sessionSecret": "blititor",
+        "database": {
+            "dbHost": "zeston.kr",
+            "dbPort": 3306,
+            "dbName": "zeston",
+            "dbUserID": "zeston",
+            "dbUserPassword": "zeston!@#$"
+        }
+    },
+    "moduleList": [
+        {
+            "folder": "account",
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {
+                "user": "b_user",
+                "auth": "b_auth",
+                "point": "b_point"
+            },
+            "core": true
+        },
+        {
+            "folder": "editor",
+            "useDatabase": false,
+            "ignore": false
+        },
+        {
+            "folder": "guestbook",
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {
+                "guestbook": "b_guestbook"
+            },
+            "core": false
+        },
+        {
+            "folder": "site",
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {
+                "site": "b_site"
+            },
+            "core": true
+        },
+        {
+            "folder": "teamblog",
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {
+                "teamblog": "b_teamblog",
+                "user": "b_user"
+            },
+            "core": false
+        }
+    ]
+}

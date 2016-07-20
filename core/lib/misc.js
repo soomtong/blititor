@@ -109,10 +109,10 @@ function siteThemeType() {
     };
 }
 
-function showRouteTable(routeTable) {
-    winston.info("\x1B[32m=== load default route table ===\033[0m");
+function showRouteTable() {
+    winston.info("\x1B[32mload default route table \033[0m");
 
-    winston.verbose(JSON.stringify(routeTable, null, 4));
+    winston.verbose(JSON.stringify(defaultRoute, null, 4));
 }
 
 module.exports = {

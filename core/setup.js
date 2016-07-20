@@ -24,20 +24,20 @@ prompt.message = colors.green(" B");
 // or just go in to a web interface except these setups.
 // register new module then admin get noticed by file system or something others
 switch (param1) {
-    case 'config':
+    case 'db':
         makeDatabaseConfigFile();
         break;
     case 'module':
         loadModuleList();
         break;
-    case 'init':
+    case 'db-init':
         if (!param2) {
             makeDatabaseTable();
         } else {
             makeModuleDatabaseTable(param2);
         }
         break;
-    case 'reset':
+    case 'db-reset':
         if (!param2) {
             makeDatabaseTableWithReset();
         } else {
@@ -47,14 +47,11 @@ switch (param1) {
     case 'theme':
         makeThemeConfigFile();
         break;
-    case 'template':
-        makeThemeTemplate();
-        break;
     case 'admin':
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeThemeTemplate, makeAdminAccount];
+        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
@@ -63,9 +60,9 @@ switch (param1) {
         break;
     default:
         console.log(" = run setup script by each configuration \n".rainbow);
-        console.log(" > node core/setup config".white);
-        console.log(" > node core/setup init".white);
-        console.log(" or ( > node core/setup reset ) for reset".white);
+        console.log(" > node core/setup db".white);
+        console.log(" > node core/setup db-init".white);
+        console.log(" or ( > node core/setup db-reset ) for reset table".white);
         console.log(" > node core/setup theme".white);
         console.log(" > node core/setup template".white);
         console.log(" > node core/setup admin \n".white);
@@ -301,28 +298,16 @@ function makeThemeConfigFile() {
             // console.log(result, themeList[result.ask - 1].folderName);
 
             var themeData = {
+                "appTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
-                "adminTheme": "simplestrap",
-                "manageTheme": "simplestrap"
+                "adminTheme": themeList[result.ask - 1].folderName || "simplestrap",
+                "manageTheme": themeList[result.ask - 1].folderName || "simplestrap"
             };
 
             fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
 
         });
     });
-}
-
-function makeThemeTemplate() {
-    console.log(" = Make Theme template data \n".rainbow);
-
-    // load theme config file
-
-    // load theme data from sql text
-
-    // prompt action
-
-    // dump theme data to database
-
 }
 
 function makeAdminAccount() {

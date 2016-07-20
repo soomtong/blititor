@@ -4,7 +4,7 @@ var winston = require('winston');
 var misc = require('./lib/misc');
 var middleware = require('./middleware');
 
-var application = require('../app/' + BLITITOR.config.site.theme);
+var application = require('../app/' + BLITITOR.config.site.app);
 
 var router = express.Router();
 var routeTable = misc.getRouteTable();

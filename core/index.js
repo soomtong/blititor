@@ -1,23 +1,16 @@
-// global bind
-var BLITITOR = {
-    env: process.env['NODE_ENV'] || 'development',
-    root: __dirname + '/../',
-    config: require('./config/app_default.json'),
-    tweak: {
-        passDBCheckMiddleware: false    // for speed
-    }
-};
+var BLITITOR = {};
 
-var HOUR = 3600000;
-var DAY = HOUR * 24;
-var WEEK = DAY * 7;
+// global configuration
+BLITITOR.env = require('./lib/dependency')(process.env['NODE_ENV'] || 'development');
+BLITITOR.root = __dirname + '/../';
+BLITITOR.tweak = {passDBCheckMiddleware: false}; // for speed
+BLITITOR.config = require('./config/app_default.json');
+BLITITOR.moduleList = require('./config/module_list.json');
 
+// bind global
 global.BLITITOR = BLITITOR;
 
-// check modules for npm, bower
-require('./lib/dependency')(BLITITOR);
-
-// load common library
+// load common package
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
@@ -54,69 +47,63 @@ winston.add(winston.transports.Console, {
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
-// load DB configuration
-var databaseDefault = require('./config/database_default');
-var databaseFile = databaseDefault.config_file;
-
-// use sync function for convenience. it's initialization
-try {
-    fs.accessSync('./core/config/module_list.json', fs.R_OK);
-
-    BLITITOR.config.moduleList = require('./config/module_list.json');
-
-    winston.info('module data file loaded', BLITITOR.config.moduleList.length, 'modules here');
-} catch (e) {
-    winston.error('module data file should be existed');
-    winston.error('run your setup script `node core/setup module` in your console');
-
-    process.exit(1);
-}
+// load Database configuration
+var databaseFile = BLITITOR.config.databaseConfig, databaseSetting;
 
 try {
     fs.accessSync(databaseFile, fs.R_OK);
 
-    BLITITOR.config.database = require(path.join('..', databaseFile));
+    databaseSetting = require(path.join('..', databaseFile));
+
+    BLITITOR.config.database = databaseSetting;
+
     winston.info('database config file loaded');
 } catch (e) {
     winston.warn('database config file not exist');
 }
 
 // load Theme configuration
+var themeFile = BLITITOR.config.themeConfig, themeSetting;
+
 try {
-    fs.accessSync('theme.json', fs.R_OK);
+    fs.accessSync(themeFile, fs.R_OK);
 
-    var themeFile = require('../theme');
+    themeSetting = require(path.join('..', themeFile));
 
-    fs.accessSync('./theme/' + themeFile.siteTheme, fs.R_OK);
+    fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
 
-    BLITITOR.config.site.theme = themeFile.siteTheme;
-    BLITITOR.config.site.adminTheme = themeFile.adminTheme;
-    BLITITOR.config.site.manageTheme = themeFile.manageTheme;
+    BLITITOR.config.site.app = themeSetting.appTheme;
+    BLITITOR.config.site.theme = themeSetting.siteTheme;
+    BLITITOR.config.site.adminTheme = themeSetting.adminTheme;
+    BLITITOR.config.site.manageTheme = themeSetting.manageTheme;
 
-    winston.verbose('Set site theme to', BLITITOR.config.site.theme);
+    winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
+    winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
 } catch (e) {
     winston.error('theme folder or config file not exist');
 
     var file = {
-        "setupTheme": "simplestrap",
-        "adminTheme": "simplestrap",
-        "manageTheme": "simplestrap",
-        "siteTheme": "simplestrap"
+        "appTheme": "plain",
+        "siteTheme": "plain",
+        "adminTheme": "plain",
+        "manageTheme": "plain"
     };
 
-    fs.writeFileSync('theme.json', JSON.stringify(file, null, 4));
+    fs.writeFileSync(themeFile, JSON.stringify(file, null, 4));
 
+    BLITITOR.config.site.app = file.appTheme;
     BLITITOR.config.site.theme = file.siteTheme;
 
-    winston.verbose('Set site theme to', BLITITOR.config.site.theme);
+    winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
+    winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
 }
+
+var HOUR = 3600000;
+var DAY = HOUR * 24;
+var WEEK = DAY * 7;
 
 // set locale
 moment.locale(BLITITOR.config.locale);
-
-// load route setup
-// misc.setRoutePage();    //todo: will be removed, use database record when edit in admin page
-misc.setRouteTable();
 
 // ready Express server
 var app = express();
@@ -197,7 +184,7 @@ if (databaseConfiguration) {
         autoReconnect: false,
         useConnectionPooling: true,
         schema: {
-            tableName: 'b_session'
+            tableName: common.databaseDefault.prefix + 'session'
         }
     });
 
@@ -261,19 +248,20 @@ app.use(function _500Handler(err, req, res, next){
 
 // start server
 app.listen(app.get('port'), function () {
-    winston.info("\x1B[32m=== server listening on port " + app.get('port') + " ===\033[0m");
+    winston.info("\x1B[32mserver listening on port " + app.get('port') + " \033[0m");
     // display default route table
-    misc.showRouteTable(BLITITOR.route);
+    // misc.showRouteTable();
 });
 
 if (!process.send) {
     // If run using `node app`, log GNU copyright info along with server info
-    winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @soomtong.');
+    winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @' + BLITITOR.config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
     winston.info('This is free software, and you are welcome to redistribute it under certain conditions.');
-    //winston.info('');
+    winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 
     if (BLITITOR.env == 'development') { // Only in dev environment
-        require('express-print-routes')(app, path.join(__dirname, './log/routes.txt'));
+        require('express-print-routes')(app, path.join(__dirname, './log/site-routes.txt'));
+        fs.writeFileSync(path.join(__dirname, './log/global-vars.txt'), JSON.stringify(BLITITOR, null, 4));
     }
 }

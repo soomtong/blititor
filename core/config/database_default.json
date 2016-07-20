@@ -1,6 +1,5 @@
 {
     "port": 3306,
     "database": "db_blititor",
-    "config_file": "database.json",
     "prefix": "b_"
 }

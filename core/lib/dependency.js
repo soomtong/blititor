@@ -1,12 +1,10 @@
 // referenced https://github.com/TryGhost/Ghost/core/server/utils/startup-check.js
 var packages = require('../../package.json');
 
-function moduleInstalled(B) {
+function moduleInstalled(env) {
     console.info('=== check module dependency ...', Object.keys(packages['dependencies']).length, 'packages');
 
-    var mode = B.env;
-
-    if (mode !== 'production' && mode !== 'development') return;
+    if (env !== 'production' && env !== 'development') return;
 
     var errors = [];
 
@@ -48,21 +46,42 @@ function nodeVersion() {
     }
 }
 
-function checkAll(B) {
-    // bind assigned port and real version
-    var port = Math.abs(parseInt(process.argv[2]));
-    if (port) B.config.site.port = port;
+function appConfig() {
+    try {
+        require('../config/app_default.json');
+    } catch (e) {
+        console.error('app data file should be existed');
+        console.error('make your `app_default.json` configuration file in your console');
 
-    B.config.revision = packages['version'] || B.config.revision;
+        process.exit(1);
+    }
+}
 
+function moduleList() {
+    console.info('=== check module list ...');
+    try {
+        require('../config/module_list.json');
+    } catch (e) {
+        console.error('module data file should be existed');
+        console.error('run your setup script `node core/setup module` in your console');
+
+        process.exit(1);
+    }
+
+}
+
+function checkAll(env) {
     // check module installed npm and bower
-    moduleInstalled(B);
+    moduleInstalled(env);
 
     // check node version
-    nodeVersion(B);
+    nodeVersion();
 
-    // check database server running, no necessary
-    //serverRunning();
+    // check config files
+    appConfig();
+    moduleList();
+
+    return env;
 }
 
 module.exports = checkAll;
