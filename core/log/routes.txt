@@ -26,6 +26,8 @@ router
  │        router                                                                                               
  │         ├── exposeLocals                        *                                                           
  │         ├── bound dispatch                      /                                                           _ALL
+ │         │    ├── testMiddleware1                /                                                           
+ │         │    ├── testMiddleware2                /                                                           
  │         │    └── indexPage                      /                                                           
  │         │   
  │         ├── bound dispatch                      /about                                                      GET

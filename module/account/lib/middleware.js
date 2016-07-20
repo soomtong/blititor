@@ -1,7 +1,9 @@
 var winston = require('winston');
-var userPrivilege = require('../../../core/config/user_level.json');
 
-var routeTable = BLITITOR.route;
+var misc = require('../../../core/lib/misc');
+
+var userPrivilege = misc.getUserPrivilege();
+var routeTable = misc.getRouteTable();
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

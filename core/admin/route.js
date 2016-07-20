@@ -1,13 +1,14 @@
 var express = require('express');
 
+var misc = require('../lib/misc');
+var connection = require('../lib/connection');
+
 var database = require('./database');
 var theme = require('./theme');
 var middleware = require('./middleware');
 
-var connection = require('../lib/connection');
-
 var router = express.Router();
-var routeTable = BLITITOR.route;
+var routeTable = misc.getRouteTable();
 
 var redirect = {
     login: function (req, res) {

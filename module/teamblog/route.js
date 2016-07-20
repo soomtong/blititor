@@ -1,13 +1,14 @@
 var express = require('express');
 
-var router = express.Router();
+var misc = require('../../core/lib/misc');
 
 var teamblog = require('./lib/teamblog');
 var middleware = require('./lib/middleware');
 
 var AccountMiddleware = require('../account/lib/middleware');
 
-var routeTable = BLITITOR.route;
+var router = express.Router();
+var routeTable = misc.getRouteTable();
 
 router.use(middleware.exposeLocals);
 

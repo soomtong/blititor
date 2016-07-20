@@ -1,14 +1,11 @@
-var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var common = require('../../../core/lib/common');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
-var routeTable = BLITITOR.route;
-
-// var query = require('./query');
+var routeTable = misc.getRouteTable();
 
 // var db = require('./database');
-
-
+// var query = require('./query');
 
 function indexPage(req, res) {
     var params = {

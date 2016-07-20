@@ -1,14 +1,13 @@
 var express = require('express');
 var winston = require('winston');
 
-var router = express.Router();
-
-// var adminRoute = require('./admin/route');
-
+var misc = require('./lib/misc');
 var middleware = require('./middleware');
+
 var application = require('../app/' + BLITITOR.config.site.theme);
 
-var routeTable = BLITITOR.route;
+var router = express.Router();
+var routeTable = misc.getRouteTable();
 
 // bind admin(manager) route
 // router.use(routeTable.admin_root, adminRoute);

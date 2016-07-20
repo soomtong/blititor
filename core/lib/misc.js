@@ -4,6 +4,10 @@ var winston = require('winston');
 var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
 
+function getUserPrivilege() {
+    return userPrivilege;
+}
+
 function setUserPrivilege() {
     BLITITOR.userPrivilege = userPrivilege;
 
@@ -11,7 +15,46 @@ function setUserPrivilege() {
 }
 
 function getRouteTable() {
-    return defaultRoute;
+    // return defaultRoute;
+    // for code assist
+    return {
+        "root": "/",
+        "about": "/about",
+        "admin_root": "/admin",
+        "admin": {
+            "login": "/login",
+            "install": "/install",
+            "database_setup": "/make-db-config",
+            "database_init": "/make-db-init",
+            "theme_setup": "/theme-config"
+        },
+        "manager_root": "/manager",
+        "manager": {
+            "login": "/login"
+        },
+        "account_root": "/account",
+        "account": {
+            "signIn": "/sign-in",
+            "signUp": "/sign-up",
+            "signOut": "/sign-out",
+            "login": "/login",
+            "register": "/register",
+            "info": "/info",
+            "updateInfo": "/update"
+        },
+        "guestbook_root": "/guestbook",
+        "guestbook": {
+            "form": "/",
+            "message": "/register",
+            "reply": "/register/reply"
+        },
+        "teamblog_root": "/blog",
+        "teamblog": {
+            "list": "/",
+            "write": "/write"
+        },
+        "teamblog_post": "/post"
+    };
 }
 
 function setRouteTable() {
@@ -58,9 +101,10 @@ function showRouteTable(routeTable) {
 }
 
 module.exports = {
+    getUserPrivilege: getUserPrivilege,
+    setUserPrivilege: setUserPrivilege,
     getRouteTable: getRouteTable,
     setRouteTable: setRouteTable,
-    setUserPrivilege: setUserPrivilege,
     setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     showRouteTable: showRouteTable

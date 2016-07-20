@@ -1,16 +1,17 @@
 var express = require('express');
 var winston = require('winston');
 
-var router = express.Router();
-
 var Passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+var misc = require('../../core/lib/misc');
 
 var account = require('./lib/account');
 var middleware = require('./lib/middleware');
 var passport = require('./lib/passoprt');
 
-var routeTable = BLITITOR.route;
+var router = express.Router();
+var routeTable = misc.getRouteTable();
 
 // Passport Stuffs
 Passport.serializeUser(passport.serialize);

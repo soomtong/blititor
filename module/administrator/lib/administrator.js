@@ -1,20 +1,16 @@
-var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var common = require('../../../core/lib/common');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
-var routeTable = BLITITOR.route;
+var routeTable = misc.getRouteTable();
 
 // var query = require('./query');
-
 // var db = require('./database');
-
-
 
 function indexPage(req, res) {
     var params = {
         title: "관리자화면"
     };
-
 
     res.send('hi this is admin home');
 }

@@ -1,6 +1,8 @@
 var winston = require('winston');
-var routeTable = BLITITOR.route;
 
+var misc = require('../../../core/lib/misc');
+
+var routeTable = misc.getRouteTable();
 
 function exposeMenu(req, res, next) {
     res.locals.adminMenu = {

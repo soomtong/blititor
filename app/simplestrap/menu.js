@@ -1,7 +1,9 @@
 var fs = require('fs');
 var winston = require('winston');
 
-var routeTable = BLITITOR.route;
+var misc = require('../../core/lib/misc');
+
+var routeTable = misc.getRouteTable();
 
 var Menu = [
     {

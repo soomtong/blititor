@@ -23,7 +23,7 @@ var Menu = [
     },
     {
         name: '소개',
-        url: routeTable['about']
+        url: routeTable.about
     }
 ];
 

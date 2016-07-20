@@ -1,11 +1,7 @@
 var express = require('express');
 var winston = require('winston');
 
-var router = express.Router();
-
-var routeTable = BLITITOR.route;
-
-// core middleware
+var misc = require('../../core/lib/misc');
 var middleware = require('../../core/middleware');
 
 // load modules for router
@@ -18,13 +14,14 @@ var Editor = require('../../module/editor');
 // load own template
 var page = require('./page');
 
-winston.info('Bind router for each modules');
+var router = express.Router();
+var routeTable = misc.getRouteTable();
 
 // Theme's middleware
 router.use(Site.middleware.exposeLocals);
 
 // separated page
-router.all(routeTable.root, page.indexPage);
+router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage);
 
 // bind static page
 // router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);

@@ -1,9 +1,10 @@
 var express = require('express');
 var winston = require('winston');
 
-var router = express.Router();
+var misc = require('../../core/lib/misc');
 
-var routeTable = BLITITOR.route;
+var router = express.Router();
+var routeTable = misc.getRouteTable();
 
 router.get('/', function (req, res) {
     console.log(req.path);
