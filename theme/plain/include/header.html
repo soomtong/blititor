@@ -1,0 +1,18 @@
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Plain</a>
+
+        <ul class="pure-menu-list">
+            {% for item in menu %}
+            {% if item.id == page %}
+            <li class="pure-menu-item pure-menu-selected"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
+            {% else %}
+            <li class="pure-menu-item"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if user %}
+            <li class="pure-menu-item"><a href="{{ route.account_root + route.account.signOut }}" class="pure-menu-link">로그아웃</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

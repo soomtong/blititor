@@ -8,21 +8,8 @@
     {% include '../include/style.html' %}
 </head>
 <body>
-<div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">Plain</a>
 
-        <ul class="pure-menu-list">
-            {% for item in menu %}
-            {% if item.id == page %}
-            <li class="pure-menu-item pure-menu-selected"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
-            {% else %}
-            <li class="pure-menu-item"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+{% include '../include/header.html' %}
 
 <div class="splash-container">
     <div class="splash">
@@ -49,7 +36,7 @@
                     Template Engine
                 </h3>
                 <p>
-                    Jinja2 스타일의 노드JS 템플릿 엔진 <a href="http://mozilla.github.io/nunjucks/" target="_blank">Nunjucks Template Engine</a> 을 사용해 HTML 페이지를 수정할 수 있습니다.
+                    Jinja2 스타일의 노드JS 템플릿 엔진 <a href="http://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> Template Language 를 사용해 자유롭게 HTML 페이지에 내용을 출력하고 파일을 포함할 수 있습니다.
                 </p>
             </div>
             <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
@@ -58,7 +45,7 @@
                     Easy Customize
                 </h3>
                 <p>
-                    적절하게 즉시 사용할 수 있는 다양한 템플릿을 통해 원하는 디자인을 쉽게 만들어 낼 수 있습니다.
+                    즉시 사용할 수 있는 다양한 템플릿을 통해 원하는 디자인을 쉽게 만들어 낼 수 있습니다.
                     지금 보시는 테마는 <a href="//purecss.io" target="_blank">PureCSS</a> 를 기반으로 만들어져 있습니다.
                 </p>
             </div>
@@ -137,7 +124,7 @@
                     등록된 계정은 테스트 용으로 모든 권한이 부여되어 있습니다. (관리자 권한과 운영자 권한)
                     저장된 개인 정보는 절대 재사용되지 않으며 수시로 삭제됩니다.
                     <br>
-                    블리티터 홈페이지를 방문해 다른 테마도 살펴보세요.
+                    <a href="//blititor.com">블리티터 홈페이지</a>를 방문해 다른 테마도 살펴보세요.
                     <br>
                     <br>
                     그 외 궁금하신 사항이 있다면 트위터 <a href="//twitter.com/soomtong" target="_blank">@soomtong</a> 으로 연락 주시기 바랍니다.
@@ -147,9 +134,7 @@
 
     </div>
 
-    <div class="footer l-box is-center">
-        PLAIN application & theme demonstration - BLITITOR © Company 2016
-    </div>
+    {% include '../include/footer.html' %}
 
 </div>
 </body>

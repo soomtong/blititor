@@ -1,8 +1,25 @@
+.application-wrapper {
+    margin-top: 52px;
+    width: 100%;
+    min-height: 12%;
+    z-index: 2;
+    background: white;
+}
+
+.application-wrapper h3 {
+    text-decoration: underline;
+}
+
+.application-wrapper .content {
+    padding: 2em;
+}
+
 .alert {
-    background: #1f8dd6;
-    padding: 1em;
+    background: #DF7514;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    padding: 0.8em 1em;
     margin-bottom: 1em;
-    border-radius: 3px;
     color: #fff;
 }
 

@@ -53,6 +53,9 @@ router
  │         │         └── loginProcess              /                                                           POST
  │         │        
  │         │   
+ │         ├── bound dispatch                      /account/sign-out                                           GET
+ │         │    └── signOut                        /                                                           GET
+ │         │   
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
  │         │   

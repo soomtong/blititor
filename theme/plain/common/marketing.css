@@ -62,7 +62,6 @@ label {
     border: 2px solid #ddd;
     box-shadow: none;
     font-size: 100%;
-    width: 100%;
     margin-bottom: 1em;
 }
 
@@ -161,7 +160,6 @@ a.pure-button-primary {
     color: white;
     border: 3px solid white;
     padding: 1em 1.6em;
-    font-weight: 100;
     border-radius: 5px;
     line-height: 1em;
 }
@@ -186,6 +184,10 @@ a.pure-button-primary {
     z-index: 2;
     background: white;
 
+}
+
+.content-wrapper .pure-form input[type] {
+    width: 100%;
 }
 
 /* This is the class used for the main content headers (<h2>) */
