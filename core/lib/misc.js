@@ -54,6 +54,7 @@ function getRouteTable() {
             "signOut": "/sign-out",
             "login": "/login",
             "register": "/register",
+            "registerSimple": "/register-simple",
             "info": "/info",
             "updateInfo": "/update"
         },

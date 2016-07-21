@@ -25,6 +25,7 @@ router
  │    └── router                                   *                                                           
  │        router                                                                                               
  │         ├── exposeLocals                        *                                                           
+ │         ├── exposeLocals                        *                                                           
  │         ├── exposeMenu                          *                                                           
  │         ├── exposeMenu                          *                                                           
  │         ├── router                              *                                                           
@@ -55,6 +56,9 @@ router
  │         │   
  │         ├── bound dispatch                      /account/sign-out                                           GET
  │         │    └── signOut                        /                                                           GET
+ │         │   
+ │         ├── bound dispatch                      /account/register-simple                                    POST
+ │         │    └── registerSimple                 /                                                           POST
  │         │   
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET

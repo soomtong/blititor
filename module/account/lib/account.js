@@ -135,7 +135,92 @@ function register(req, res) {
             });
         });
     });
+}
 
+function registerSimple(req, res) {
+    req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
+    req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
+    req.assert('password', 'Password must be at least 4 characters long').len(4);
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+        return res.redirect('back');
+    }
+
+    req.sanitize('nickname').escape();
+    req.sanitize('password').trim();
+
+    // var hash = common.hash(req.body.password);
+    common.hash(req.body.password, function (err, hash) {
+        var authData = {
+            user_id: req.body.email,
+            user_password: hash
+        };
+
+        var mysql = connection.get();
+
+        // save to auth table
+        db.writeAuth(mysql, authData, function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
+
+                winston.error(error);
+
+                res.redirect('back');
+            }
+
+            var auth_id = result['insertId'];
+
+            // save to user table
+            var userData = {
+                uuid: common.UUID4(),
+                auth_id: auth_id,
+                nickname: req.body.nickname,
+                level: 9,
+                grant: 'AMC',
+                login_counter: 1,
+                last_logged_at: new Date(),
+                created_at: new Date()
+            };
+
+            req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
+
+            db.writeAccount(mysql, userData, function (err, result) {
+                if (err) {
+                    req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
+
+                    winston.error(error);
+
+                    res.redirect('back');
+                }
+
+                var id = result['insertId'];
+
+                var user = {
+                    id: id,
+                    uuid: userData.uuid,
+                    user_id: authData.user_id,
+                    nickname: userData.nickname,
+                    level: userData.level,
+                    grant: userData.grant
+                };
+
+                req.logIn(user, function (err) {
+                    if (err) {
+                        req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+                        winston.error(error);
+
+                        return res.redirect('back');
+                    }
+
+                    res.redirect('/');
+                });
+            });
+        });
+    });
 }
 
 function showInfo(req, res) {
@@ -312,6 +397,7 @@ function signOut(req, res) {
 
 module.exports = {
     register: register,
+    registerSimple: registerSimple,
     infoForm: showInfo,
     updateInfo: updateInfo,
     signIn: signIn,

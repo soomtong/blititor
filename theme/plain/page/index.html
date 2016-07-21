@@ -92,19 +92,20 @@
 
         <div class="pure-g">
             <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
-                <form class="pure-form pure-form-stacked">
+                <form class="pure-form pure-form-stacked" action="{{ route.account_root + route.account.registerSimple }}" method="post">
                     <fieldset>
 
                         <label for="nickname">아이디 <small>화면에 보이는 이름입니다</small></label>
-                        <input id="nickname" type="text" placeholder="Your Name">
+                        <input id="nickname" name="nickname" type="text" placeholder="Your Name">
 
 
                         <label for="email">이메일 <small>고유한 계정이 되는 아이디입니다</small></label>
-                        <input id="email" type="email" placeholder="Your Email">
+                        <input id="email" name="email" type="email" placeholder="Your Email">
 
                         <label for="password">패스워드 <small>4자 이상의 패스워드를 사용해주세요</small></label>
-                        <input id="password" type="password" placeholder="Your Password">
+                        <input id="password" name="password" type="password" placeholder="Your Password">
 
+                        <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                         <button type="submit" class="pure-button">Sign Up</button>
                     </fieldset>
                 </form>
