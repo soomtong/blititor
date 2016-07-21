@@ -1,30 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Plain Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>Plain Demo - Pure</title>
     {% include '../include/style.html' %}
 </head>
 <body>
-<div class="pure-g">
-    <div class="pure-u-1">
-        <h1>{{title}}</h1>
-        <h2>This is a simple plain demo page, and it's the index page</h2>
-        <p>Note: You can use template tags with <a href="http://mozilla.github.io/nunjucks/" target="_blank">Nunjucks Template Engine</a> in a html page</p>
-        <h3>Menu</h3>
-        <ul>
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="">Plain</a>
+
+        <ul class="pure-menu-list">
             {% for item in menu %}
-            <li><a href="{{item.url}}">{{item.name}}</a></li>
+            {% if item.id == page %}
+            <li class="pure-menu-item pure-menu-selected"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
+            {% else %}
+            <li class="pure-menu-item"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
-    <div class="pure-u-1">
-        <h3>Hidden Menu</h3>
-        <ul>
-            <li><a href="{{adminMenu.root}}">Admin</a></li>
-            <li><a href="{{manageMenu.root}}">Manager</a></li>
-        </ul>
+</div>
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">{{title}}</h1>
+        <p class="splash-subhead">
+            This is a simple plain demo page, and it's the index page
+        </p>
+        <p>
+            <a href="{{adminMenu.root}}" class="pure-button pure-button-primary">관리자 로그인</a>
+            <a href="{{manageMenu.root}}" class="pure-button pure-button-primary">운영자 로그인</a>
+        </p>
     </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+        <h2 class="content-head is-center">included normal html pages and admin accounts, access log modules</h2>
+
+        <div class="pure-g">
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+
+                <h3 class="content-subhead">
+                    <i class="fa fa-rocket"></i>
+                    Template Engine
+                </h3>
+                <p>
+                    Jinja2 스타일의 노드JS 템플릿 엔진 <a href="http://mozilla.github.io/nunjucks/" target="_blank">Nunjucks Template Engine</a> 을 사용해 HTML 페이지를 수정할 수 있습니다.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-mobile"></i>
+                    Easy Customize
+                </h3>
+                <p>
+                    적절하게 즉시 사용할 수 있는 다양한 템플릿을 통해 원하는 디자인을 쉽게 만들어 낼 수 있습니다.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-th-large"></i>
+                    Module System
+                </h3>
+                <p>
+                    가장 강력한 모듈 생태계를 가지고 있는 npm 을 통해 확장 가능합니다.
+                </p>
+            </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-check-square-o"></i>
+                    Plays Nice
+                </h3>
+                <p>
+                    웹 개발자가 아니어도 따라하기를 통해 쉽게 운용이 가능합니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ribbon l-box-lrg pure-g">
+        <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
+            <img class="pure-img-responsive" alt="File Icons" width="300" src="/{{site.theme}}/common/asset/blititor_logo.png">
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
+
+            <h2 class="content-head content-head-ribbon">B L I T I T O R</h2>
+
+            <p>
+                플래인 테마를 사용하고 있는 <strong>블리티터</strong> 입니다. <br>
+                블리티터의 팀블로그 모듈을 중심으로 꾸며진 예제로 회원관리, 블로그 포스트 관리, 방명록 관리 등의 기능을 제공하고 있습니다.
+            </p>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2 class="content-head is-center">직접 계정을 등록하여 사용해 보세요.</h2>
+
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+                <form class="pure-form pure-form-stacked">
+                    <fieldset>
+
+                        <label for="name">아이디 <small>화면에 보이는 이름입니다</small></label>
+                        <input id="name" type="text" placeholder="Your Name">
+
+
+                        <label for="email">이메일 <small>고유한 계정이 되는 아이디입니다</small></label>
+                        <input id="email" type="email" placeholder="Your Email">
+
+                        <label for="password">패스워드 <small>4자 이상의 패스워드를 사용해주세요</small></label>
+                        <input id="password" type="password" placeholder="Your Password">
+
+                        <button type="submit" class="pure-button">Sign Up</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                <h4>Support this project</h4>
+                <p>
+                    블리티터 프로젝트가 마음에 드시나요?
+                    <br>
+                    계속 개발할 수 있도록 지원 및 후원해주세요.
+                    직접 고용 및 페이팔 기부도 가능합니다
+                </p>
+
+                <h4>More Information</h4>
+                <p>
+                    등록된 계정은 테스트 용으로 모든 권한이 부여되어 있습니다. (관리자 권한과 운영자 권한)
+                    저장된 개인 정보는 절대 재사용되지 않으며 수시로 삭제됩니다.
+                    <br>
+                    블리티터 홈페이지를 방문해 다른 테마도 살펴보세요.
+                    <br>
+                    <br>
+                    그 외 궁금하신 사항이 있다면 트위터 <a href="//twitter.com/soomtong" target="_blank">@soomtong</a> 으로 연락 주시기 바랍니다.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer l-box is-center">
+        PLAIN application & theme demonstration - BLITITOR © Company 2016
+    </div>
+
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
     "env": "development",
-    "root": "/Users/sven/Repository/blititor/core/../",
+    "root": "/Users/soomtong/Repository/blititor/core/../",
     "tweak": {
         "passDBCheckMiddleware": false
     },

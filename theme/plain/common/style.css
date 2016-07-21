@@ -1,11 +1,27 @@
-body {
-    padding: 2em;
-}
-
 .alert {
     background: #1f8dd6;
     padding: 1em;
     margin-bottom: 1em;
     border-radius: 3px;
     color: #fff;
+}
+
+.content p {
+    text-align: justify;
+}
+
+.content small {
+    letter-spacing: 0.05em;
+    opacity: 0.2;
+    margin-left: 4px;
+}
+
+.content-head {
+    padding: 0 2em;
+}
+
+@media (min-width: 78em) {
+    .content-head {
+        padding: 0 1em;
+    }
 }

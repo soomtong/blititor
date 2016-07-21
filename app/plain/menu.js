@@ -10,18 +10,22 @@ var routeTable = misc.getRouteTable();
 
 var Menu = [
     {
+        id: 'index',
         name: '홈',
         url: routeTable.root
     },
     {
+        id: 'marketing',
         name: '마케팅',
         url: '/marketing'
     },
     {
+        id: 'professional',
         name: '맴버',
         url: '/marketing/professional'
     },
     {
+        id: 'about',
         name: '소개',
         url: routeTable.about
     }

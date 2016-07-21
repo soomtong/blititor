@@ -10,13 +10,15 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 - NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
 - Nunjucks html template
-- Jquery, Bootstrap, Materialize etc
-- used npm, bower
+- Jquery and many frontend frameworks
+- and npm
 
 ## demo
 
 check out the samples!
 
+- pure
+- kube
 - bootstrap
 - foundation
 - materialize
@@ -24,19 +26,20 @@ check out the samples!
 
 ## usage
 
-- clone repos
+### clone repos
+
 ```shell
 git clone git://github.com/soomtong/blititor.git
 ```
 
-- prepare nodejs, npm, bower
-- install component with npm, bower
+### prepare nodejs, npm
+### install component with npm
+
 ```shell
 npm install
-bower install
 ```
 
-- run node app
+### run node app
 ```shell
-node app
+node core/index
 ```
