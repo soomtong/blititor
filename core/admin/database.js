@@ -1,6 +1,7 @@
 var colors = require('colors');
 
 function createDatabase(connection, dbName, callback) {
+/*
     connection.connect(function(err) {
         console.log(' = Verify connection parameters...'.blue);
 
@@ -19,9 +20,20 @@ function createDatabase(connection, dbName, callback) {
                 connection.destroy();
 
                 // if has argument then execute callback
-                callback();
+                if (callback && typeof callback === 'function') callback(err, results);
             });
         }
+    });
+*/
+
+    console.log(' = Make database...'.blue);
+
+    // make database by given name
+    var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';
+    connection.query(sql, [dbName, 'utf8'], function (err, results) {
+
+        // if has argument then execute callback
+        if (callback && typeof callback === 'function') callback(err, results);
     });
 
 }

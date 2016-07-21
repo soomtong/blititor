@@ -15,7 +15,7 @@ var theme = require('./admin/theme');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
-var databaseFile = common.databaseDefault['config_file'];
+var databaseFile = require('./config/app_default.json').databaseConfig;
 var moduleFile = 'module_list.json';
 
 prompt.message = colors.green(" B");
@@ -70,7 +70,7 @@ switch (param1) {
         console.log(" > node core/setup all \n".white);
 }
 
-function makeDatabaseConfigFile(done) {
+function makeDatabaseConfigFile() {
     console.log(" = Make database configuration \n".rainbow);
 
     prompt.start();
@@ -145,14 +145,16 @@ function makeDatabaseConfigFile(done) {
             } else {
                 // save params to database.json
 
-                fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4) + '\n');
+                fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4));
 
                 console.log(' = Verify configuration data... Done \n'.green);
 
-                database.createDatabase(connection, params.dbName);
-            }
+                database.createDatabase(connection, params.dbName, function (err, result) {
+                    console.log(' = Make database... Done \n'.green);
 
-            if (done && typeof done === 'function') done(null, 'step 1 callback');
+                    connection.destroy();
+                });
+            }
         });
     });
 }

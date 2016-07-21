@@ -1,8 +1,11 @@
+var fs = require('fs');
+var path = require('path');
+
 var BLITITOR = {};
 
 // global configuration
 BLITITOR.env = require('./lib/dependency')(process.env['NODE_ENV'] || 'development');
-BLITITOR.root = __dirname + '/../';
+BLITITOR.root = path.join(__dirname, '..');
 BLITITOR.tweak = {passDBCheckMiddleware: false}; // for speed
 BLITITOR.config = require('./config/app_default.json');
 BLITITOR.moduleList = require('./config/module_list.json');
@@ -11,8 +14,6 @@ BLITITOR.moduleList = require('./config/module_list.json');
 global.BLITITOR = BLITITOR;
 
 // load common package
-var fs = require('fs');
-var path = require('path');
 var express = require('express');
 var expressValidator = require('express-validator');
 var multer = require('multer');
