@@ -6,8 +6,17 @@
     color: #fff;
 }
 
+.splash p a.pure-button {
+    margin: 4px;
+}
+
 .content p {
     text-align: justify;
+}
+
+.content a {
+    color: #2d3e50;
+    font-weight: bold;
 }
 
 .content small {
