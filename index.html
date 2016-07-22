@@ -1,112 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Blititor by soomtong</title>
+    <meta name="description" content="Blititor : Old School Web Site Template for All Web Agencies and Developers">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Blititor</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Blititor</h1>
-        <p class="header">humble blog application for nodejs</p>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/soomtong/blititor/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/soomtong/blititor/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/soomtong/blititor">View On GitHub</a></li>
-        </ul>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/soomtong/blititor">View on GitHub</a>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/soomtong">soomtong</a></p>
+          <h1 id="project_title">Blititor</h1>
+          <h2 id="project_tagline">Old School Web Site Template for All Web Agencies and Developers</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/soomtong/blititor/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/soomtong/blititor/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      </header>
-      <section>
-        <h1>blititer</h1>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="blititor" class="anchor" href="#blititor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>blititor</h1>
 
-<p>humble blog application for nodejs using summernote</p>
+<p>Easy to custom for the all Web Agencies and Web Masters in Korea</p>
 
-<h2>stack</h2>
+<blockquote>
+<p>this code is really easy to customize for your business! - web developer journal in korean times</p>
+</blockquote>
+
+<h2>
+<a id="stack" class="anchor" href="#stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>stack</h2>
 
 <ul>
-<li>nodejs + mongodb + nginx (recommended)</li>
-<li>express + mongoskin</li>
-<li>jquery + knockout</li>
-<li>swig</li>
+<li>NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)</li>
+<li>Express.js + Socket.io</li>
+<li>Nunjucks html template</li>
+<li>Jquery and many frontend frameworks</li>
+<li>and wonderful NPM</li>
+</ul>
+
+<h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>demo</h2>
+
+<p>check out the samples! based awesome css frameworks</p>
+
+<ul>
+<li>pure</li>
 <li>bootstrap</li>
-<li>with <a href="http://hackerwins.github.io/summernote/">summernote</a>
-</li>
-<li>used npm, bower</li>
-</ul><h2>demo</h2>
+<li>foundation</li>
+<li>materialize</li>
+<li>kube</li>
+<li>...</li>
+</ul>
 
-<p>view the <a href="http://blog.nerdbrea.kr/">sample blog</a></p>
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>usage</h2>
 
-<h2>usage</h2>
+<p>prepare git, nodejs, npm</p>
 
-<ul>
-<li>
-<p>clone repos</p>
+<h3>
+<a id="clone-repos" class="anchor" href="#clone-repos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>clone repos</h3>
 
-<pre lang="shell"><code>git clone git://github.com/soomtong/blititor.git
-</code></pre>
-</li>
-<li><p>prepare nodejs, npm, bower</p></li>
-<li>
-<p>edit your config.json file</p>
+<div class="highlight highlight-source-shell"><pre>git clone git://github.com/soomtong/blititor.git</pre></div>
 
-<pre lang="shell"><code>cd blititor
-cp config.default.json config.js
-chmod +x blit.js
-</code></pre>
-</li>
-<li>
-<p>install component with npm, bower</p>
+<h3>
+<a id="install-component-with-npm" class="anchor" href="#install-component-with-npm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>install component with npm</h3>
 
-<pre lang="shell"><code>npm install
-bower install
-</code></pre>
-</li>
-<li>
-<p>generate configuration file, make mongo collection, insert dummy data</p>
+<div class="highlight highlight-source-shell"><pre>npm install</pre></div>
 
-<pre lang="shell"><code>./blit ready
-</code></pre>
+<h3>
+<a id="run-node-app" class="anchor" href="#run-node-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>run node app</h3>
 
-<p>for windows</p>
-
-<pre lang="shell"><code>node blit ready
-</code></pre>
-</li>
-<li>
-<p>run server with forever</p>
-
-<pre lang="shell"><code>./blit start
-./blit stop
-</code></pre>
-
-<p>for windows use single node app</p>
-
-<pre lang="shell"><code>node app.js
-</code></pre>
-</li>
-</ul><h2>for hackers</h2>
-
-<p>I wish you can make this better one :)</p>
+<div class="highlight highlight-source-shell"><pre>node core/index</pre></div>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Blititor maintained by <a href="https://github.com/soomtong">soomtong</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		          <script type="text/javascript">
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -116,6 +105,7 @@ bower install
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
