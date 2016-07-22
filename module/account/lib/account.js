@@ -137,7 +137,7 @@ function register(req, res) {
     });
 }
 
-function registerSimple(req, res) {
+function registerSimpleForTest(req, res) {
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('password', 'Password must be at least 4 characters long').len(4);
@@ -216,7 +216,11 @@ function registerSimple(req, res) {
                         return res.redirect('back');
                     }
 
-                    res.redirect('/');
+                    if (req.query['q'] =='admin' || req.query['q'] == 'manage') {
+                        res.redirect('/' + req.query['q']);
+                    } else {
+                        res.redirect('/');
+                    }
                 });
             });
         });
@@ -397,7 +401,7 @@ function signOut(req, res) {
 
 module.exports = {
     register: register,
-    registerSimple: registerSimple,
+    registerSimple: registerSimpleForTest,
     infoForm: showInfo,
     updateInfo: updateInfo,
     signIn: signIn,

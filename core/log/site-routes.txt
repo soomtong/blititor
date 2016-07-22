@@ -70,7 +70,7 @@ router
  │         │    └── signOut                        /                                                           GET
  │         │   
  │         ├── bound dispatch                      /account/register-simple                                    POST
- │         │    └── registerSimple                 /                                                           POST
+ │         │    └── registerSimpleForTest          /                                                           POST
  │         │   
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
