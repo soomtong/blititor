@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>Plain Demo - Pure</title>
+    {% include '../include/style.html' %}
+</head>
+<body>
+
+{% include '../admin/include/header.html' %}
+
+<div class="application-wrapper">
+    <div class="describe">
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <h3>시스템 관리자는 사이트에 등록된 모든 계정을 관리합니다.</h3>
+                <ul>
+                    <li>신규 계정 등록/삭제</li>
+                    <li>계정 권한 조정</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <table class="pure-table pure-table-horizontal table-wide">
+                    <tr>
+                        <td class="account-tag">아이디</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-warning pull-right">계정 삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">패스워드</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">닉네임</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">이미지</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">프로필</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">레벨</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">권한</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">포인트</td>
+                        <td>{{title}}
+                            <button class="pure-button button-small button-secondary pull-right">변경</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">가입일</td>
+                        <td>{{title}}</td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag">최근 정보갱신일</td>
+                        <td>{{title}}</td>
+                    </tr>
+                    <tr>
+                        <td class="account-tag" style="vertical-align: top">로그인 기록</td>
+                        <td class="account-access-log">
+                            <ul>
+                                <li>언제 기기정보</li>
+                                <li>언제 기기정보</li>
+                                <li>언제 기기정보</li>
+                                <li>언제 기기정보</li>
+                                <li>언제 기기정보</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% include '../include/footer.html' %}
+
+</div>
+</body>
+</html>

@@ -25,9 +25,20 @@
     </div>
 
     <div class="content">
+        <div class="pure-g search">
+            <div class="pure-u-1">
+                <form class="pure-form" method="post">
+                    <label>
+                        <input type="text" class="pure-input" placeholder="Username or Nickname">
+                    </label>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                    <button type="submit" class="pure-button">Search</button>
+                </form>
+            </div>
+        </div>
         <div class="pure-g">
             <div class="pure-u-1">
-                <table class="pure-table">
+                <table class="pure-table table-hover table-wide">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -46,7 +57,7 @@
                     <tbody>
                     <tr class="pure-table-odd">
                         <td>1</td>
-                        <td>Honda</td>
+                        <td><a href="admin/account/1">Honda</a></td>
                         <td>Accord</td>
                         <td>2009</td>
                         <td>2009</td>
@@ -123,6 +134,22 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <nav role="navigation">
+                    <ul class="cd-pagination no-space move-buttons custom-icons">
+                        <li class="button"><a href="#0">Prev</a>
+                        <li><a href="#0">1</a>
+                        <li><a href="#0">2</a>
+                        <li><a class="current" href="#0">3</a>
+                        <li><a href="#0">4</a>
+                        <li><span>...</span>
+                        <li><a href="#0">20</a>
+                        <li class="button"><a href="#0">Next</a>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

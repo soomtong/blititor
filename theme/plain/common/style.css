@@ -20,13 +20,41 @@
     color: #111;
 }
 
+.search {
+    margin-bottom: 1em;
+}
+
 .alert {
     background: #DF7514;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     padding: 0.8em 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     color: #fff;
+}
+
+.button-xsmall {
+    font-size: 70%;
+}
+
+.button-small {
+    font-size: 85%;
+}
+
+.button-warning,
+.button-secondary {
+    color: white;
+    border-radius: 2px;
+    padding: .4em .5em;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
 }
 
 .splash p a.pure-button {
@@ -50,6 +78,35 @@
 
 .content-head {
     padding: 0 2em;
+}
+
+.table-wide {
+    width: 100%;
+}
+
+.table-wide .pure-button {
+
+}
+
+.table-wide .account-tag {
+    width: 12em;
+    min-width: 8em;
+    max-width: 20em;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #f5f5f5;
+}
+
+.account-access-log ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sign-up input[type] {
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 @media (min-width: 78em) {

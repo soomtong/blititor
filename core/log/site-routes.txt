@@ -37,8 +37,20 @@ router
  │         │    ├── bound dispatch                 /admin/login                                                GET
  │         │    │    └── loginForm                 /                                                           GET
  │         │    │   
- │         │    └── bound dispatch                 /admin/login                                                POST
- │         │         └── loginProcess              /                                                           POST
+ │         │    ├── bound dispatch                 /admin/login                                                POST
+ │         │    │    └── loginProcess              /                                                           POST
+ │         │    │   
+ │         │    ├── bound dispatch                 /admin/account                                              GET
+ │         │    │    └── indexPage                 /                                                           GET
+ │         │    │   
+ │         │    ├── bound dispatch                 /admin/account/register                                     GET
+ │         │    │    └── accountForm               /                                                           GET
+ │         │    │   
+ │         │    ├── bound dispatch                 /admin/account/:uuid                                        GET
+ │         │    │    └── accountForm               /                                                           GET
+ │         │    │   
+ │         │    └── bound dispatch                 /admin/account/:uuid                                        POST
+ │         │         └── accountProcess            /                                                           POST
  │         │        
  │         │   
  │         ├── router                              *                                                           

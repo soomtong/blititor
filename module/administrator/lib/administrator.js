@@ -15,8 +15,12 @@ var routeTable = misc.getRouteTable();
 
 function indexPage(req, res) {
     var params = {
-        title: "관리자 화면"
+        title: "관리자 화면",
+        uuid: req.query['uuid']
     };
+
+    // redirect to account view
+    if (params.uuid) return res.redirect('account/' + params.uuid);
 
     res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
 }
@@ -106,8 +110,34 @@ function loginProcess(req, res) {
     });
 }
 
+function accountForm(req, res) {
+    // if no account id then do register mode or view mode
+    var params = {
+        title: "관리자 화면",
+        uuid: req.params.uuid
+    };
+
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    if (params.uuid) {
+        res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+    } else {
+        res.render(BLITITOR.config.site.adminTheme + '/admin/sign_up', params);
+    }
+}
+
+function accountProcess(req, res) {
+
+
+    res.send('ok');
+}
+
 module.exports = {
     index: indexPage,
     loginForm: loginForm,
-    loginProcess: loginProcess
+    loginProcess: loginProcess,
+    accountForm: accountForm,
+    accountProcess: accountProcess,
 };

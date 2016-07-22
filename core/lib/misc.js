@@ -41,7 +41,9 @@ function getRouteTable() {
             "install": "/install",
             "database_setup": "/make-db-config",
             "database_init": "/make-db-init",
-            "theme_setup": "/theme-config"
+            "theme_setup": "/theme-config",
+            "account": "/account",
+            "newAccount": "/account/register"
         },
         "manage_root": "/manage",
         "manage": {

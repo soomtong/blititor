@@ -38,8 +38,13 @@ var AdminMenu = [
         url: routeTable.admin_root
     },
     {
+        id: 'new',
+        name: '신규 계정 생성',
+        url: routeTable.admin_root + routeTable.admin.newAccount
+    },
+    {
         id: 'manage',
-        name: 'Manage',
+        name: '운영',
         url: routeTable.manage_root
     }
 ];

@@ -16,4 +16,9 @@ router.all(routeTable.admin_root, AccountMiddleware.checkAdministrator, administ
 router.get(routeTable.admin_root + routeTable.admin.login, administrator.loginForm);
 router.post(routeTable.admin_root + routeTable.admin.login, administrator.loginProcess);
 
+router.get(routeTable.admin_root + routeTable.admin.account, administrator.index);
+router.get(routeTable.admin_root + routeTable.admin.newAccount, administrator.accountForm);
+router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', administrator.accountForm);
+router.post(routeTable.admin_root + routeTable.admin.account + '/:uuid', administrator.accountProcess);
+
 module.exports = router;
