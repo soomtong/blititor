@@ -11,20 +11,22 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 - Express.js + Socket.io
 - Nunjucks html template
 - Jquery and many frontend frameworks
-- and npm
+- and wonderful NPM
 
 ## demo
 
-check out the samples!
+check out the samples! based awesome css frameworks
 
 - pure
-- kube
 - bootstrap
 - foundation
 - materialize
+- kube
 - ...
 
 ## usage
+
+prepare git, nodejs, npm
 
 ### clone repos
 
@@ -32,7 +34,6 @@ check out the samples!
 git clone git://github.com/soomtong/blititor.git
 ```
 
-### prepare nodejs, npm
 ### install component with npm
 
 ```shell

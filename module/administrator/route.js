@@ -14,12 +14,11 @@ var routeTable = misc.getRouteTable();
 router.get(routeTable.admin_root + routeTable.admin.login, administrator.loginForm);
 router.post(routeTable.admin_root + routeTable.admin.login, administrator.loginProcess);
 
-router.use(AccountMiddleware.checkAdministrator);
-
-router.all(routeTable.admin_root, administrator.index);
-router.get(routeTable.admin_root + routeTable.admin.account, administrator.index);
-router.get(routeTable.admin_root + routeTable.admin.newAccount, administrator.accountForm);
-router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', administrator.accountForm);
-router.post(routeTable.admin_root + routeTable.admin.account + '/:uuid', administrator.accountProcess);
+// caution. use each middleware for other module's router. it affects all router exist behind
+router.all(routeTable.admin_root, AccountMiddleware.checkAdministrator, administrator.index);
+router.get(routeTable.admin_root + routeTable.admin.account, AccountMiddleware.checkAdministrator, administrator.index);
+router.get(routeTable.admin_root + routeTable.admin.newAccount, AccountMiddleware.checkAdministrator, administrator.accountForm);
+router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountForm);
+router.post(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountProcess);
 
 module.exports = router;
