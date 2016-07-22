@@ -31,6 +31,19 @@ var Menu = [
     }
 ];
 
+var AdminMenu = [
+    {
+        id: 'index',
+        name: '홈',
+        url: routeTable.admin_root
+    },
+    {
+        id: 'manage',
+        name: 'Manage',
+        url: routeTable.manage_root
+    }
+];
+
 function menuExpose(req, res, next) {
 
     // var pages = BLITITOR.route.pages;
@@ -39,6 +52,7 @@ function menuExpose(req, res, next) {
     //todo: retrieve from database site menu record which should match with `pages` items
     // read from database
     res.locals.menu = Menu;
+    res.locals.adminMenu = AdminMenu;
 
     next();
 }

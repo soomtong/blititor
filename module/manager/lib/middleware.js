@@ -4,9 +4,8 @@ var misc = require('../../../core/lib/misc');
 var routeTable = misc.getRouteTable();
 
 function exposeMenu(req, res, next) {
-    res.locals.manageMenu = {
-        root: routeTable.manage_root
-    };
+    // it can be bound correctly, app/route's expose menu called at core stage
+    res.locals.menu.manage_root = routeTable.manage_root;
 
     next();
 }

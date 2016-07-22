@@ -258,7 +258,8 @@ if (!process.send) {
     // If run using `node app`, log GNU copyright info along with server info
     winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @' + BLITITOR.config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
-    winston.info('This is free software, and you are welcome to redistribute it under certain conditions.');
+    winston.info('This is free software,');
+    winston.info('and you are welcome to redistribute it under certain conditions.');
     winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 
     if (BLITITOR.env == 'development') { // Only in dev environment

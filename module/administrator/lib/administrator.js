@@ -18,7 +18,7 @@ function indexPage(req, res) {
         title: "관리자 화면"
     };
 
-    res.send('hi this is admin home');
+    res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
 }
 
 function loginForm(req, res) {

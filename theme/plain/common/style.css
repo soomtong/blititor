@@ -14,6 +14,12 @@
     padding: 2em;
 }
 
+.describe {
+    padding: 1em 2em 0.5em;
+    background: #aaa;
+    color: #111;
+}
+
 .alert {
     background: #DF7514;
     border-radius: 4px;
