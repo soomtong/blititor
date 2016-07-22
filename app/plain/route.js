@@ -24,10 +24,6 @@ router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
 
-// route
-router.use(Admin.route);       // to manage accounts
-router.use(Manager.route);     // to view log module
-
 // it uses common feature for each admin and manager, then assign in app router.
 // other features use each module's router. eg, modifying account records or log records
 router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
@@ -35,6 +31,10 @@ router.post(routeTable.account_root + routeTable.account.registerSimple, Account
 
 // bind static page
 bindRouter();
+
+// route
+router.use(Admin.route);       // to manage accounts
+router.use(Manager.route);     // to view log module
 
 module.exports = router;
 
