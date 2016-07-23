@@ -141,6 +141,34 @@ function loginProcess(req, res) {
     });
 }
 
+function accountView(req, res) {
+    // if no account id then do register mode or view mode
+    var params = {
+        title: "관리자 화면",
+        uuid: req.params.uuid
+    };
+
+    if (params.uuid) {
+        var mysql = connection.get();
+
+        db.readAccount(mysql, params.uuid, function (error, result) {
+            if (error) {
+                req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+                winston.error(error);
+
+                res.redirect('back');
+            }
+
+            params.account = result;
+
+            res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+        });
+    } else {
+        res.render(BLITITOR.config.site.adminTheme + '/admin/sign_up', params);
+    }
+}
+
 function accountForm(req, res) {
     // if no account id then do register mode or view mode
     var params = {
@@ -148,14 +176,28 @@ function accountForm(req, res) {
         uuid: req.params.uuid
     };
 
-    console.log(req.body);
-    console.log(req.params);
-    console.log(req.query);
+    if (!params.uuid) {
+        req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
 
-    if (params.uuid) {
-        res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+        winston.error(error);
+
+        res.redirect('back');
     } else {
-        res.render(BLITITOR.config.site.adminTheme + '/admin/sign_up', params);
+        var mysql = connection.get();
+
+        db.readAccount(mysql, params.uuid, function (error, result) {
+            if (error) {
+                req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+                winston.error(error);
+
+                res.redirect('back');
+            }
+
+            params.account = result;
+
+            res.render(BLITITOR.config.site.adminTheme + '/admin/account_form', params);
+        });
     }
 }
 
@@ -169,6 +211,7 @@ module.exports = {
     index: indexPage,
     loginForm: loginForm,
     loginProcess: loginProcess,
+    accountView: accountView,
     accountForm: accountForm,
     accountProcess: accountProcess,
 };

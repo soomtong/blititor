@@ -43,7 +43,8 @@ function getRouteTable() {
             "database_init": "/make-db-init",
             "theme_setup": "/theme-config",
             "account": "/account",
-            "newAccount": "/account/register"
+            "accountEdit": "/account/edit",
+            "accountNew": "/account/register"
         },
         "manage_root": "/manage",
         "manage": {

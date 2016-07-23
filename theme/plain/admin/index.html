@@ -58,7 +58,7 @@
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
                         <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
-                        <td>{{item.user_id}}</td>
+                        <td><a href="{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.user_id}}</a></td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.level}}</td>
                         <td>{{item.grant}}</td>

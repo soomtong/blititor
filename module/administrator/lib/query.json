@@ -1,6 +1,6 @@
 {
   "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
-  "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
+  "selectByUUID": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id AND user.uuid = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAllAccount": "SELECT count(auth.id) as `count` FROM ?? auth, ?? user WHERE auth.id = user.auth_id",
   "readAccountByPage": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id ORDER BY auth.id DESC LIMIT ?, ?",

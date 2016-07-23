@@ -44,6 +44,16 @@ function selectByPage(connection, page, callback) {
     });
 }
 
+function selectByUUID(connection, uuid, callback) {
+    var fields = ['user_id', 'user_password', 'uuid', 'nickname', 'photo', 'desc', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
+
+    connection.query(query.selectByUUID, [fields, tables.auth, tables.user, uuid], function (err, rows) {
+
+        callback(err, rows[0]);
+    });
+}
+
 module.exports = {
     readAccountByPage: selectByPage,
+    readAccount: selectByUUID,
 };

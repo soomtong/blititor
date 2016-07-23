@@ -17,8 +17,9 @@ router.post(routeTable.admin_root + routeTable.admin.login, administrator.loginP
 // caution. use each middleware for other module's router. it affects all router exist behind
 router.all(routeTable.admin_root, AccountMiddleware.checkAdministrator, administrator.index);
 router.get(routeTable.admin_root + routeTable.admin.account, AccountMiddleware.checkAdministrator, administrator.index);
-router.get(routeTable.admin_root + routeTable.admin.newAccount, AccountMiddleware.checkAdministrator, administrator.accountForm);
-router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountForm);
+router.get(routeTable.admin_root + routeTable.admin.accountNew, AccountMiddleware.checkAdministrator, administrator.accountView);
+router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountView);
+router.get(routeTable.admin_root + routeTable.admin.accountEdit + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountForm);
 router.post(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountProcess);
 
 module.exports = router;

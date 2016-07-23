@@ -46,9 +46,13 @@ router
  │         │    │   
  │         │    ├── bound dispatch                 /admin/account/register                                     GET
  │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── accountForm               /                                                           GET
+ │         │    │    └── accountView               /                                                           GET
  │         │    │   
  │         │    ├── bound dispatch                 /admin/account/:uuid                                        GET
+ │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
+ │         │    │    └── accountView               /                                                           GET
+ │         │    │   
+ │         │    ├── bound dispatch                 /admin/account/edit/:uuid                                   GET
  │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
  │         │    │    └── accountForm               /                                                           GET
  │         │    │   
