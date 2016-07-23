@@ -1,3 +1,7 @@
+var fs = require('fs');
+var async = require('neo-async');
+var colors = require('colors');
+
 var mysql = require('mysql');
 var winston = require('winston');
 
@@ -84,8 +88,85 @@ function createScheme(databaseConfiguration, callback) {
 }
 
 function insertDummy(databaseConfiguration) {
-    "use strict";
+    fs.stat(__dirname + '/dummy.json', function (error, result) {
+        if (!error && result.size > 2) {
+            var connection = mysql.createConnection({
+                host: databaseConfiguration.dbHost,
+                port: databaseConfiguration.dbPort || common.databaseDefault.port,
+                database: databaseConfiguration.dbName || common.databaseDefault.database,
+                user: databaseConfiguration.dbUserID,
+                password: databaseConfiguration.dbUserPassword
+            });
 
+            var dummy = require('./dummy.json');
+            var iteratorAsync = function (item, callback) {
+                var authData = {
+                    user_id: item.email,
+                    user_password: item.password
+                };
+                var userData = {
+                    uuid: common.UUID4(),
+                    auth_id: null,
+                    nickname: item.nickname,
+                    level: 1,
+                    grant: '',
+                    login_counter: 1,
+                    last_logged_at: null,
+                    created_at: new Date()
+                };
+
+                insertDummyAccount(connection, authData, userData, function (err, result) {
+                    console.log('   inserted records...'.white);
+
+                    callback(err, result);
+                });
+            };
+            var resultAsync = function (err, result) {
+                console.log(' = Make default records...'.blue);
+
+                // close connection
+                connection.destroy();
+            };
+
+            async.mapSeries(dummy, iteratorAsync, resultAsync);
+        }
+    });
+}
+
+function insertDummyAccount(connection, authData, userData, callback) {
+    insertAuth(connection, authData, function (err, result) {
+        if (err) {
+            console.log(' = 로그인 정보 저장에 실패했습니다.'.red);
+
+            callback(null, result);
+
+            return;
+        }
+
+        var auth_id = result['insertId'];
+
+        console.log(' = New Auth ID Generated...', auth_id);
+
+        // save to user table
+        userData.auth_id = auth_id;
+        userData.created_at = new Date();
+
+        insertAccount(connection, userData, function (err, result) {
+            if (err) {
+                console.log(' = 계정 정보 저장에 실패했습니다.'.red);
+
+                callback(null, result);
+
+                return;
+            }
+
+            var id = result['insertId'];
+
+            console.log(' = New User ID Generated...', id);
+
+            callback(err, result);
+        });
+    });
 }
 
 function selectByID(connection, id, callback) {

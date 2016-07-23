@@ -1,0 +1,12 @@
+[
+  {
+    "email": "noname@mail.net",
+    "password": "hash_0$0zVQQ3ovSe1I0DYFpv4czeDuXxNsGdOuKZJKoHliMi/V0VV/./sMm",
+    "nickname": "영원히"
+  },
+  {
+    "email": "test@mail.net",
+    "password": "hash_0$0zVQQ3ovSe1I0DYFpv4czeDuXxNsGdOuKZJKoHliMi/V0VV/./sMm",
+    "nickname": "Tester"
+  }
+]
