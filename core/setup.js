@@ -24,11 +24,11 @@ prompt.message = colors.green(" B");
 // or just go in to a web interface except these setups.
 // register new module then admin get noticed by file system or something others
 switch (param1) {
-    case 'db':
-        makeDatabaseConfigFile();
-        break;
     case 'module':
         loadModuleList();
+        break;
+    case 'db':
+        makeDatabaseConfigFile();
         break;
     case 'db-init':
         if (!param2) {
@@ -60,11 +60,11 @@ switch (param1) {
         break;
     default:
         console.log(" = run setup script by each configuration \n".rainbow);
+        console.log(" > node core/setup module".white);
         console.log(" > node core/setup db".white);
         console.log(" > node core/setup db-init".white);
         console.log(" or ( > node core/setup db-reset ) for reset table".white);
         console.log(" > node core/setup theme".white);
-        console.log(" > node core/setup template".white);
         console.log(" > node core/setup admin \n".white);
         console.log(" or \n".gray);
         console.log(" > node core/setup all \n".white);
