@@ -1,5 +1,14 @@
 [
     {
+        "folder": "site",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "site": "b_site"
+        },
+        "core": true
+    },
+    {
         "folder": "account",
         "useDatabase": true,
         "ignore": false,
@@ -9,6 +18,11 @@
             "point": "b_point"
         },
         "core": true
+    },
+    {
+        "folder": "administrator",
+        "useDatabase": false,
+        "ignore": false
     },
     {
         "folder": "editor",
@@ -25,13 +39,9 @@
         "core": false
     },
     {
-        "folder": "site",
-        "useDatabase": true,
-        "ignore": false,
-        "tables": {
-            "site": "b_site"
-        },
-        "core": true
+        "folder": "manager",
+        "useDatabase": false,
+        "ignore": false
     },
     {
         "folder": "teamblog",

@@ -26,7 +26,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 }
 
-function createScheme(databaseConfiguration) {
+function createScheme(databaseConfiguration, callback, done) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -41,27 +41,53 @@ function createScheme(databaseConfiguration) {
         '`created_at` datetime)';
 
     connection.query(sql_site, tables.site, function (error, result) {
-        connection.query('select count(id) as `count` from ?? where `title` = ?', [tables.site, 'title'], function (error, rows) {
-            if (rows[0].count > 0) {
+        callback && callback(databaseConfiguration, done);
+
+        // close connection
+        connection.destroy();
+    });
+}
+
+function insertDummy(databaseConfiguration, done) {
+    var connection = mysql.createConnection({
+        host: databaseConfiguration.dbHost,
+        port: databaseConfiguration.dbPort || common.databaseDefault.port,
+        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        user: databaseConfiguration.dbUserID,
+        password: databaseConfiguration.dbUserPassword
+    });
+
+    connection.query('select count(id) as `count` from ?? where `title` = ?', [tables.site, 'title'], function (error, rows) {
+        if (rows[0]['count'] > 0) {
+            console.log('   skip records...'.white);
+
+            // for async
+            done && done();
+
+            // close connection
+            connection.destroy();
+        } else {
+            connection.query('insert into ?? SET ?', [tables.site ,{
+                'created_at': new Date(),
+                'title': 'title',
+                'value': 'simplestrap demo'
+            }], function (error, result) {
+                console.log(' = Inserted default records...'.blue);
+
+                // for async
+                done && done(error, result);
+
                 // close connection
                 connection.destroy();
-            } else {
-                connection.query('insert into ?? SET ?', [tables.site ,{
-                    'created_at': new Date(),
-                    'title': 'title',
-                    'value': 'simplestrap demo'
-                }], function (error, result) {
-                    // close connection
-                    connection.destroy();
-                });
-            }
-        });
+            });
+        }
     });
 }
 
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
+    insertDummy: insertDummy,
     option: {
         tables: tables,
         core: true

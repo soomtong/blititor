@@ -34,7 +34,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 }
 
-function createScheme(databaseConfiguration, callback) {
+function createScheme(databaseConfiguration, callback, done) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -77,7 +77,8 @@ function createScheme(databaseConfiguration, callback) {
                 // bind foreign key
                 connection.query(sql_fkey_user_auth, [tables.user, tables.auth], function (error, result) {
                     connection.query(sql_fkey_point_user, [tables.point, tables.user], function (error, result) {
-                        callback && callback(databaseConfiguration);
+                        // for dummy
+                        callback && callback(databaseConfiguration, done);
 
                         connection.destroy();
                     })
@@ -87,7 +88,7 @@ function createScheme(databaseConfiguration, callback) {
     });
 }
 
-function insertDummy(databaseConfiguration) {
+function insertDummy(databaseConfiguration, done) {
     fs.stat(__dirname + '/dummy.json', function (error, result) {
         if (!error && result.size > 2) {
             var connection = mysql.createConnection({
@@ -122,7 +123,10 @@ function insertDummy(databaseConfiguration) {
                 });
             };
             var resultAsync = function (err, result) {
-                console.log(' = Make default records...'.blue);
+                console.log(' = Inserted default records...'.blue);
+
+                // for async
+                done && done(err, result);
 
                 // close connection
                 connection.destroy();

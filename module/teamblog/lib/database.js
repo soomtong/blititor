@@ -33,7 +33,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 }
 
-function createScheme(databaseConfiguration, callback) {
+function createScheme(databaseConfiguration, callback, done) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
@@ -63,7 +63,7 @@ function createScheme(databaseConfiguration, callback) {
         // bind foreign key
         connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
             // check dummy json
-            callback && callback(databaseConfiguration);
+            callback && callback(databaseConfiguration, done);
 
             // close connection
             connection.destroy();
@@ -71,7 +71,7 @@ function createScheme(databaseConfiguration, callback) {
     });
 }
 
-function insertDummy(databaseConfiguration) {
+function insertDummy(databaseConfiguration, done) {
     fs.stat(__dirname + '/dummy.json', function (error, result) {
         if (!error && result.size > 2) {
             var connection = mysql.createConnection({
@@ -103,7 +103,10 @@ function insertDummy(databaseConfiguration) {
                     });
                 };
                 var resultAsync = function (err, result) {
-                    console.log(' = Make default records...'.blue);
+                    console.log(' = Inserted default records...'.blue);
+
+                    // for async
+                    done && done(err, result);
 
                     // close connection
                     connection.destroy();
@@ -116,7 +119,7 @@ function insertDummy(databaseConfiguration) {
 }
 
 function getAnyAuthor(connection, callback) {
-    var fields = ['id', 'uuid', 'nickname'];
+    var fields = ['id', 'uuid', 'auth_id', 'nickname'];
 
     connection.query(query.anyAuthor, [fields, tables.user], function (error, results) {
         callback(error, results[0]);

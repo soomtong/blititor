@@ -174,12 +174,17 @@ function makeDatabaseTable() {
     });
 
     var iteratorAsync = function (item, callback) {
+        console.log('\n = Make database table...'.green, item.folder);
         if (!item.ignore && item.useDatabase) {
             var moduleName = item.folder;
 
-            makeModuleDatabaseTable(moduleName);
+
+            makeModuleDatabaseTable(moduleName, function () {
+                callback(null, moduleName);
+            });
+        } else {
+            callback();
         }
-        callback(null, moduleName);
     };
 
     var resultAsync = function (err, result) {
@@ -250,14 +255,16 @@ function makeDatabaseTableWithReset() {
     });
 }
 
-function makeModuleDatabaseTable(moduleName) {
+function makeModuleDatabaseTable(moduleName, callback) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
     var module = require('../module/'+ moduleName + '/lib/database');
 
     // inset dummy data after create table
-    module.createScheme(connectionInfo, module.insertDummy);
+    module.createScheme(connectionInfo, module.insertDummy, function () {
+        callback && callback(null, moduleName);
+    });
 }
 
 function makeModuleDatabaseTableWithReset(moduleName) {
@@ -453,7 +460,26 @@ function loadModuleList() {
         async.map(files, collectData, function (err, results) {
             console.log(' = Module Data Gathering... Done \n'.green);
 
-            fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(results, null, 4));
+            // ordering. first is site, second is account
+            var temp = [];
+
+            results.filter(function (item, index) {
+                if (item.folder == 'site') {
+                    temp.push(item);
+                    results.splice(index, 1);
+                }
+            });
+
+            results.filter(function (item, index) {
+                if (item.folder == 'account') {
+                    temp.push(item);
+                    results.splice(index, 1);
+                }
+            });
+
+            var ordered = temp.concat(results);
+
+            fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
         });
     });
 }
