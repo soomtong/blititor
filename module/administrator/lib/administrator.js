@@ -1,11 +1,14 @@
 var bcrypt = require('bcrypt');
 var winston = require('winston');
+var moment = require('moment');
 
 var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
 var account = require('../../account');
+
+var db = require('./database');
 
 var userPrivilege = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
@@ -16,13 +19,41 @@ var routeTable = misc.getRouteTable();
 function indexPage(req, res) {
     var params = {
         title: "관리자 화면",
+        page: Number(req.query['p']) || 1,
         uuid: req.query['uuid']
     };
 
     // redirect to account view
     if (params.uuid) return res.redirect('account/' + params.uuid);
 
-    res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
+    var mysql = connection.get();
+
+    db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = true;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.list = result.accountList;
+
+        params.list.map(function (item) {
+            item.last_logged_at = !(item.last_logged_at) ? '' : moment(item.last_logged_at).fromNow();
+            item.created_at = !(item.created_at) ? '' : moment(item.created_at).format("YYYY-MM-DD");
+            item.updated_at = !(item.updated_at) ? '' : moment(item.updated_at).format("YYYY-MM-DD");
+        });
+
+        res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
+    });
 }
 
 function loginForm(req, res) {

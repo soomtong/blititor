@@ -41,6 +41,7 @@
     "winston": "^2.1.1"
   },
   "scripts": {
+    "dev": "nodemon core/index.js",
     "setup": "node core/setup.js all",
     "start": "node core/index.js",
     "prod": "echo \"set production\" && exit 0",

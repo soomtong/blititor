@@ -46,7 +46,6 @@
                         <th>닉네임</th>
                         <th>레벨</th>
                         <th>권한</th>
-                        <th>포인트</th>
                         <th>로그인횟수</th>
                         <th>최근로그인</th>
                         <th>계정생성일</th>
@@ -55,101 +54,51 @@
                     </thead>
 
                     <tbody>
-                    <tr class="pure-table-odd">
-                        <td>1</td>
-                        <td><a href="admin/account/1">Honda</a></td>
-                        <td>Accord</td>
-                        <td>2009</td>
-                        <td>2009</td>
-                        <td>2009</td>
-                        <td>2009</td>
-                        <td>2009</td>
-                        <td>2009</td>
-                        <td>2009</td>
+                    {% set cls = cycler("pure-table-odd", "") %}
+                    {% for item in list %}
+                    <tr class="{{ cls.next() }}">
+                        <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
+                        <td>{{item.user_id}}</td>
+                        <td>{{item.nickname}}</td>
+                        <td>{{item.level}}</td>
+                        <td>{{item.grant}}</td>
+                        <td>{{item.login_counter}}</td>
+                        <td>{{item.last_logged_at}}</td>
+                        <td>{{item.created_at}}</td>
+                        <td>{{item.updated_at}}</td>
                     </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>Toyota</td>
-                        <td>Camry</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                        <td>2012</td>
-                    </tr>
-
-                    <tr class="pure-table-odd">
-                        <td>3</td>
-                        <td>Hyundai</td>
-                        <td>Elantra</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                        <td>2010</td>
-                    </tr>
-
-                    <tr>
-                        <td>4</td>
-                        <td>Ford</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>Focus</td>
-                        <td>2008</td>
-                    </tr>
-
-                    <tr class="pure-table-odd">
-                        <td>5</td>
-                        <td>Nissan</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>Sentra</td>
-                        <td>2011</td>
-                    </tr>
-
-                    <tr>
-                        <td>6</td>
-                        <td>BMW</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>M3</td>
-                        <td>2009</td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="pure-g">
             <div class="pure-u-1">
+                {% if pagination %}
                 <nav role="navigation">
                     <ul class="cd-pagination no-space move-buttons custom-icons">
-                        <li class="button"><a href="#0">Prev</a>
-                        <li><a href="#0">1</a>
-                        <li><a href="#0">2</a>
-                        <li><a class="current" href="#0">3</a>
-                        <li><a href="#0">4</a>
-                        <li><span>...</span>
-                        <li><a href="#0">20</a>
-                        <li class="button"><a href="#0">Next</a>
+                        {% if hasPrev %}
+                        {% if page > 1 %}
+                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}?p={{page - 1}}">Prev</a>
+                        {% else %}
+                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}">Prev</a>
+                        {% endif %}
+                        {% endif %}
+
+                        {% for i in range(1, maxPage + 1) -%}
+                        {% if i == page %}
+                        <li><a class="current" href="{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        {% else %}
+                        <li><a href="{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        {% endif %}
+                        {%- endfor %}
+
+                        {% if hasNext %}
+                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}?p={{page + 1}}">Next</a>
+                        {% endif %}
                     </ul>
                 </nav>
+                {% endif %}
             </div>
         </div>
     </div>

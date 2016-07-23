@@ -55,7 +55,7 @@
                     {% endif %}
                     {% endif %}
 
-                    {% for i in range(1, maxPage) -%}
+                    {% for i in range(1, maxPage + 1) -%}
                     {% if i == page %}
                     <li class="page-item active">
                         <a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{ i }} <span class="sr-only">(current)</span></a>
