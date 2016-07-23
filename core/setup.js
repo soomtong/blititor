@@ -189,6 +189,7 @@ function makeDatabaseTable() {
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
         async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
+        connection.destroy();
     });
 }
 
@@ -243,6 +244,8 @@ function makeDatabaseTableWithReset() {
             } else {
                 console.log(' = Make database tables request canceled... \n'.green);
             }
+
+            connection.destroy();
         });
     });
 }
