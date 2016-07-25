@@ -196,6 +196,9 @@ function accountForm(req, res) {
 
             params.account = result;
 
+            params.account.created_at = !(params.account.created_at) ? '' : moment(params.account.created_at).format("YYYY-MM-DD");
+            params.account.updated_at = !(params.account.updated_at) ? '' : moment(params.account.updated_at).format("YYYY-MM-DD");
+
             res.render(BLITITOR.config.site.adminTheme + '/admin/account_form', params);
         });
     }

@@ -114,6 +114,28 @@
     margin-bottom: 1em;
 }
 
+input.pure-file-input[type=file] {
+    border: 0;
+    vertical-align: middle;
+}
+
+.grant-checker label {
+    margin-right: 0.9em;
+    font-weight: normal;
+}
+
+.v-top {
+    vertical-align: top;
+}
+
+.picker-holder .datepicker-panel>ul>li {
+    height: 26px;
+}
+
+.picker-holder .datepicker-container {
+    font-size: 14px;
+}
+
 @media (min-width: 78em) {
     .content-head {
         padding: 0 1em;

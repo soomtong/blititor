@@ -6,6 +6,7 @@
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
     <title>Plain Demo - Pure</title>
     {% include '../include/style.html' %}
+    <link rel="stylesheet" href="/{{site.theme}}/common/datepicker.min.css"/>
 </head>
 <body>
 
@@ -25,51 +26,77 @@
     </div>
 
     <div class="content">
+        <form class="pure-form">
         <div class="pure-g">
             <div class="pure-u-1">
                 <table class="pure-table pure-table-horizontal table-wide">
                     <tr>
                         <td class="account-tag">아이디</td>
-                        <td>{{account.user_id}}</td>
+                        <td><input class="pure-input pure-u-1" type="email" name="email" value="{{account.user_id}}"></td>
                     </tr>
                     <tr>
                         <td class="account-tag">패스워드</td>
-                        <td>{{account.user_password}}</td>
+                        <td><input class="pure-input pure-u-1" type="password" name="password" placeholder="Insert New Password"></td>
                     </tr>
                     <tr>
                         <td class="account-tag">닉네임</td>
-                        <td>{{account.nickname}}</td>
+                        <td><input class="pure-input pure-u-1" type="text" name="nickname" value="{{account.nickname}}"></td>
                     </tr>
                     <tr>
                         <td class="account-tag">이미지</td>
-                        <td>{{account.photo}}</td>
+                        <td><input class="pure-file-input pure-u-1" type="file" name="photo"></td>
                     </tr>
                     <tr>
-                        <td class="account-tag">프로필</td>
-                        <td>{{account.desc}}</td>
+                        <td class="account-tag v-top">프로필</td>
+                        <td><textarea class="pure-input pure-u-1" rows="3" name="nickname">{{account.desc}}</textarea></td>
                     </tr>
                     <tr>
                         <td class="account-tag">레벨</td>
-                        <td>{{account.level}}</td>
+                        <td>
+                            <select name="level" id="level">
+                                {% for i in range(1, 10) -%}
+                                {% if i == account.level %}
+                                <option value="{{ i }}" selected>{{ i }} 레벨</option>
+                                {% else %}
+                                <option value="{{ i }}">{{ i }} 레벨</option>
+                                {% endif %}
+                                {%- endfor %}
+                            </select>
+                            ( 1 is the first account's level )
+                        </td>
                     </tr>
                     <tr>
                         <td class="account-tag">권한</td>
-                        <td>{{account.grant}}</td>
+                        <td class="grant-checker">
+                            <label for="option-admin">
+                                <input id="option-admin" type="checkbox" name="grant_checker_admin" value="A" {{ "checked" if grant_admin }}> 관리자
+                            </label>
+                            <label for="option-manager">
+                                <input id="option-manager" type="checkbox" name="grant_checker_manager" value="M" {{ "checked" if grant_manager }}> 운영자
+                            </label>
+                            <label for="option-content">
+                                <input id="option-content" type="checkbox" name="grant_checker_content" value="C" {{ "checked" if grant_content }}> 콘텐트 담당자
+                            </label>
+                        </td>
                     </tr>
                     <tr>
                         <td class="account-tag">포인트</td>
-                        <td>{{account.point}}</td>
+                        <td><input class="pure-input pure-u-lg-1-5" type="number" name="point">{{account.point}}</td>
                     </tr>
                     <tr>
-                        <td class="account-tag">가입일</td>
-                        <td>{{account.created_at}}</td>
+                        <td class="account-tag v-top">가입일</td>
+                        <td><input class="created-at pure-input pure-u-lg-7-24 pure-u-md-9-24 pure-u-sm-13-24" type="text" name="created_at" value="{{account.created_at}}" hidden>
+                            <div id="picker_created_at" class="picker-holder"></div>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="account-tag">최근 정보갱신일</td>
-                        <td>{{account.updated_at}}</td>
+                        <td class="account-tag v-top">최근 정보갱신일</td>
+                        <td><input class="updated-at pure-input pure-u-lg-7-24 pure-u-md-9-24 pure-u-sm-13-24" type="text" name="created_at" value="{{account.updated_at}}" hidden>
+                            <div id="picker_updated_at" class="picker-holder"></div>
+                        </td>
                     </tr>
                     <tr>
-                        <td class="account-tag" style="vertical-align: top">로그인 기록
+                        <td class="account-tag v-top">로그인 기록
                             ({{account.login_counter}})
                         </td>
                         <td class="account-access-log">
@@ -94,10 +121,20 @@
                 <button type="submit" class="pure-button button-warning pull-right" href="{{ route.admin_root + route.admin.accountEdit }}/{{uuid}}">수정완료</button>
             </div>
         </div>
+        </form>
     </div>
 
     {% include '../include/footer.html' %}
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/{{site.theme}}/common/datepicker.min.js"></script>
+<script src="/{{site.theme}}/common/plain.js"></script>
+<script>
+    $(document).ready(function () {
+        Plain.initDatePicker($);
+        Plain.bindDatePicker();
+    });
+</script>
 </body>
 </html>
