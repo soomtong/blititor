@@ -28,7 +28,7 @@ function deleteScheme(databaseConfiguration, callback) {
     var sql = "DROP TABLE IF EXISTS ??";
     var tableList = [tables.point, tables.user, tables.auth];
 
-    connection.query(sql, tableList, function (error, results, fields) {
+    connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
         callback(databaseConfiguration);
     });
@@ -51,7 +51,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
         '`nickname` varchar(64), `level` varchar(3), `grant` varchar(3), ' +
-        '`photo` varchar(255), `point` int, ' +
+        '`status` varchar(1), `photo` varchar(255), `point` int, ' +
         '`login_counter` int, `logout_counter` int, ' +
         '`desc` text, ' +
         '`last_logged_at` datetime, ' +

@@ -35,6 +35,15 @@
                         <td><input class="pure-input pure-u-1" type="email" name="email" value="{{account.user_id}}"></td>
                     </tr>
                     <tr>
+                        <td class="account-tag">상태</td>
+                        <td><select name="status" id="status">
+                            <option value="" selected>정상</option>
+                            <option value="L">잠금</option>
+                            <option value="D">삭제됨</option>
+                        </select> (L: Locked, D: Deleted)
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="account-tag">패스워드</td>
                         <td><input class="pure-input pure-u-1" type="password" name="password" placeholder="Insert New Password If you Want to Change"></td>
                     </tr>
