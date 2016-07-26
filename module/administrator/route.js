@@ -20,6 +20,6 @@ router.get(routeTable.admin_root + routeTable.admin.account, AccountMiddleware.c
 router.get(routeTable.admin_root + routeTable.admin.accountNew, AccountMiddleware.checkAdministrator, administrator.accountView);
 router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountView);
 router.get(routeTable.admin_root + routeTable.admin.accountEdit + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountForm);
-router.post(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountProcess);
+router.post(routeTable.admin_root + routeTable.admin.accountEdit + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountProcess);
 
 module.exports = router;

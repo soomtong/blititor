@@ -56,7 +56,7 @@ router
  │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
  │         │    │    └── accountForm               /                                                           GET
  │         │    │   
- │         │    └── bound dispatch                 /admin/account/:uuid                                        POST
+ │         │    └── bound dispatch                 /admin/account/edit/:uuid                                   POST
  │         │         ├── ensureAdminAuthenticated  /                                                           POST
  │         │         └── accountProcess            /                                                           POST
  │         │        

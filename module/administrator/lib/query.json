@@ -1,9 +1,8 @@
 {
-  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
-  "selectByUUID": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id AND user.uuid = ?",
-  "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
+  "selectAccountByUUID": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id AND user.uuid = ?",
   "countAllAccount": "SELECT count(auth.id) as `count` FROM ?? auth, ?? user WHERE auth.id = user.auth_id",
   "readAccountByPage": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id ORDER BY auth.id DESC LIMIT ?, ?",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
+  "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
 }

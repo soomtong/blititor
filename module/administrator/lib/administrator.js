@@ -1,4 +1,6 @@
+var fs = require('fs');
 var bcrypt = require('bcrypt');
+var mkdirp = require('mkdirp');
 var winston = require('winston');
 var moment = require('moment');
 
@@ -196,8 +198,11 @@ function accountForm(req, res) {
 
             params.account = result;
 
-            params.account.created_at = !(params.account.created_at) ? '' : moment(params.account.created_at).format("YYYY-MM-DD");
-            params.account.updated_at = !(params.account.updated_at) ? '' : moment(params.account.updated_at).format("YYYY-MM-DD");
+            params.account.created_at = !(result.created_at) ? '' : moment(result.created_at).format("YYYY-MM-DD");
+            params.account.updated_at = !(result.updated_at) ? '' : moment(result.updated_at).format("YYYY-MM-DD");
+            params.account.grant_admin = result.grant.indexOf('A') > -1;
+            params.account.grant_manager = result.grant.indexOf('M') > -1;
+            params.account.grant_content = result.grant.indexOf('C') > -1;
 
             res.render(BLITITOR.config.site.adminTheme + '/admin/account_form', params);
         });
@@ -205,9 +210,127 @@ function accountForm(req, res) {
 }
 
 function accountProcess(req, res) {
+    var params = {
+        updatePassword: false,
+        updateProfileImage: false,
+    };
 
+    var profileImage = null;
 
-    res.send('ok');
+    console.log(req.params.uuid, req.body, req.files);
+
+    req.assert('uuid', 'uuid is required').notEmpty();
+    req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
+
+    if (req.body.password/* && (req.body.password.toString().length >= 4)*/) {
+        req.assert('password', 'Password must be at least 4 characters long').len(4);
+
+        params.updatePassword = true;
+    }
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        winston.error(errors, errors.length);
+        req.flash('error', errors);
+        return res.redirect('back');
+    }
+
+    req.sanitize('nickname').escape();
+    req.sanitize('desc').escape();
+    req.sanitize('point').escape();
+
+    var UUID = req.params.uuid;
+
+    if (!UUID) {
+        req.flash('error', {msg: 'No Session Info Exist!'});
+
+        return res.redirect('back');
+    }
+
+    var userData = {
+        nickname: req.body.nickname,
+        level: req.body.level,
+        grant: String(req.body.grant_checker_admin || '').toUpperCase().trim() +
+               String(req.body.grant_checker_manager || '').toUpperCase().trim() +
+               String(req.body.grant_checker_content || '').toUpperCase().trim(),
+        desc: req.body.desc,
+        point: Number(req.body.point),
+        updated_at: new Date()
+    };
+
+    if (req.files[0] && req.files[0].fieldname == 'profile_image') {
+        params.updateProfileImage = true;
+
+        profileImage = req.files[0];
+
+        mkdirp('./public/upload/' + UUID, function (err) {
+            if (err) winston.error('Error in Make user folder');
+
+            // move to user folder from temp
+            fs.renameSync(req.files[0].path, './public/upload/' + UUID + '/' + profileImage.filename);
+
+            // set file info to database
+            userData.photo = profileImage.filename;
+        });
+    }
+
+    var mysql = connection.get();
+
+    db.readAuthIDByUUID(mysql, UUID, function (err, account) {
+        if (err) {
+            req.flash('error', {msg: err});
+
+            winston.error(err);
+
+            return res.redirect('back');
+        }
+
+        var authID = account.auth_id;
+
+        // update auth table, it is async routine
+        if (params.updatePassword) {
+            common.hash(req.body.password, function (err, hash) {
+                if (err) {
+                    req.flash('error', {msg: err});
+
+                    winston.error(err);
+
+                    // if password update routine was broken
+                    // then pass this process for next login
+                    // it can use before password
+                } else {
+                    var authData = {user_password: hash};
+
+                    db.updateAuthByID(mysql, authData, authID, function (err, result) {
+                        winston.warn('Updated user password into `auth` table record:', result);
+                    });
+                }
+            });
+        }
+
+        // update file associate table
+        if (params.updateProfileImage) {
+            // replace new profile photo to old one
+
+        }
+
+        db.updateAccountByUUID(mysql, userData, UUID, function (err, result) {
+            if (err) {
+                req.flash('error', {msg: err});
+
+                winston.error(err);
+
+                return res.redirect('back');
+            }
+
+            winston.warn('Updated user info into `user` table record:', result);
+
+            req.flash('info', {msg: '개인 정보가 갱신되었습니다.'});
+
+            return res.redirect(routeTable.admin_root + routeTable.admin.account + '/' + UUID);
+        });
+    });
 }
 
 module.exports = {

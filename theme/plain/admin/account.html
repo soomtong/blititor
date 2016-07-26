@@ -42,7 +42,13 @@
                     </tr>
                     <tr>
                         <td class="account-tag">이미지</td>
-                        <td>{{account.photo}}</td>
+                        <td>
+                            {% if account.photo %}
+                            <img src="/upload/{{ account.uuid }}/{{account.photo}}" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                            {% else %}
+                            <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td class="account-tag">프로필</td>

@@ -136,6 +136,12 @@ input.pure-file-input[type=file] {
     font-size: 14px;
 }
 
+.datepicker-panel>ul>li.picked, .datepicker-panel>ul>li.picked:hover {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 @media (min-width: 78em) {
     .content-head {
         padding: 0 1em;

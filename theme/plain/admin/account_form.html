@@ -26,7 +26,7 @@
     </div>
 
     <div class="content">
-        <form class="pure-form">
+        <form class="pure-form" method="post" enctype="multipart/form-data" action="{{ route.admin_root + route.admin.accountEdit + '/' + account.uuid}}">
         <div class="pure-g">
             <div class="pure-u-1">
                 <table class="pure-table pure-table-horizontal table-wide">
@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td class="account-tag">패스워드</td>
-                        <td><input class="pure-input pure-u-1" type="password" name="password" placeholder="Insert New Password"></td>
+                        <td><input class="pure-input pure-u-1" type="password" name="password" placeholder="Insert New Password If you Want to Change"></td>
                     </tr>
                     <tr>
                         <td class="account-tag">닉네임</td>
@@ -44,11 +44,11 @@
                     </tr>
                     <tr>
                         <td class="account-tag">이미지</td>
-                        <td><input class="pure-file-input pure-u-1" type="file" name="photo"></td>
+                        <td><input class="pure-file-input pure-u-1" type="file" name="profile_image"></td>
                     </tr>
                     <tr>
                         <td class="account-tag v-top">프로필</td>
-                        <td><textarea class="pure-input pure-u-1" rows="3" name="nickname">{{account.desc}}</textarea></td>
+                        <td><textarea class="pure-input pure-u-1" rows="3" name="desc">{{account.desc}}</textarea></td>
                     </tr>
                     <tr>
                         <td class="account-tag">레벨</td>
@@ -69,19 +69,19 @@
                         <td class="account-tag">권한</td>
                         <td class="grant-checker">
                             <label for="option-admin">
-                                <input id="option-admin" type="checkbox" name="grant_checker_admin" value="A" {{ "checked" if grant_admin }}> 관리자
+                                <input id="option-admin" type="checkbox" name="grant_checker_admin" value="A" {{ "checked" if account.grant_admin }}> 관리자
                             </label>
                             <label for="option-manager">
-                                <input id="option-manager" type="checkbox" name="grant_checker_manager" value="M" {{ "checked" if grant_manager }}> 운영자
+                                <input id="option-manager" type="checkbox" name="grant_checker_manager" value="M" {{ "checked" if account.grant_manager }}> 운영자
                             </label>
                             <label for="option-content">
-                                <input id="option-content" type="checkbox" name="grant_checker_content" value="C" {{ "checked" if grant_content }}> 콘텐트 담당자
+                                <input id="option-content" type="checkbox" name="grant_checker_content" value="C" {{ "checked" if account.grant_content }}> 콘텐트 담당자
                             </label>
                         </td>
                     </tr>
                     <tr>
                         <td class="account-tag">포인트</td>
-                        <td><input class="pure-input pure-u-lg-1-5" type="number" name="point">{{account.point}}</td>
+                        <td><input class="pure-input pure-u-lg-1-5" type="number" name="point" value="{{account.point}}"></td>
                     </tr>
                     <tr>
                         <td class="account-tag v-top">가입일</td>
@@ -118,7 +118,8 @@
                 <a class="pure-button button-error" href="{{ route.admin_root + route.admin.account }}/{{uuid}}">뒤로</a>
             </div>
             <div class="pure-u-1-2">
-                <button type="submit" class="pure-button button-warning pull-right" href="{{ route.admin_root + route.admin.accountEdit }}/{{uuid}}">수정완료</button>
+                <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                <button type="submit" class="pure-button button-warning pull-right">수정완료</button>
             </div>
         </div>
         </form>

@@ -44,16 +44,39 @@ function selectByPage(connection, page, callback) {
     });
 }
 
-function selectByUUID(connection, uuid, callback) {
-    var fields = ['user_id', 'user_password', 'uuid', 'nickname', 'photo', 'desc', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
+function selectByAccountUUID(connection, uuid, callback) {
+    var fields = ['user_id', 'user_password', 'uuid', 'nickname', 'photo', 'desc', 'level', 'grant', 'point', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
 
-    connection.query(query.selectByUUID, [fields, tables.auth, tables.user, uuid], function (err, rows) {
+    connection.query(query.selectAccountByUUID, [fields, tables.auth, tables.user, uuid], function (err, rows) {
 
         callback(err, rows[0]);
     });
 }
 
+function selectAuthIDByUUID(connection, UUID, callback) {
+    connection.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
+function updateAuthByID(connection, authData, authID, callback) {
+    connection.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function updateByUUID(connection, userData, UUID, callback) {
+    connection.query(query.updateAccountByUUID, [tables.user, userData, UUID], function (err, result) {
+        callback(err, result);
+    });
+}
+
+
 module.exports = {
     readAccountByPage: selectByPage,
-    readAccount: selectByUUID,
+    readAccount: selectByAccountUUID,
+    readAuthIDByUUID: selectAuthIDByUUID,
+    updateAuthByID: updateAuthByID,
+    updateAccountByUUID: updateByUUID,
+
 };
