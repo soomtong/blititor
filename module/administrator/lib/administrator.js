@@ -50,8 +50,8 @@ function indexPage(req, res) {
 
         params.list.map(function (item) {
             item.last_logged_at = !(item.last_logged_at) ? '' : moment(item.last_logged_at).fromNow();
-            item.created_at = !(item.created_at) ? '' : moment(item.created_at).format("YYYY-MM-DD");
-            item.updated_at = !(item.updated_at) ? '' : moment(item.updated_at).format("YYYY-MM-DD");
+            item.created_at = common.dateFormatter(item.created_at);
+            item.updated_at = common.dateFormatter(item.updated_at);
         });
 
         res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
@@ -164,6 +164,9 @@ function accountView(req, res) {
 
             params.account = result;
 
+            params.account.created_at = common.dateFormatter(result.created_at);
+            params.account.updated_at = common.dateFormatter(result.updated_at);
+
             res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
         });
     } else {
@@ -198,8 +201,8 @@ function accountForm(req, res) {
 
             params.account = result;
 
-            params.account.created_at = !(result.created_at) ? '' : moment(result.created_at).format("YYYY-MM-DD");
-            params.account.updated_at = !(result.updated_at) ? '' : moment(result.updated_at).format("YYYY-MM-DD");
+            params.account.created_at = common.dateFormatter(result.created_at);
+            params.account.updated_at = common.dateFormatter(result.updated_at);
             params.account.grant_admin = result.grant.indexOf('A') > -1;
             params.account.grant_manager = result.grant.indexOf('M') > -1;
             params.account.grant_content = result.grant.indexOf('C') > -1;
@@ -256,7 +259,8 @@ function accountProcess(req, res) {
                String(req.body.grant_checker_content || '').toUpperCase().trim(),
         desc: req.body.desc,
         point: Number(req.body.point),
-        updated_at: new Date()
+        created_at: new Date(req.body.created_at),
+        updated_at: new Date(req.body.updated_at)
     };
 
     if (req.files[0] && req.files[0].fieldname == 'profile_image') {

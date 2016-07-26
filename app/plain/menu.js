@@ -34,7 +34,7 @@ var Menu = [
 var AdminMenu = [
     {
         id: 'index',
-        name: '홈',
+        name: '관리자 홈',
         url: routeTable.admin_root
     },
     {

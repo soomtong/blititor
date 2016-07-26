@@ -1,6 +1,7 @@
 var uuid = require('uuid');
 var bcrypt = require('bcrypt');
 var removeMarkdown = require('remove-markdown');
+var moment = require('moment');
 
 var databaseConfiguration = require('../config/database_default');
 
@@ -99,7 +100,12 @@ function getDatabaseDefault() {
     return databaseConfiguration;
 }
 
+function dateFormatter(dateValue) {
+    return !(dateValue && dateValue.toString().indexOf('0000') < 0) ? moment(Date.now()).format("YYYY-MM-DD") : moment(dateValue).format("YYYY-MM-DD");
+}
+
 module.exports = {
+    dateFormatter: dateFormatter,
     errorFormatter: errorFormatter,
     destructMarkdown: destructMarkdown,
     regexFilter: regexFilter,
