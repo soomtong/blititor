@@ -86,10 +86,18 @@ function loginProcess(req, res) {
 
     account.authByUserID(params.adminID, function (err, auth) {
         if (err) {
-            return done(err);
+            winston.verbose('something wrong in passport login system', err);
+
+            req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+            return res.redirect('back');
         }
         if (!auth) {
-            return done(null, false, {message: 'Unknown user ' + userID});
+            winston.verbose('there is no account by given auth data', err);
+
+            req.flash('error', {msg: '등록되지 않았거나 정확하지 않은 계정입니다.'});
+
+            return res.redirect('back');
         }
 
         // winston.verbose(auth, userID, password);
