@@ -399,9 +399,10 @@ function signOut(req, res) {
     winston.info('signed out');
 }
 
-function insertLastLog(uuid) {
+function insertLastLog(uuid, loginCounter) {
     var userData = {
-        last_logged_at: new Date()
+        last_logged_at: new Date(),
+        login_counter: loginCounter + 1
     };
 
     var mysql = connection.get();

@@ -175,7 +175,7 @@ function insertDummyAccount(connection, authData, userData, callback) {
 }
 
 function selectByID(connection, id, callback) {
-    var field = ["id", "uuid", "nickname", "photo", "level", "grant"];
+    var field = ["id", "uuid", "nickname", "photo", "level", "grant", "login_counter"];
 
     connection.query(query.selectByID, [field, tables.user, id], function (err, rows) {
         callback(err, rows[0]);

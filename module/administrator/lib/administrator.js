@@ -137,11 +137,9 @@ function loginProcess(req, res) {
                             }
 
                             // insert login logging
-                            account.insertLastLog(user.uuid);
-                            console.log(req.device);
+                            account.insertLastLog(user.uuid, userData.login_counter);
 
                             var agent = useragent.parse(req.headers['user-agent']);
-
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                             res.redirect(routeTable.admin_root);
