@@ -399,7 +399,25 @@ function signOut(req, res) {
     winston.info('signed out');
 }
 
+function insertLastLog(uuid) {
+    var userData = {
+        last_logged_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    db.updateAccountByUUID(mysql, userData, uuid, function (err, result) {
+        if (err) {
+            winston.error(err);
+            return;
+        }
+
+        winston.verbose('Updated last logged info into `user` table record:', uuid);
+    });
+}
+
 module.exports = {
+    insertLastLog: insertLastLog,
     register: register,
     registerSimple: registerSimpleForTest,
     infoForm: showInfo,

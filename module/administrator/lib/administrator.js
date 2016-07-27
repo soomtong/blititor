@@ -131,17 +131,20 @@ function loginProcess(req, res) {
                             if (err) {
                                 req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
 
-                                winston.error(error);
+                                winston.error(err);
 
                                 return res.redirect('back');
                             }
+
+                            // insert login logging
+                            account.insertLastLog(user.uuid);
 
                             res.redirect(routeTable.admin_root);
                         });
                     } else {
                         req.flash('error', {msg: 'You have not Admin privilege'});
 
-                        winston.error(error);
+                        winston.warn('Unauthorized user accessed');
 
                         return res.redirect('back');
                     }
