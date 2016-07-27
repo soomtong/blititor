@@ -44,7 +44,8 @@ function getRouteTable() {
             "theme_setup": "/theme-config",
             "account": "/account",
             "accountEdit": "/account/edit",
-            "accountNew": "/account/register"
+            "accountNew": "/account/register",
+            "counter": "/counter"
         },
         "manage_root": "/manage",
         "manage": {
@@ -113,6 +114,15 @@ function siteThemeType() {
     };
 }
 
+function commonToken() {
+    return {
+        account: {
+            login: 1001,
+            logout: 1010
+        }
+    }
+}
+
 function showRouteTable() {
     winston.info("\x1B[32mload default route table \033[0m");
 
@@ -126,5 +136,6 @@ module.exports = {
     setRouteTable: setRouteTable,
     setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
+    commonToken: commonToken,
     showRouteTable: showRouteTable
 };

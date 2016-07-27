@@ -62,7 +62,8 @@ function createScheme(databaseConfiguration, callback, done) {
     var sql_point = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_id` int unsigned not null, `amount` int, `reason` varchar(255), ' +
-        '`created_at` datetime, INDEX user_id(`user_id`))';
+        '`created_at` datetime, ' +
+        'INDEX user_id(`user_id`))';
 
     var sql_fkey_user_auth = 'alter table ?? ' +
         'add constraint user_auth_id_foreign foreign key (`auth_id`) ' +

@@ -10,7 +10,8 @@
     "theme_setup": "/theme-config",
     "account": "/account",
     "accountEdit": "/account/edit",
-    "accountNew": "/account/register"
+    "accountNew": "/account/register",
+    "counter": "/counter"
   },
   "manage_root": "/manage",
   "manage": {

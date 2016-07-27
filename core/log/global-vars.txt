@@ -53,8 +53,22 @@
         },
         {
             "folder": "administrator",
-            "useDatabase": false,
-            "ignore": false
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {},
+            "core": false
+        },
+        {
+            "folder": "counter",
+            "useDatabase": true,
+            "ignore": false,
+            "tables": {
+                "accountLog": "b_account_counter_log",
+                "accountCounter": "b_account_counter",
+                "visitLog": "b_visit_counter_log",
+                "visitCounter": "b_visit_counter"
+            },
+            "core": true
         },
         {
             "folder": "editor",

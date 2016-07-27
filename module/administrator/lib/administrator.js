@@ -9,14 +9,13 @@ var common = require('../../../core/lib/common');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
 var account = require('../../account');
+var counter = require('../../counter');
 
 var db = require('./database');
 
 var userPrivilege = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
-
-// var query = require('./query');
-// var db = require('./database');
+var token = misc.commonToken();
 
 function indexPage(req, res) {
     var params = {
@@ -138,6 +137,9 @@ function loginProcess(req, res) {
 
                             // insert login logging
                             account.insertLastLog(user.uuid);
+
+                            //todo: insert access log
+                            counter.insertAccountCounter(user.uuid, token.account.login);
 
                             res.redirect(routeTable.admin_root);
                         });
