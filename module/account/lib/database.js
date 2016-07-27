@@ -52,7 +52,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
         '`nickname` varchar(64), `level` varchar(3), `grant` varchar(3), ' +
         '`status` varchar(1), `photo` varchar(255), `point` int, ' +
-        '`login_counter` int, `logout_counter` int, ' +
+        '`login_counter` int unsigned, `logout_counter` int unsigned, ' +
         '`desc` text, ' +
         '`last_logged_at` datetime, ' +
         '`created_at` datetime, ' +
@@ -112,7 +112,7 @@ function insertDummy(databaseConfiguration, done) {
                     nickname: item.nickname,
                     level: 1,
                     grant: '',
-                    login_counter: 1,
+                    login_counter: 0,
                     last_logged_at: null,
                     created_at: new Date()
                 };

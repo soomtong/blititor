@@ -448,10 +448,11 @@ function loadModuleList() {
             } else {
                 var module = require(path.join('..', folderName, item, 'lib', 'database.js'));
 
-                if (module.option) {
+                if (module.option && module.option.tables) {
                     moduleData.tables = module.option.tables || {};
                     moduleData.core = module.option.core || false;
                 } else {
+                    moduleData.useDatabase = false;
                     moduleData.tables = {};
                     moduleData.core = false;
                 }

@@ -94,7 +94,7 @@ function register(req, res) {
                 nickname: req.body.nickname,
                 level: 1,
                 grant: '',
-                login_counter: 1,
+                login_counter: 0,
                 last_logged_at: new Date(),
                 created_at: new Date()
             };
@@ -180,7 +180,7 @@ function registerSimpleForTest(req, res) {
                 nickname: req.body.nickname,
                 level: 9,
                 grant: 'AMC',
-                login_counter: 1,
+                login_counter: 0,
                 last_logged_at: new Date(),
                 created_at: new Date()
             };

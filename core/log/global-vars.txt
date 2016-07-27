@@ -53,7 +53,7 @@
         },
         {
             "folder": "administrator",
-            "useDatabase": true,
+            "useDatabase": false,
             "ignore": false,
             "tables": {},
             "core": false
