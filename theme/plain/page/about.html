@@ -6,25 +6,118 @@
     {% include '../include/style.html' %}
 </head>
 <body>
-<div class="pure-g">
-    <div class="pure-u-1">
-        <h2>{{title}}</h2>
-        <dl>
-            <dt>Path</dt>
-            <dd>{{path}}</dd>
-        </dl>
-        <dl>
-            <dt>Page</dt>
-            <dd>{{page}}</dd>
-        </dl>
 
-        <h3>Menu</h3>
-        <ul>
-            {% for item in menu %}
-            <li><a href="{{item.url}}">{{item.name}}</a></li>
-            {% endfor %}
-        </ul>
+{% include '../include/header.html' %}
+
+<div class="marketing-wrapper">
+    <div id="main">
+
+        <div class="hero">
+            <div class="hero-titles">
+                <img class="logo" src="/{{site.theme}}/common/asset/blititor_logo.png" alt="Pure">
+                <h2 class="hero-tagline">현재 사용된 템플릿 예제는 <a href="//purecss.io" target="_blank">PureCSS</a> 를 기반으로 만들어져 있습니다.</h2>
+            </div>
+        </div>
+
+        <div class="about">
+            <div class="size-chart pure-g">
+
+                <div class="size-chart-base pure-u" style="width: 19.8516%;">
+                    <a class="size-chart-item" href="/base/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">base</span>
+                    <span class="size-chart-size">1.1KB</span>
+                </span>
+                    </a>
+                </div>
+
+                <div class="size-chart-grids pure-u" style="width: 15.4361%;">
+                    <a class="size-chart-item" href="/grids/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">grids</span>
+                    <span class="size-chart-size">0.8KB</span>
+                </span>
+                    </a>
+                </div>
+
+                <div class="size-chart-forms pure-u" style="width: 26.8730%;">
+                    <a class="size-chart-item" href="/forms/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">forms</span>
+                    <span class="size-chart-size">1.5KB</span>
+                </span>
+                    </a>
+                </div>
+
+                <div class="size-chart-buttons pure-u" style="width: 14.4951%;">
+                    <a class="size-chart-item" href="/buttons/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">buttons</span>
+                    <span class="size-chart-size">0.8KB</span>
+                </span>
+                    </a>
+                </div>
+
+                <div class="size-chart-tables pure-u" style="width: 8.9215%;">
+                    <a class="size-chart-item" href="/tables/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">tables</span>
+                    <span class="size-chart-size">0.5KB</span>
+                </span>
+                    </a>
+                </div>
+
+                <div class="size-chart-menus pure-u" style="width: 14.4227%;">
+                    <a class="size-chart-item" href="/menus/">
+                <span class="size-chart-label">
+                    <span class="size-chart-mod">menus</span>
+                    <span class="size-chart-size">0.8KB</span>
+                </span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="content description">
+                <h3 class="about-header">CSS with a minimal footprint.</h3>
+                <p>
+                    Pure is ridiculously tiny. The entire set of modules clocks in at <b>4.0KB* minified and gzipped</b>. Crafted with mobile devices in mind, it was important to us to keep our file sizes small, and every line of CSS was carefully considered. If you decide to only use a subset of these modules, you'll save even more bytes.
+                </p>
+
+                <p style="font-size:smaller;">
+                    * We can add correctly :) the numbers above are individual module sizes; when grouped together they compress (gzip) even more.
+                </p>
+            </div>
+        </div>
+
+        <div class="about l-wrap pure-g">
+            <div class="content description pure-u-1 u-sm-1-2 u-xl-1-3">
+                <h3 class="about-header">Your CSS foundation.</h3>
+                <p>
+                    Pure builds on <a href="http://necolas.github.io/normalize.css/">Normalize.css</a> and provides layout and styling for native HTML elements, plus the most common UI components. It's what you need, without the cruft.
+                </p>
+            </div>
+
+            <div class="content description pure-u-1 u-sm-1-2 u-xl-1-3">
+                <h3 class="about-header">Made with mobile in mind.</h3>
+                <p>
+                    Pure is responsive out of the box, so elements look great on all screen sizes.
+                </p>
+            </div>
+
+            <div class="content description pure-u-1 u-lg-3-4 u-xl-1-3">
+                <h3 class="about-header">Stays out of your way.</h3>
+                <p>
+                    Pure has minimal styles and encourages you to write your application styles on top of it. It's designed to get out of your way and makes it easy to override styles.
+                </p>
+            </div>
+        </div>
+
     </div>
+
 </div>
+
+{% include '../include/footer.html' %}
+
 </body>
 </html>

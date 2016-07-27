@@ -6,25 +6,127 @@
     {% include '../include/style.html' %}
 </head>
 <body>
-<div class="pure-g">
-    <div class="pure-u-1">
-        <h2>{{title}}</h2>
-        <dl>
-            <dt>Path</dt>
-            <dd>{{path}}</dd>
-        </dl>
-        <dl>
-            <dt>Page</dt>
-            <dd>{{page}}</dd>
-        </dl>
 
-        <h3>Menu</h3>
-        <ul>
-            {% for item in menu %}
-            <li><a href="{{item.url}}">{{item.name}}</a></li>
-            {% endfor %}
-        </ul>
+{% include '../include/header.html' %}
+
+<div class="pure-g team">
+    <div class="photo-box u-1 u-med-1-3 u-lrg-1-4">
+        <a href="http://www.dillonmcintosh.tumblr.com/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Beach">
+        </a>
+
+        <aside class="photo-box-caption">
+            <span><a href="">soomtong</a></span>
+        </aside>
+    </div>
+
+    <div class="text-box u-1 u-med-2-3 u-lrg-3-4">
+        <div class="l-box">
+            <h1 class="text-box-head">웹 개발자가 웹 개발자를 위해 만들고 있습니다.</h1>
+            <p class="text-box-subhead">Javascript 와 HTML, CSS 만 이해하면 바로 시작할 수 있습니다.</p>
+        </div>
+    </div>
+
+    <div class="photo-box u-1 u-med-1-2 u-lrg-1-3">
+        <a href="http://ngkhanhlinh.dunked.com/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Meadow">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box u-1 u-med-1-2 u-lrg-1-3">
+        <a href="http://www.nilssonlee.se/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="City">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box u-1 u-med-1-2 u-lrg-1-3">
+        <a href="http://www.flickr.com/photos/rulasibai/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Flowers">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box u-1 u-med-1-2 u-lrg-1-3">
+        <a href="http://www.flickr.com/photos/charliefoster/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Bridge">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box photo-box-thin u-1 u-lrg-2-3">
+        <a href="http://ngkhanhlinh.dunked.com/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Balloons">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box photo-box-thin u-1 u-med-2-3">
+        <a href="http://twitter.com/iBoZR">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Rain Drops">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="photo-box u-1 u-med-1-3">
+        <a href="http://www.goodfreephotos.com/">
+            <img src="http://24.media.tumblr.com/1b1464fc1ef5ddfe8fd2e9c9c50e96f8/tumblr_myp9aotkm91st5lhmo1_1280.jpg" alt="Port">
+        </a>
+
+        <aside class="photo-box-caption">
+                <span>
+                    <a href="">soomtong</a>
+                </span>
+        </aside>
+    </div>
+
+    <div class="u-1">
+        <div class="l-box">
+            <h2>Creating a Photo Gallery Layout</h2>
+
+            <p>
+                This page shows how to make a photo gallery using <a href="/grids/">Pure Grids</a>. Using Pure, we can create interesting layouts such as this photo gallery. This layout is fully responsive. We've added a bit of custom media queries on top of the responsive grid provided by Pure.
+            </p>
+
+            <p>
+                We've also taken advantage of <a href="/forms/">Pure Forms</a> and <a href="/menus/">Pure Menus</a>. This example uses a form with the <code>pure-form</code> class name to create an inline form. We use <a href="/buttons/">Pure Buttons</a> for the button styling.
+            </p>
+        </div>
     </div>
 </div>
+
+{% include '../include/footer.html' %}
+
 </body>
 </html>
