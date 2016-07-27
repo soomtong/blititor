@@ -22,6 +22,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var mysqlSession = require('express-mysql-session');
 var flash = require('connect-flash');
+var device = require('express-device');
 var compress = require('compression');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -161,6 +162,7 @@ app.use(favicon('public/favicon.ico'));
 app.use(multerUploader.any());  // should set before csrf middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(device.capture({parseUserAgent: true}));
 app.use(compress({}));    // compress all for default
 app.use(expressValidator({errorFormatter: common.errorFormatter}));
 

@@ -79,13 +79,15 @@
                             ({{account.login_counter}})
                         </td>
                         <td class="account-access-log">
-                            <ul>
-                                <li>언제 기기정보</li>
-                                <li>언제 기기정보</li>
-                                <li>언제 기기정보</li>
-                                <li>언제 기기정보</li>
-                                <li>언제 기기정보</li>
-                            </ul>
+                            <table class="table-wide">
+                                {% for log in accountLog %}
+                                <tr>
+                                    <td style="width: 10em">{{log.created_at}}</td>
+                                    <td>{{log.device}}</td>
+                                    <td>{{log.client}}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
                         </td>
                     </tr>
                 </table>

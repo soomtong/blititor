@@ -8,7 +8,8 @@ var misc = require('../../../core/lib/misc');
 
 var tables = {
     auth: common.databaseDefault.prefix + 'auth',
-    user: common.databaseDefault.prefix + 'user'
+    user: common.databaseDefault.prefix + 'user',
+    accountLog: common.databaseDefault.prefix + 'account_counter_log'
 };
 
 var query = require('./query');
@@ -71,6 +72,14 @@ function updateByUUID(connection, userData, UUID, callback) {
     });
 }
 
+function selectByAccountLogUUID(connection, UUID, callback) {
+    var fields = ['id', 'type', 'client' , 'device', 'created_at'];
+
+    connection.query(query.selectByUUIDWithLimit, [fields, tables.accountLog, UUID, 10], function (err, rows) {
+        callback(err, rows);
+    });
+}
+
 
 module.exports = {
     readAccountByPage: selectByPage,
@@ -78,5 +87,5 @@ module.exports = {
     readAuthIDByUUID: selectAuthIDByUUID,
     updateAuthByID: updateAuthByID,
     updateAccountByUUID: updateByUUID,
-
+    readAccountLog: selectByAccountLogUUID,
 };

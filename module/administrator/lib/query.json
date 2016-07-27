@@ -3,6 +3,7 @@
   "countAllAccount": "SELECT count(auth.id) as `count` FROM ?? auth, ?? user WHERE auth.id = user.auth_id",
   "readAccountByPage": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id ORDER BY auth.id DESC LIMIT ?, ?",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "selectByUUIDWithLimit": "SELECT ?? FROM ?? WHERE `uuid` = ? ORDER BY id DESC LIMIT ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
 }

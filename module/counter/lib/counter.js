@@ -21,11 +21,13 @@ function indexPage(req, res) {
     };
 }
 
-function accountCounter(uuid, type) {
+function accountCounter(uuid, type, agent, device) {
     // insert uuid and login type and now date
     var logData = {
         uuid: uuid,
         type: type,
+        client: agent.toString(),
+        device: device.name + " (" + device.type  + ")",
         created_at: new Date()
     };
 
@@ -40,8 +42,7 @@ function accountCounter(uuid, type) {
         if (error) {
             winston.error(error);
         } else {
-            console.log(result);
-            winston.verbose('Insert user sign in result info into `account_counter_log` table record:', uuid);
+            winston.verbose('Insert user sign-in record:', uuid);
         }
     });
 
@@ -49,8 +50,7 @@ function accountCounter(uuid, type) {
         if (error) {
             winston.error(error);
         } else {
-            console.log(result);
-            winston.verbose('Updated last logged info into `account_counter` table record:', uuid);
+            winston.verbose('Updated last logged info record:', uuid);
         }
     });
 }

@@ -50,6 +50,8 @@ function createScheme(databaseConfiguration, callback, done) {
     var sql_account_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`uuid` char(36) not null, `type` int(4) unsigned not null, ' +
+        '`client` varchar(96), ' +
+        '`device` varchar(64), ' +
         '`created_at` datetime, ' +
         'INDEX account_log_uuid(`uuid`))';
     var sql_account_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
@@ -131,15 +133,13 @@ function insertAccountCounterLog(connection, counterData, callback) {
 function updateAccountCounter(connection, counterData, callback) {
     connection.query(query.selectByDate, [tables.accountCounter, counterData.date], function (error, rows) {
         if (rows[0] && rows[0].id) {
-            var q = connection.query(query.updateCounterByDate, [tables.accountCounter, counterData.type, counterData.type, counterData.date], function (error, result) {
+            connection.query(query.updateCounterByDate, [tables.accountCounter, counterData.type, counterData.type, counterData.date], function (error, result) {
                 callback(error, result);
             });
-            console.log(q.sql);
         } else {
-            var p = connection.query(query.insertCounterByDate, [tables.accountCounter, counterData.type, counterData.date], function (error, result) {
+            connection.query(query.insertCounterByDate, [tables.accountCounter, counterData.type, counterData.date], function (error, result) {
                 callback(error, result);
             });
-            console.log(p.sql);
         }
     });
 }

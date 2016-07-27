@@ -100,8 +100,9 @@ function getDatabaseDefault() {
     return databaseConfiguration;
 }
 
-function dateFormatter(dateValue) {
-    return !(dateValue && dateValue.toString().indexOf('0000') < 0) ? moment(Date.now()).format("YYYY-MM-DD") : moment(dateValue).format("YYYY-MM-DD");
+function dateFormatter(dateValue, format) {
+    if (!format) format = "YYYY-MM-DD";
+    return !(dateValue && dateValue.toString().indexOf('0000') < 0) ? moment(Date.now()).format(format) : moment(dateValue).format(format);
 }
 
 module.exports = {

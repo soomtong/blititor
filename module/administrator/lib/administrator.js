@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 var mkdirp = require('mkdirp');
 var winston = require('winston');
 var moment = require('moment');
+var useragent = require('useragent');
 
 var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
@@ -137,9 +138,11 @@ function loginProcess(req, res) {
 
                             // insert login logging
                             account.insertLastLog(user.uuid);
+                            console.log(req.device);
 
-                            //todo: insert access log
-                            counter.insertAccountCounter(user.uuid, token.account.login);
+                            var agent = useragent.parse(req.headers['user-agent']);
+
+                            counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                             res.redirect(routeTable.admin_root);
                         });
@@ -175,12 +178,28 @@ function accountView(req, res) {
                 res.redirect('back');
             }
 
-            params.account = result;
+            db.readAccountLog(mysql, params.uuid, function (error, rows) {
+                if (error) {
+                    req.flash('error', {msg: '로그 목록 읽기에 실패했습니다.'});
 
-            params.account.created_at = common.dateFormatter(result.created_at);
-            params.account.updated_at = common.dateFormatter(result.updated_at);
+                    winston.error(error);
 
-            res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+                    res.redirect('back');
+                }
+
+                rows.map(function (item) {
+                    console.log(item.created_at);
+                    item.created_at = common.dateFormatter(item.created_at, "YYYY-MM-DD HH:mm");
+                });
+
+                params.account = result;
+                params.accountLog = rows;
+
+                params.account.created_at = common.dateFormatter(result.created_at);
+                params.account.updated_at = common.dateFormatter(result.updated_at);
+
+                res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+            });
         });
     } else {
         res.render(BLITITOR.config.site.adminTheme + '/admin/sign_up', params);
