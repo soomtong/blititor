@@ -44,7 +44,8 @@
   },
   "scripts": {
     "dev": "nodemon core/index.js",
-    "setup": "node core/setup.js all",
+    "prepare": "node core/setup.js module",
+    "setup": "node core/setup.js",
     "start": "node core/index.js",
     "prod": "echo \"set production\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
