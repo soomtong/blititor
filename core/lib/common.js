@@ -105,7 +105,20 @@ function dateFormatter(dateValue, format) {
     return !(dateValue && dateValue.toString().indexOf('0000') < 0) ? moment(Date.now()).format(format) : moment(dateValue).format(format);
 }
 
+function pageFormatter(url) {
+    if (typeof url != 'string') url = url.toString();
+
+    var len = url.length;
+
+    if (url.lastIndexOf('/') == len - 1) url = url.substr(0, len - 1);
+    if (url.indexOf('https://') == 0) url = url.substr(7);
+    if (url.indexOf('http://') == 0) url = url.substr(6);
+
+    return url;
+}
+
 module.exports = {
+    pageFormatter: pageFormatter,
     dateFormatter: dateFormatter,
     errorFormatter: errorFormatter,
     destructMarkdown: destructMarkdown,

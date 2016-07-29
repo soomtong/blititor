@@ -55,10 +55,33 @@ function accountCounter(uuid, type, agent, device) {
     });
 }
 
+function pageCounter(page, ip, ref, agent, device) {
+    var logData = {
+        page: common.pageFormatter(page),
+        ip: ip,
+        ref: ref,
+        client: agent.toString(),
+        device: device.name + " (" + device.type  + ")",
+        created_at: new Date()
+    };
+    var counterData = {
+        page: common.pageFormatter(page),
+        date: moment().format('YYYYMMDD')
+    };
+
+    var mysql = connection.get();
+
+    // insert log
+    console.log(logData);
+
+    // update counter
+    console.log(counterData);
+}
+
 module.exports = {
     index: indexPage,
     insertAccountCounter: accountCounter,
+    insertPageCounter: pageCounter,
     insertActionCounter: indexPage,
-    insertPageCounter: indexPage,
     insertVisitCounter: indexPage
 };
