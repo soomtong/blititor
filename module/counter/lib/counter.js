@@ -55,7 +55,7 @@ function accountCounter(uuid, type, agent, device) {
     });
 }
 
-function pageCounter(path, ip, ref, agent, device) {
+function pageCounter(path, method, ip, ref, agent, device) {
 // var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 /*
     var fullUrl = url.format({
@@ -66,6 +66,7 @@ function pageCounter(path, ip, ref, agent, device) {
 */
     var logData = {
         path: path,
+        method: method,
         ip: ip,
         ref: ref,
         client: agent.toString(),
@@ -80,10 +81,24 @@ function pageCounter(path, ip, ref, agent, device) {
     var mysql = connection.get();
 
     // insert log
-    db.insertPageViewLog(logData);
+    db.insertPageViewLog(mysql, logData, function (error, result) {
+        if (error) {
+            winston.error(error);
+        } else {
+            winston.verbose('Insert visit log record:', result);
+        }
+    });
 
     // update counter
-    db.updatePageCounter(counterData);
+/*
+    db.updatePageCounter(mysql, counterData, function (error, result) {
+        if (error) {
+            winston.error(error);
+        } else {
+            winston.verbose('Update visit counter record:', result);
+        }
+    });
+*/
 }
 
 module.exports = {

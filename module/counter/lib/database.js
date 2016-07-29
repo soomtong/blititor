@@ -8,6 +8,8 @@ var winston = require('winston');
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
+// logged user view: account,
+// all user view(==page view): visit
 var tables = {
     accountLog: common.databaseDefault.prefix + 'account_counter_log',
     accountCounter: common.databaseDefault.prefix + 'account_counter',
@@ -56,20 +58,40 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX account_log_uuid(`uuid`))';
     var sql_account_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`session_in` int unsigned default 0, `sign_up` int unsigned default 0, ' +
         '`sign_in` int unsigned default 0, `sign_out` int unsigned default 0, ' +
-        '`registered` int unsigned default 0, `resigned` int unsigned default 0, ' +
-        '`deactivated` int unsigned default 0, `activated` int unsigned default 0, ' +
+        '`deactivated` int unsigned default 0, `reactivated` int unsigned default 0, ' +
         '`date` char(8), ' +
         'UNIQUE account_counter_date_unique(`date`))';
+    var sql_visit_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`path` varchar(96) not null,' +
+        '`method` varchar(8),' +
+        '`ip` varchar(18), ' +  // prepare ipv6, consider to use numeric
+        '`ref` varchar(96), ' +
+        '`client` varchar(96), ' +
+        '`device` varchar(64), ' +
+        '`created_at` datetime, ' +
+        'INDEX visit_log_path(`path`))';
+    var sql_visit_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`path` varchar(96) not null,' +
+        '`date` char(8) not null, ' +
+        '`view` int unsigned default 0, ' +
+        'INDEX visit_counter_path(`path`))';
 
     connection.query(sql_account_log, tables.accountLog, function (error, result) {
-        // console.log(error, result);
         connection.query(sql_account_counter, tables.accountCounter, function (error, result) {
-            // console.log(error, result);
-            // for dummy
-            callback && callback(databaseConfiguration, done);
+            connection.query(sql_visit_log, tables.visitLog, function (error, result) {
+                // console.log(error, result);
+                connection.query(sql_visit_counter, tables.visitCounter, function (error, result) {
+                    // console.log(error, result);
+                    // for dummy
+                    callback && callback(databaseConfiguration, done);
 
-            connection.destroy();
+                    connection.destroy();
+                });
+            });
         });
     });
 }
@@ -112,22 +134,10 @@ function selectByPage(connection, page, callback) {
     });
 }
 
-function selectByUUID(connection, uuid, callback) {
-    var fields = ['user_id', 'user_password', 'uuid', 'nickname', 'photo', 'desc', 'level', 'grant', 'point', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
-
-    connection.query(query.selectAccountByUUID, [fields, tables.auth, tables.user, uuid], function (err, rows) {
-
-        callback(err, rows[0]);
-    });
-}
-
 function insertAccountActionLog(connection, logData, callback) {
-    var q =connection.query(query.insertInto, [tables.accountLog, logData], function (error, result) {
+    connection.query(query.insertInto, [tables.accountLog, logData], function (error, result) {
         callback(error, result);
     });
-
-    console.log(q.sql);
-
 }
 
 function updateAccountCounter(connection, counterData, callback) {
@@ -145,12 +155,25 @@ function updateAccountCounter(connection, counterData, callback) {
 }
 
 function insertPageViewLog(connection, logData, callback) {
-    // console.log(logData);
-
+    connection.query(query.insertInto, [tables.visitLog, logData], function (error, result) {
+        callback(error, result);
+    });
 }
 
 function updatePageCounter(connection, counterData, callback) {
-    // console.log(counterData);
+    connection.query(query.selectByDateWitPage, [tables.accountCounter, counterData.date], function (error, rows) {
+        if (rows[0] && rows[0].id) {
+            connection.query(query.updateCounterByDate, [tables.accountCounter, counterData.type, counterData.type, counterData.date], function (error, result) {
+                callback(error, result);
+            });
+        } else {
+            connection.query(query.insertCounterByDate, [tables.accountCounter, counterData.type, counterData.date], function (error, result) {
+                callback(error, result);
+            });
+        }
+    });
+
+    console.log(counterData);
 
 }
 
