@@ -29,7 +29,6 @@ router
  │         ├── exposeLocals                        *                                                           
  │         ├── exposeMenu                          *                                                           
  │         ├── exposeMenu                          *                                                           
- │         ├── pageCounter                         *                                                           
  │         ├── router                              *                                                           
  │         │   router                                                                                          
  │         │    ├── bound dispatch                 /admin/login                                                GET
@@ -90,6 +89,7 @@ router
  │         ├── bound dispatch                      /account/register-simple                                    POST
  │         │    └── registerSimpleForTest          /                                                           POST
  │         │   
+ │         ├── pageCounter                         *                                                           
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
  │         │   

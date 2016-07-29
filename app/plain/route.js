@@ -24,7 +24,6 @@ router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
-router.use(Counter.middleware.pageCounter);
 
 // route
 router.use(Admin.route);       // to manage accounts
@@ -34,6 +33,9 @@ router.use(Manager.route);     // to view log module
 // other features use each module's router. eg, modifying account records or log records
 router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
 router.post(routeTable.account_root + routeTable.account.registerSimple, Account.registerSimple);
+
+// need to place down here for except admin page log
+router.use(Counter.middleware.pageCounter);
 
 // bind static page
 bindRouter();
