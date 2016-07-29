@@ -148,13 +148,40 @@ function accountList(req, res) {
     });
 }
 
-function pageLog(req, res) {
+function pageLogList(req, res) {
     var params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1
     };
 
-    res.render(BLITITOR.config.site.adminTheme + '/manage/page_log', params);
+    var mysql = connection.get();
+
+    db.readVisitLogByPage(mysql, Number(params.page - 1), function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '로그 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = true;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.list = result.visitLogList;
+
+        console.log(result);
+
+        params.list.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');
+        });
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/page_log', params);
+    });
 }
 
 module.exports = {
@@ -162,7 +189,7 @@ module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
     account: accountList,
-    pageLog: pageLog,
+    pageLog: pageLogList,
     // write: writeForm,
     // save: savePost,
     // view: viewPost,

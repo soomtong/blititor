@@ -9,12 +9,15 @@ var misc = require('../../../core/lib/misc');
 var tables = {
     auth: common.databaseDefault.prefix + 'auth',
     user: common.databaseDefault.prefix + 'user',
-    accountLog: common.databaseDefault.prefix + 'account_counter_log'
+    accountLog: common.databaseDefault.prefix + 'account_counter_log',
+    accountCounter: common.databaseDefault.prefix + 'account_counter',
+    visitLog: common.databaseDefault.prefix + 'visit_counter_log',
+    visitCounter: common.databaseDefault.prefix + 'visit_counter'
 };
 
 var query = require('./query');
 
-function selectByPage(connection, page, callback) {
+function selectAccountByPage(connection, page, callback) {
     var pageSize = 10;
     var fields = ['user_id', 'uuid', 'nickname', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
     var result = {
@@ -45,47 +48,38 @@ function selectByPage(connection, page, callback) {
     });
 }
 
-function selectByAccountUUID(connection, uuid, callback) {
-    var fields = ['user_id', 'user_password', 'uuid', 'nickname', 'photo', 'desc', 'level', 'grant', 'point', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
+function readVisitLogByPage(connection, page, callback) {
+    var pageSize = 10;
+    var fields = ['path', 'method', 'ip', 'ref', 'client', 'device', 'created_at'];
+    var result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
+        teamblogList: []
+    };
 
-    connection.query(query.selectAccountByUUID, [fields, tables.auth, tables.user, uuid], function (err, rows) {
+    connection.query(query.countAllVisitLog, [tables.visitLog], function (err, rows) {
+        result.total = rows[0]['count'] || 0;
 
-        callback(err, rows[0]);
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.maxPage = maxPage;
+        result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
+
+        connection.query(query.readVisitLogByPage, [fields, tables.visitLog, result.index, pageSize], function (err, rows) {
+            if (!err) result.visitLogList = rows;
+            callback(err, result);
+        });
     });
 }
-
-function selectAuthIDByUUID(connection, UUID, callback) {
-    connection.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
-        callback(err, rows[0]);
-    });
-}
-
-function updateAuthByID(connection, authData, authID, callback) {
-    connection.query(query.updateByID, [tables.auth, authData, authID], function (err, result) {
-        callback(err, result);
-    });
-}
-
-function updateByUUID(connection, userData, UUID, callback) {
-    connection.query(query.updateAccountByUUID, [tables.user, userData, UUID], function (err, result) {
-        callback(err, result);
-    });
-}
-
-function selectByAccountLogUUID(connection, UUID, callback) {
-    var fields = ['id', 'type', 'client' , 'device', 'created_at'];
-
-    connection.query(query.selectByUUIDWithLimit, [fields, tables.accountLog, UUID, 10], function (err, rows) {
-        callback(err, rows);
-    });
-}
-
 
 module.exports = {
-    readAccountByPage: selectByPage,
-    readAccount: selectByAccountUUID,
-    readAuthIDByUUID: selectAuthIDByUUID,
-    updateAuthByID: updateAuthByID,
-    updateAccountByUUID: updateByUUID,
-    readAccountLog: selectByAccountLogUUID,
+    readAccountByPage: selectAccountByPage,
+    readVisitLogByPage: readVisitLogByPage
 };

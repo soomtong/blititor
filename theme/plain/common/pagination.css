@@ -11,7 +11,7 @@ nav[role="navigation"] {
 .cd-pagination li {
     /* hide numbers on small devices */
     display: none;
-    margin: 0 .2em;
+    margin: .2em;
 }
 .cd-pagination li.button {
     /* make sure prev next buttons are visible */
