@@ -1,10 +1,10 @@
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="/">Plain</a>
+        <a class="pure-menu-heading" href="/">{{site.title}}</a>
 
         <ul class="pure-menu-list">
             {% for item in adminMenu %}
-            {% if item.id == page %}
+            {% if item.url == site.url %}
             <li class="pure-menu-item pure-menu-selected"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
             {% else %}
             <li class="pure-menu-item"><a href="{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>

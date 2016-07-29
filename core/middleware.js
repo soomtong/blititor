@@ -10,7 +10,7 @@ function exposeLocals(req, res, next) {
     res.locals.site = {
         theme: BLITITOR.config.site.theme,
         themeType: siteThemeType,
-        title: BLITITOR.config.revision,
+        title: BLITITOR.config.site.title,
         url: req.path
     };
     
