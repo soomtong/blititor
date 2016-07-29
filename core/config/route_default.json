@@ -15,7 +15,11 @@
   },
   "manage_root": "/manage",
   "manage": {
-    "login": "/login"
+    "login": "/login",
+    "account": "/account",
+    "pageLog": "/page/log",
+    "pageView": "/page",
+    "counter": "/counter"
   },
   "account_root": "/account",
   "account": {

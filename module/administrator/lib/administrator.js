@@ -186,7 +186,6 @@ function accountView(req, res) {
                 }
 
                 rows.map(function (item) {
-                    console.log(item.created_at);
                     item.created_at = common.dateFormatter(item.created_at, "YYYY-MM-DD HH:mm");
                 });
 

@@ -40,12 +40,35 @@ var AdminMenu = [
     {
         id: 'new',
         name: '신규 계정 생성',
-        url: routeTable.admin_root + routeTable.admin.newAccount
+        url: routeTable.admin_root + routeTable.admin.accountNew
     },
     {
         id: 'manage',
         name: '운영',
         url: routeTable.manage_root
+    }
+];
+
+var ManagerMenu = [
+    {
+        id: 'index',
+        name: '운영자 홈',
+        url: routeTable.manage_root
+    },
+    {
+        id: 'account',
+        name: '계정',
+        url: routeTable.manage_root + routeTable.manage.account
+    },
+    {
+        id: 'page_log',
+        name: '페이지 로그',
+        url: routeTable.manage_root + routeTable.manage.pageLog
+    },
+    {
+        id: 'admin',
+        name: '관리',
+        url: routeTable.admin_root
     }
 ];
 
@@ -58,6 +81,7 @@ function menuExpose(req, res, next) {
     // read from database
     res.locals.menu = Menu;
     res.locals.adminMenu = AdminMenu;
+    res.locals.managerMenu = ManagerMenu;
 
     next();
 }

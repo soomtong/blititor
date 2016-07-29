@@ -15,10 +15,10 @@
     <div class="describe">
         <div class="pure-g">
             <div class="pure-u-1">
-                <h3>시스템 관리자는 사이트에 등록된 모든 계정을 관리합니다.</h3>
+                <h3>사이트 운영자는 등록된 회원과 페이지 로그를 확인할 수 있습니다.</h3>
                 <ul>
-                    <li>신규 계정 등록/삭제</li>
-                    <li>계정 권한 조정</li>
+                    <li>회원 정보 열람</li>
+                    <li>페이지 접속 정보 열람</li>
                 </ul>
             </div>
         </div>
@@ -58,7 +58,7 @@
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
                         <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
-                        <td><a href="{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.user_id}}</a></td>
+                        <td>{{item.user_id}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.level}}</td>
                         <td>{{item.grant}}</td>
@@ -79,22 +79,22 @@
                     <ul class="cd-pagination no-space move-buttons custom-icons">
                         {% if hasPrev %}
                         {% if page > 1 %}
-                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}?p={{page - 1}}">Prev</a>
+                        <li class="button"><a href="{{ route.manage_root + route.manage.account }}?p={{page - 1}}">Prev</a>
                         {% else %}
-                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}">Prev</a>
+                        <li class="button"><a href="{{ route.manage_root + route.manage.account }}">Prev</a>
                         {% endif %}
                         {% endif %}
 
                         {% for i in range(1, maxPage + 1) -%}
                         {% if i == page %}
-                        <li><a class="current" href="{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        <li><a class="current" href="{{ route.manage_root + route.manage.account }}?p={{i}}">{{i}}</a>
                         {% else %}
-                        <li><a href="{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        <li><a href="{{ route.manage_root + route.manage.account }}?p={{i}}">{{i}}</a>
                         {% endif %}
                         {%- endfor %}
 
                         {% if hasNext %}
-                        <li class="button"><a href="{{ route.admin_root + route.admin.account }}?p={{page + 1}}">Next</a>
+                        <li class="button"><a href="{{ route.manage_root + route.manage.account }}?p={{page + 1}}">Next</a>
                         {% endif %}
                     </ul>
                 </nav>

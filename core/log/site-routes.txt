@@ -64,15 +64,23 @@ router
  │         │   
  │         ├── router                              *                                                           
  │         │   router                                                                                          
+ │         │    ├── bound dispatch                 /manage/login                                               GET
+ │         │    │    └── loginForm                 /                                                           GET
+ │         │    │   
+ │         │    ├── bound dispatch                 /manage/login                                               POST
+ │         │    │    └── loginProcess              /                                                           POST
+ │         │    │   
  │         │    ├── bound dispatch                 /manage                                                     _ALL
  │         │    │    ├── ensureManagerAuthenticated /                                                           
  │         │    │    └── indexPage                 /                                                           
  │         │    │   
- │         │    ├── bound dispatch                 /manage/login                                               GET
- │         │    │    └── loginForm                 /                                                           GET
+ │         │    ├── bound dispatch                 /manage/account                                             GET
+ │         │    │    ├── ensureManagerAuthenticated /                                                           GET
+ │         │    │    └── accountList               /                                                           GET
  │         │    │   
- │         │    └── bound dispatch                 /manage/login                                               POST
- │         │         └── loginProcess              /                                                           POST
+ │         │    └── bound dispatch                 /manage/page/log                                            GET
+ │         │         ├── ensureManagerAuthenticated /                                                           GET
+ │         │         └── pageLog                   /                                                           GET
  │         │        
  │         │   
  │         ├── bound dispatch                      /account/sign-out                                           GET

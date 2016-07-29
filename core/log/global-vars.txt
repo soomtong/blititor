@@ -1,6 +1,6 @@
 {
     "env": "development",
-    "root": "/Users/sven/Repository/blititor",
+    "root": "/Users/soomtong/Repository/blititor",
     "tweak": {
         "passDBCheckMiddleware": false
     },
@@ -8,6 +8,7 @@
         "locale": "ko",
         "logLevel": "debug",
         "site": {
+            "title": "Plain",
             "app": "plain",
             "theme": "plain",
             "adminTheme": "plain",

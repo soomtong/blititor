@@ -1,30 +1,35 @@
+var fs = require('fs');
 var bcrypt = require('bcrypt');
+var mkdirp = require('mkdirp');
 var winston = require('winston');
+var moment = require('moment');
+var useragent = require('useragent');
 
 var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
 var account = require('../../account');
+var counter = require('../../counter');
+
+var db = require('./database');
 
 var userPrivilege = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
 
-// var db = require('./database');
-// var query = require('./query');
-
 function indexPage(req, res) {
     var params = {
-        title: "관리자 화면"
+        title: "운영자 화면",
+        page: Number(req.query['p']) || 1,
     };
 
 
-    res.send('hi this is manager home');
+    res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
 }
 
 function loginForm(req, res) {
     var params = {
-        title: "관리자 화면"
+        title: "운영자 화면"
     };
 
     res.render(BLITITOR.config.site.manageTheme + '/manage/login', params);
@@ -107,11 +112,57 @@ function loginProcess(req, res) {
     });
 }
 
+function accountList(req, res) {
+    var params = {
+        title: "운영자 화면",
+        page: Number(req.query['p']) || 1
+    };
+
+    var mysql = connection.get();
+
+    db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = true;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.list = result.accountList;
+
+        params.list.map(function (item) {
+            item.last_logged_at = !(item.last_logged_at) ? '' : moment(item.last_logged_at).fromNow();
+            item.created_at = common.dateFormatter(item.created_at);
+            item.updated_at = common.dateFormatter(item.updated_at);
+        });
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/account', params);
+    });
+}
+
+function pageLog(req, res) {
+    var params = {
+        title: "운영자 화면",
+        page: Number(req.query['p']) || 1
+    };
+
+    res.render(BLITITOR.config.site.adminTheme + '/manage/page_log', params);
+}
+
 module.exports = {
-    index: indexPage,
+    index: indexPage,   // page counter
     loginForm: loginForm,
-    loginProcess: loginProcess
-    // list: listPost,
+    loginProcess: loginProcess,
+    account: accountList,
+    pageLog: pageLog,
     // write: writeForm,
     // save: savePost,
     // view: viewPost,
