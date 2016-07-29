@@ -55,7 +55,9 @@
     {
         "folder": "manager",
         "useDatabase": false,
-        "ignore": false
+        "ignore": false,
+        "tables": {},
+        "core": false
     },
     {
         "folder": "teamblog",

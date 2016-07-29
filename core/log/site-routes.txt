@@ -29,6 +29,7 @@ router
  │         ├── exposeLocals                        *                                                           
  │         ├── exposeMenu                          *                                                           
  │         ├── exposeMenu                          *                                                           
+ │         ├── pageCounter                         *                                                           
  │         ├── router                              *                                                           
  │         │   router                                                                                          
  │         │    ├── bound dispatch                 /admin/login                                                GET

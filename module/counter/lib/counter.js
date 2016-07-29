@@ -38,7 +38,7 @@ function accountCounter(uuid, type, agent, device) {
 
     var mysql = connection.get();
 
-    db.insertAccountCounter(mysql, logData, function (error, result) {
+    db.insertAccountActionLog(mysql, logData, function (error, result) {
         if (error) {
             winston.error(error);
         } else {
@@ -55,9 +55,17 @@ function accountCounter(uuid, type, agent, device) {
     });
 }
 
-function pageCounter(page, ip, ref, agent, device) {
+function pageCounter(path, ip, ref, agent, device) {
+// var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+/*
+    var fullUrl = url.format({
+        protocol: req.protocol,
+        host: req.get('host'),
+        pathname: req.originalUrl
+    });
+*/
     var logData = {
-        page: common.pageFormatter(page),
+        path: path,
         ip: ip,
         ref: ref,
         client: agent.toString(),
@@ -65,17 +73,17 @@ function pageCounter(page, ip, ref, agent, device) {
         created_at: new Date()
     };
     var counterData = {
-        page: common.pageFormatter(page),
+        path: path,
         date: moment().format('YYYYMMDD')
     };
 
     var mysql = connection.get();
 
     // insert log
-    console.log(logData);
+    db.insertPageViewLog(logData);
 
     // update counter
-    console.log(counterData);
+    db.updatePageCounter(counterData);
 }
 
 module.exports = {

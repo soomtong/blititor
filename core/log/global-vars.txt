@@ -1,6 +1,6 @@
 {
     "env": "development",
-    "root": "/Users/soomtong/Repository/blititor",
+    "root": "/Users/sven/Repository/blititor",
     "tweak": {
         "passDBCheckMiddleware": false
     },
@@ -88,7 +88,9 @@
         {
             "folder": "manager",
             "useDatabase": false,
-            "ignore": false
+            "ignore": false,
+            "tables": {},
+            "core": false
         },
         {
             "folder": "teamblog",

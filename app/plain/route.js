@@ -10,6 +10,7 @@ var Account = require('../../module/account');
 var Site = require('../../module/site');
 var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
+var Counter = require('../../module/counter');
 
 // load locals
 var menu = require('./menu');
@@ -23,6 +24,7 @@ router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
+router.use(Counter.middleware.pageCounter);
 
 // route
 router.use(Admin.route);       // to manage accounts

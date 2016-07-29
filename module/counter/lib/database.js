@@ -121,8 +121,8 @@ function selectByUUID(connection, uuid, callback) {
     });
 }
 
-function insertAccountCounterLog(connection, counterData, callback) {
-    var q =connection.query(query.insertInto, [tables.accountLog, counterData], function (error, result) {
+function insertAccountActionLog(connection, logData, callback) {
+    var q =connection.query(query.insertInto, [tables.accountLog, logData], function (error, result) {
         callback(error, result);
     });
 
@@ -144,12 +144,24 @@ function updateAccountCounter(connection, counterData, callback) {
     });
 }
 
+function insertPageViewLog(connection, logData, callback) {
+    // console.log(logData);
+
+}
+
+function updatePageCounter(connection, counterData, callback) {
+    // console.log(counterData);
+
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    insertAccountCounter: insertAccountCounterLog,
+    insertAccountActionLog: insertAccountActionLog,
     updateAccountCounter: updateAccountCounter,
+    insertPageViewLog: insertPageViewLog,
+    updatePageCounter: updatePageCounter,
     option: {
         tables: tables,
         core: true

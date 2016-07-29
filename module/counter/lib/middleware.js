@@ -1,6 +1,9 @@
 var winston = require('winston');
+var useragent = require('useragent');
 
 var misc = require('../../../core/lib/misc');
+
+var counter = require('./counter');
 
 var routeTable = misc.getRouteTable();
 
@@ -16,7 +19,22 @@ function exposeLocals(req, res, next) {
     next();
 }
 
+function pageCounter(req, res, next) {
+    var url = req.originalUrl;
+    var ip = req.ip == '::1' ? '127.0.0.1' : req.ip;
+    var ref = req.headers.referrer || req.headers.referer;
+    var agent = useragent.parse(req.headers['user-agent']);
+    var device = req.device;
+
+
+    counter.insertPageCounter(url, ip, ref, agent, device);
+    winston.verbose('logged counter in counter: {page}');
+
+    next();
+}
+
 module.exports = {
     exposeMenu: exposeMenu,
-    exposeLocals: exposeLocals
+    exposeLocals: exposeLocals,
+    pageCounter: pageCounter
 };
