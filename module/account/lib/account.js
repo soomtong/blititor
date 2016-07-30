@@ -210,6 +210,8 @@ function registerSimpleForTest(req, res) {
                     grant: userData.grant
                 };
 
+                counter.insertSessionCounter(token.account.join);
+
                 req.logIn(user, function (err) {
                     if (err) {
                         req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});

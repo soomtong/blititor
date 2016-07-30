@@ -122,7 +122,8 @@ function commonToken() {
     return {
         account: {
             login: {id: 'sign_in', value: 1001},
-            logout: {id: 'sign_out', value: 1010}
+            logout: {id: 'sign_out', value: 1010},
+            join: {id: 'sign_up', value: 1011}
         }
     }
 }
