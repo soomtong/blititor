@@ -5,7 +5,7 @@ var misc = require('../../../core/lib/misc');
 
 var counter = require('./counter');
 
-var routeTable = misc.getRouteTable();
+var token = misc.commonToken();
 
 function exposeMenu(req, res, next) {
 
@@ -13,9 +13,8 @@ function exposeMenu(req, res, next) {
 }
 
 function exposeLocals(req, res, next) {
-    // res.locals.user = req.user;  moved to site module
-
     winston.verbose('bind locals in counter: {}');
+
     next();
 }
 
@@ -30,11 +29,26 @@ function pageCounter(req, res, next) {
     counter.insertPageCounter(url, method, ip, ref, agent, device);
 
     winston.verbose('logged counter in counter: {page}');
+
+    next();
+}
+
+function sessionCounter(req, res, next) {
+    counter.session(req.sessionID, function (error, result) {
+        if (result) {
+            counter.insertSessionCounter(token.account.logout);
+        } else {
+            var uuid = !req.session.passport || req.session.passport.user;
+            counter.insertSessionLog(req.sessionID, uuid);
+        }
+    });
+
     next();
 }
 
 module.exports = {
     exposeMenu: exposeMenu,
     exposeLocals: exposeLocals,
-    pageCounter: pageCounter
+    pageCounter: pageCounter,
+    sessionCounter: sessionCounter
 };

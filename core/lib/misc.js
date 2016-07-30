@@ -120,6 +120,9 @@ function siteThemeType() {
 
 function commonToken() {
     return {
+        session: {
+            init: {id: 'session_init', value: 1000}
+        },
         account: {
             login: {id: 'sign_in', value: 1001},
             logout: {id: 'sign_out', value: 1010},

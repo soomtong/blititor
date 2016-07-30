@@ -89,6 +89,7 @@ router
  │         ├── bound dispatch                      /account/register-simple                                    POST
  │         │    └── registerSimpleForTest          /                                                           POST
  │         │   
+ │         ├── sessionCounter                      *                                                           
  │         ├── pageCounter                         *                                                           
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET

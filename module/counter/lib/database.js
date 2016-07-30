@@ -14,7 +14,8 @@ var tables = {
     accountLog: common.databaseDefault.prefix + 'account_counter_log',
     accountCounter: common.databaseDefault.prefix + 'account_counter',
     visitLog: common.databaseDefault.prefix + 'visit_counter_log',
-    visitCounter: common.databaseDefault.prefix + 'visit_counter'
+    visitCounter: common.databaseDefault.prefix + 'visit_counter',
+    sessionLog: common.databaseDefault.prefix + 'session_counter_log'
 };
 
 var query = require('./query');
@@ -31,7 +32,8 @@ function deleteScheme(databaseConfiguration, callback) {
     var sql = "DROP TABLE IF EXISTS ??";
     var tableList = [
         tables.accountLog, tables.accountCounter,
-        tables.visitLog, tables.visitCounter
+        tables.visitLog, tables.visitCounter,
+        tables.sessionLog
     ];
 
     connection.query(sql, [tableList], function (error, results, fields) {
@@ -58,7 +60,7 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX account_log_uuid(`uuid`))';
     var sql_account_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`session_in` int unsigned default 0, `sign_up` int unsigned default 0, ' +
+        '`session_init` int unsigned default 0, `sign_up` int unsigned default 0, ' +
         '`sign_in` int unsigned default 0, `sign_out` int unsigned default 0, ' +
         '`deactivated` int unsigned default 0, `reactivated` int unsigned default 0, ' +
         '`date` char(8), ' +
@@ -79,17 +81,24 @@ function createScheme(databaseConfiguration, callback, done) {
         '`date` char(8) not null, ' +
         '`view` int unsigned default 0, ' +
         'INDEX visit_counter_path(`path`))';
+    var sql_session_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`session` varchar(96) not null,' +
+        '`uuid` char(36), ' +
+        '`created_at` datetime, ' +
+        'INDEX session_log_session(`session`))';
 
     connection.query(sql_account_log, tables.accountLog, function (error, result) {
         connection.query(sql_account_counter, tables.accountCounter, function (error, result) {
             connection.query(sql_visit_log, tables.visitLog, function (error, result) {
-                // console.log(error, result);
                 connection.query(sql_visit_counter, tables.visitCounter, function (error, result) {
-                    // console.log(error, result);
-                    // for dummy
-                    callback && callback(databaseConfiguration, done);
+                    connection.query(sql_session_log, tables.sessionLog, function (error, result) {
+                        // console.log(error, result);
+                        // for dummy
+                        callback && callback(databaseConfiguration, done);
 
-                    connection.destroy();
+                        connection.destroy();
+                    })
                 });
             });
         });
@@ -172,9 +181,10 @@ function updatePageCounter(connection, counterData, callback) {
             });
         }
     });
+}
 
-    console.log(counterData);
-
+function selectSession(connection, sessData, callback) {
+    callback(null, false);
 }
 
 module.exports = {
@@ -185,6 +195,7 @@ module.exports = {
     updateAccountCounter: updateAccountCounter,
     insertPageViewLog: insertPageViewLog,
     updatePageCounter: updatePageCounter,
+    selectSession: selectSession,
     option: {
         tables: tables,
         core: true

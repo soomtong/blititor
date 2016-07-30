@@ -118,8 +118,32 @@ function pageCounter(path, method, ip, ref, agent, device) {
 */
 }
 
+function checkSession(sess, callback) {
+    var mysql = connection.get();
+
+    db.selectSession(mysql, sess, function (error, rows) {
+        var result = false;
+        if (rows && rows[0].id) {
+            // already session exist
+
+
+            // insert new session info
+        } else {
+            // pass
+        }
+
+        callback(error, result);
+    });
+}
+
+function insertSessionLog(sessID, userID) {
+    console.log(sessID, userID);
+}
+
 module.exports = {
     index: indexPage,
+    session: checkSession,
+    insertSessionLog: insertSessionLog,
     insertAccountCounter: accountCounter,
     insertSessionCounter: sessionCounter,
     insertPageCounter: pageCounter,
