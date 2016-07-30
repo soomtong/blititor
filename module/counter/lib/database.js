@@ -184,7 +184,15 @@ function updatePageCounter(connection, counterData, callback) {
 }
 
 function selectSession(connection, sessData, callback) {
-    callback(null, false);
+    connection.query(query.selectBySessionID, [tables.sessionLog, sessData], function (error, rows) {
+        callback(error, rows);
+    });
+}
+
+function insertSession(connection, sessData, callback) {
+    connection.query(query.insertInto, [tables.sessionLog, sessData], function (error, result) {
+        callback(error, result);
+    });
 }
 
 module.exports = {
@@ -196,6 +204,7 @@ module.exports = {
     insertPageViewLog: insertPageViewLog,
     updatePageCounter: updatePageCounter,
     selectSession: selectSession,
+    insertSessionLog: insertSession,
     option: {
         tables: tables,
         core: true

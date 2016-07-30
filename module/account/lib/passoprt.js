@@ -33,7 +33,7 @@ function authenticate(userID, password, done) {
 }
 
 function serialize(user, done) {
-    winston.verbose('Serialize in ---- process ---- for', user);
+    winston.verbose('Serialize in process for', user);
 
     account.findByID(user.id, function (error, user) {
         done(error, user.uuid);
@@ -41,7 +41,7 @@ function serialize(user, done) {
 }
 
 function deserialize(uuid, done) {
-    winston.verbose('DeSerialize in ---- process ---- for', uuid);
+    winston.verbose('DeSerialize in process for', uuid);
 
     account.findByUUID(uuid, function (err, user) {
         done(err, user);
@@ -49,7 +49,7 @@ function deserialize(uuid, done) {
 }
 
 function loginSuccess(req, res, next) {
-    winston.verbose('Log in ---- process ---- done');
+    winston.verbose('Log in process done');
     // Issue a remember me cookie if the option was checked
     if (!req.body.remember_me) { return next(); }
 

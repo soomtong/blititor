@@ -1,8 +1,5 @@
-- [ ] redesign exposing locals for flash
+- [ ] visit counter for manager home
 - [ ] bind global root folder for setup and init process
-- [ ] default set (blititor basic theme)
-- [ ] theme select to file
-- [ ] insert initial data to `site` table for selected theme
 - [ ] connect mysql by socket
 - [ ] use macro, layout for advanced template
 - [ ] 2 depth menu

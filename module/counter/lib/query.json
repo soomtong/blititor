@@ -2,6 +2,7 @@
   "insertInto": "INSERT INTO ?? SET ?",
   "selectByDate": "SELECT `id` as id FROM ?? WHERE `date` = ? FOR UPDATE",
   "selectByDateWitPage": "SELECT `id` as id FROM ?? WHERE `date` = ? and page = ? FOR UPDATE",
+  "selectBySessionID": "SELECT `id` as id FROM ?? WHERE `session` = ? LIMIT 1",
   "updateCounterByDate": "UPDATE ?? SET ?? = ?? + 1 WHERE `date` = ?",
   "insertCounterByDate": "INSERT INTO ?? (??, `date`) VALUES (1, ?)"
 }

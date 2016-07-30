@@ -42,7 +42,7 @@ function accountCounter(uuid, type, agent, device) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Insert user sign-in record:', uuid);
+            winston.verbose('Insert user ' + counterData.type + ' record:', uuid);
         }
     });
 
@@ -50,7 +50,7 @@ function accountCounter(uuid, type, agent, device) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Updated sign in info record:', uuid);
+            winston.verbose('Updated ' + counterData.type + ' info record:', uuid);
         }
     });
 }
@@ -67,7 +67,7 @@ function sessionCounter(type) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Updated sign out info record:');
+            winston.verbose('Updated ' + counterData.type + ' info record:');
         }
     });
 }
@@ -102,7 +102,7 @@ function pageCounter(path, method, ip, ref, agent, device) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Insert visit log record:', result);
+            winston.verbose('Insert visit log record:', result.insertId);
         }
     });
 
@@ -118,26 +118,26 @@ function pageCounter(path, method, ip, ref, agent, device) {
 */
 }
 
-function checkSession(sess, callback) {
+function checkSession(sessID, callback) {
     var mysql = connection.get();
 
-    db.selectSession(mysql, sess, function (error, rows) {
+    db.selectSession(mysql, sessID, function (error, rows) {
         var result = false;
-        if (rows && rows[0].id) {
-            // already session exist
 
-
-            // insert new session info
-        } else {
-            // pass
-        }
+        if (!(rows && rows[0] && rows[0].id)) result = true;
 
         callback(error, result);
     });
 }
 
-function insertSessionLog(sessID, userID) {
-    console.log(sessID, userID);
+function insertSessionLog(sessID, userID, callback) {
+    var mysql = connection.get();
+
+    db.insertSessionLog(mysql, {session: sessID, uuid: userID}, function (error, result) {
+        winston.verbose('Inserted new session log record:', sessID);
+
+        callback && callback(error, result);
+    });
 }
 
 module.exports = {

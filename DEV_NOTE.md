@@ -12,6 +12,26 @@
 - silly: 5
 
 
+### session counter
+
+> sometime we need to implement own session counter.
+
+blititor uses express.js session system with external session store for mysql. 
+it's name is express-mysql-session.
+
+but there is no checker or callback when a new session created. 
+and that store module saves only it's session with simple mysql query.
+
+I was forking that repo. and digged a little. but it related with express session system. 
+when i found that, i stopped modifying. 
+because it's better to keep simple and separeted alone each libraries than to update perfect with hacking something.
+
+finally, i decided to make a helper module in the counter system.
+just make one more database table and some code in it.
+
+someone think this is verbose a little. 
+but this is still elegant implementation for keep 3rd party modules and core libraries. 
+
 ### module structure
 
 each module has below structure

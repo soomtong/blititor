@@ -35,11 +35,12 @@ function pageCounter(req, res, next) {
 
 function sessionCounter(req, res, next) {
     counter.session(req.sessionID, function (error, result) {
-        if (result) {
-            counter.insertSessionCounter(token.account.logout);
-        } else {
-            var uuid = !req.session.passport || req.session.passport.user;
-            counter.insertSessionLog(req.sessionID, uuid);
+        if (!error && result) {
+            var uuid;
+            if (req.session['passport'] && req.session['passport'].user) uuid = req.session['passport'].user;
+
+            counter.insertSessionLog(req['sessionID'], uuid);
+            counter.insertSessionCounter(token.session.init);
         }
     });
 
