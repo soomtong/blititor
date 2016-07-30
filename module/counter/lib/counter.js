@@ -25,14 +25,14 @@ function accountCounter(uuid, type, agent, device) {
     // insert uuid and login type and now date
     var logData = {
         uuid: uuid,
-        type: type,
+        type: type.value,
         client: agent.toString(),
         device: device.name + " (" + device.type  + ")",
         created_at: new Date()
     };
 
     var counterData = {
-        type: 'sign_in',
+        type: type.id,
         date: moment().format('YYYYMMDD')
     };
 
@@ -50,7 +50,24 @@ function accountCounter(uuid, type, agent, device) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Updated last logged info record:', uuid);
+            winston.verbose('Updated sign in info record:', uuid);
+        }
+    });
+}
+
+function sessionCounter(type) {
+    var counterData = {
+        type: type.id,
+        date: moment().format('YYYYMMDD')
+    };
+
+    var mysql = connection.get();
+
+    db.updateAccountCounter(mysql, counterData, function (error, result) {
+        if (error) {
+            winston.error(error);
+        } else {
+            winston.verbose('Updated sign out info record:');
         }
     });
 }
@@ -104,6 +121,7 @@ function pageCounter(path, method, ip, ref, agent, device) {
 module.exports = {
     index: indexPage,
     insertAccountCounter: accountCounter,
+    insertSessionCounter: sessionCounter,
     insertPageCounter: pageCounter,
     insertActionCounter: indexPage,
     insertVisitCounter: indexPage

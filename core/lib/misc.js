@@ -121,8 +121,8 @@ function siteThemeType() {
 function commonToken() {
     return {
         account: {
-            login: 1001,
-            logout: 1010
+            login: {id: 'sign_in', value: 1001},
+            logout: {id: 'sign_out', value: 1010}
         }
     }
 }

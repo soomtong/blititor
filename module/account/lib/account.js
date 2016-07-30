@@ -7,9 +7,12 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');
 
-var query = require('./query');
+var counter = require('../../counter');
 
 var db = require('./database');
+var query = require('./query');
+
+var token = misc.commonToken();
 
 function findByID(id, callback) {
     var mysql = connection.get();
@@ -393,6 +396,8 @@ function signUp(req, res) {
 }
 
 function signOut(req, res) {
+    counter.insertSessionCounter(token.account.logout);
+
     res.clearCookie('remember_me');     // clear the remember me cookie when logging out
     req.logOut();   // it aliased as req.logout()
     res.redirect('/');
