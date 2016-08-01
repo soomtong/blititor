@@ -148,6 +148,39 @@ function accountList(req, res) {
     });
 }
 
+function accountCounter(req, res) {
+    var params = {
+        title: "운영자 화면",
+        page: req.query['m'] || moment().format('YYYYMM')
+    };
+
+    var mysql = connection.get();
+
+    db.readAccountCounterByMonth(mysql, params.page, function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = false;
+        params.total = result.total;
+        // params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        // params.hasPrev = result.page > 0;
+        // params.maxPage = result.maxPage + 1;
+        // params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.list = result.accountCounter;
+
+        params.list.map(function (item) {
+            item.date = common.dateFormatter(item.date, 'M월 D일');
+        });
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/account_counter', params);
+    });
+}
+
 function pageLogList(req, res) {
     var params = {
         title: "운영자 화면",
@@ -189,6 +222,7 @@ module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
     account: accountList,
+    accountCounter: accountCounter,
     pageLog: pageLogList,
     // write: writeForm,
     // save: savePost,

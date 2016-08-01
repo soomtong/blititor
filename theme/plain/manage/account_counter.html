@@ -29,11 +29,10 @@
             <div class="pure-u-1">
                 <form class="pure-form" method="post">
                     <label>
-                        <input type="text" class="pure-input" placeholder="Username or Nickname">
+                        <input type="text" class="pure-input" placeholder="Date">
                     </label>
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                     <button type="submit" class="pure-button">Search</button>
-                    <a href="{{ route.manage_root + route.manage.accountCounter }}" class="pure-button pull-right">카운터</a>
                 </form>
             </div>
         </div>
@@ -42,15 +41,14 @@
                 <table class="pure-table table-hover table-wide">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>아이디</th>
-                        <th>닉네임</th>
-                        <th>레벨</th>
-                        <th>권한</th>
-                        <th>로그인횟수</th>
-                        <th>최근로그인</th>
-                        <th>계정생성일</th>
-                        <th>정보수정일</th>
+                        <th>날짜</th>
+                        <th>방문</th>
+                        <th>가입</th>
+                        <th>로그인</th>
+                        <th>로그아웃</th>
+                        <th>잠금</th>
+                        <th>해제</th>
+                        <th>UV 그래프</th>
                     </tr>
                     </thead>
 
@@ -58,15 +56,14 @@
                     {% set cls = cycler("pure-table-odd", "") %}
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
-                        <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
-                        <td>{{item.user_id}}</td>
-                        <td>{{item.nickname}}</td>
-                        <td>{{item.level}}</td>
-                        <td>{{item.grant}}</td>
-                        <td>{{item.login_counter}}</td>
-                        <td>{{item.last_logged_at}}</td>
-                        <td>{{item.created_at}}</td>
-                        <td>{{item.updated_at}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.session_init}}</td>
+                        <td>{{item.sign_up}}</td>
+                        <td>{{item.sign_in}}</td>
+                        <td>{{item.sign_out}}</td>
+                        <td>{{item.deactivated}}</td>
+                        <td>{{item.reactivated}}</td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                     </tbody>

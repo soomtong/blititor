@@ -4,6 +4,7 @@
   "countAllVisitLog": "SELECT count(id) as `count` FROM ??",
   "readAccountByPage": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id ORDER BY auth.id DESC LIMIT ?, ?",
   "readVisitLogByPage": "SELECT ?? FROM ?? ORDER BY id DESC LIMIT ?, ?",
+  "readAccountCounterByMonth": "SELECT ?? FROM ?? WHERE date LIKE ? ORDER BY id DESC",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "selectByUUIDWithLimit": "SELECT ?? FROM ?? WHERE `uuid` = ? ORDER BY id DESC LIMIT ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",

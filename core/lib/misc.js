@@ -53,7 +53,8 @@ function getRouteTable() {
             "account": "/account",
             "pageLog": "/page/log",
             "pageView": "/page",
-            "counter": "/counter"
+            "pageCounter": "/counter/page",
+            "accountCounter": "/counter/account"
         },
         "account_root": "/account",
         "account": {

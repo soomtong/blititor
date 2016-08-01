@@ -79,7 +79,24 @@ function readVisitLogByPage(connection, page, callback) {
     });
 }
 
+function selectAccountCounterByMonth(connection, month, callback) {
+    var fields = ['date', 'session_init', 'sign_up', 'sign_in', 'sign_out', 'deactivated', 'reactivated'];
+    var result = {
+        total: 0,
+        month: month + '%',
+        index: 0,
+        maxPage: 0,
+        accountCounter: []
+    };
+
+    connection.query(query.readAccountCounterByMonth, [fields, tables.accountCounter, result.month], function (err, rows) {
+        if (!err) result.accountCounter = rows;
+        callback(err, result);
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
+    readAccountCounterByMonth: selectAccountCounterByMonth,
     readVisitLogByPage: readVisitLogByPage
 };

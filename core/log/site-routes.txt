@@ -78,6 +78,10 @@ router
  │         │    │    ├── ensureManagerAuthenticated /                                                           GET
  │         │    │    └── accountList               /                                                           GET
  │         │    │   
+ │         │    ├── bound dispatch                 /manage/counter/account                                     GET
+ │         │    │    ├── ensureManagerAuthenticated /                                                           GET
+ │         │    │    └── accountCounter            /                                                           GET
+ │         │    │   
  │         │    └── bound dispatch                 /manage/page/log                                            GET
  │         │         ├── ensureManagerAuthenticated /                                                           GET
  │         │         └── pageLogList               /                                                           GET
