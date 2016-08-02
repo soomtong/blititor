@@ -251,7 +251,7 @@ app.use(function _500Handler(err, req, res, next){
 
 // start server
 app.listen(app.get('port'), function () {
-    winston.info("\x1B[32mserver listening on port " + app.get('port') + " \033[0m");
+    winston.info("\x1B[32mserver listening on port " + app.get('port') + " in " + BLITITOR.env + " mode \033[0m");
     // display default route table
     // misc.showRouteTable();
 });
