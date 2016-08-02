@@ -20,11 +20,37 @@ var routeTable = misc.getRouteTable();
 function indexPage(req, res) {
     var params = {
         title: "운영자 화면",
-        page: Number(req.query['p']) || 1,
+        week: Number(req.query['w']) || moment().format('W'),
+        weekly: true
     };
 
+    var mysql = connection.get();
 
-    res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
+    db.readPageCounterByDate(mysql, params.weekly, params.week, function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = false;
+        // params.total = result.total;
+        // params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        // params.hasPrev = result.page > 0;
+        // params.maxPage = result.maxPage + 1;
+        // params.page = result.page + 1;  // prevent when wrong page number assigned
+        // params.list = result.accountCounter;
+
+/*
+        params.list.map(function (item) {
+            item.date = common.dateFormatter(item.date, 'M월 D일');
+        });
+*/
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
+    });
 }
 
 function loginForm(req, res) {
@@ -151,12 +177,12 @@ function accountList(req, res) {
 function accountCounter(req, res) {
     var params = {
         title: "운영자 화면",
-        page: req.query['m'] || moment().format('YYYYMM')
+        month: req.query['m'] || moment().format('YYYYMM')
     };
 
     var mysql = connection.get();
 
-    db.readAccountCounterByMonth(mysql, params.page, function (error, result) {
+    db.readAccountCounterByMonth(mysql, params.month, function (error, result) {
         if (error) {
             req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
 
@@ -206,8 +232,6 @@ function pageLogList(req, res) {
         params.maxPage = result.maxPage + 1;
         params.page = result.page + 1;  // prevent when wrong page number assigned
         params.list = result.visitLogList;
-
-        console.log(result);
 
         params.list.map(function (item) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');

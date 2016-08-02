@@ -95,8 +95,13 @@ function selectAccountCounterByMonth(connection, month, callback) {
     });
 }
 
+function selectPageCounterByDate(connection, weekly, weeks, callback) {
+    callback(null, {});
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
-    readAccountCounterByMonth: selectAccountCounterByMonth,
-    readVisitLogByPage: readVisitLogByPage
+    readPageCounterByDate: selectPageCounterByDate,
+    readVisitLogByPage: readVisitLogByPage,
+    readAccountCounterByMonth: selectAccountCounterByMonth
 };

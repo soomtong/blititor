@@ -107,15 +107,13 @@ function pageCounter(path, method, ip, ref, agent, device) {
     });
 
     // update counter
-/*
     db.updatePageCounter(mysql, counterData, function (error, result) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Update visit counter record:', result);
+            winston.verbose('Update visit counter record:', result.insertId);
         }
     });
-*/
 }
 
 function checkSession(sessID, callback) {

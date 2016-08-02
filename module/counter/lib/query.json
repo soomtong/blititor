@@ -1,8 +1,10 @@
 {
   "insertInto": "INSERT INTO ?? SET ?",
   "selectByDate": "SELECT `id` as id FROM ?? WHERE `date` = ? FOR UPDATE",
-  "selectByDateWitPage": "SELECT `id` as id FROM ?? WHERE `date` = ? and page = ? FOR UPDATE",
+  "selectByDateWithPath": "SELECT `id` as id FROM ?? WHERE `date` = ? and `path` = ? FOR UPDATE",
   "selectBySessionID": "SELECT `id` as id FROM ?? WHERE `session` = ? LIMIT 1",
+  "updateCounterByDateWithPath": "UPDATE ?? SET `view` = `view` + 1 WHERE `date` = ? and `path` = ?",
   "updateCounterByDate": "UPDATE ?? SET ?? = ?? + 1 WHERE `date` = ?",
+  "insertCounterByDateWithPath": "INSERT INTO ?? (`path`, `date`, `view`) VALUES (?, ?, 1)",
   "insertCounterByDate": "INSERT INTO ?? (??, `date`) VALUES (1, ?)"
 }

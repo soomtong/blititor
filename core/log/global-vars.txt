@@ -1,6 +1,6 @@
 {
     "env": "development",
-    "root": "/Users/sven/Repository/blititor",
+    "root": "/Users/soomtong/Repository/blititor",
     "tweak": {
         "passDBCheckMiddleware": false
     },
@@ -67,7 +67,8 @@
                 "accountLog": "b_account_counter_log",
                 "accountCounter": "b_account_counter",
                 "visitLog": "b_visit_counter_log",
-                "visitCounter": "b_visit_counter"
+                "visitCounter": "b_visit_counter",
+                "sessionLog": "b_session_counter_log"
             },
             "core": true
         },
