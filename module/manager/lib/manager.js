@@ -26,9 +26,9 @@ function indexPage(req, res) {
 
     var mysql = connection.get();
 
-    db.readPageCounterByDate(mysql, params.weekly, params.week, function (error, result) {
+    db.readVisitCounterByDate(mysql, params.weekly, params.week, function (error, result) {
         if (error) {
-            req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
+            req.flash('error', {msg: 'PV Counter 읽기에 실패했습니다.'});
 
             winston.error(error);
 
@@ -41,8 +41,9 @@ function indexPage(req, res) {
         // params.hasPrev = result.page > 0;
         // params.maxPage = result.maxPage + 1;
         // params.page = result.page + 1;  // prevent when wrong page number assigned
-        // params.list = result.accountCounter;
+        params.list = result.visitCounter;
 
+        console.log(params.list);
 /*
         params.list.map(function (item) {
             item.date = common.dateFormatter(item.date, 'M월 D일');

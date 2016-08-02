@@ -45,7 +45,6 @@
                 <table class="pure-table table-hover table-wide">
                     <thead>
                     <tr>
-                        <th>#</th>
                         <th>페이지</th>
                         <th>전체</th>
                         <th>주간</th>
@@ -63,17 +62,16 @@
                     {% set cls = cycler("pure-table-odd", "") %}
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
-                        <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
-                        <td><a href="{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.user_id}}</a></td>
-                        <td>{{item.nickname}}</td>
-                        <td>{{item.level}}</td>
-                        <td>{{item.grant}}</td>
-                        <td>{{item.login_counter}}</td>
-                        <td>{{item.last_logged_at}}</td>
-                        <td>{{item.created_at}}</td>
-                        <td>{{item.updated_at}}</td>
-                        <td>{{item.updated_at}}</td>
-                        <td>{{item.updated_at}}</td>
+                        <td><a href="{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.path}}</a></td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
+                        <td>{{item.view}}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
