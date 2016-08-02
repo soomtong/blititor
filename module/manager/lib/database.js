@@ -95,19 +95,21 @@ function selectAccountCounterByMonth(connection, month, callback) {
     });
 }
 
-function selectVisitCounterByDate(connection, weekly, weeks, callback) {
-    var fields = ['date', 'path', 'view'];
+function selectVisitCounterByDate(connection, dates, callback) {
     var result = {
-        total: 0,
-        week: weeks,
-        index: 0,
-        maxPage: 0,
-        accountCounter: []
+        sum: [],
+        visitCounter: []
     };
 
-    connection.query(query.readPageCounterByWeek, [fields, tables.visitCounter, '201608%'], function (err, rows) {
-        if (!err) result.visitCounter = rows;
-        callback(err, result);
+    // todo: have to refactoring, it's ugly!!!
+    connection.query(query.readVisitCounter, [tables.visitCounter], function (err, sums) {
+        if (!err) result.sum = sums;
+
+        connection.query(query.readVisitCounterByDate, [dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6], dates[7], tables.visitCounter], function (err, rows) {
+            if (!err) result.visitCounter = rows;
+
+            callback(err, result);
+        });
     });
 }
 

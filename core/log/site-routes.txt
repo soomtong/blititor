@@ -39,11 +39,11 @@ router
  │         │    │   
  │         │    ├── bound dispatch                 /admin                                                      _ALL
  │         │    │    ├── ensureAdminAuthenticated  /                                                           
- │         │    │    └── indexPage                 /                                                           
+ │         │    │    └── accountList               /                                                           
  │         │    │   
  │         │    ├── bound dispatch                 /admin/account                                              GET
  │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── indexPage                 /                                                           GET
+ │         │    │    └── accountList               /                                                           GET
  │         │    │   
  │         │    ├── bound dispatch                 /admin/account/register                                     GET
  │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
@@ -72,19 +72,23 @@ router
  │         │    │   
  │         │    ├── bound dispatch                 /manage                                                     _ALL
  │         │    │    ├── ensureManagerAuthenticated /                                                           
- │         │    │    └── indexPage                 /                                                           
+ │         │    │    └── visitCounter              /                                                           
+ │         │    │   
+ │         │    ├── bound dispatch                 /manage/counter/page                                        _ALL
+ │         │    │    ├── ensureManagerAuthenticated /                                                           
+ │         │    │    └── visitCounter              /                                                           
+ │         │    │   
+ │         │    ├── bound dispatch                 /manage/page/log                                            GET
+ │         │    │    ├── ensureManagerAuthenticated /                                                           GET
+ │         │    │    └── pageLogList               /                                                           GET
  │         │    │   
  │         │    ├── bound dispatch                 /manage/account                                             GET
  │         │    │    ├── ensureManagerAuthenticated /                                                           GET
  │         │    │    └── accountList               /                                                           GET
  │         │    │   
- │         │    ├── bound dispatch                 /manage/counter/account                                     GET
- │         │    │    ├── ensureManagerAuthenticated /                                                           GET
- │         │    │    └── accountCounter            /                                                           GET
- │         │    │   
- │         │    └── bound dispatch                 /manage/page/log                                            GET
+ │         │    └── bound dispatch                 /manage/counter/account                                     GET
  │         │         ├── ensureManagerAuthenticated /                                                           GET
- │         │         └── pageLogList               /                                                           GET
+ │         │         └── accountCounter            /                                                           GET
  │         │        
  │         │   
  │         ├── bound dispatch                      /account/sign-out                                           GET

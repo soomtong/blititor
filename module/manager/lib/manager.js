@@ -17,43 +17,6 @@ var db = require('./database');
 var userPrivilege = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
 
-function indexPage(req, res) {
-    var params = {
-        title: "운영자 화면",
-        week: Number(req.query['w']) || moment().format('W'),
-        weekly: true
-    };
-
-    var mysql = connection.get();
-
-    db.readVisitCounterByDate(mysql, params.weekly, params.week, function (error, result) {
-        if (error) {
-            req.flash('error', {msg: 'PV Counter 읽기에 실패했습니다.'});
-
-            winston.error(error);
-
-            res.redirect('back');
-        }
-
-        params.pagination = false;
-        // params.total = result.total;
-        // params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        // params.hasPrev = result.page > 0;
-        // params.maxPage = result.maxPage + 1;
-        // params.page = result.page + 1;  // prevent when wrong page number assigned
-        params.list = result.visitCounter;
-
-        console.log(params.list);
-/*
-        params.list.map(function (item) {
-            item.date = common.dateFormatter(item.date, 'M월 D일');
-        });
-*/
-
-        res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
-    });
-}
-
 function loginForm(req, res) {
     var params = {
         title: "운영자 화면"
@@ -242,15 +205,55 @@ function pageLogList(req, res) {
     });
 }
 
+function visitCounter(req, res) {
+    var params = {
+        title: "운영자 화면",
+        today: req.query['date'] || moment().format('YYYYMMDD'),
+        weekly: req.query['k'] || false
+    };
+
+    var duration = '7';
+    var dates = [];
+    var countOfDays = [];
+    var tempDate;
+
+    for (var idx = 0; idx <= duration; idx++) {
+        tempDate = moment(params.today).subtract(idx, 'days');
+
+        if (tempDate.date() == 1) {
+            dates.push(tempDate.format('M월 D일'));
+        } else {
+            dates.push(tempDate.format('D 일'));
+        }
+
+        countOfDays.push(tempDate.format('YYYYMMDD'));
+    }
+
+    var mysql = connection.get();
+
+    db.readVisitCounterByDate(mysql, countOfDays, function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '페이지 뷰 카운터 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = false;
+        params.dates = dates;
+        params.sum = result.sum;
+        params.list = result.visitCounter;
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
+    });
+}
+
 module.exports = {
-    index: indexPage,   // page counter
     loginForm: loginForm,
     loginProcess: loginProcess,
-    account: accountList,
-    accountCounter: accountCounter,
-    pageLog: pageLogList,
-    // write: writeForm,
-    // save: savePost,
-    // view: viewPost,
-    // recentPost: recentPost
+    pageViewLog: pageLogList,
+    pageViewCounter: visitCounter,
+    accountList: accountList,
+    accountActionCounter: accountCounter
 };

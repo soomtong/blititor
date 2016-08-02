@@ -18,7 +18,7 @@ var userPrivilege = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
 var token = misc.commonToken();
 
-function indexPage(req, res) {
+function accountList(req, res) {
     var params = {
         title: "관리자 화면",
         page: Number(req.query['p']) || 1,
@@ -367,9 +367,9 @@ function accountProcess(req, res) {
 }
 
 module.exports = {
-    index: indexPage,
     loginForm: loginForm,
     loginProcess: loginProcess,
+    accountList: accountList,
     accountView: accountView,
     accountForm: accountForm,
     accountProcess: accountProcess,

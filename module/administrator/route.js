@@ -15,8 +15,8 @@ router.get(routeTable.admin_root + routeTable.admin.login, administrator.loginFo
 router.post(routeTable.admin_root + routeTable.admin.login, administrator.loginProcess);
 
 // caution. use each middleware for other module's router. it affects all router exist behind
-router.all(routeTable.admin_root, AccountMiddleware.checkAdministrator, administrator.index);
-router.get(routeTable.admin_root + routeTable.admin.account, AccountMiddleware.checkAdministrator, administrator.index);
+router.all(routeTable.admin_root,                            AccountMiddleware.checkAdministrator, administrator.accountList);
+router.get(routeTable.admin_root + routeTable.admin.account, AccountMiddleware.checkAdministrator, administrator.accountList);
 router.get(routeTable.admin_root + routeTable.admin.accountNew, AccountMiddleware.checkAdministrator, administrator.accountView);
 router.get(routeTable.admin_root + routeTable.admin.account + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountView);
 router.get(routeTable.admin_root + routeTable.admin.accountEdit + '/:uuid', AccountMiddleware.checkAdministrator, administrator.accountForm);

@@ -34,8 +34,8 @@
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                     <button type="submit" class="pure-button">Search</button>
 
-                    <label for="remember" class="pull-right" title="주간 구분 또는 최근 일주일">
-                        <input id="remember" type="checkbox"> 주간 구분
+                    <label for="weekly" class="pull-right" title="주간 구분 또는 최근 일주일">
+                        <input id="weekly" type="checkbox"> 요일별
                     </label>
                 </form>
             </div>
@@ -47,14 +47,14 @@
                     <tr>
                         <th>페이지</th>
                         <th>전체</th>
-                        <th>주간</th>
-                        <th>10일</th>
-                        <th>11일</th>
-                        <th>12일</th>
-                        <th>13일</th>
-                        <th>14일</th>
-                        <th>15일</th>
-                        <th>16일</th>
+                        <th>{{ dates[7] }}</th>
+                        <th>{{ dates[6] }}</th>
+                        <th>{{ dates[5] }}</th>
+                        <th>{{ dates[4] }}</th>
+                        <th>{{ dates[3] }}</th>
+                        <th>{{ dates[2] }}</th>
+                        <th>{{ dates[1] }}</th>
+                        <th>오늘</th>
                     </tr>
                     </thead>
 
@@ -63,15 +63,15 @@
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
                         <td><a href="{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.path}}</a></td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
-                        <td>{{item.view}}</td>
+                        <td>{{sum[loop.index0].total}}</td>
+                        <td>{{item.T7}}</td>
+                        <td>{{item.T6}}</td>
+                        <td>{{item.T5}}</td>
+                        <td>{{item.T4}}</td>
+                        <td>{{item.T3}}</td>
+                        <td>{{item.T2}}</td>
+                        <td>{{item.T1}}</td>
+                        <td>{{item.T0}}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
