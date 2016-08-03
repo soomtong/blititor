@@ -91,24 +91,18 @@ router
  │         │         └── accountCounter            /                                                           GET
  │         │        
  │         │   
- │         ├── bound dispatch                      /account/sign-out                                           GET
- │         │    └── signOut                        /                                                           GET
- │         │   
- │         ├── bound dispatch                      /account/register-simple                                    POST
- │         │    └── registerSimpleForTest          /                                                           POST
- │         │   
  │         ├── sessionCounter                      *                                                           
  │         ├── pageCounter                         *                                                           
  │         ├── bound dispatch                      /                                                           GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
- │         ├── bound dispatch                      /marketing                                                  GET
+ │         ├── bound dispatch                      /blog/write                                                 GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
- │         ├── bound dispatch                      /marketing/professional                                     GET
+ │         ├── bound dispatch                      /account/sign-in                                            GET
  │         │    └── plainPage                      /                                                           GET
  │         │   
- │         └── bound dispatch                      /about                                                      GET
+ │         └── bound dispatch                      /account/sign-out                                           GET
  │              └── plainPage                      /                                                           GET
  │             
  │        
