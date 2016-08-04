@@ -27,7 +27,7 @@ router.get(routeTable.account.signOut, account.signOut);
 router.post(routeTable.account.login, Passport.authenticate('local', {
         failureRedirect: routeTable.account_root + routeTable.account.signIn,
         badRequestMessage: '아이디 또는 비밀번호를 입력해주세요.',
-        failureFlash: '아이디 또는 비밀번호가 정확하지 않습니다!'
+        failureFlash: true,
     }), passport.loginSuccess, passport.loginDone
 );
 

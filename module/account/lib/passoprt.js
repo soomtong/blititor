@@ -5,12 +5,20 @@ var common = require('../../../core/lib/common');
 var account = require('./account');
 
 function authenticate(userID, password, done) {
+/*  no need it, it checked by passport system. and that print out with `badRequestMessage` parameter
+    if (!userID || !password) {
+        winston.error('it needs id and password');
+        return done(null, false, 'Unknown user identifier. need a id like a email type!');
+    }
+*/
+
     account.authByUserID(userID, function (err, auth) {
         if (err) {
             return done(err);
         }
         if (!auth) {
-            return done(null, false, {message: 'Unknown user ' + userID});
+            winston.warn('user given id not exactly same with authorized hash', userID);
+            return done(null, false, {message: 'Unknown user account ' + userID});
         }
 
         // winston.verbose(auth, userID, password);
@@ -22,9 +30,9 @@ function authenticate(userID, password, done) {
                 return done(err);
             }
             if (!result) {
-                winston.verbose('user given password not exactly same with authorized hash', result);
+                winston.warn('user given password not exactly same with authorized hash', result);
 
-                return done(null, false, {message: 'Invalid password'});
+                return done(null, false, {message: 'Invalid password given'});
             } else {
                 return done(null, auth);
             }
