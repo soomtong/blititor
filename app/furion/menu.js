@@ -10,25 +10,27 @@ var routeTable = misc.getRouteTable();
 
 var Menu = [
     {
-        id: 'index',
-        name: '홈',
-        url: routeTable.root
-    },
-    {
-        name: '새글쓰기',
+        name: '새글',
         logged: 1,
         level: 2, grant: 'AMC',
         url: routeTable.teamblog_root + routeTable.teamblog.write
     },
     {
+        id: 'sign_in',
         name: '로그인',
         logged: -1,
         url: routeTable.account_root + routeTable.account.signIn
     },
     {
+        id: 'sign_out',
         name: '로그아웃',
         logged: 1,
         url: routeTable.account_root + routeTable.account.signOut
+    },
+    {
+        id: 'about',
+        name: '소개',
+        url: routeTable.about
     }
 ];
 
@@ -76,7 +78,7 @@ var ManagerMenu = [
 function menuExpose(req, res, next) {
 
     // var pages = BLITITOR.route.pages;
-    // console.log('pages:', pages);
+    winston.info('Expose app menu in app router', req.path);
 
     //todo: retrieve from database site menu record which should match with `pages` items
     // read from database

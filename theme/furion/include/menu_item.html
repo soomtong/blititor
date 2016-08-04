@@ -1,0 +1,10 @@
+{% macro item(item, site) %}
+<li class="nav-item">
+    <a class="pure-button" href="{{item.url}}">{{item.name}}</a>
+</li>
+{% endmacro %}
+{% macro itemGranted(item, site) %}
+<li class="nav-item">
+    <a class="pure-button" href="{{item.url}}">{{item.name}}</a>
+</li>
+{% endmacro %}

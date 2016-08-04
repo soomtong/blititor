@@ -18,94 +18,88 @@ router
  ├── checkCsrf                                     *                                                           
  ├── serveStatic                                   *                                                           
  ├── serveStatic                                   *                                                           
- ├── router                                        *                                                           
- │   router                                                                                                    
- │    ├── exposeLocals                             *                                                           
- │    ├── checkDatabaseConfig                      *                                                           
- │    ├── menuExpose                               *                                                           
- │    └── router                                   *                                                           
- │        router                                                                                               
- │         ├── exposeLocals                        *                                                           
- │         ├── exposeLocals                        *                                                           
- │         ├── exposeMenu                          *                                                           
- │         ├── exposeMenu                          *                                                           
- │         ├── router                              *                                                           
- │         │   router                                                                                          
- │         │    ├── bound dispatch                 /admin/login                                                GET
- │         │    │    └── loginForm                 /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /admin/login                                                POST
- │         │    │    └── loginProcess              /                                                           POST
- │         │    │   
- │         │    ├── bound dispatch                 /admin                                                      _ALL
- │         │    │    ├── ensureAdminAuthenticated  /                                                           
- │         │    │    └── accountList               /                                                           
- │         │    │   
- │         │    ├── bound dispatch                 /admin/account                                              GET
- │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── accountList               /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /admin/account/register                                     GET
- │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── accountView               /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /admin/account/:uuid                                        GET
- │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── accountView               /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /admin/account/edit/:uuid                                   GET
- │         │    │    ├── ensureAdminAuthenticated  /                                                           GET
- │         │    │    └── accountForm               /                                                           GET
- │         │    │   
- │         │    └── bound dispatch                 /admin/account/edit/:uuid                                   POST
- │         │         ├── ensureAdminAuthenticated  /                                                           POST
- │         │         └── accountProcess            /                                                           POST
- │         │        
- │         │   
- │         ├── router                              *                                                           
- │         │   router                                                                                          
- │         │    ├── bound dispatch                 /manage/login                                               GET
- │         │    │    └── loginForm                 /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /manage/login                                               POST
- │         │    │    └── loginProcess              /                                                           POST
- │         │    │   
- │         │    ├── bound dispatch                 /manage                                                     _ALL
- │         │    │    ├── ensureManagerAuthenticated /                                                           
- │         │    │    └── visitCounter              /                                                           
- │         │    │   
- │         │    ├── bound dispatch                 /manage/counter/page                                        _ALL
- │         │    │    ├── ensureManagerAuthenticated /                                                           
- │         │    │    └── visitCounter              /                                                           
- │         │    │   
- │         │    ├── bound dispatch                 /manage/page/log                                            GET
- │         │    │    ├── ensureManagerAuthenticated /                                                           GET
- │         │    │    └── pageLogList               /                                                           GET
- │         │    │   
- │         │    ├── bound dispatch                 /manage/account                                             GET
- │         │    │    ├── ensureManagerAuthenticated /                                                           GET
- │         │    │    └── accountList               /                                                           GET
- │         │    │   
- │         │    └── bound dispatch                 /manage/counter/account                                     GET
- │         │         ├── ensureManagerAuthenticated /                                                           GET
- │         │         └── accountCounter            /                                                           GET
- │         │        
- │         │   
- │         ├── sessionCounter                      *                                                           
- │         ├── pageCounter                         *                                                           
- │         ├── bound dispatch                      /                                                           GET
- │         │    └── plainPage                      /                                                           GET
- │         │   
- │         ├── bound dispatch                      /blog/write                                                 GET
- │         │    └── plainPage                      /                                                           GET
- │         │   
- │         ├── bound dispatch                      /account/sign-in                                            GET
- │         │    └── plainPage                      /                                                           GET
- │         │   
- │         └── bound dispatch                      /account/sign-out                                           GET
- │              └── plainPage                      /                                                           GET
- │             
- │        
- │   
- ├── _404Handler                                   *                                                           
- └── _500Handler                                   *                                                           
+ └── router                                        *                                                           
+     router                                                                                                    
+      ├── exposeLocals                             *                                                           
+      ├── checkDatabaseConfig                      *                                                           
+      ├── router                                   *                                                           
+      │   router                                                                                               
+      │    ├── menuExpose                          *                                                           
+      │    ├── exposeLocals                        *                                                           
+      │    ├── exposeLocals                        *                                                           
+      │    ├── exposeMenu                          *                                                           
+      │    ├── exposeMenu                          *                                                           
+      │    ├── router                              *                                                           
+      │    │   router                                                                                          
+      │    │    ├── bound dispatch                 /admin/login                                                GET
+      │    │    │    └── loginForm                 /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin/login                                                POST
+      │    │    │    └── loginProcess              /                                                           POST
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin                                                      _ALL
+      │    │    │    ├── ensureAdminAuthenticated  /                                                           
+      │    │    │    └── accountList               /                                                           
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin/account                                              GET
+      │    │    │    ├── ensureAdminAuthenticated  /                                                           GET
+      │    │    │    └── accountList               /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin/account/register                                     GET
+      │    │    │    ├── ensureAdminAuthenticated  /                                                           GET
+      │    │    │    └── accountView               /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin/account/:uuid                                        GET
+      │    │    │    ├── ensureAdminAuthenticated  /                                                           GET
+      │    │    │    └── accountView               /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /admin/account/edit/:uuid                                   GET
+      │    │    │    ├── ensureAdminAuthenticated  /                                                           GET
+      │    │    │    └── accountForm               /                                                           GET
+      │    │    │   
+      │    │    └── bound dispatch                 /admin/account/edit/:uuid                                   POST
+      │    │         ├── ensureAdminAuthenticated  /                                                           POST
+      │    │         └── accountProcess            /                                                           POST
+      │    │        
+      │    │   
+      │    ├── router                              *                                                           
+      │    │   router                                                                                          
+      │    │    ├── bound dispatch                 /manage/login                                               GET
+      │    │    │    └── loginForm                 /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /manage/login                                               POST
+      │    │    │    └── loginProcess              /                                                           POST
+      │    │    │   
+      │    │    ├── bound dispatch                 /manage                                                     _ALL
+      │    │    │    ├── ensureManagerAuthenticated /                                                           
+      │    │    │    └── visitCounter              /                                                           
+      │    │    │   
+      │    │    ├── bound dispatch                 /manage/counter/page                                        _ALL
+      │    │    │    ├── ensureManagerAuthenticated /                                                           
+      │    │    │    └── visitCounter              /                                                           
+      │    │    │   
+      │    │    ├── bound dispatch                 /manage/page/log                                            GET
+      │    │    │    ├── ensureManagerAuthenticated /                                                           GET
+      │    │    │    └── pageLogList               /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /manage/account                                             GET
+      │    │    │    ├── ensureManagerAuthenticated /                                                           GET
+      │    │    │    └── accountList               /                                                           GET
+      │    │    │   
+      │    │    └── bound dispatch                 /manage/counter/account                                     GET
+      │    │         ├── ensureManagerAuthenticated /                                                           GET
+      │    │         └── accountCounter            /                                                           GET
+      │    │        
+      │    │   
+      │    ├── sessionCounter                      *                                                           
+      │    ├── pageCounter                         *                                                           
+      │    ├── bound dispatch                      /                                                           _ALL
+      │    │    └── indexPage                      /                                                           
+      │    │   
+      │    └── bound dispatch                      /about                                                      _ALL
+      │         └── indexPage                      /                                                           
+      │        
+      │   
+      ├── _404Handler                              *                                                           
+      └── _500Handler                              *                                                           
+     

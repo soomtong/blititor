@@ -8,7 +8,7 @@ function indexPage(req, res) {
         title: "Home",
     };
 
-    winston.info(req.path);
+    winston.info('this is a index page', req.path);
 
     //500 Error
     //throw Error('make noise!');

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body>
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title" title="it comes from a database record in site table">A Sample Blog</h1>
+            <h2 class="brand-tagline" title="same above">Creating a blog layout using Pure</h2>
+            {% include '../include/menu.html' %}
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead">Can't resolve this request</h1>
+
+                <!-- A single blog post -->
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/tilo-avatar.png">
+
+                        <h2 class="post-title">500!</h2>
+
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            there is some problems: {{ error }}
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            {% include '../include/footer.html' %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
