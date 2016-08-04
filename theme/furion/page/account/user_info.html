@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '../include/header.html' %}
+    <style>
+        .file-changed:after {
+            content: attr(data-content);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+
+        {% include '../include/menu.html' %}
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="bg-guest-form-holder">
+
+                <h4>Account Info</h4>
+                <div class="card">
+                    <div class="card-block" style="min-height: 200px;">
+                        {% if userInfo.photo %}
+                        <img src="/upload/{{ userInfo.uuid }}/{{ userInfo.photo }}" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        {% else %}
+                        <img src="/{{ site.theme }}/common/asset/photo-user1.png" class="img-rounded user-profile-photo" alt="{{ userInfo.nickname }} profile">
+                        {% endif %}
+                        <h5 class="card-title">{{ userInfo.nickname }}</h5>
+                        <p class="card-text">
+                            <span class="label label-pill label-success">{{ userInfo.level }}</span>
+                            <span class="label label-pill label-info">{{ userInfo.grant }}</span>
+                        </p>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text">
+                            {{ userInfo.created_at }}
+                        </p>
+                    </div>
+                </div>
+
+                {% if message.info %}
+                {% for info in message.info %}
+                <div class="alert alert-info" role="alert">
+                    <strong>Info!</strong> {{ info.msg }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <h4 style="margin-top: 2em;">Update</h4>
+                <form method="post" action="{{ route.account_root + route.account.updateInfo }}" enctype="multipart/form-data">
+                    <fieldset class="form-group">
+                        <label for="exampleInputName">Screen Name</label>
+                        <input name="nickname" type="text" class="form-control" id="exampleInputName" value="{{ userInfo.nickname }}">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
+                    </fieldset>
+                    <label>Profile Image</label>
+                    <fieldset class="form-group">
+                        <label class="file">
+                            <input name="profile_image" type="file" id="file">
+                            <span class="file-custom"></span>
+                        </label>
+                    </fieldset>
+
+                    {% if message.error %}
+                    {% for error in message.error %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> {{ error.msg }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                    <button type="submit" class="btn btn-primary">Change</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>Subheading</h4>
+            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+            <h5>Blog heroes</h5>
+            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+            <ul>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+            </ul>
+        </div>
+    </div>
+
+    {% include '../include/footer.html' %}
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://github.hubspot.com/tether/dist/js/tether.js"></script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#file').on('change', function () {
+            var file = $(this).val().split('\\');
+            var fileName = file[file.length - 1];
+            $('#file').siblings('.file-custom').addClass('file-changed').attr('data-content', fileName);
+        });
+    })
+</script>
+</body>
+</html>

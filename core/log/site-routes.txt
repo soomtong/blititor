@@ -96,8 +96,38 @@ router
       │    ├── bound dispatch                      /                                                           _ALL
       │    │    └── indexPage                      /                                                           
       │    │   
-      │    └── bound dispatch                      /about                                                      _ALL
-      │         └── <anonymous>                    /                                                           
+      │    ├── bound dispatch                      /about                                                      _ALL
+      │    │    └── <anonymous>                    /                                                           
+      │    │   
+      │    └── router                              /^\/account\/?(?=\/|$)/                                     
+      │        router                                                                                          
+      │         ├── exposeLocals                   *                                                           
+      │         ├── bound dispatch                 /sign-in                                                    GET
+      │         │    └── signIn                    /                                                           GET
+      │         │   
+      │         ├── bound dispatch                 /sign-up                                                    GET
+      │         │    ├── ensureClearSession        /                                                           GET
+      │         │    └── signUp                    /                                                           GET
+      │         │   
+      │         ├── bound dispatch                 /sign-out                                                   GET
+      │         │    └── signOut                   /                                                           GET
+      │         │   
+      │         ├── bound dispatch                 /login                                                      POST
+      │         │    ├── authenticate              /                                                           POST
+      │         │    ├── loginSuccess              /                                                           POST
+      │         │    └── loginDone                 /                                                           POST
+      │         │   
+      │         ├── bound dispatch                 /register                                                   POST
+      │         │    └── register                  /                                                           POST
+      │         │   
+      │         ├── bound dispatch                 /info                                                       GET
+      │         │    ├── ensureAuthenticated       /                                                           GET
+      │         │    └── showInfo                  /                                                           GET
+      │         │   
+      │         └── bound dispatch                 /update                                                     POST
+      │              ├── ensureAuthenticated       /                                                           POST
+      │              └── updateInfo                /                                                           POST
+      │             
       │        
       │   
       ├── _404Handler                              *                                                           

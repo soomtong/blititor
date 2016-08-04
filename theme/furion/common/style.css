@@ -1,0 +1,10 @@
+.alert {
+    padding: 1em;
+    margin: 1em 0 0.5em;
+}
+
+.alert-login {
+    color: #ffffff;
+    border: 1px solid #DF7514;
+    background: #DF7514;
+}

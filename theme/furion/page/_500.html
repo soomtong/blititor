@@ -5,13 +5,8 @@
 </head>
 <body>
 <div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-        <div class="header">
-            <h1 class="brand-title" title="it comes from a database record in site table">A Sample Blog</h1>
-            <h2 class="brand-tagline" title="same above">Creating a blog layout using Pure</h2>
-            {% include '../include/menu.html' %}
-        </div>
-    </div>
+
+    {% include '../include/menu.html' %}
 
     <div class="content pure-u-1 pure-u-md-3-4">
         <div>
@@ -22,7 +17,7 @@
                 <!-- A single blog post -->
                 <section class="post">
                     <header class="post-header">
-                        <img class="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/tilo-avatar.png">
+                        <img class="post-avatar" alt="" height="48" width="48" src="/{{site.theme}}/common/asset/tilo-avatar.png">
 
                         <h2 class="post-title">500!</h2>
 

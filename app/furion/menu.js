@@ -10,6 +10,7 @@ var routeTable = misc.getRouteTable();
 
 var Menu = [
     {
+        id: 'post_new',
         name: '새글',
         logged: 1,
         level: 2, grant: 'AMC',
@@ -28,8 +29,16 @@ var Menu = [
         url: routeTable.account_root + routeTable.account.signOut
     },
     {
+        id: 'manage',
+        name: '관리',
+        logged: 1,
+        level: 2, grant: 'AMC',
+        url: routeTable.manage_root
+    },
+    {
         id: 'about',
         name: '소개',
+        logged: -1,
         url: routeTable.about
     }
 ];

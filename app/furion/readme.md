@@ -11,7 +11,9 @@ based on plain and pure css framework and their sample
 3. make app's theme folder
 4. prepare html files and another assets 
 5. change values in theme.json
-6. combine modules in app's router
+6. assign some static page
+7. assign some modules method. like a sign in feature
+8. combine other modules in app's router
 
 ### History
 
