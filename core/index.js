@@ -219,36 +219,6 @@ app.use(express.static('theme', staticOptions));
 // bind route
 app.use(require('./route'));
 
-// Handle 404
-app.use(function _404Handler(req, res, next){
-    res.status(404);
-
-    // respond with html page
-    if (req.accepts('html')) {
-        res.render('../theme/simplestrap/page/_404', { url: req.url });
-        return;
-    }
-
-    // respond with json
-    if (req.accepts('json')) {
-        res.send({ error: 'Not found' });
-        return;
-    }
-
-    // default to plain-text. send()
-    res.type('txt').send('Not found');
-});
-
-// Handle 500
-app.use(function _500Handler(err, req, res, next){
-    // we may use properties of the error object
-    // here and next(err) appropriately, or if
-    // we possibly recovered from the error, simply next().
-    winston.error(err);
-    res.status(err.status || 500);
-    res.render('../theme/simplestrap/page/_500', { error: err });
-});
-
 // start server
 app.listen(app.get('port'), function () {
     winston.info("\x1B[32mserver listening on port " + app.get('port') + " in " + BLITITOR.env + " mode \033[0m");
