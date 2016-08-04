@@ -37,6 +37,6 @@ router.use(Counter.middleware.pageCounter);
 
 // bind static page
 router.all(routeTable.root, Site.index);
-router.all(routeTable.about, Site.index);
+router.all(routeTable.about, Site.redirect(routeTable.root));
 
 module.exports = router;

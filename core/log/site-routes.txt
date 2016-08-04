@@ -97,7 +97,7 @@ router
       │    │    └── indexPage                      /                                                           
       │    │   
       │    └── bound dispatch                      /about                                                      _ALL
-      │         └── indexPage                      /                                                           
+      │         └── <anonymous>                    /                                                           
       │        
       │   
       ├── _404Handler                              *                                                           

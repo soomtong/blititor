@@ -32,7 +32,19 @@ function plainPage(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
+function redirectPage(url) {
+    return function (req, res) {
+        // winston.verbose('redirect to', url);
+        if (url) {
+            res.redirect(url);
+        } else {
+            res.redirect('back');
+        }
+    };
+}
+
 module.exports = {
     index: indexPage,
     plain: plainPage,
+    redirect: redirectPage
 };
