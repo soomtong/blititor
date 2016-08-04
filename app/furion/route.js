@@ -20,6 +20,7 @@ var router = express.Router();
 var routeTable = misc.getRouteTable();
 
 // middleware
+router.use(menu.expose);
 router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
@@ -35,13 +36,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // bind static page
-bindRouter();
+router.all(routeTable.root, Site.index);
+router.all(routeTable.about, Site.index);
 
 module.exports = router;
-
-// functions for private use
-function bindRouter() {
-    menu.map(function (item) {
-        router[item.type || 'get'](item.url, Site.plain);
-    });
-}

@@ -13,11 +13,13 @@ var Editor = require('../../module/editor');
 
 // load own template
 var page = require('./page');
+var menu = require('./menu');
 
 var router = express.Router();
 var routeTable = misc.getRouteTable();
 
 // Theme's middleware
+router.use(menu.expose);
 router.use(Site.middleware.exposeLocals);
 
 // separated page

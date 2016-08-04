@@ -20,6 +20,7 @@ var router = express.Router();
 var routeTable = misc.getRouteTable();
 
 // middleware
+router.use(menu.expose);
 router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
