@@ -3,6 +3,7 @@
 based on plain and pure css framework and their sample
 
 - dropbox paper like online editor (hybrid) 
+- version history for each posts
 
 ### Tutorial
 

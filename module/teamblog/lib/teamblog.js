@@ -40,7 +40,7 @@ function listPost(req, res) {
 
             // render markdown
             result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.post = md.render(item.post);
+                item.content = md.render(item.content);
             });
 
             params.list = result.teamblogList;  // todo: convert markdown to html
@@ -60,7 +60,7 @@ function listPost(req, res) {
 
             // render markdown
             result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.post = md.render(item.post);
+                item.content = md.render(item.content);
             });
 
             params.pagination = true;

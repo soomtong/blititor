@@ -21,9 +21,9 @@
                 <h2 class="blog-post-title">{{ item.title }}</h2>
                 <p class="blog-post-meta">{{ item.created_at }} by <a href="#">{{ item.nickname }}</a></p>
                 {% if useMarkdown %}
-                <div class="markdown-body">{{ item.post | safe }}</div>
+                <div class="markdown-body">{{ item.content | safe }}</div>
                 {% else %}
-                <div class="no-markdown">{{ item.post }}</div>
+                <div class="no-markdown">{{ item.content }}</div>
                 {% endif %}
                 {% if item.tags %}
                 <p class="blog-post-tags">{{ item.tags }}</p>
