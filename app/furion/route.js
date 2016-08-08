@@ -6,8 +6,9 @@ var winston = require('winston');
 var misc = require('../../core/lib/misc');
 
 // load modules
-var Account = require('../../module/account');
 var Site = require('../../module/site');
+var Teamblog = require('../../module/teamblog');
+var Account = require('../../module/account');
 var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
 var Counter = require('../../module/counter');
@@ -40,5 +41,6 @@ router.all(routeTable.about, Site.redirect(routeTable.root));
 
 // bind module
 router.use(routeTable.account_root, Account.route);
+router.use(Teamblog.route);
 
 module.exports = router;

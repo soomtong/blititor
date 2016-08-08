@@ -79,8 +79,8 @@ try {
     BLITITOR.config.site.adminTheme = themeSetting.adminTheme;
     BLITITOR.config.site.manageTheme = themeSetting.manageTheme;
 
-    winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
-    winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
+    winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
+    winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
 } catch (e) {
     winston.error('theme folder or config file not exist');
 
