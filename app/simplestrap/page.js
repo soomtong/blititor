@@ -13,8 +13,8 @@ function indexPage(req, res) {
         if (!error) {
             results.map(function (item) {
                 params.recentPostList.push({
-                    title: item.title,
-                    preview: common.getHeaderTextFromMarkdown(item.post, 200)
+                    title: item['title'],
+                    preview: common.getHeaderTextFromMarkdown(item['content'], 200)
                 });
             });
         }

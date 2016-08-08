@@ -30,6 +30,7 @@ function listPost(req, res) {
 
     if (params.month) {
         db.readTeamblogAll(mysql, Number(params.year), Number(params.month), function (err, result) {
+            console.log(result);
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
