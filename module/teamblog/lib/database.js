@@ -49,6 +49,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
         '`nickname` varchar(64), ' +
         '`flag` varchar(1), ' +
+        '`render` varchar(1), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
         '`tags` text, ' +
@@ -112,6 +113,7 @@ function insertDummy(databaseConfiguration, done) {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
+                        render: item.render ? 'M' : '',
                         title: item.title,
                         content: item.content,
                         tags: item.tags,

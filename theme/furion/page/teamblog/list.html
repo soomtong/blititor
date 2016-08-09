@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include '../../include/head.html' %}
+    <link rel="stylesheet" type="text/css" href="/{{site.theme}}/common/pagination.css">
+</head>
+<body>
+<div id="layout" class="pure-g">
+
+    {% include '../../include/menu.html' %}
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead" style="text-align:right">Total 32 Posts or 12 Posts in this Category</h1>
+
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="Eric Ferraiuolo&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/ericf-avatar.png">
+
+                        <h2 class="post-title">Everything You Need to Know About Grunt</h2>
+
+                        <p class="post-meta">
+                            By <a class="post-author" href="#">Eric Ferraiuolo</a> under <a class="post-category post-category-js" href="#">JavaScript</a>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="Reid Burke&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/reid-avatar.png">
+
+                        <h2 class="post-title">Photos from CSSConf and JSConf</h2>
+
+                        <p class="post-meta">
+                            By <a class="post-author" href="#">Reid Burke</a> under <a class="post-category" href="#">Uncategorized</a>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <div class="post-images pure-g">
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <a href="http://www.flickr.com/photos/uberlife/8915936174/">
+                                    <img alt="Photo of someone working poolside at a resort"
+                                         class="pure-img-responsive"
+                                         src="http://farm8.staticflickr.com/7448/8915936174_8d54ec76c6.jpg">
+                                </a>
+
+                                <div class="post-image-meta">
+                                    <h3>CSSConf Photos</h3>
+                                </div>
+                            </div>
+
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <a href="http://www.flickr.com/photos/uberlife/8907351301/">
+                                    <img alt="Photo of the sunset on the beach"
+                                         class="pure-img-responsive"
+                                         src="http://farm8.staticflickr.com/7382/8907351301_bd7460cffb.jpg">
+                                </a>
+
+                                <div class="post-image-meta">
+                                    <h3>JSConf Photos</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="Andrew Wooldridge&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/andrew-avatar.png">
+
+                        <h2 class="post-title">YUI 3.10.2 Released</h2>
+
+                        <p class="post-meta">
+                            By <a class="post-author" href="#">Andrew Wooldridge</a> under <a class="post-category post-category-yui" href="#">YUI</a>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            We are happy to announce the release of YUI 3.10.2! You can find it now on the Yahoo! CDN, download it directly, or pull it in via npm. We’ve also updated the YUI Library website with the latest documentation.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="pure-g">
+                <div class="pure-u-1">
+                    {% if pagination %}
+                    <nav role="navigation">
+                        <ul class="cd-pagination no-space move-buttons custom-icons">
+                            {% if hasPrev %}
+                            {% if page > 1 %}
+                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}?p={{page - 1}}">Prev</a>
+                                {% else %}
+                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}">Prev</a>
+                                {% endif %}
+                                {% endif %}
+
+                                {% for i in range(1, maxPage + 1) -%}
+                                {% if i == page %}
+                            <li><a class="current" href="{{ route.teamblog_root + route.teamblog.list }}?p={{i}}">{{i}}</a>
+                                {% else %}
+                            <li><a href="{{ route.teamblog_root + route.teamblog.list }}?p={{i}}">{{i}}</a>
+                                {% endif %}
+                                {%- endfor %}
+
+                                {% if hasNext %}
+                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}?p={{page + 1}}">Next</a>
+                                {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    {# or use like this #}
+                    <nav>
+                        <ul class="pagination">
+                            {% if hasPrev %}
+                            {% if page > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}{{page - 1}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+
+                            {% for i in range(1, maxPage + 1) -%}
+                            {% if i == page %}
+                            <li class="page-item active">
+                                <a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{ i }} <span class="sr-only">(current)</span></a>
+                            </li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                            {%- endfor %}
+
+                            {% if hasNext %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ route.teamblog_root + route.teamblog.list }}{{page + 1}}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+
+            {% include '../../include/footer.html' %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -109,6 +109,7 @@ function updateReply(req, res) {
     };
 
     var mysql = connection.get();
+
     db.writeReply(mysql, req.body.id, replyData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});

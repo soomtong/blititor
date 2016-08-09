@@ -86,9 +86,51 @@ function writeForm(req, res) {
 }
 
 function savePost(req, res) {
+    req.assert('content', 'content is required').len(10).withMessage('Must be 10 chars over').notEmpty();
 
+    var errors = req.validationErrors();
 
-    res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('title').escape();
+    req.sanitize('tags').escape();
+
+    var postData = {
+        user_uuid: req.user.uuid,
+        user_id: req.user.id,
+        nickname: req.user.nickname,
+        flag: req.body.flag ? '1' : '',  // todo: subtract common flag module using bitwise
+        render: req.body.render ? 'M' : '', // 1: markdown, 2: asciidoc
+        title: req.body.title,
+        content: req.body.content,
+        tags: req.body.tags,
+        created_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    // save to guestbook table
+    db.writePost(mysql, postData, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '포스트 저장에 실패했습니다.'});
+
+            winston.error(err);
+
+            res.redirect('back');
+        }
+
+        var post_id = result['insertId'];
+
+        winston.info('Saved post id', post_id);
+
+        req.flash('info', 'Saved Post by ' + (postData.nickname || postData.user_id));
+
+        res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
+    });
 }
 
 function viewPost(req, res) {
@@ -105,7 +147,48 @@ function recentPost(params, callback) {
     });
 }
 
+function indexPage(req, res) {
+    var params = {
+        title: "Home",
+        pinnedPostCount: 2,
+        pinnedPostList: [],
+        recentPostCount: 4,
+        recentPostList: []
+    };
+
+    res.render(BLITITOR.config.site.theme + '/page/index', params);
+
+
+    /*
+     Teamblog.pinnedPost(params, function (error, results) {
+     if (!error) {
+     results.map(function (item) {
+     params.recentPostList.push({
+     title: item['title'],
+     preview: common.getHeaderTextFromMarkdown(item['content'], 200)
+     });
+     });
+     }
+
+     // load recent articles
+     Teamblog.recentPost(params, function (error, results) {
+     if (!error) {
+     results.map(function (item) {
+     params.recentPostList.push({
+     title: item['title'],
+     preview: common.getHeaderTextFromMarkdown(item['content'], 200)
+     });
+     });
+     }
+
+     res.render(BLITITOR.config.site.theme + '/page/index', params);
+     });
+     });
+     */
+}
+
 module.exports = {
+    index: indexPage,
     list: listPost,
     write: writeForm,
     save: savePost,

@@ -1,6 +1,5 @@
 // load packages
 var express = require('express');
-var winston = require('winston');
 
 // load cores
 var misc = require('../../core/lib/misc');
@@ -36,7 +35,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // bind static page
-router.all(routeTable.root, Site.index);
+router.all(routeTable.root, Teamblog.index);
 router.all(routeTable.about, Site.redirect(routeTable.root));
 
 // bind module
