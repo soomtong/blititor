@@ -11,6 +11,7 @@ var misc = require('../../../core/lib/misc');
 var tables = {
     teamblog: common.databaseDefault.prefix + 'teamblog',
     teamblogHistory: common.databaseDefault.prefix + 'teamblog_history',
+    teamblogRelated: common.databaseDefault.prefix + 'teamblog_related',
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
@@ -26,7 +27,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.teamblog, tables.teamblogHistory];
+    var tableList = [tables.teamblog, tables.teamblogHistory, tables.teamblogRelated];
 
     connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
@@ -64,19 +65,29 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         'INDEX created_at(`created_at`), ' +
         'INDEX post_id(`post_id`))';
+    var sql_teamblog_related = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`post_id` int unsigned not null, ' +
+        '`related_post_id` int unsigned not null, ' +
+        '`created_at` datetime, ' +
+        'INDEX related_post_id(`related_post_id`), ' +
+        'INDEX post_id(`post_id`))';
     var sql_fkey_user_id = 'alter table ?? ' +
         'add constraint teamblog_user_id_foreign foreign key (`user_id`) ' +
         'references ?? (`id`)';
 
     connection.query(sql_teamblog, tables.teamblog, function (error, result) {
-        connection.query(sql_teamblog_history, tables.teamblog, function (error, result) {
-            // bind foreign key
-            connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
-                // check dummy json
-                callback && callback(databaseConfiguration, done);
+        connection.query(sql_teamblog_history, tables.teamblogHistory, function (error, result) {
+            connection.query(sql_teamblog_related, tables.teamblogRelated, function (error, result) {
+                // console.log(error, result);
+                // bind foreign key
+                connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
+                    // check dummy json
+                    callback && callback(databaseConfiguration, done);
 
-                // close connection
-                connection.destroy();
+                    // close connection
+                    connection.destroy();
+                });
             });
         });
     });
