@@ -10,6 +10,7 @@ var misc = require('../../../core/lib/misc');
 
 var tables = {
     teamblog: common.databaseDefault.prefix + 'teamblog',
+    teamblogHistory: common.databaseDefault.prefix + 'teamblog_history',
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
@@ -25,7 +26,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.teamblog];
+    var tableList = [tables.teamblog, tables.teamblogHistory];
 
     connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
@@ -48,25 +49,35 @@ function createScheme(databaseConfiguration, callback, done) {
         '`nickname` varchar(64), ' +
         '`flag` varchar(1), ' +
         '`title` varchar(256), ' +
-        '`post` text, ' +
+        '`content` text, ' +
         '`tags` text, ' +
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX created_at(`created_at`), ' +
         'INDEX user_id(`user_id`))';
-
+    var sql_teamblog_history = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`post_id` int unsigned not null, ' +
+        '`title` varchar(256), ' +
+        '`content` text, ' +
+        '`tags` text, ' +
+        '`created_at` datetime, ' +
+        'INDEX created_at(`created_at`), ' +
+        'INDEX post_id(`post_id`))';
     var sql_fkey_user_id = 'alter table ?? ' +
         'add constraint teamblog_user_id_foreign foreign key (`user_id`) ' +
         'references ?? (`id`)';
 
     connection.query(sql_teamblog, tables.teamblog, function (error, result) {
-        // bind foreign key
-        connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
-            // check dummy json
-            callback && callback(databaseConfiguration, done);
+        connection.query(sql_teamblog_history, tables.teamblog, function (error, result) {
+            // bind foreign key
+            connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
+                // check dummy json
+                callback && callback(databaseConfiguration, done);
 
-            // close connection
-            connection.destroy();
+                // close connection
+                connection.destroy();
+            });
         });
     });
 }
@@ -91,7 +102,7 @@ function insertDummy(databaseConfiguration, done) {
                         user_id: author.id,
                         nickname: author.nickname,
                         title: item.title,
-                        post: item.post,
+                        content: item.content,
                         tags: item.tags,
                         created_at: new Date()
                     };
@@ -128,7 +139,7 @@ function getAnyAuthor(connection, callback) {
 
 function selectByPage(connection, page, callback) {
     var pageSize = 5;
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
@@ -162,7 +173,7 @@ function selectByPage(connection, page, callback) {
 }
 
 function selectAllByMonth(connection, year, month, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         teamblogList: []
@@ -184,7 +195,7 @@ function selectAllByMonth(connection, year, month, callback) {
 }
 
 function selectPost(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'post', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
 
     connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);

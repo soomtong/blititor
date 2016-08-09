@@ -9,8 +9,8 @@
         "logLevel": "debug",
         "site": {
             "title": "Plain",
-            "app": "furion",
-            "theme": "furion",
+            "app": "simplestrap",
+            "theme": "simplestrap",
             "adminTheme": "plain",
             "manageTheme": "plain",
             "host": "",

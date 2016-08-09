@@ -30,6 +30,7 @@ function listPost(req, res) {
 
     if (params.month) {
         db.readTeamblogAll(mysql, Number(params.year), Number(params.month), function (err, result) {
+            console.log(result);
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
@@ -40,7 +41,7 @@ function listPost(req, res) {
 
             // render markdown
             result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.post = md.render(item.post);
+                item.content = md.render(item.content);
             });
 
             params.list = result.teamblogList;  // todo: convert markdown to html
@@ -60,7 +61,7 @@ function listPost(req, res) {
 
             // render markdown
             result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.post = md.render(item.post);
+                item.content = md.render(item.content);
             });
 
             params.pagination = true;

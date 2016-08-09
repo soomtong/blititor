@@ -13,6 +13,7 @@ based on plain and pure css framework and their sample
 - full text search
 - manage own post by each owner
 - administrator for manage account
+- version history for each posts
 
 ### Tutorial
 
