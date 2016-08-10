@@ -74,9 +74,10 @@ function getHash(password, callback) {
     }
 }
 
-function getHeaderTextFromMarkdown(markdown, limit) {
+function getHeaderTextFromMarkdown(markdown, limit, joiner) {
     var arr = markdown.split(/\r*\n/), len = arr.length;
     var text = [];
+    var reduced = '';
 
     limit = limit || 30;
 
@@ -90,10 +91,13 @@ function getHeaderTextFromMarkdown(markdown, limit) {
         }
 
         // check count length
-        if (text.join('\n').length > limit) break;
+        if (text.join('\n').length > limit) {
+            reduced = ' ...';
+            break;
+        }
     }
 
-    return text.join('\n').substr(0, limit).trim();
+    return joiner ? text.join(joiner).substr(0, limit).trim() + reduced : text.join('\n').substr(0, limit).trim() + reduced;
 }
 
 function getDatabaseDefault() {

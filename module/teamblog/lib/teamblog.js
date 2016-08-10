@@ -23,11 +23,13 @@ function listPost(req, res) {
     };
 
     var mysql = connection.get();
+/*
     var md = markdownIt({
         breaks: true,
         linkify: true,
         langPrefix: 'language-'
     });
+*/
 
     if (params.month) {
         db.readTeamblogAll(mysql, Number(params.year), Number(params.month), function (err, result) {
@@ -199,8 +201,8 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         item.tags = item.tags.split(',');
     }
     if (item.render && (item.render == 'M' || item.render == 'm')) {
-        item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen);
+        item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
     } else {
-        item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen);
+        item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
     }
 }
