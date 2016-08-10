@@ -71,6 +71,6 @@ nav[role="navigation"] {
 }
 @media only screen and (min-width: 1170px) {
     .cd-pagination {
-        margin: 4em auto 8em;
+        margin: 4em auto 6em;
     }
 }

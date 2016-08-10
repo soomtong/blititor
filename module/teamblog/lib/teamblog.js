@@ -2,6 +2,7 @@ var fs = require('fs');
 var moment = require('moment');
 var winston = require('winston');
 var markdownIt = require('markdown-it');
+var striptags = require('striptags');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -39,10 +40,7 @@ function listPost(req, res) {
                 res.redirect('back');
             }
 
-            // render markdown
-            result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.content = md.render(item.content);
-            });
+            result.teamblogList.map(makePreviewContent);
 
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
@@ -59,10 +57,8 @@ function listPost(req, res) {
                 res.redirect('back');
             }
 
-            // render markdown
-            result.teamblogList.map(function (item) {   // this is sync process, it can be delayed
-                item.content = md.render(item.content);
-            });
+            // render content and this is sync process, it can be delayed
+            result.teamblogList.map(makePreviewContent);
 
             params.pagination = true;
             params.hasNext = result.total > (result.page + 1) * result.pageSize;
@@ -195,3 +191,16 @@ module.exports = {
     view: viewPost,
     recentPost: recentPost
 };
+
+function makePreviewContent (item) {   // this is sync process, it can be delayed
+    var previewLen = 200;
+
+    if (item.tags) {
+        item.tags = item.tags.split(',');
+    }
+    if (item.render && (item.render == 'M' || item.render == 'm')) {
+        item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen);
+    } else {
+        item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen);
+    }
+}

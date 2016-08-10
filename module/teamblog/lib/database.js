@@ -152,7 +152,7 @@ function getAnyAuthor(connection, callback) {
 
 function selectByPage(connection, page, callback) {
     var pageSize = 5;
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
@@ -186,7 +186,7 @@ function selectByPage(connection, page, callback) {
 }
 
 function selectAllByMonth(connection, year, month, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         teamblogList: []
@@ -207,8 +207,8 @@ function selectAllByMonth(connection, year, month, callback) {
     });
 }
 
-function selectPost(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'created_at', 'updated_at'];
+function selectPostRecently(connection, limit, callback) {
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
 
     connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);
@@ -233,7 +233,7 @@ module.exports = {
     insertDummy: insertDummy,
     readTeamblogByPage: selectByPage,
     readTeamblogAll: selectAllByMonth,
-    readTeamblogRecently: selectPost,
+    readTeamblogRecently: selectPostRecently,
     writePost: insertPost,
     updatePost: updatePost,
     option: {
