@@ -132,7 +132,10 @@ router
       │    └── router                              *                                                           
       │        router                                                                                          
       │         ├── exposeLocals                   *                                                           
-      │         ├── bound dispatch                 /post/:postNumber                                           GET
+      │         ├── bound dispatch                 /post/:postNumber([0-9]+)                                   GET
+      │         │    └── viewPost                  /                                                           GET
+      │         │   
+      │         ├── bound dispatch                 /post/:postTitle                                            GET
       │         │    └── viewPost                  /                                                           GET
       │         │   
       │         ├── bound dispatch                 /blog/write                                                 GET
@@ -146,10 +149,10 @@ router
       │         ├── bound dispatch                 /blog/                                                      GET
       │         │    └── listPost                  /                                                           GET
       │         │   
-      │         ├── bound dispatch                 /blog/:page                                                 GET
+      │         ├── bound dispatch                 /blog/:page([0-9]+)                                         GET
       │         │    └── listPost                  /                                                           GET
       │         │   
-      │         └── bound dispatch                 /blog/:year/:month                                          GET
+      │         └── bound dispatch                 /blog/:year([0-9]+)/:month([0-9]+)                          GET
       │              └── listPost                  /                                                           GET
       │             
       │        

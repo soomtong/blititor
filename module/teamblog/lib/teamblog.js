@@ -23,17 +23,15 @@ function listPost(req, res) {
     };
 
     var mysql = connection.get();
-/*
-    var md = markdownIt({
-        breaks: true,
-        linkify: true,
-        langPrefix: 'language-'
-    });
-*/
+
+    var defaultYear = moment().format('YYYY');
+    var defaultMonth = moment().format('MM');
+
+    if (Number(params.year) < 1000 || Number(params.year) > 3000) params.year = defaultYear;
+    if (Number(params.month) < 0 || Number(params.month) > 12) params.month = defaultMonth;
 
     if (params.month) {
-        db.readTeamblogAll(mysql, Number(params.year), Number(params.month), function (err, result) {
-            console.log(result);
+        db.readTeamblogAll(mysql, params.year, params.month, function (err, result) {
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
@@ -44,13 +42,14 @@ function listPost(req, res) {
 
             result.teamblogList.map(makePreviewContent);
 
+            params.count = result.postGroupList[0].count;
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
             res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
         });
     } else {
-        db.readTeamblogByPage(mysql, Number(params.page - 1), function (err, result) {
+        db.readTeamblogByPage(mysql, params.page - 1, function (err, result) {
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
@@ -63,6 +62,7 @@ function listPost(req, res) {
             result.teamblogList.map(makePreviewContent);
 
             params.pagination = true;
+            params.totalCount = result.total;
             params.hasNext = result.total > (result.page + 1) * result.pageSize;
             params.hasPrev = result.page > 0;
             params.maxPage = result.maxPage + 1;

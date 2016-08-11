@@ -13,7 +13,16 @@
         <div>
             <!-- A wrapper for all the blog posts -->
             <div class="posts">
-                <h1 class="content-subhead" style="text-align:right">Total 32 Posts or 12 Posts in this Category</h1>
+                {% if totalCount and count %}
+                <h1 class="content-subhead" style="text-align:right">Total {{totalCount}} Posts and {{count}} Posts in this Category</h1>
+                {% else %}
+                {% if totalCount %}
+                <h1 class="content-subhead" style="text-align:right">Total {{totalCount}} Posts</h1>
+                {% endif %}
+                {% if count %}
+                <h1 class="content-subhead" style="text-align:right">{{count}} Posts in this Category</h1>
+                {% endif %}
+                {% endif %}
 
                 <section class="post">
                     <header class="post-header">
