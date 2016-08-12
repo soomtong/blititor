@@ -151,7 +151,7 @@ function insertAccountActionLog(connection, logData, callback) {
 
 function updateAccountCounter(connection, counterData, callback) {
     connection.query(query.selectByDate, [tables.accountCounter, counterData.date], function (error, rows) {
-        if (rows[0] && rows[0].id) {
+        if (!error && rows[0] && rows[0].id) {
             connection.query(query.updateCounterByDate, [tables.accountCounter, counterData.type, counterData.type, counterData.date], function (error, result) {
                 callback(error, result);
             });
@@ -171,7 +171,7 @@ function insertPageViewLog(connection, logData, callback) {
 
 function updatePageCounter(connection, counterData, callback) {
     connection.query(query.selectByDateWithPath, [tables.visitCounter, counterData.date, counterData.path], function (error, rows) {
-        if (rows[0] && rows[0].id) {
+        if (!error && rows[0] && rows[0].id) {
             connection.query(query.updateCounterByDateWithPath, [tables.visitCounter, counterData.date, counterData.path], function (error, result) {
                 callback(error, result);
             });

@@ -1,8 +1,17 @@
+.post .post-title a {
+    color: #222;
+}
+.post .post-title a:hover {
+    color: #555;
+}
+.post .post-date {
+    margin: auto .5em;
+}
+
 .alert {
     padding: 1em;
     margin: 1em 0 0.5em;
 }
-
 .alert-login {
     color: #ffffff;
     border: 1px solid #DF7514;

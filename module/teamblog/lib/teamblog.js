@@ -196,7 +196,12 @@ module.exports = {
 
 function makePreviewContent (item) {   // this is sync process, it can be delayed
     var previewLen = 200;
-
+    if (item.created_at) {
+        item.created_at = moment(item.created_at).fromNow()
+    }
+    if (item.updated_at) {
+        item.updated_at = moment(item.updated_at).fromNow()
+    }
     if (item.tags) {
         item.tags = item.tags.split(',');
     }

@@ -47,16 +47,18 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="/{{site.theme}}/common/asset/ericf-avatar.png">
 
-                        <h2 class="post-title">{{item.title}}</h2>
+                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
 
                         <p class="post-meta">
-                            By <a class="post-author" href="#">{{item.nickname}}</a>
+                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
                             {% if item.tags %}
                             under
                             {% for tag in item.tags %}
-                            <a class="post-category post-category-js" href="#">{{tag}}</a>
+                            <a class="post-category post-category-js" href="/tag/{{tag}}">{{tag}}</a>
                             {% endfor %}
                             {% endif %}
+                            <span class="post-date">{{item.created_at}}</span>
+                            <span class="post-date">{{item.updated_at}}</span>
                         </p>
                     </header>
 
@@ -112,7 +114,7 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="Andrew Wooldridge&#x27;s avatar" height="48" width="48" src="/{{site.theme}}/common/asset/andrew-avatar.png">
 
-                        <h2 class="post-title">YUI 3.10.2 Released</h2>
+                        <h2 class="post-title"><a href="#">YUI 3.10.2 Released</a></h2>
 
                         <p class="post-meta">
                             By <a class="post-author" href="#">Andrew Wooldridge</a> under <a class="post-category post-category-yui" href="#">YUI</a>
