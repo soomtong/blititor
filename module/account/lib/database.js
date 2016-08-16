@@ -190,6 +190,14 @@ function selectByUUID(connection, uuid, callback) {
     });
 }
 
+function selectByAuthID(connection, authID, callback) {
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+
+    connection.query(query.selectByAuthID, [field, tables.user, authID], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
 function selectByNickname(connection, nickname, callback) {
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
@@ -243,10 +251,11 @@ module.exports = {
     readAccountByNickname: selectByNickname,
     readAccountByID: selectByID,
     readAccountByUUID: selectByUUID,
+    readAccountByAuthID: selectByAuthID,
     readAuthByUserID: selectByUserID,
+    readAuthIDByUUID: selectAuthIDByUUID,
     writeAuth: insertAuth,
     writeAccount: insertAccount,
-    readAuthIDByUUID: selectAuthIDByUUID,
     updateAccountByUUID: updateByUUID,
     updateAuthByID: updateAuthByID,
     option: {

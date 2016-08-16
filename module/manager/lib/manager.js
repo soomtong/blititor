@@ -74,7 +74,7 @@ function loginProcess(req, res) {
                 return res.redirect('back');
             } else {
                 // retrieve with auth
-                account.findByID(auth.id, function (error, userData) {
+                account.findByAuthID(auth.id, function (error, userData) {
                     var user = {
                         id: userData.id,
                         uuid: userData.uuid,

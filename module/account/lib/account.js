@@ -41,6 +41,19 @@ function findByUUID(UUID, callback) {
     });
 }
 
+function findByAuthID(authID, callback) {
+    var mysql = connection.get();
+
+    db.readAccountByAuthID(mysql, authID, function (err, account) {
+        if (err || !account) {
+            // return Error("Can't Find by This authID");
+            return callback(err, null);
+        }
+
+        callback(err, account);
+    });
+}
+
 function authByUserID(userID, callback) {
     var mysql = connection.get();
 
@@ -481,5 +494,6 @@ module.exports = {
     checkToken: checkToken,
     authByUserID: authByUserID,
     findByID: findByID,
-    findByUUID: findByUUID
+    findByUUID: findByUUID,
+    findByAuthID: findByAuthID
 };

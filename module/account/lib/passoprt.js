@@ -65,12 +65,14 @@ function loginSuccess(req, res, next) {
     winston.verbose('Log in process done');
 
     // insert login logging
-    var user = req.user;
+    var auth_id = req.user.id;
 
-    account.insertLastLog(user.uuid, user.login_counter);
+    account.findByAuthID(auth_id, function (error, user) {
+        account.insertLastLog(user.uuid, user.login_counter);
 
-    var agent = useragent.parse(req.headers['user-agent']);
-    counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+        var agent = useragent.parse(req.headers['user-agent']);
+        counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+    });
 
     // Issue a remember me cookie if the option was checked
     if (!req.body.remember_me) { return next(); }
