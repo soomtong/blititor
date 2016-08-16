@@ -53,6 +53,24 @@ function authByUserID(userID, callback) {
     });
 }
 
+function insertLastLog(uuid, loginCounter) {
+    var userData = {
+        last_logged_at: new Date(),
+        login_counter: loginCounter + 1
+    };
+
+    var mysql = connection.get();
+
+    db.updateAccountByUUID(mysql, userData, uuid, function (err, result) {
+        if (err) {
+            winston.error(err);
+            return;
+        }
+
+        winston.verbose('Updated last logged info into `user` table record:', uuid);
+    });
+}
+
 function register(req, res) {
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
     req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
@@ -82,10 +100,11 @@ function register(req, res) {
         db.writeAuth(mysql, authData, function (err, result) {
             if (err) {
                 req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
+                req.flash('error', {msg: err.toString()});
 
-                winston.error(error);
+                winston.error(err);
 
-                res.redirect('back');
+                return res.redirect('back');
             }
 
             var auth_id = result['insertId'];
@@ -406,22 +425,39 @@ function signOut(req, res) {
     winston.info('signed out');
 }
 
-function insertLastLog(uuid, loginCounter) {
-    var userData = {
-        last_logged_at: new Date(),
-        login_counter: loginCounter + 1
+// check for available auth id or nickname, etc
+function checkToken(req, res) {
+    var params = {
+        type: req.query('type'),
+        email: req.body.email,
+        nickname: req.body.nickname
     };
 
     var mysql = connection.get();
 
-    db.updateAccountByUUID(mysql, userData, uuid, function (err, result) {
-        if (err) {
-            winston.error(err);
-            return;
-        }
+    switch (params.type) {
+        case 'u':
+            db.readAuthByUserID(mysql, params.email, function (err, auth) {
+                if (err || !auth) {
+                    // return Error("Can't Auth by This userID");
+                    return res.send({result: true, ok: true})
+                }
+            });
 
-        winston.verbose('Updated last logged info into `user` table record:', uuid);
-    });
+            break;
+
+        case 'n':
+            db.readAccountByNickname(mysql, params.nickname, function (err, user) {
+                if (err || !user) {
+                    // return Error("Can't Auth by This userID");
+                    return res.send({result: true, ok: true})
+                }
+            });
+
+            break;
+    }
+
+    res.send({result: false, ok: false});
 }
 
 module.exports = {
@@ -433,6 +469,7 @@ module.exports = {
     signIn: signIn,
     signUp: signUp,
     signOut: signOut,
+    checkToken: checkToken,
     authByUserID: authByUserID,
     findByID: findByID,
     findByUUID: findByUUID

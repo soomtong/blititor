@@ -190,6 +190,14 @@ function selectByUUID(connection, uuid, callback) {
     });
 }
 
+function selectByNickname(connection, nickname, callback) {
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+
+    connection.query(query.selectByUUID, [field, tables.user, nickname], function (err, rows) {
+        callback(err, rows[0]);
+    });
+}
+
 function selectByUserID(connection, userID, callback) {
     var field = ['id', 'user_id', 'user_password'];
 
@@ -232,6 +240,7 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
+    readAccountByNickname: selectByNickname,
     readAccountByID: selectByID,
     readAccountByUUID: selectByUUID,
     readAuthByUserID: selectByUserID,

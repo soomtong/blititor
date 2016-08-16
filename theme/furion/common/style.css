@@ -10,7 +10,7 @@
 
 .alert {
     padding: 1em;
-    margin: 1em 0 0.5em;
+    margin: .5em 0;
 }
 .alert-login {
     color: #ffffff;

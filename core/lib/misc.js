@@ -61,6 +61,7 @@ function getRouteTable() {
             "signIn": "/sign-in",
             "signUp": "/sign-up",
             "signOut": "/sign-out",
+            "checkToken": "/check-token",
             "login": "/login",
             "register": "/register",
             "registerSimple": "/register-simple",

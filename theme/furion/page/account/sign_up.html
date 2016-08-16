@@ -1,81 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/header.html' %}
+    {% include '../../include/head.html' %}
 </head>
 <body>
+<div id="layout" class="pure-g">
 
-<div class="container">
-    <div class="header clearfix">
+    {% include '../../include/menu.html' %}
 
-        {% include '../include/menu.html' %}
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <div class="form">
 
-    </div>
+                <h1 class="content-subhead">Sign Up</h1>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="bg-guest-form-holder">
+                <form class="pure-form pure-form-stacked" method="post" action="{{ route.account_root + route.account.register }}">
+                    <fieldset class="post-meta">
 
-                <h4>Sign Up</h4>
-                <form method="post" action="{{ route.account_root + route.account.register }}">
-                    <fieldset class="form-group">
-                        <label for="exampleInputName">Screen Name</label>
-                        <input name="nickname" type="text" class="form-control" id="exampleInputName" placeholder="Enter screen name">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="exampleInputEmail1">User ID</label>
-                        <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                        <small class="text-muted">We'll never share your email with anyone else.</small>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <label for="nickname">Screen Name</label>
+                                <input id="nickname" name="nickname" class="pure-u-23-24" type="text" placeholder="Enter screen name">
+                            </div>
+
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <label for="id">User ID</label>
+                                <input id="id" name="email" class="pure-u-23-24" type="email" placeholder="Username(Email Address)">
+                            </div>
+
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <label for="password">Password</label>
+                                <input id="password" name="password" type="password" placeholder="Password" class="pure-u-23-24">
+                            </div>
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <label for="password_check">Password Confirm</label>
+                                <input id="password_check" name="password_check" type="password" placeholder="Once More" class="pure-u-23-24">
+                            </div>
+                        </div>
+
                     </fieldset>
 
                     {% if message.error %}
                     {% for error in message.error %}
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-login">
                         <strong>Warning!</strong> {{ error.msg }}
                     </div>
                     {% endfor %}
                     {% endif %}
 
-                    <fieldset class="form-group">
-                        <input name="password_check" type="password" class="form-control" id="exampleInputPassword2" placeholder="Once More">
-                    </fieldset>
-
-                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                    <button type="submit" class="pure-button pure-button-primary">Sign Up</button>
                 </form>
+
             </div>
+
+            <!-- A wrapper for all the blog posts -->
+            {% include '../../include/footer.html' %}
         </div>
     </div>
-
-    <hr>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-            <h5>Blog heroes</h5>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-            <ul>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-            </ul>
-        </div>
-    </div>
-
-    {% include '../include/footer.html' %}
-
 </div>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

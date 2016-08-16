@@ -112,6 +112,9 @@ router
       │    │    ├── bound dispatch                 /sign-out                                                   GET
       │    │    │    └── signOut                   /                                                           GET
       │    │    │   
+      │    │    ├── bound dispatch                 /check-token                                                POST
+      │    │    │    └── checkToken                /                                                           POST
+      │    │    │   
       │    │    ├── bound dispatch                 /login                                                      POST
       │    │    │    ├── authenticate              /                                                           POST
       │    │    │    ├── loginSuccess              /                                                           POST

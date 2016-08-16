@@ -5,7 +5,7 @@ based on plain and pure css framework and their sample
 - multi user author
 - tag support
 - categorize by date or month
-- custom title url (like dev.mozilla)
+- custom title url (like hacks.mozilla)
 - dropbox paper like online editor (hybrid) 
 - version history for each posts
 - bind related posts (can select other posts in searched list)

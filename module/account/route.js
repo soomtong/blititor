@@ -23,6 +23,7 @@ router.use(middleware.exposeLocals);
 router.get(routeTable.account.signIn, account.signIn);
 router.get(routeTable.account.signUp, middleware.checkLoggedSession, account.signUp);
 router.get(routeTable.account.signOut, account.signOut);
+router.post(routeTable.account.checkToken, account.checkToken);
 
 router.post(routeTable.account.login, Passport.authenticate('local', {
         failureRedirect: routeTable.account_root + routeTable.account.signIn,
