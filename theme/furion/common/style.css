@@ -31,3 +31,7 @@
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+.form-description {
+    margin-top: 2em;
+}
