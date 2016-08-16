@@ -2,6 +2,7 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var moment = require('moment');
 var winston = require('winston');
+var useragent = require('useragent');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -143,6 +144,8 @@ function register(req, res) {
                     grant: userData.grant
                 };
 
+                counter.insertSessionCounter(token.account.join);
+
                 req.logIn(user, function (err) {
                     if (err) {
                         req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
@@ -151,6 +154,12 @@ function register(req, res) {
 
                         return res.redirect('back');
                     }
+
+                    // insert login logging
+                    insertLastLog(user.uuid, userData.login_counter);
+
+                    var agent = useragent.parse(req.headers['user-agent']);
+                    counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                     res.redirect('/');
                 });
@@ -188,7 +197,7 @@ function registerSimpleForTest(req, res) {
             if (err) {
                 req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
-                winston.error(error);
+                winston.error(err);
 
                 res.redirect('back');
             }

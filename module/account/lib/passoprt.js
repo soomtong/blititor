@@ -1,8 +1,13 @@
 var winston = require('winston');
 var bcrypt = require('bcrypt');
+var useragent = require('useragent');
 
+var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
+var counter = require('../../counter');
 var account = require('./account');
+
+var token = misc.commonToken();
 
 function authenticate(userID, password, done) {
 /*  no need it, it checked by passport system. and that print out with `badRequestMessage` parameter
@@ -58,6 +63,15 @@ function deserialize(uuid, done) {
 
 function loginSuccess(req, res, next) {
     winston.verbose('Log in process done');
+
+    // insert login logging
+    var user = req.user;
+
+    account.insertLastLog(user.uuid, user.login_counter);
+
+    var agent = useragent.parse(req.headers['user-agent']);
+    counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+
     // Issue a remember me cookie if the option was checked
     if (!req.body.remember_me) { return next(); }
 
