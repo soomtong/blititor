@@ -20,6 +20,13 @@ router.use(middleware.checkDatabase);
 // router.use(application.exposeMenu);     // moved to own app's router
 router.use(application.route);
 
+// Extension
+if (BLITITOR.env == 'development') { // Only in dev environment
+    var statusMonitor = require('express-status-monitor');
+
+    router.use(statusMonitor({path: '/system/status'}));
+}
+
 // Handle 404
 router.use(function _404Handler(req, res, next){
     res.status(404);
