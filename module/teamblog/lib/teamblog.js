@@ -13,6 +13,32 @@ var query = require('./query');
 
 var routeTable = misc.getRouteTable();
 
+function indexPage(req, res) {
+    var params = {
+        title: "Home",
+        pinnedPostCount: 2,
+        pinnedPostList: [],
+        recentPostCount: 4,
+        recentPostList: []
+    };
+
+    pinnedPost(params, function (error, results) {
+        if (!error) {
+            params.pinnedPostList = results;
+            params.pinnedPostList.map(makePreviewContent);
+        }
+
+        recentPost(params, function (error, results) {
+            if (!error) {
+                params.recentPostList = results;
+                params.recentPostList.map(makePreviewContent);
+            }
+
+            res.render(BLITITOR.config.site.theme + '/page/index', params);
+        });
+    });
+}
+
 function listPost(req, res) {
     var params = {
         title: '팀블로그',
@@ -145,44 +171,12 @@ function recentPost(params, callback) {
     });
 }
 
-function indexPage(req, res) {
-    var params = {
-        title: "Home",
-        pinnedPostCount: 2,
-        pinnedPostList: [],
-        recentPostCount: 4,
-        recentPostList: []
-    };
+function pinnedPost(params, callback) {
+    var mysql = connection.get();
 
-    res.render(BLITITOR.config.site.theme + '/page/index', params);
-
-
-    /*
-     Teamblog.pinnedPost(params, function (error, results) {
-     if (!error) {
-     results.map(function (item) {
-     params.recentPostList.push({
-     title: item['title'],
-     preview: common.getHeaderTextFromMarkdown(item['content'], 200)
-     });
-     });
-     }
-
-     // load recent articles
-     Teamblog.recentPost(params, function (error, results) {
-     if (!error) {
-     results.map(function (item) {
-     params.recentPostList.push({
-     title: item['title'],
-     preview: common.getHeaderTextFromMarkdown(item['content'], 200)
-     });
-     });
-     }
-
-     res.render(BLITITOR.config.site.theme + '/page/index', params);
-     });
-     });
-     */
+    db.readTeamblogPinned(mysql, params.pinnedPostCount, function (err, result) {
+        callback(err, result);
+    });
 }
 
 module.exports = {
@@ -191,6 +185,7 @@ module.exports = {
     write: writeForm,
     save: savePost,
     view: viewPost,
+    pinnedPost: pinnedPost,
     recentPost: recentPost
 };
 

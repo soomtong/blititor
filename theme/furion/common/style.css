@@ -7,6 +7,18 @@
 .post .post-date {
     margin: auto .5em;
 }
+.post-category-1 {
+    background: #5aba59;
+}
+.post-category-2 {
+    background: #4d85d1;
+}
+.post-category-3 {
+    background: #8156a7;
+}
+.post-category-4 {
+    background: #df2d4f;
+}
 
 .alert {
     padding: 1em;

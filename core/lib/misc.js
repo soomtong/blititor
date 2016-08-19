@@ -133,6 +133,14 @@ function commonToken() {
     }
 }
 
+function commonFlag() {
+    return {
+        post: {
+            pinned: {id: 'pinned_post', value: 'P'}
+        }
+    }
+}
+
 function showRouteTable() {
     winston.info("\x1B[32mload default route table \033[0m");
 
@@ -146,6 +154,7 @@ module.exports = {
     setRouteTable: setRouteTable,
     setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
+    commonFlag: commonFlag,
     commonToken: commonToken,
     showRouteTable: showRouteTable
 };

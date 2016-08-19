@@ -32,10 +32,66 @@
                         </p>
                     </div>
                 </section>
+
+                {% for item in pinnedPostList %}
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="/{{site.theme}}/common/asset/ericf-avatar.png">
+
+                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
+
+                        <p class="post-meta">
+                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
+                            {% if item.tags %}
+                            under
+                            {% for tag in item.tags %}
+                            <a class="post-category post-category-{{loop.index % 4}}" href="/tag/{{tag}}">{{tag}}</a>
+                            {% endfor %}
+                            {% endif %}
+                            <span class="post-date">{{item.created_at}}</span>
+                            <span class="post-date">{{item.updated_at}}</span>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            {{item.preview | safe}}
+                        </p>
+                    </div>
+                </section>
+                {% endfor %}
             </div>
 
             <div class="posts">
                 <h1 class="content-subhead">Recent Posts</h1>
+
+                {% for item in recentPostList %}
+                <section class="post">
+                    <header class="post-header">
+                        <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="/{{site.theme}}/common/asset/ericf-avatar.png">
+
+                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
+
+                        <p class="post-meta">
+                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
+                            {% if item.tags %}
+                            under
+                            {% for tag in item.tags %}
+                            <a class="post-category post-category-js" href="/tag/{{tag}}">{{tag}}</a>
+                            {% endfor %}
+                            {% endif %}
+                            <span class="post-date">{{item.created_at}}</span>
+                            <span class="post-date">{{item.updated_at}}</span>
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            {{item.preview | safe}}
+                        </p>
+                    </div>
+                </section>
+                {% endfor %}
 
                 <section class="post">
                     <header class="post-header">

@@ -8,6 +8,8 @@ var winston = require('winston');
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
+var postFlag = misc.commonFlag().post;
+
 var tables = {
     teamblog: common.databaseDefault.prefix + 'teamblog',
     teamblogHistory: common.databaseDefault.prefix + 'teamblog_history',
@@ -210,7 +212,15 @@ function selectPostRecently(connection, limit, callback) {
 
     connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);
-    })
+    });
+}
+
+function selectPostPinned(connection, limit, callback) {
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
+
+    connection.query(query.readTeamblogPinned, [fields, tables.teamblog, postFlag.pinned.value, Number(limit)], function (err, rows) {
+        callback(err, rows);
+    });
 }
 
 function insertPost(connection, teamblogData, callback) {
@@ -232,6 +242,7 @@ module.exports = {
     readTeamblogByPage: selectByPage,
     readTeamblogAll: selectAllByMonth,
     readTeamblogRecently: selectPostRecently,
+    readTeamblogPinned: selectPostPinned,
     writePost: insertPost,
     updatePost: updatePost,
     option: {
