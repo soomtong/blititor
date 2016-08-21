@@ -8,7 +8,8 @@ var siteThemeType = misc.siteThemeType();
 // bind common parameters
 function exposeLocals(req, res, next) {
     res.locals.site = {
-        theme: BLITITOR.config.site.url_prefix + BLITITOR.config.site.theme,
+        root: BLITITOR.config.site.url_prefix, // url_prefix shouldn't end with '/'
+        theme: BLITITOR.config.site.url_prefix + '/' +BLITITOR.config.site.theme,
         themeType: siteThemeType,
         title: BLITITOR.config.site.title,
         url: req.path

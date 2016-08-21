@@ -14,7 +14,7 @@
             "adminTheme": "plain",
             "manageTheme": "plain",
             "host": "",
-            "url_prefix": "/",
+            "url_prefix": "",
             "port": 3010
         },
         "databaseConfig": "database.json",

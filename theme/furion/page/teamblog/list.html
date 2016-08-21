@@ -47,10 +47,10 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="{{site.theme}}/common/asset/ericf-avatar.png">
 
-                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
+                        <h2 class="post-title"><a href="{{site.root}}/post/{{item.id}}">{{item.title}}</a></h2>
 
                         <p class="post-meta">
-                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
+                            By <a class="post-author" href="{{site.root}}/author/{{item.user_id}}">{{item.nickname}}</a>
                             {% if item.tags %}
                             under
                             {% for tag in item.tags %}
@@ -136,22 +136,22 @@
                         <ul class="cd-pagination no-space move-buttons custom-icons">
                             {% if hasPrev %}
                             {% if page > 1 %}
-                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}{{page - 1}}">Prev</a></li>
+                            <li class="button"><a href="{{site.root}}{{ route.teamblog_root + route.teamblog.list }}{{page - 1}}">Prev</a></li>
                             {% else %}
-                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}">Prev</a></li>
+                            <li class="button"><a href="{{site.root}}{{ route.teamblog_root + route.teamblog.list }}">Prev</a></li>
                             {% endif %}
                             {% endif %}
 
                             {% for i in range(1, maxPage + 1) -%}
                             {% if i == page %}
-                            <li><a class="current" href="{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{i}}</a></li>
+                            <li><a class="current" href="{{site.root}}{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{i}}</a></li>
                             {% else %}
-                            <li><a href="{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{i}}</a></li>
+                            <li><a href="{{site.root}}{{ route.teamblog_root + route.teamblog.list }}{{ i }}">{{i}}</a></li>
                             {% endif %}
                             {%- endfor %}
 
                             {% if hasNext %}
-                            <li class="button"><a href="{{ route.teamblog_root + route.teamblog.list }}{{page + 1}}">Next</a></li>
+                            <li class="button"><a href="{{site.root}}{{ route.teamblog_root + route.teamblog.list }}{{page + 1}}">Next</a></li>
                             {% endif %}
                         </ul>
                     </nav>

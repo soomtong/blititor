@@ -38,10 +38,10 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="{{site.theme}}/common/asset/ericf-avatar.png">
 
-                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
+                        <h2 class="post-title"><a href="{{site.root}}/post/{{item.id}}">{{item.title}}</a></h2>
 
                         <p class="post-meta">
-                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
+                            By <a class="post-author" href="{{site.root}}/author/{{item.user_id}}">{{item.nickname}}</a>
                             {% if item.tags %}
                             under
                             {% for tag in item.tags %}
@@ -70,14 +70,14 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="{{item.nickname}}" height="48" width="48" src="{{site.theme}}/common/asset/ericf-avatar.png">
 
-                        <h2 class="post-title"><a href="/post/{{item.id}}">{{item.title}}</a></h2>
+                        <h2 class="post-title"><a href="{{site.root}}/post/{{item.id}}">{{item.title}}</a></h2>
 
                         <p class="post-meta">
-                            By <a class="post-author" href="/author/{{item.user_id}}">{{item.nickname}}</a>
+                            By <a class="post-author" href="{{site.root}}/author/{{item.user_id}}">{{item.nickname}}</a>
                             {% if item.tags %}
                             under
                             {% for tag in item.tags %}
-                            <a class="post-category post-category-js" href="/tag/{{tag}}">{{tag}}</a>
+                            <a class="post-category post-category-js" href="{{site.root}}/tag/{{tag}}">{{tag}}</a>
                             {% endfor %}
                             {% endif %}
                             <span class="post-date">{{item.created_at}}</span>
