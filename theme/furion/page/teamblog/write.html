@@ -18,7 +18,7 @@
 
                 <!-- A single blog post -->
                 <section class="post">
-                    <form class="pure-form pure-form-stacked" id="message_form" method="post" action="{{ route.teamblog_root + route.teamblog.write }}">
+                    <form class="pure-form pure-form-stacked" id="message_form" method="post" action="{{ site.root }}{{ route.teamblog_root + route.teamblog.write }}">
                         <fieldset class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" class="pure-u-1" id="title" placeholder="Title">

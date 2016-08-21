@@ -50,7 +50,7 @@
                 {% endif %}
 
                 <h4 style="margin-top: 2em;">Update</h4>
-                <form method="post" action="{{ route.account_root + route.account.updateInfo }}" enctype="multipart/form-data">
+                <form method="post" action="{{ site.root }}{{ route.account_root + route.account.updateInfo }}" enctype="multipart/form-data">
                     <fieldset class="form-group">
                         <label for="exampleInputName">Screen Name</label>
                         <input name="nickname" type="text" class="form-control" id="exampleInputName" value="{{ userInfo.nickname }}">
