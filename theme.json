@@ -1,6 +1,6 @@
 {
-    "appTheme": "furion",
-    "siteTheme": "furion",
+    "appTheme": "plain",
+    "siteTheme": "plain",
     "adminTheme": "plain",
     "manageTheme": "plain"
 }

@@ -8,7 +8,7 @@ var siteThemeType = misc.siteThemeType();
 // bind common parameters
 function exposeLocals(req, res, next) {
     res.locals.site = {
-        theme: BLITITOR.config.site.theme,
+        theme: BLITITOR.config.site.url_prefix + BLITITOR.config.site.theme,
         themeType: siteThemeType,
         title: BLITITOR.config.site.title,
         url: req.path
