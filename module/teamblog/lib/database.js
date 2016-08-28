@@ -50,8 +50,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
         '`nickname` varchar(64), ' +
-        '`flag` varchar(1), ' +
-        '`render` varchar(1), ' +
+        '`flag` varchar(8), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
         '`tags` text, ' +
@@ -111,11 +110,20 @@ function insertDummy(databaseConfiguration, done) {
                 var dummy = require('./dummy.json');
 
                 var iteratorAsync = function (item, callback) {
+                    var flag = '';
+
+                    if (item.render) {
+                        flag = flag.concat(postFlag.markdown.value);
+                    }
+                    if (item.pinned) {
+                        flag = flag.concat(postFlag.pinned.value);
+                    }
+
                     var teamblogData = {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
-                        render: item.render ? 'M' : '',
+                        flag: flag,
                         title: item.title,
                         content: item.content,
                         tags: item.tags,
@@ -154,7 +162,7 @@ function getAnyAuthor(connection, callback) {
 
 function selectByPage(connection, page, callback) {
     var pageSize = 5;
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
@@ -188,7 +196,7 @@ function selectByPage(connection, page, callback) {
 }
 
 function selectAllByMonth(connection, year, month, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         teamblogList: []
@@ -208,7 +216,7 @@ function selectAllByMonth(connection, year, month, callback) {
 }
 
 function selectPostRecently(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'created_at', 'updated_at'];
 
     connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);
@@ -216,7 +224,7 @@ function selectPostRecently(connection, limit, callback) {
 }
 
 function selectPostPinned(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'render', 'created_at', 'updated_at'];
+    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'created_at', 'updated_at'];
 
     connection.query(query.readTeamblogPinned, [fields, tables.teamblog, postFlag.pinned.value, Number(limit)], function (err, rows) {
         callback(err, rows);

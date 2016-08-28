@@ -12,6 +12,7 @@ var db = require('./database');
 var query = require('./query');
 
 var routeTable = misc.getRouteTable();
+var postFlag = misc.commonFlag().post;
 
 function indexPage(req, res) {
     var params = {
@@ -200,7 +201,8 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
     if (item.tags) {
         item.tags = item.tags.split(',');
     }
-    if (item.render && (item.render == 'M' || item.render == 'm')) {
+
+    if (item.flag && (item.flag.toString().indexOf(postFlag.markdown.value) !== -1)) {
         item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
     } else {
         item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');

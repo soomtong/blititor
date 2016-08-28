@@ -136,7 +136,9 @@ function commonToken() {
 function commonFlag() {
     return {
         post: {
-            pinned: {id: 'pinned_post', value: 'P'}
+            pinned: {id: 'pinned_post', value: 'P'},
+            markdown: {id: 'markdown_post', value: 'M'},
+            headedPicture: {id: 'picture_headed_post', value: 'H'}
         }
     }
 }

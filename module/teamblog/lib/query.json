@@ -7,7 +7,7 @@
   "readTeamblogByPage": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "readTeamblogMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
   "readTeamblogRecently": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?",
-  "readTeamblogPinned": "SELECT ?? FROM ?? WHERE LOCATE(UPPER(?), UPPER(`flag`)) ORDER BY `id` DESC LIMIT ?",
+  "readTeamblogPinned": "SELECT ?? FROM ?? WHERE LOCATE(?, `flag`) ORDER BY `id` DESC LIMIT ?",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
