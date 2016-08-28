@@ -12,6 +12,37 @@
 - silly: 5
 
 
+### json result convention
+
+need to define result or post parameter structure
+
+it referred [JSON API Format](http://jsonapi.org/format/) document and [JSend Spec](https://labs.omniti.com/labs/jsend) document
+
+```json
+{
+    "status": "fail",
+    "data": "result data"
+}
+```
+
+or 
+
+```json
+{
+    "status": "success",
+    "data": { "title": "some values" } 
+}
+```
+
+or
+
+```json
+{
+    "status" : "error",
+    "message" : "Unable to communicate with database"
+}
+```
+
 ### session counter
 
 > sometime we need to implement own session counter.
@@ -22,9 +53,9 @@ it's name is express-mysql-session.
 but there is no checker or callback when a new session created. 
 and that store module saves only it's session with simple mysql query.
 
-I was forking that repo. and digged a little. but it related with express session system. 
+I was forking that repo. and dug a little. but it related with express session system. 
 when i found that, i stopped modifying. 
-because it's better to keep simple and separeted alone each libraries than to update perfect with hacking something.
+because it's better to keep simple and separated alone each libraries than to update perfect with hacking something.
 
 finally, i decided to make a helper module in the counter system.
 just make one more database table and some code in it.
@@ -158,6 +189,7 @@ correct
 /account/signin
 ```
 
+
 ## theme
 
 each theme include setup, admin (manager), site, board. and have fallback if not exist these folders
@@ -174,7 +206,8 @@ manage
 : manager
 
 
-## MariaDB
+
+## MariaDB with Sphinx
 
 $ mysql.server start
 

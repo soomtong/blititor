@@ -1,8 +1,8 @@
 .post .post-title a {
-    color: #222;
+    color: #303030;
 }
 .post .post-title a:hover {
-    color: #555;
+    color: #202020;
 }
 .post .post-date {
     margin: auto .5em;

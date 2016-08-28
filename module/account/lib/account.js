@@ -462,7 +462,7 @@ function checkToken(req, res) {
             db.readAuthByUserID(mysql, params.email, function (err, auth) {
                 if (err || !auth) {
                     // return Error("Can't Auth by This userID");
-                    return res.send({result: true, ok: true})
+                    return res.send({status: "success", data: err})
                 }
             });
 
@@ -472,14 +472,14 @@ function checkToken(req, res) {
             db.readAccountByNickname(mysql, params.nickname, function (err, user) {
                 if (err || !user) {
                     // return Error("Can't Auth by This userID");
-                    return res.send({result: true, ok: true})
+                    return res.send({status: "success", data: err})
                 }
             });
 
             break;
     }
 
-    res.send({result: false, ok: false});
+    res.send({status: "fail", result: params});
 }
 
 module.exports = {
