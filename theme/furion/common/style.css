@@ -19,6 +19,9 @@
 .post-category-4 {
     background: #df2d4f;
 }
+.post-description .post-image-meta h3 {
+    margin-top: 0.5em;
+}
 
 .alert {
     padding: 1em;

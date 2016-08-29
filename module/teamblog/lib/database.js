@@ -19,6 +19,8 @@ var tables = {
 
 var query = require('./query');
 
+var fields_teamblog = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'header_imgs', 'flag', 'pinned', 'created_at', 'updated_at'];
+
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
@@ -53,6 +55,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`title` varchar(256), ' +
         '`content` text, ' +
         '`tags` text, ' +
+        '`header_imgs` varchar(256), ' +    // presented json type array
         '`flag` varchar(8), ' +
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
         '`created_at` datetime, ' +
@@ -112,10 +115,14 @@ function insertDummy(databaseConfiguration, done) {
                 var dummy = require('./dummy.json');
 
                 var iteratorAsync = function (item, callback) {
-                    var flag = '';
+                    var flag = '', header_imgs = '';
 
                     if (item.render && (item.render.toString().indexOf(postFlag.markdown.value) !== -1)) {
                         flag = flag.concat(postFlag.markdown.value);
+                    }
+
+                    if (item.headerPic && (JSON.parse(item.headerPic.toString()).length > 0)) {
+                        flag = flag.concat(postFlag.headedPicture.value);
                     }
 
                     var teamblogData = {
@@ -125,6 +132,7 @@ function insertDummy(databaseConfiguration, done) {
                         title: item.title,
                         content: item.content,
                         tags: item.tags,
+                        header_imgs: item.headerPic ? item.headerPic.toString() : '',
                         flag: flag.trim(),
                         pinned: item.pinned ? 1 : 0,
                         created_at: new Date()
@@ -161,8 +169,8 @@ function getAnyAuthor(connection, callback) {
 }
 
 function selectByPage(connection, page, callback) {
-    var pageSize = 5;
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'pinned', 'created_at', 'updated_at'];
+    var pageSize = 10;
+
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
@@ -187,7 +195,7 @@ function selectByPage(connection, page, callback) {
         connection.query(query.countAllGroupByMonth, ['created_at', 'created_at', tables.teamblog, 'created_at', 'created_at', 'created_at'], function (err, results) {
             result.postGroupList = results;
 
-            connection.query(query.readTeamblogByPage, [fields, tables.teamblog, result.index, pageSize], function (err, rows) {
+            connection.query(query.readTeamblogByPage, [fields_teamblog, tables.teamblog, result.index, pageSize], function (err, rows) {
                 if (!err) result.teamblogList = rows;
                 callback(err, result);
             });
@@ -196,7 +204,6 @@ function selectByPage(connection, page, callback) {
 }
 
 function selectAllByMonth(connection, year, month, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'pinned', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         teamblogList: []
@@ -208,7 +215,7 @@ function selectAllByMonth(connection, year, month, callback) {
         if (year < 1900 || year > 3000) year = Date.now().getFullYear();
         if (month < 0 || month > 12) month = Date.now().getMonth() + 1;
 
-        connection.query(query.readTeamblogMonthlyAll, [fields, tables.teamblog, 'created_at', year, 'created_at', month], function (err, rows) {
+        connection.query(query.readTeamblogMonthlyAll, [fields_teamblog, tables.teamblog, 'created_at', year, 'created_at', month], function (err, rows) {
             result.teamblogList = rows;
             callback(err, result);
         });
@@ -216,17 +223,13 @@ function selectAllByMonth(connection, year, month, callback) {
 }
 
 function selectPostRecently(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'pinned', 'created_at', 'updated_at'];
-
-    connection.query(query.readTeamblogRecently, [fields, tables.teamblog, Number(limit)], function (err, rows) {
+    connection.query(query.readTeamblogRecently, [fields_teamblog, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
 
 function selectPostPinned(connection, limit, callback) {
-    var fields = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'flag', 'pinned', 'created_at', 'updated_at'];
-
-    connection.query(query.readTeamblogPinned, [fields, tables.teamblog, postFlag.pinned.value, Number(limit)], function (err, rows) {
+    connection.query(query.readTeamblogPinned, [fields_teamblog, tables.teamblog, postFlag.pinned.value, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }

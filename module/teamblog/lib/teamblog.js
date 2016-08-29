@@ -19,7 +19,7 @@ function indexPage(req, res) {
         title: "Home",
         pinnedPostCount: 2,
         pinnedPostList: [],
-        recentPostCount: 4,
+        recentPostCount: 8,
         recentPostList: []
     };
 
@@ -202,9 +202,14 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         item.tags = item.tags.split(',');
     }
 
-    if (item.flag && (item.flag.toString().indexOf(postFlag.markdown.value) !== -1)) {
-        item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
+    if (item.flag && (item.flag.toString().indexOf(postFlag.headedPicture.value) !== -1)) {
+        item.headedPicture = true;
+        item.images = JSON.parse(item['header_imgs']);
     } else {
-        item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
+        if (item.flag && (item.flag.toString().indexOf(postFlag.markdown.value) !== -1)) {
+            item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
+        } else {
+            item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
+        }
     }
 }

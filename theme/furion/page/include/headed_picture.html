@@ -1,0 +1,30 @@
+{% macro pinned(item) %}
+<div class="post-description">
+    <div class="post-images pure-g">
+        {% for img in item.images %}
+        <div class="pure-u-1 pure-u-md-1-{{loop.length}}">
+            <img alt="{{img.title}}" class="pure-img-responsive" src="{{img.file}}">
+
+            <div class="post-image-meta">
+                <h3>{{img.title}}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+{% macro recent(item) %}
+<div class="post-description">
+    <div class="post-images pure-g">
+        {% for img in item.images %}
+        <div class="pure-u-1 pure-u-md-1-{{loop.length}}">
+            <img alt="{{img.title}}" class="pure-img-responsive" src="{{img.file}}">
+
+            <div class="post-image-meta">
+                <h3>{{img.title}}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
