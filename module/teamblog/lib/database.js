@@ -56,6 +56,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`nickname` varchar(64), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
+        '`tags` text, ' +
         '`header_imgs` varchar(256), ' +    // presented json type array
         '`flag` varchar(8), ' +
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
@@ -144,21 +145,21 @@ function insertDummy(databaseConfiguration, done) {
                         flag = flag.concat(postFlag.headedPicture.value);
                     }
 
+                    // separated array list
+                    var tagList = item.tags.split(',');
+
                     var teamblogData = {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
                         title: item.title,
                         content: item.content,
-                        // tags: item.tags,
+                        tags: tagList.join(','),
                         header_imgs: item.headerPic ? item.headerPic.toString() : '',
                         flag: flag.trim(),
                         pinned: item.pinned ? 1 : 0,
                         created_at: new Date()
                     };
-
-                    // separated array list
-                    var tagList = item.tags.split(',');
 
                     insertPost(connection, teamblogData, function (err, result) {
                         console.log('   inserted post records...'.white, result.insertId);
@@ -312,6 +313,12 @@ function insertTagRelatedPost(connection, tagRelatedPostData, callback) {
     });
 }
 
+function selectTags(connection, postData, callback) {
+    connection.query(query.selectTagByPost, ['tag', 'tag_count', tables.teamblog, tables.teamblogTagRelated, tables.teamblogTag, postData.id], function (error, rows) {
+        callback(error, rows);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
@@ -322,6 +329,7 @@ module.exports = {
     readTeamblogPinned: selectPostPinned,
     writePost: insertPost,
     updatePost: updatePost,
+    readTags: selectTags,
     option: {
         tables: tables
     }
