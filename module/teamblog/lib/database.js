@@ -14,6 +14,8 @@ var tables = {
     teamblog: common.databaseDefault.prefix + 'teamblog',
     teamblogHistory: common.databaseDefault.prefix + 'teamblog_history',
     teamblogRelated: common.databaseDefault.prefix + 'teamblog_related',
+    teamblogTag: common.databaseDefault.prefix + 'teamblog_tag',
+    teamblogTagRelated: common.databaseDefault.prefix + 'teamblog_tag_related',
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
@@ -31,7 +33,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.teamblog, tables.teamblogHistory, tables.teamblogRelated];
+    var tableList = [tables.teamblog, tables.teamblogHistory, tables.teamblogRelated, tables.teamblogTag, tables.teamblogTagRelated];
 
     connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
@@ -54,7 +56,6 @@ function createScheme(databaseConfiguration, callback, done) {
         '`nickname` varchar(64), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
-        '`tags` text, ' +
         '`header_imgs` varchar(256), ' +    // presented json type array
         '`flag` varchar(8), ' +
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
@@ -79,6 +80,20 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         'INDEX related_post_id(`related_post_id`), ' +
         'INDEX post_id(`post_id`))';
+    var sql_teamblog_tag = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`tag` varchar(128), ' +
+        '`tag_count` int unsigned not null DEFAULT 1, ' +
+        '`created_at` datetime, ' +
+        'INDEX tag(`tag`), ' +
+        'INDEX tag_count(`tag_count`))';
+    var sql_teamblog_tag_related = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`tag_id` int unsigned not null, ' +
+        '`tag_related_post_id` int unsigned not null, ' +
+        '`created_at` datetime, ' +
+        'INDEX tag_related_post_id(`tag_related_post_id`), ' +
+        'INDEX tag_id(`tag_id`))';
     var sql_fkey_user_id = 'alter table ?? ' +
         'add constraint teamblog_user_id_foreign foreign key (`user_id`) ' +
         'references ?? (`id`)';
@@ -86,14 +101,18 @@ function createScheme(databaseConfiguration, callback, done) {
     connection.query(sql_teamblog, tables.teamblog, function (error, result) {
         connection.query(sql_teamblog_history, tables.teamblogHistory, function (error, result) {
             connection.query(sql_teamblog_related, tables.teamblogRelated, function (error, result) {
-                // console.log(error, result);
-                // bind foreign key
-                connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
-                    // check dummy json
-                    callback && callback(databaseConfiguration, done);
+                connection.query(sql_teamblog_tag, tables.teamblogTag, function (error, result) {
+                    connection.query(sql_teamblog_tag_related, tables.teamblogTagRelated, function (error, result) {
+                        // console.log(error, result);
+                        // bind foreign key
+                        connection.query(sql_fkey_user_id, [tables.teamblog, tables.user], function (error, result) {
+                            // check dummy json
+                            callback && callback(databaseConfiguration, done);
 
-                    // close connection
-                    connection.destroy();
+                            // close connection
+                            connection.destroy();
+                        });
+                    });
                 });
             });
         });
@@ -131,17 +150,26 @@ function insertDummy(databaseConfiguration, done) {
                         nickname: author.nickname,
                         title: item.title,
                         content: item.content,
-                        tags: item.tags,
+                        // tags: item.tags,
                         header_imgs: item.headerPic ? item.headerPic.toString() : '',
                         flag: flag.trim(),
                         pinned: item.pinned ? 1 : 0,
                         created_at: new Date()
                     };
 
+                    var tagList = item.tags.split(',');
+                    var teamblogTagData = tagList.map(function (index) {
+                        console.log(index);
+                    });
+
                     insertPost(connection, teamblogData, function (err, result) {
                         console.log('   inserted records...'.white, result.insertId);
 
-                        callback(null, result);
+                        // insertTag(connection, teamblogTagData, function (err, result) {
+
+                            callback(null, result);
+
+                        // });
                     });
                 };
                 var resultAsync = function (err, result) {
