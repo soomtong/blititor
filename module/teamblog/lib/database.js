@@ -35,7 +35,7 @@ function deleteScheme(databaseConfiguration, callback) {
     var sql = "DROP TABLE IF EXISTS ??";
     var tableList = [tables.teamblog, tables.teamblogHistory, tables.teamblogRelated, tables.teamblogTag, tables.teamblogTagRelated];
 
-    connection.query(sql, tableList, function (error, results, fields) {
+    connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
         callback(databaseConfiguration);
     });
@@ -157,21 +157,39 @@ function insertDummy(databaseConfiguration, done) {
                         created_at: new Date()
                     };
 
+                    // separated array list
                     var tagList = item.tags.split(',');
-                    var teamblogTagData = tagList.map(function (index) {
-                        console.log(index);
-                    });
 
                     insertPost(connection, teamblogData, function (err, result) {
-                        console.log('   inserted records...'.white, result.insertId);
+                        console.log('   inserted post records...'.white, result.insertId);
 
-                        // insertTag(connection, teamblogTagData, function (err, result) {
+                        var iterator2Async = function (item, callback) {
+                            var tagData = {
+                                tag: item.toString().trim(),
+                                tag_count: 1,
+                                created_at: new Date()
+                            };
 
-                            callback(null, result);
+                            updatedTagList(connection, tagData, function (err, affectedId) {
+                                var tagRelatedPostData = {
+                                    tag_id: affectedId,
+                                    tag_related_post_id: result.insertId,
+                                    created_at: new Date()
+                                };
 
-                        // });
+                                insertTagRelatedPost(connection, tagRelatedPostData, function (err, result) {
+                                    callback(err, result);
+                                });
+
+                                console.log('   processed tag records...'.white, affectedId);
+                            });
+                        };
+
+                        // going sync
+                        async.mapSeries(tagList, iterator2Async, callback);
                     });
                 };
+
                 var resultAsync = function (err, result) {
                     console.log(' = Inserted default records...'.blue);
 
@@ -271,6 +289,26 @@ function insertPost(connection, teamblogData, callback) {
 function updatePost(connection, teamblogID, replyData, callback) {
     connection.query(query.updateByID, [tables.teamblog, replyData, teamblogID], function (err, result) {
         callback(err, result);
+    });
+}
+
+function updatedTagList(connection, tagData, callback) {
+    connection.query(query.selectByTag, [tables.teamblogTag, tagData.tag], function (error, rows) {
+        if (!error && rows[0] && rows[0].id) {
+            connection.query(query.updateCounterByTag, [tables.teamblogTag, 'tag_count', 'tag_count', tagData.tag], function (error, result) {
+                callback(error, rows[0].id);
+            });
+        } else {
+            connection.query(query.insertInto, [tables.teamblogTag, tagData], function (error, result) {
+                callback(error, result.insertId);
+            });
+        }
+    });
+}
+
+function insertTagRelatedPost(connection, tagRelatedPostData, callback) {
+    connection.query(query.insertInto, [tables.teamblogTagRelated, tagRelatedPostData], function (error, result) {
+        callback(error, result.insertId);
     });
 }
 

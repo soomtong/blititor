@@ -8,6 +8,8 @@
   "readTeamblogMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
   "readTeamblogRecently": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?",
   "readTeamblogPinned": "SELECT ?? FROM ?? WHERE `pinned` = ? ORDER BY `id` DESC LIMIT ?",
+  "updateCounterByTag": "UPDATE ?? SET ?? = ?? + 1 WHERE `tag` = ?",
+  "selectByTag": "SELECT `id`, `tag` FROM ?? WHERE `tag` = ? FOR UPDATE",
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
