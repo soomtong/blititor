@@ -79,7 +79,10 @@ function getRouteTable() {
             "list": "/",
             "write": "/write"
         },
-        "teamblog_post": "/post"
+        "teamblog_post": "/post",
+        "teamblog_tag": {
+            "list": "/tag"
+        }
     };
 }
 

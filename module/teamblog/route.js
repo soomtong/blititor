@@ -22,4 +22,6 @@ router.get(routeTable.teamblog_root + routeTable.teamblog.list, teamblog.list);
 router.get(routeTable.teamblog_root + routeTable.teamblog.list + ':page([0-9]+)', teamblog.list);
 router.get(routeTable.teamblog_root + routeTable.teamblog.list + ':year([0-9]+)/:month([0-9]+)', teamblog.list);
 
+router.get(routeTable.teamblog_root + routeTable.teamblog_tag.list + '/:tag', teamblog.tag);
+
 module.exports = router;

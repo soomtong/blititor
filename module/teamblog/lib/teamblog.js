@@ -180,9 +180,18 @@ function pinnedPost(params, callback) {
     });
 }
 
+function taggedPost(req, res) {
+    var params = {
+        tag: req.params['tag'],
+    };
+
+    res.send(params);
+}
+
 module.exports = {
     index: indexPage,
     list: listPost,
+    tag: taggedPost,
     write: writeForm,
     save: savePost,
     view: viewPost,

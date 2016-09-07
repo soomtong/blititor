@@ -155,8 +155,11 @@ router
       │         ├── bound dispatch                 /blog/:page([0-9]+)                                         GET
       │         │    └── listPost                  /                                                           GET
       │         │   
-      │         └── bound dispatch                 /blog/:year([0-9]+)/:month([0-9]+)                          GET
-      │              └── listPost                  /                                                           GET
+      │         ├── bound dispatch                 /blog/:year([0-9]+)/:month([0-9]+)                          GET
+      │         │    └── listPost                  /                                                           GET
+      │         │   
+      │         └── bound dispatch                 /blog/tag/:tag                                              GET
+      │              └── taggedPost                /                                                           GET
       │             
       │        
       │   
