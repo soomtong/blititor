@@ -146,7 +146,9 @@ function insertDummy(databaseConfiguration, done) {
                     }
 
                     // separated array list
-                    var tagList = item.tags.split(',');
+                    var tagList = item.tags.split(',').map(function (tag) {
+                        return tag.trim();
+                    });
 
                     var teamblogData = {
                         user_uuid: author.uuid,

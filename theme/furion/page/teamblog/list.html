@@ -39,7 +39,7 @@
                             {% if item.tags %}
                             under
                             {% for tag in item.tags %}
-                            <a class="post-category post-category-{{cls.next()}}" href="/tag/{{tag}}">{{tag}}</a>
+                            <a class="post-category post-category-{{cls.next()}}" href="{{site.root}}{{ route.teamblog_root + route.teamblog_tag.list }}/{{tag}}">{{tag}}</a>
                             {% endfor %}
                             {% endif %}
                             <span class="post-date">{{item.created_at}}</span>

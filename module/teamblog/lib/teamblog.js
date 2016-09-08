@@ -218,7 +218,9 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         item.updated_at = moment(item.updated_at).fromNow()
     }
     if (item.tags) {
-        item.tags = item.tags.split(',');
+        item.tags = item.tags.split(',').map(function (tag) {
+            return tag.trim();
+        });
     }
 
     if (item.flag && (item.flag.toString().indexOf(postFlag.headedPicture.value) !== -1)) {
