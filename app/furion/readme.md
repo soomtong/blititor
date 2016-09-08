@@ -4,7 +4,7 @@ based on plain and pure css framework and their sample
 
 - multi user author
 - tag support
-- categorize by date or month
+- categorize by monthly
 - custom title url (like hacks.mozilla)
 - dropbox paper like online editor (hybrid)
 - support in-memory image copying in editor

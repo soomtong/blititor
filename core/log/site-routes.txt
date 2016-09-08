@@ -159,7 +159,7 @@ router
       │         │    └── listPost                  /                                                           GET
       │         │   
       │         └── bound dispatch                 /blog/tag/:tag                                              GET
-      │              └── taggedPost                /                                                           GET
+      │              └── listPost                  /                                                           GET
       │             
       │        
       │   

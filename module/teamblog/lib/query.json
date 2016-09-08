@@ -4,6 +4,7 @@
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
   "countAllGroupByMonth": "SELECT month(??) as `month`, year(??) as `year`, count(`id`) as `count` FROM ?? GROUP BY month(??), year(??) ORDER BY ?? DESC",
+  "readTeamblogByTagAll": "SELECT a.* FROM ?? as b, ?? as c LEFT JOIN ?? as a ON a.`id` = c.`tag_related_post_id` WHERE b.`tag` = ? and b.`id` = c.`tag_id` ORDER BY a.`id` DESC",
   "readTeamblogByPage": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "readTeamblogMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
   "readTeamblogRecently": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?",

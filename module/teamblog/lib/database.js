@@ -269,6 +269,18 @@ function selectAllByMonth(connection, year, month, callback) {
     });
 }
 
+function selectAllByTag(connection, tag, callback) {
+    var result = {
+        total: 0,
+        teamblogList: []
+    };
+
+    connection.query(query.readTeamblogByTagAll, [tables.teamblogTag, tables.teamblogTagRelated, tables.teamblog, tag], function (err, rows) {
+        result.teamblogList = rows;
+        callback(err, result);
+    });
+}
+
 function selectPostRecently(connection, limit, callback) {
     connection.query(query.readTeamblogRecently, [fields_teamblog, tables.teamblog, Number(limit)], function (err, rows) {
         callback(err, rows);
@@ -324,7 +336,8 @@ module.exports = {
     createScheme: createScheme,
     insertDummy: insertDummy,
     readTeamblogByPage: selectByPage,
-    readTeamblogAll: selectAllByMonth,
+    readTeamblogAllByTag: selectAllByTag,
+    readTeamblogAllByMonth: selectAllByMonth,
     readTeamblogRecently: selectPostRecently,
     readTeamblogPinned: selectPostPinned,
     writePost: insertPost,

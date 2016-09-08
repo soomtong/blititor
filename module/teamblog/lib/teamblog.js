@@ -44,6 +44,7 @@ function listPost(req, res) {
     var params = {
         title: '팀블로그',
         useMarkdown: true,
+        tag: req.params['tag'],
         page: Number(req.params['page'] || Number(req.query['p'] || 1)),
         month: req.params['month'],
         year: req.params['month'] ? req.params['year'] : undefined
@@ -58,7 +59,7 @@ function listPost(req, res) {
     if (Number(params.month) < 0 || Number(params.month) > 12) params.month = defaultMonth;
 
     if (params.month) {
-        db.readTeamblogAll(mysql, params.year, params.month, function (err, result) {
+        db.readTeamblogAllByMonth(mysql, params.year, params.month, function (err, result) {
             if (err) {
                 req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
 
@@ -69,7 +70,25 @@ function listPost(req, res) {
 
             result.teamblogList.map(makePreviewContent);
 
-            params.count = result.postGroupList[0].count;
+            params.count = result.teamblogList.length;
+            params.list = result.teamblogList;  // todo: convert markdown to html
+            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+
+            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+        });
+    } else if (params.tag) {
+        db.readTeamblogAllByTag(mysql, params.tag.trim(), function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
+
+                winston.error(err);
+
+                res.redirect('back');
+            }
+
+            result.teamblogList.map(makePreviewContent);
+
+            params.count = result.teamblogList.length;
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
@@ -180,18 +199,9 @@ function pinnedPost(params, callback) {
     });
 }
 
-function taggedPost(req, res) {
-    var params = {
-        tag: req.params['tag'],
-    };
-
-    res.send(params);
-}
-
 module.exports = {
     index: indexPage,
     list: listPost,
-    tag: taggedPost,
     write: writeForm,
     save: savePost,
     view: viewPost,
