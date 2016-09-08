@@ -15,14 +15,9 @@ var Menu = [
         url: routeTable.root
     },
     {
-        id: 'marketing',
+        id: 'project_list',
         name: 'Project List',
-        url: '/marketing'
-    },
-    {
-        id: 'professional',
-        name: 'Q & A',
-        url: '/marketing/professional'
+        url: '/project'
     }
 ];
 

@@ -99,13 +99,27 @@ router
       │    │   
       │    ├── sessionCounter                      *                                                           
       │    ├── pageCounter                         *                                                           
+      │    ├── router                              /^\/qna\/?(?=\/|$)/                                         
+      │    │   router                                                                                          
+      │    │    ├── exposeLocals                   *                                                           
+      │    │    ├── bound dispatch                 /                                                           GET
+      │    │    │    └── guestbookForm             /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /:page                                                      GET
+      │    │    │    └── guestbookForm             /                                                           GET
+      │    │    │   
+      │    │    ├── bound dispatch                 /register                                                   POST
+      │    │    │    └── registerMessage           /                                                           POST
+      │    │    │   
+      │    │    └── bound dispatch                 /register/reply                                             POST
+      │    │         ├── ensureAuthenticated       /                                                           POST
+      │    │         └── updateReply               /                                                           POST
+      │    │        
+      │    │   
       │    ├── bound dispatch                      /                                                           GET
       │    │    └── plainPage                      /                                                           GET
       │    │   
-      │    ├── bound dispatch                      /marketing                                                  GET
-      │    │    └── plainPage                      /                                                           GET
-      │    │   
-      │    └── bound dispatch                      /marketing/professional                                     GET
+      │    └── bound dispatch                      /project                                                    GET
       │         └── plainPage                      /                                                           GET
       │        
       │   

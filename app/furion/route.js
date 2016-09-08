@@ -36,10 +36,10 @@ router.use(Counter.middleware.pageCounter);
 
 // bind static page
 router.all(routeTable.root, Teamblog.index);
-router.all('/project', Site.redirect(routeTable.root));
-router.all('/qna', Site.redirect(routeTable.root));
+router.all(routeTable.about, Site.redirect(routeTable.root));
 
 // bind module
 router.use(routeTable.account_root, Account.route);
+router.use(Teamblog.route);
 
 module.exports = router;

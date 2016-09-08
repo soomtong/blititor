@@ -11,6 +11,7 @@ var Site = require('../../module/site');
 var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
 var Counter = require('../../module/counter');
+var Guestbook = require('../../module/guestbook');
 
 // load locals
 var menu = require('./menu');
@@ -38,6 +39,9 @@ router.post(routeTable.account_root + routeTable.account.registerSimple, Account
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
+
+// modules
+router.use('/qna', Guestbook.route);
 
 // bind static page
 bindRouter();
