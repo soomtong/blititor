@@ -1,6 +1,6 @@
 {
     "env": "development",
-    "root": "/Users/soomtong/Repository/blititor",
+    "root": "/Users/sven/Repository/blititor",
     "tweak": {
         "passDBCheckMiddleware": false
     },
@@ -8,9 +8,9 @@
         "locale": "ko",
         "logLevel": "debug",
         "site": {
-            "title": "Plain",
-            "app": "furion",
-            "theme": "furion",
+            "title": "KossLab Hackathon 2016",
+            "app": "kosshack2016",
+            "theme": "kosshack2016",
             "adminTheme": "plain",
             "manageTheme": "plain",
             "host": "",
