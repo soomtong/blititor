@@ -11,20 +11,6 @@ html {
     filter: alpha(opacity=0);
 }
 
-.mbr-embedded-video {
-    position: relative;
-}
-
-.mbr-background-video,
-.mbr-background-video-preview {
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .mbr-parallax-background,
 .mbr-background {
     background-attachment: fixed !important;
@@ -50,74 +36,74 @@ html {
     animation-name: none !important;
 }
 
-.msgbox-1 {
+.msgbox {
     overflow: hidden;
     padding: 0 20px;
     position: relative;
 }
 
-.msgbox-1 .container {
+.msgbox .container {
     padding: 41px 0 29px;
     position: relative;
     z-index: 3;
 }
 
 @media (max-width: 767px) {
-    .msgbox-1 .container {
+    .msgbox .container {
         padding: 67px 0 78px;
         text-align: center;
     }
 }
 
-.msgbox-1 .row > div + div {
+.msgbox .row > div + div {
     line-height: 67px;
 }
 
 @media (max-width: 767px) {
-    .msgbox-1 .row > div + div {
+    .msgbox .row > div + div {
         padding-bottom: 3px;
         padding-top: 23px;
     }
 }
 
 @media (max-width: 480px) {
-    .msgbox-1 .row > div + div {
+    .msgbox .row > div + div {
         padding-bottom: 15px;
         padding-top: 37px;
     }
 }
 
-.msgbox-1 h1,
-.msgbox-1 h2 {
+.msgbox h1,
+.msgbox h2 {
     letter-spacing: 4px;
     line-height: 33px;
     margin-bottom: 11px;
     margin-top: 10px;
 }
 
-.msgbox-1 h1 + h1,
-.msgbox-1 h2 + h1,
-.msgbox-1 h1 + h2,
-.msgbox-1 h2 + h2 {
+.msgbox h1 + h1,
+.msgbox h2 + h1,
+.msgbox h1 + h2,
+.msgbox h2 + h2 {
     margin-top: -11px;
 }
 
 @media (max-width: 767px) {
-    .msgbox-1 h1,
-    .msgbox-1 h2 {
+    .msgbox h1,
+    .msgbox h2 {
         line-height: 1.5em;
         margin-bottom: 0;
     }
 
-    .msgbox-1 h1 + h1,
-    .msgbox-1 h2 + h1,
-    .msgbox-1 h1 + h2,
-    .msgbox-1 h2 + h2 {
+    .msgbox h1 + h1,
+    .msgbox h2 + h1,
+    .msgbox h1 + h2,
+    .msgbox h2 + h2 {
         margin-top: -1px;
     }
 }
 
-.msgbox-1 p {
+.msgbox p {
     color: #777;
     font-size: 17px;
     line-height: 27px;
@@ -127,69 +113,64 @@ html {
     text-align: left;
 }
 
-.msgbox-1 p + p {
+.msgbox p + p {
     margin-top: -13px;
     padding-top: 0;
 }
 
 @media (max-width: 767px) {
-    .msgbox-1 p {
+    .msgbox p {
         padding-top: 20px;
     }
 }
 
-.msgbox-1 .btn {
+.msgbox .btn {
     margin-top: -14px;
     margin-right: 10px;
 }
 
 @media (max-width: 480px) {
-    .msgbox-1 .btn {
+    .msgbox .btn {
         display: block;
     }
 
-    .msgbox-1 .btn + .btn {
+    .msgbox .btn + .btn {
         margin-top: 12px;
     }
 }
 
-.msgbox-1.dark {
+.msgbox.dark {
     background: #3c3c3c;
     color: #fff;
 }
 
-.msgbox-1.dark p {
+.msgbox.dark p {
     color: #fff;
 }
 
-.msgbox-1.dark .btn-default {
+.msgbox.dark .btn-default {
     border-color: #fff;
     color: #fff;
 }
 
-.msgbox-1.dark .btn-default:hover,
-.msgbox-1.dark .btn-default:focus,
-.msgbox-1.dark .btn-default.focus,
-.msgbox-1.dark .btn-default:active,
-.msgbox-1.dark .btn-default.active,
-.open > .dropdown-toggle.msgbox-1.dark .btn-default {
+.msgbox.dark .btn-default:hover,
+.msgbox.dark .btn-default:focus,
+.msgbox.dark .btn-default.focus,
+.msgbox.dark .btn-default:active,
+.msgbox.dark .btn-default.active,
+.open > .dropdown-toggle.msgbox.dark .btn-default {
     background-color: #fff;
     border-color: #fff;
     color: #252525;
 }
 
-.content-1 {
-    padding: 20px;
-    margin: 2em;
-}
-
-.content-2 {
+.content-section {
     overflow: hidden;
     padding: 71px 20px 70px;
     position: relative;
 }
 
-.content-2.col-5 .row > div {
+.content-section.col-5 .row > div {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -197,7 +178,7 @@ html {
 }
 
 @media (min-width: 768px) {
-    .content-2.col-5 .row > div {
+    .content-section.col-5 .row > div {
         display: inline-block;
         float: none;
         vertical-align: top;
@@ -206,27 +187,27 @@ html {
 }
 
 @media (min-width: 992px) {
-    .content-2.col-5 .row > div {
+    .content-section.col-5 .row > div {
         float: left;
         width: 20%;
     }
 }
 
 @media (min-width: 992px) {
-    .content-2.col-5 {
+    .content-section.col-5 {
         padding-top: 75px;
     }
 
-    .content-2.col-5 .thumbnail h3 {
+    .content-section.col-5 .thumbnail h3 {
         margin-top: 15px;
     }
 
-    .content-2.col-5 .thumbnail h3 + h3 {
+    .content-section.col-5 .thumbnail h3 + h3 {
         margin-top: -33px;
     }
 }
 
-.content-2.col-4 .row > div {
+.content-section.col-4 .row > div {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -234,20 +215,20 @@ html {
 }
 
 @media (min-width: 768px) {
-    .content-2.col-4 .row > div {
+    .content-section.col-4 .row > div {
         float: left;
         width: 50%;
     }
 }
 
 @media (min-width: 992px) {
-    .content-2.col-4 .row > div {
+    .content-section.col-4 .row > div {
         float: left;
         width: 25%;
     }
 }
 
-.content-2.col-3 .row > div {
+.content-section.col-3 .row > div {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -255,31 +236,31 @@ html {
 }
 
 @media (min-width: 768px) {
-    .content-2.col-3 .row > div {
+    .content-section.col-3 .row > div {
         float: left;
         width: 33.33333333%;
     }
 }
 
 @media (min-width: 992px) {
-    .content-2.col-3 {
+    .content-section.col-3 {
         padding-top: 64px;
     }
 
-    .content-2.col-3 .thumbnail h3 {
+    .content-section.col-3 .thumbnail h3 {
         margin-top: 4px;
     }
 
-    .content-2.col-3 .thumbnail h3 + h3 {
+    .content-section.col-3 .thumbnail h3 + h3 {
         margin-top: -33px;
     }
 
-    .content-2.col-3 .thumbnail .group {
+    .content-section.col-3 .thumbnail .group {
         margin-top: 37px;
     }
 }
 
-.content-2.col-2 .row > div {
+.content-section.col-2 .row > div {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -287,23 +268,23 @@ html {
 }
 
 @media (min-width: 768px) {
-    .content-2.col-2 .row > div {
+    .content-section.col-2 .row > div {
         float: left;
         width: 50%;
     }
 }
 
 @media (min-width: 992px) {
-    .content-2.col-2 {
+    .content-section.col-2 {
         padding-top: 48px;
     }
 
-    .content-2.col-2 .thumbnail > img {
+    .content-section.col-2 .thumbnail > img {
         width: 100%;
         max-width: 300px;
     }
 
-    .content-2.col-2 .thumbnail h3 {
+    .content-section.col-2 .thumbnail h3 {
         margin-top: -14px;
         margin-bottom: 20px;
         font-size: 25px;
@@ -311,16 +292,16 @@ html {
         line-height: 1.5em;
     }
 
-    .content-2.col-2 .thumbnail h3 + h3 {
+    .content-section.col-2 .thumbnail h3 + h3 {
         margin-top: -19px;
     }
 
-    .content-2.col-2 .thumbnail p {
+    .content-section.col-2 .thumbnail p {
         font-size: 17px;
         line-height: 27px;
     }
 
-    .content-2.col-2 .thumbnail .btn {
+    .content-section.col-2 .thumbnail .btn {
         padding: 16px 27px;
         font-size: 18px;
         line-height: 1.3333333;
@@ -331,106 +312,106 @@ html {
 }
 
 @media (max-width: 767px) {
-    .content-2 {
+    .content-section {
         padding: 0 20px;
     }
 
-    .content-2 .row > div {
+    .content-section .row > div {
         -webkit-box-shadow: inset 0 1px 1px rgba(10, 10, 10, 0.06);
         box-shadow: inset 0 1px 1px rgba(10, 10, 10, 0.06);
     }
 
-    .content-2.dark .row > div {
+    .content-section.dark .row > div {
         -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .content-2.col-5 {
+    .content-section.col-5 {
         padding-top: 70px;
     }
 
-    .content-2.col-5 .row > div + div + div + div {
+    .content-section.col-5 .row > div + div + div + div {
         margin-top: 50px;
     }
 
-    .content-2.col-5 .thumbnail h3 {
+    .content-section.col-5 .thumbnail h3 {
         margin-top: 10px;
     }
 
-    .content-2.col-5 .thumbnail h3 + h3 {
+    .content-section.col-5 .thumbnail h3 + h3 {
         margin-top: -33px;
     }
 
-    .content-2.col-4 {
+    .content-section.col-4 {
         padding: 64px 20px 70px;
     }
 
-    .content-2.col-4 .row > div + div + div {
+    .content-section.col-4 .row > div + div + div {
         margin-top: 39px;
     }
 
-    .content-2.col-4 .thumbnail h3 {
+    .content-section.col-4 .thumbnail h3 {
         margin-top: 4px;
         margin-bottom: 32px;
     }
 
-    .content-2.col-4 .thumbnail h3 + h3 {
+    .content-section.col-4 .thumbnail h3 + h3 {
         margin-top: -33px;
     }
 
-    .content-2.col-4 .thumbnail .group {
+    .content-section.col-4 .thumbnail .group {
         margin-top: 37px;
     }
 
-    .content-2.col-3 {
+    .content-section.col-3 {
         padding-top: 73px;
     }
 
-    .content-2.col-3 .thumbnail h3 {
+    .content-section.col-3 .thumbnail h3 {
         margin-top: 12px;
         margin-bottom: 33px;
     }
 
-    .content-2.col-3 .thumbnail h3 + h3 {
+    .content-section.col-3 .thumbnail h3 + h3 {
         margin-top: -33px;
     }
 
-    .content-2.col-3 .thumbnail .group {
+    .content-section.col-3 .thumbnail .group {
         margin-top: 36px;
     }
 
-    .content-2.col-2 {
+    .content-section.col-2 {
         padding-top: 64px;
     }
 
-    .content-2.col-2 .thumbnail h3 {
+    .content-section.col-2 .thumbnail h3 {
         margin-top: 4px;
         margin-bottom: 33px;
     }
 
-    .content-2.col-2 .thumbnail h3 + h3 {
+    .content-section.col-2 .thumbnail h3 + h3 {
         margin-top: -34px;
     }
 
-    .content-2.col-2 .thumbnail .group {
+    .content-section.col-2 .thumbnail .group {
         margin-top: 36px;
     }
 }
 
-.content-2 .container {
+.content-section .container {
     padding: 0;
     position: relative;
     z-index: 3;
 }
 
-.content-2 .row {
+.content-section .row {
     margin-left: -24px;
     margin-right: -24px;
 }
 
-.content-2 .thumbnail {
+.content-section .thumbnail {
     background: none;
     border: 0;
     margin-bottom: 0;
@@ -441,7 +422,7 @@ html {
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail {
+    .content-section .thumbnail {
         padding-top: 52px;
         padding-bottom: 65px;
         margin-bottom: 0;
@@ -449,37 +430,37 @@ html {
 }
 
 @media (max-width: 480px) {
-    .content-2 .thumbnail {
+    .content-section .thumbnail {
         padding-bottom: 70px;
     }
 }
 
-.content-2 .thumbnail > img,
-.content-2 .thumbnail .image img {
+.content-section .thumbnail > img,
+.content-section .thumbnail .image img {
     max-width: 50%;
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail > img,
-    .content-2 .thumbnail .image img {
+    .content-section .thumbnail > img,
+    .content-section .thumbnail .image img {
         width: 100%;
         max-width: 300px;
     }
 }
 
-.content-2 .thumbnail h3 {
+.content-section .thumbnail h3 {
     font-size: 16px;
     letter-spacing: 1px;
     margin-bottom: 32px;
     margin-top: 11px;
 }
 
-.content-2 .thumbnail h3 + h3 {
+.content-section .thumbnail h3 + h3 {
     margin-top: -32px;
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail h3 {
+    .content-section .thumbnail h3 {
         font-size: 25px;
         letter-spacing: 6px;
         line-height: 1.5em;
@@ -487,30 +468,30 @@ html {
         margin-top: -14px;
     }
 
-    .content-2 .thumbnail h3 + h3 {
+    .content-section .thumbnail h3 + h3 {
         margin-top: -21px;
     }
 }
 
-.content-2 .thumbnail p {
+.content-section .thumbnail p {
     color: #999;
     font-size: 16px;
     line-height: 26px;
     text-align: left;
 }
 
-.content-2 .thumbnail p + p {
+.content-section .thumbnail p + p {
     margin-top: -10px;
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail p {
+    .content-section .thumbnail p {
         font-size: 17px;
         line-height: 27px;
     }
 }
 
-.content-2 .thumbnail .group {
+.content-section .thumbnail .group {
     line-height: 43px;
     margin-bottom: 14px;
     margin-top: 33px;
@@ -518,20 +499,20 @@ html {
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail .group {
+    .content-section .thumbnail .group {
         margin-top: 29px;
         line-height: 67px;
     }
 }
 
 @media (max-width: 480px) {
-    .content-2 .thumbnail .group {
+    .content-section .thumbnail .group {
         margin-top: 37px;
     }
 }
 
 @media (max-width: 767px) {
-    .content-2 .thumbnail .btn {
+    .content-section .thumbnail .btn {
         padding: 16px 27px;
         font-size: 18px;
         line-height: 1.3333333;
@@ -543,364 +524,111 @@ html {
 }
 
 @media (max-width: 480px) {
-    .content-2 .thumbnail .btn {
+    .content-section .thumbnail .btn {
         display: block;
         margin-right: 0;
     }
 
-    .content-2 .thumbnail .btn + .btn {
+    .content-section .thumbnail .btn + .btn {
         margin-top: 12px;
     }
 }
 
-.content-2.simple h3 {
+.content-section.simple h3 {
     margin-top: 0 !important;
     margin-bottom: 31px !important;
 }
 
-.content-2.simple h3 + h3 {
+.content-section.simple h3 + h3 {
     margin-top: -30px !important;
 }
 
-.content-2.simple.col-5 {
+.content-section.simple.col-5 {
     padding-top: 77px;
 }
 
-.content-2.simple.col-4,
-.content-2.simple.col-3 {
+.content-section.simple.col-4,
+.content-section.simple.col-3 {
     padding-top: 76px;
 }
 
-.content-2.simple.col-2 {
+.content-section.simple.col-2 {
     padding-top: 64px;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .content-2.simple h3 {
+    .content-section.simple h3 {
         margin-bottom: 32px !important;
     }
 
-    .content-2.simple.col-5 {
+    .content-section.simple.col-5 {
         padding-top: 76px;
     }
 
-    .content-2.simple.col-5 .row > div + div + div + div {
+    .content-section.simple.col-5 .row > div + div + div + div {
         margin-top: 53px;
     }
 
-    .content-2.simple.col-4 {
+    .content-section.simple.col-4 {
         padding-top: 77px;
     }
 
-    .content-2.simple.col-4 .row > div + div + div {
+    .content-section.simple.col-4 .row > div + div + div {
         margin-top: 53px;
     }
 
-    .content-2.simple.col-2 {
+    .content-section.simple.col-2 {
         padding-top: 76px;
     }
 }
 
 @media (max-width: 767px) {
-    .content-2.simple {
+    .content-section.simple {
         padding-top: 0 !important;
     }
 
-    .content-2.simple .thumbnail {
+    .content-section.simple .thumbnail {
         padding-top: 68px;
     }
 
-    .content-2.simple h3 {
+    .content-section.simple h3 {
         margin-bottom: 20px !important;
     }
 
-    .content-2.simple h3 + h3 {
+    .content-section.simple h3 + h3 {
         margin-top: -21px !important;
     }
 }
 
-.content-2.dark {
+.content-section.dark {
     background: #3c3c3c;
 }
 
-.content-2.dark h1,
-.content-2.dark h2,
-.content-2.dark h3,
-.content-2.dark h4 {
+.content-section.dark h1,
+.content-section.dark h2,
+.content-section.dark h3,
+.content-section.dark h4 {
     color: #fff;
 }
 
-.content-2.dark p {
+.content-section.dark p {
     color: #fff;
 }
 
-.content-2.dark .btn-default {
+.content-section.dark .btn-default {
     border-color: #fff;
     color: #fff;
 }
 
-.content-2.dark .btn-default:hover,
-.content-2.dark .btn-default:focus,
-.content-2.dark .btn-default.focus,
-.content-2.dark .btn-default:active,
-.content-2.dark .btn-default.active,
-.open > .dropdown-toggle.content-2.dark .btn-default {
+.content-section.dark .btn-default:hover,
+.content-section.dark .btn-default:focus,
+.content-section.dark .btn-default.focus,
+.content-section.dark .btn-default:active,
+.content-section.dark .btn-default.active,
+.open > .dropdown-toggle.content-section.dark .btn-default {
     background-color: #fff;
     border-color: #fff;
     color: #252525;
-}
-
-.pricing-table-1 {
-    -webkit-box-shadow: inset 0 1px 0 rgba(10, 10, 10, 0.06);
-    box-shadow: inset 0 1px 0 rgba(10, 10, 10, 0.06);
-    background: #f0f0f0;
-    overflow: hidden;
-    padding: 100px 0 67px;
-    position: relative;
-}
-
-.pricing-table-1 .container {
-    display: block;
-    float: none;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1000px;
-    position: relative;
-    z-index: 3;
-}
-
-.pricing-table-1.col-4 .row > div {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding: 0;
-}
-
-@media (min-width: 768px) {
-    .pricing-table-1.col-4 .row > div {
-        float: left;
-        width: 25%;
-    }
-}
-
-.pricing-table-1.col-3 .container {
-    max-width: 750px;
-}
-
-.pricing-table-1.col-3 .row > div {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding: 0;
-}
-
-@media (min-width: 768px) {
-    .pricing-table-1.col-3 .row > div {
-        float: left;
-        width: 33.33333333%;
-    }
-}
-
-.pricing-table-1.col-2 .container {
-    max-width: 600px;
-}
-
-.pricing-table-1.col-2 .row > div {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding: 0;
-}
-
-@media (min-width: 768px) {
-    .pricing-table-1.col-2 .row > div {
-        float: left;
-        width: 50%;
-    }
-}
-
-.pricing-table-1 .plan {
-    -webkit-box-shadow: 0 2px 2px rgba(10, 10, 10, 0.06);
-    box-shadow: 0 2px 2px rgba(10, 10, 10, 0.06);
-    background: #fff;
-    color: #484f5a;
-    margin-right: 1px;
-    padding-bottom: 39px;
-    text-align: center;
-}
-
-.pricing-table-1 .plan h3 {
-    background: #323b44;
-    border-radius: 7px 7px 0 0;
-    color: #fff;
-    font-size: 16px;
-    letter-spacing: 1px;
-    margin: 0;
-    padding: 18px 0 19px;
-    position: relative;
-    top: -7px;
-}
-
-.pricing-table-1 .plan p {
-    margin-bottom: 0;
-}
-
-.pricing-table-1 .plan .price {
-    font-size: 80px;
-    letter-spacing: 1px;
-    padding: 7px 0 0;
-}
-
-.pricing-table-1 .plan .price small {
-    color: #aaa;
-    display: block;
-    font-size: 13px;
-    margin-top: -11px;
-    padding-bottom: 19px;
-}
-
-.pricing-table-1 .plan .price strong {
-    font-weight: normal;
-    left: -10px;
-    position: relative;
-}
-
-.pricing-table-1 .plan .price sup {
-    display: inline-block;
-    font-size: 32px;
-    height: 1px;
-    margin: 58px 0 0 -4px;
-    position: relative;
-    vertical-align: top;
-    width: 25px;
-}
-
-.pricing-table-1 .plan .price:after {
-    background: #eee;
-    content: "";
-    display: block;
-    height: 1px;
-    margin: 20px auto 0;
-    width: 80%;
-}
-
-.pricing-table-1 .plan ul {
-    font-size: 14px;
-    list-style: none;
-    margin: 35px 0 35px;
-    padding-left: 0;
-}
-
-.pricing-table-1 .plan ul li {
-    margin-bottom: 12px;
-}
-
-.pricing-table-1 .plan .btn {
-    margin-bottom: 2px;
-    margin-top: 1px;
-}
-
-.pricing-table-1 .favorite {
-    -webkit-box-shadow: 0 0 10px rgba(10, 10, 10, 0.35);
-    box-shadow: 0 0 10px rgba(10, 10, 10, 0.35);
-    margin-left: -5px;
-    margin-right: -5px;
-    padding-bottom: 52px;
-    position: relative;
-    top: -13px;
-    z-index: 2;
-}
-
-.pricing-table-1 .favorite h3 {
-    background: #f97352;
-}
-
-.pricing-table-1 .favorite .price {
-    padding-top: 20px;
-}
-
-.pricing-table-1 .favorite .price strong {
-    left: -8px;
-}
-
-.pricing-table-1 .green h3 {
-    background: #7ac673;
-}
-
-.pricing-table-1 .blue h3 {
-    background: #27aae0;
-}
-
-.pricing-table-1 .orange h3 {
-    background: #faaf40;
-}
-
-@media (max-width: 767px) {
-    .pricing-table-1 {
-        padding: 30px 20px 10px 20px;
-    }
-
-    .pricing-table-1 .plan {
-        margin-bottom: 20px;
-    }
-
-    .pricing-table-1 .plan ul {
-        margin: 36px 0 34px;
-    }
-
-    .pricing-table-1 .plan .btn {
-        margin-top: 2px;
-    }
-
-    .pricing-table-1 .favorite {
-        margin-left: 0;
-        margin-right: 0;
-        top: 0;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-    .pricing-table-1 .plan {
-        padding-bottom: 64px;
-    }
-
-    .pricing-table-1 .plan .price {
-        font-size: 120px;
-        line-height: 142px;
-    }
-
-    .pricing-table-1 .plan .price small {
-        font-size: 16px;
-        margin-top: -1px;
-        padding-bottom: 18px;
-        line-height: 23px;
-    }
-
-    .pricing-table-1 .plan .price sup {
-        font-size: 36px;
-        margin: 77px 0 0 -4px;
-    }
-
-    .pricing-table-1 .plan ul {
-        font-size: 16px;
-        margin: 35px 0 22px;
-    }
-
-    .pricing-table-1 .plan .btn {
-        padding: 16px 27px;
-        font-size: 18px;
-        line-height: 1.3333333;
-        border-radius: 0px;
-        font-size: 14px;
-        letter-spacing: 2px;
-        margin-bottom: 3px;
-        margin-top: -13px;
-        position: relative;
-        top: 26px;
-    }
 }
 
 .mbr-navbar {
@@ -2132,9 +1860,15 @@ html {
     font-size: 35px;
     font-weight: bold;
     text-decoration: underline;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
     line-height: 1.5em;
     margin: 0;
+}
+
+@media (max-width: 480px) {
+    .mbr-header__text {
+        letter-spacing: 1px;
+    }
 }
 
 .mbr-header__subtext {
@@ -2172,30 +1906,6 @@ html {
         left: 0;
         text-align: left !important;
     }
-}
-
-.mbr-social-icons__icon {
-    -webkit-transition: all 0.2s ease-in-out 0s;
-    -o-transition: all 0.2s ease-in-out 0s;
-    transition: all 0.2s ease-in-out 0s;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 29px;
-    height: 56px;
-    line-height: 61px;
-    margin: 0 10px 13px 0;
-    position: relative;
-    text-align: center;
-    width: 56px;
-}
-
-.mbr-social-icons__icon:hover {
-    color: #fff;
-}
-
-.mbr-social-icons--style-1 .mbr-social-icons__icon:hover {
-    background: #252525 !important;
 }
 
 .mbr-contacts {
@@ -2515,47 +2225,6 @@ html {
 
 .mbr-article .pager {
     margin-top: 5em;
-}
-
-.social-likes__counter {
-    -webkit-transition: all 0.2s ease-in-out 0s;
-    -o-transition: all 0.2s ease-in-out 0s;
-    transition: all 0.2s ease-in-out 0s;
-    background: #3c3c3c;
-    border-radius: 23px;
-    font-size: 12px;
-    height: 23px;
-    line-height: 24px;
-    min-width: 23px;
-    padding: 0 5px;
-    position: absolute;
-    right: -7px;
-    text-align: center;
-    top: -7px;
-}
-
-.social-likes__counter_empty {
-    display: none;
-}
-
-.social-likes_style-1 .social-likes__icon:hover {
-    background: #252525 !important;
-}
-
-.social-likes_style-1 .social-likes__icon:hover .social-likes__counter {
-    background: #f97352;
-}
-
-.social-likes_style-2 .social-likes__icon {
-    background: #252525;
-}
-
-.social-likes_style-2 .social-likes__counter {
-    background: #f97352;
-}
-
-.social-likes_style-2 .social-likes__icon:hover .social-likes__counter {
-    background: #3c3c3c;
 }
 
 .engine {

@@ -29,7 +29,7 @@
 
                 timeout = setTimeout(delayed, threshold || 100);
             };
-        }
+        };
         // smartresize 
         jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
 
@@ -87,8 +87,9 @@
     }());
 
     $(function(){
+        var $html = $('html');
 
-        $('html').addClass($.isMobile() ? 'mobile' : 'desktop');
+        $html.addClass($.isMobile() ? 'mobile' : 'desktop');
 
         // .mbr-navbar--sticky
         $(window).scroll(function(){
@@ -100,7 +101,7 @@
         });
 
         // .mbr-hamburger
-        $(document).on('add.cards change.cards', function(event){
+        $(document).on('kosshack.start change.cards', function(event){
             $(event.target).outerFind('.mbr-hamburger:not(.mbr-added)').each(function(){
                 $(this).addClass('mbr-added')
                     .click(function(){
@@ -137,8 +138,8 @@
             $(window).smartresize(function(){
                 $('.mbr-section--full-height').css('height', $(window).height() + 'px');
             });
-            $(document).on('add.cards', function(event){
-                if ($('html').hasClass('mbr-site-loaded') && $(event.target).outerFind('.mbr-section--full-height').length)
+            $(document).on('kosshack.start', function(event){
+                if ($html.hasClass('mbr-site-loaded') && $(event.target).outerFind('.mbr-section--full-height').length)
                     $(window).resize();
             });
         }
@@ -150,19 +151,10 @@
                     .jarallax('destroy')
                     .css('position', '');
             });
-            $(document).on('add.cards change.cards', function(event){
+            $(document).on('kosshack.start change.cards', function(event){
                 $(event.target).outerFind('.mbr-parallax-background')
                     .jarallax()
                     .css('position', 'relative');
-            });
-        }
-
-        // .mbr-social-likes
-        if ($.fn.socialLikes){
-            $(document).on('add.cards', function(event){
-                $(event.target).outerFind('.mbr-social-likes:not(.mbr-added)').on('counter.social-likes', function(event, service, counter){
-                    if (counter > 999) $('.social-likes__counter', event.target).html(Math.floor(counter / 1000) + 'k');
-                }).socialLikes({initHtml : false});
             });
         }
 
@@ -193,7 +185,7 @@
                 }
             }
         });
-        $(document).on('add.cards delete.cards', function(event){
+        $(document).on('kosshack.start delete.cards', function(event){
             if (fixedTopTimeout) clearTimeout(fixedTopTimeout);
             fixedTopTimeout = setTimeout(function(){
                 if (fixedTop){
@@ -217,7 +209,7 @@
                 return new google.maps.LatLng(pos[0], pos[1]);
             };
             var params = $.extend({
-                zoom       : 14,
+                zoom       : 16,
                 type       : 'ROADMAP',
                 center     : null,
                 markerIcon : null,
@@ -278,90 +270,25 @@
                 });
             }
         };
-        $(document).on('add.cards', function(event){
+        $(document).on('kosshack.start', function(event){
             if (window.google && google.maps){
                 $(event.target).outerFind('.mbr-google-map').each(function(){
                     loadGoogleMap.call(this);
                 });
             }
         });
-
-        // embedded videos
-        $(window).smartresize(function(){
-            $('.mbr-embedded-video').each(function(){
-                $(this).height(
-                    $(this).width() *
-                    parseInt($(this).attr('height') || 315) /
-                    parseInt($(this).attr('width') || 560)
-                );
-            });
-        });
-        $(document).on('add.cards', function(event){
-            if ($('html').hasClass('mbr-site-loaded') && $(event.target).outerFind('iframe').length)
+        $(document).on('kosshack.start', function(event){
+            if ($html.hasClass('mbr-site-loaded') && $(event.target).outerFind('iframe').length)
                 $(window).resize();
         });
 
-        $(document).on('add.cards', function(event){
-            $(event.target).outerFind('[data-bg-video]').each(function(){
-                var result, videoURL = $(this).data('bg-video'), patterns = [
-                    /\?v=([^&]+)/,
-                    /(?:embed|\.be)\/([-a-z0-9_]+)/i,
-                    /^([-a-z0-9_]+)$/i
-                ];
-                for (var i = 0; i < patterns.length; i++){
-                    if (result = patterns[i].exec(videoURL)){
-                        var previewURL = 'http' + ('https:' == location.protocol ? 's' : '') + ':';
-                        previewURL += '//img.youtube.com/vi/' + result[1] + '/maxresdefault.jpg';
-
-                        var $img = $('<div class="mbr-background-video-preview">')
-                            .hide()
-                            .css({
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center'
-                            })
-                        $('.container:eq(0)', this).before($img);
-
-                        $('<img>').on('load', function() {
-                            if (120 == (this.naturalWidth || this.width)) {
-                                // selection of preview in the best quality
-                                var file = this.src.split('/').pop();
-                                switch (file){
-                                    case 'maxresdefault.jpg':
-                                        this.src = this.src.replace(file, 'sddefault.jpg');
-                                        break;
-                                    case 'sddefault.jpg':
-                                        this.src = this.src.replace(file, 'hqdefault.jpg');
-                                        break;
-                                }
-                            } else {
-                                $img.css('background-image', 'url("' + this.src + '")')
-                                    .show();
-                            }
-                        }).attr('src', previewURL)
-
-                        if ($.fn.YTPlayer && !$.isMobile()){
-                            var params = eval('(' + ($(this).data('bg-video-params') || '{}') + ')');
-                            $('.container:eq(0)', this).before('<div class="mbr-background-video"></div>').prev()
-                                .YTPlayer($.extend({
-                                    videoURL : result[1],
-                                    containment : 'self',
-                                    showControls : false,
-                                    mute : true
-                                }, params));
-                        }
-                        break;
-                    }
-                }
-            });
-        });
-
         // init
-        $('body > *:not(style, script)').trigger('add.cards');
-        $('html').addClass('mbr-site-loaded');
+        $html.addClass('mbr-site-loaded');
+        $('body > *:not(style, script)').trigger('kosshack.start');
         $(window).resize().scroll();
 
         // smooth scroll
-        if (!$('html').hasClass('is-builder')){
+        if (!$html.hasClass('is-builder')){
             $(document).click(function(e){
                 try {
                     var target = e.target;
