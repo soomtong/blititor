@@ -94,9 +94,6 @@ router
       │    ├── bound dispatch                      /account/sign-out                                           GET
       │    │    └── signOut                        /                                                           GET
       │    │   
-      │    ├── bound dispatch                      /account/register-simple                                    POST
-      │    │    └── registerSimpleForTest          /                                                           POST
-      │    │   
       │    ├── sessionCounter                      *                                                           
       │    ├── pageCounter                         *                                                           
       │    ├── router                              /^\/guestbook\/?(?=\/|$)/                                   
