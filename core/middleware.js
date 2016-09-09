@@ -10,6 +10,8 @@ function exposeLocals(req, res, next) {
     res.locals.site = {
         root: BLITITOR.config.site.url_prefix, // url_prefix shouldn't end with '/'
         theme: BLITITOR.config.site.url_prefix + '/' +BLITITOR.config.site.theme,
+        adminTheme: BLITITOR.config.site.url_prefix + '/' +BLITITOR.config.site.adminTheme,
+        manageTheme: BLITITOR.config.site.url_prefix + '/' +BLITITOR.config.site.manageTheme,
         themeType: siteThemeType,
         title: BLITITOR.config.site.title,
         url: req.path

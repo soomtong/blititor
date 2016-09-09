@@ -81,6 +81,8 @@ try {
 
     winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
     winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
+    winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
+    winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
 } catch (e) {
     winston.error('theme folder or config file not exist');
 
