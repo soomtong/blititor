@@ -120,7 +120,7 @@
 #menu-74 .mbr-navbar__items a {
   font-family: 'Noto Sans KR','Oxygen', sans-serif;
 }
-#features1-75 P span {
+#kosshack_brief P span {
   padding-right: 0.4em;
 }
 #features1-77 P {
@@ -139,27 +139,27 @@
 #msg-box5-79 .mbr-article {
   color: #ffffff;
 }
-#features1-80 P {
+#kosshack_process P {
   color: #4c6972;
   text-align: center;
 }
-#features1-80 .thumbnail .image {
+#kosshack_process .thumbnail .image {
   text-decoration: underline;
 }
-#features1-80 .thumbnail .image span.glyphicon {
+#kosshack_process .thumbnail .image span.glyphicon {
   display: inline-block;
   font-size: 10em;
   padding: 40px 0;
 }
-#features1-80 .caption {
+#kosshack_process .caption {
   border: 1px solid;
   margin: 0 3em;
   padding-top: 2em;
 }
-#msg-box3-81 .mbr-header .mbr-header__text {
+#kosshack_prize .mbr-header .mbr-header__text {
   text-align: center;
 }
-#msg-box3-81 .mbr-header .mbr-header__subtext {
+#kosshack_prize .mbr-header .mbr-header__subtext {
   text-align: center;
 }
 #msg-box2-83 .container .row {
