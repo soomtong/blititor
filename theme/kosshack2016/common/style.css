@@ -2492,6 +2492,31 @@ html {
     }
 }
 
+.mbr-article .guest-message {
+    margin: 1em 0;
+    border: 1px solid #cdcdcd;
+    padding: 1em;
+}
+
+.mbr-article .guest-reply {
+    border-left: 5px solid #f97352;
+    padding-left: 2em;
+}
+
+.mbr-article .guest-replied {
+    font-size: 11px;
+    color: #252525;
+    margin-top: 0.5em;
+    display: block;
+    font-weight: bold;
+    line-height: 1.3em;
+    text-align: left;
+}
+
+.mbr-article .pager {
+    margin-top: 5em;
+}
+
 .social-likes__counter {
     -webkit-transition: all 0.2s ease-in-out 0s;
     -o-transition: all 0.2s ease-in-out 0s;

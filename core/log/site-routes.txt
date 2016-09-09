@@ -99,7 +99,7 @@ router
       │    │   
       │    ├── sessionCounter                      *                                                           
       │    ├── pageCounter                         *                                                           
-      │    ├── router                              /^\/qna\/?(?=\/|$)/                                         
+      │    ├── router                              /^\/guestbook\/?(?=\/|$)/                                   
       │    │   router                                                                                          
       │    │    ├── exposeLocals                   *                                                           
       │    │    ├── bound dispatch                 /                                                           GET

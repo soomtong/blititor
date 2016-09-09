@@ -17,9 +17,9 @@
                             <div class="mbr-hero animated fadeInUp">
                                 <h1 class="mbr-hero__text" id="header1-41">문의사항</h1>
                                 <p class="mbr-hero__subtext">
-                                    오픈소스 나도 해 볼 수 있다!
-                                    <br>
-                                    말로만 듣던 '오픈소스' 이제 직접 참여해보세요!
+                                    공개SW 해카톤 운영 사무국 <br>
+                                    kosshackathon@kosslab.kr <br>
+                                    02-561-0552
                                 </p>
                             </div>
                         </div>
@@ -30,143 +30,146 @@
     </div>
 </section>
 
-<section class="mbr-section">
-    <h2>
-        준비중입니다
-    </h2>
-    <div>
-        공개SW 해카톤 운영 사무국 E-mail : kosshackathon@kosslab.kr
-    </div>
-</section>
-
-<section class="mbr-section" id="header3-109" style="display: none">
-        <div class="header clearfix">
-
-        <h2>
-            공개SW 해카톤 운영 사무국 E-mail : kosshackathon@kosslab.kr
-        </h2>
-
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="bg-guest-form-holder">
-
-                <h4>Guest Book</h4>
-                <form id="message_form" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
-                    <fieldset class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
-                        <small class="text-muted">We'll never share your email with anyone else.</small>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="nickname">Nickname</label>
-                        <input type="text" name="nickname" class="form-control" id="nickname" placeholder="Anonymous">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="message">Message</label>
-                        <textarea class="form-control" name="message" id="message" rows="4"></textarea>
-                    </fieldset>
-
-                    {% if message.error %}
-                    {% for error in message.error %}
-                    <div class="alert alert-warning" role="alert">
-                        <strong>Warning!</strong> {{ error.msg }}
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="hidden"> Hidden
-                        </label>
-                    </div>
-
-                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
+<section class="mbr-section" id="header3-78">
+    <div class="mbr-section__container container mbr-section__container--first">
+        <div class="mbr-header mbr-header--wysiwyg row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h3 class="mbr-header__text">궁금하신 사항을 남겨 주세요</h3>
+                <p class="mbr-header__subtext">
+                    공개SW 해카톤 운영 사무국 <br>
+                    kosshackathon@kosslab.kr <br>
+                    02-561-0552
+                </p>
             </div>
         </div>
     </div>
+</section>
 
-    <hr>
+<section class="mbr-section" id="content1-70">
+    <div class="mbr-section__container container mbr-section__container--first">
+        <div class="mbr-header mbr-header--wysiwyg row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="bg-guest-form-holder">
 
-    <div class="row">
-        {% for item in list %}
-        <div class="col-lg-12">
-            <h4>{{ item.nickname | default('Anonymous') }}</h4>
-            <h5>{{ item.created_at }}</h5>
-            <p>
-                {{ item.message | striptags(true) | replace('\n', '<br>') | safe }}
-            </p>
-
-            {% if user and user.grant %}
-            <div class="row">
-                <div class="col-lg-12">
-                    <form id="reply_form" method="post" action="{{ route.guestbook_root + route.guestbook.reply }}">
+                    <form id="message_form" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
                         <fieldset class="form-group">
-                            <label for="reply">Reply</label>
-                            <textarea class="form-control" name="reply" id="reply" rows="4">{{ item.reply }}</textarea>
+                            <label for="email">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                            <small class="text-muted">We'll never share your email with anyone else.</small>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="nickname">Nickname</label>
+                            <input type="text" name="nickname" class="form-control" id="nickname" placeholder="Anonymous">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" name="message" id="message" rows="4"></textarea>
                         </fieldset>
 
-                        <div class="pull-lg-right">
-                            <input type="hidden" name="id" value="{{ item.id }}"/>
-                            <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
-                            {% if item.reply or item.replied_at %}
-                            <button type="submit" class="btn btn-info">Update</button>
-                            {% else %}
-                            <button type="submit" class="btn btn-info">Reply</button>
-                            {% endif %}
+                        {% if message.error %}
+                        {% for error in message.error %}
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Warning!</strong> {{ error.msg }}
                         </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="checkbox hidden">
+                            <label>
+                                <input type="checkbox" name="hidden"> Hidden
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                </div>
-            </div>
-            {% else %}
-            {% if item.reply %}
-            <div class="card">
-                <div class="card-block">
-                    {{ item.reply | default('Display reply if there were replied') }}
-                    <p>{{ item.replied_at }}</p>
-                </div>
-            </div>
-            {% endif %}
-            {% endif %}
 
-            {% if not loop.last %}
-            <hr class="hr">
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
+                </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <nav>
-                <ul class="pager">
-                    {% if hasNext %}
-                    <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page + 1}}">이전</a></li>
-                    {% endif %}
-                    {% if hasPrev %}
-                    {% if page > 1 %}
-                    <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page - 1}}">다음</a></li>
-                    {% else %}
-                    <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}">다음</a></li>
-                    {% endif %}
-                    {% endif %}
-                </ul>
-            </nav>
+            </div>
         </div>
     </div>
-
-
-
 </section>
 
+
+<section class="mbr-section" id="content1-79">
+    <div class="mbr-section__container container mbr-section__container--middle">
+
+        <hr>
+
+        <div class="row">
+            {% for item in list %}
+            <div class="mbr-article mbr-article--wysiwyg col-sm-8 col-sm-offset-2">
+                <h4>{{ item.nickname }}</h4>
+                <h5>{{ item.created_at }}</h5>
+                <p class="guest-message">
+                    {{ item.message | striptags(true) | replace('\n', '<br>') | safe }}
+                </p>
+
+                {% if user and user.grant %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="reply_form" method="post" action="{{ route.guestbook_root + route.guestbook.reply }}">
+                            <fieldset class="form-group">
+                                <label for="reply">Reply</label>
+                                <textarea class="form-control" name="reply" id="reply" rows="6">{{ item.reply }}</textarea>
+                            </fieldset>
+
+                            <div class="pull-lg-right">
+                                <input type="hidden" name="id" value="{{ item.id }}"/>
+                                <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                                {% if item.reply or item.replied_at %}
+                                <button type="submit" class="btn btn-info">Update</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-info">Reply</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                {% if item.reply %}
+                <div class="card">
+                    <div class="card-block guest-reply">
+                        {{ item.reply | striptags(true) | replace('\n', '<br>') | safe }}
+                        <p class="guest-replied">{{ item.replied_at }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+
+                {% if not loop.last %}
+                <hr class="hr" style="margin: 3em 0;">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="mbr-article col-sm-8 col-sm-offset-2">
+                <nav>
+                    <ul class="pager">
+                        {% if hasNext %}
+                        <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page + 1}}">이전</a></li>
+                        {% endif %}
+                        {% if hasPrev %}
+                        {% if page > 1 %}
+                        <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page - 1}}">다음</a></li>
+                        {% else %}
+                        <li><a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}">다음</a></li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</section>
 
 {% include '../include/footer.html' %}
 

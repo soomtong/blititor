@@ -41,7 +41,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // modules
-router.use('/qna', Guestbook.route);
+router.use(routeTable.guestbook_root, Guestbook.route);
 
 // bind static page
 bindRouter();

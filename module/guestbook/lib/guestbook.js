@@ -33,6 +33,13 @@ function guestbookForm(req, res) {
         params.hasNext = result.total > (result.page + 1) * result.pageSize;
         params.hasPrev = result.page > 0;
         params.page = result.page;  // prevent when wrong page number assigned
+
+        result.guestbookList.map(function (item) {
+            item.nickname = item.nickname || '익명';
+            item.created_at = !(item.created_at) ? '' : moment(item.created_at).fromNow();
+            item.replied_at = !(item.replied_at) ? '' : moment(item.replied_at).fromNow();
+        });
+
         params.list = result.guestbookList;
 
         res.render(BLITITOR.config.site.theme + '/page/guestbook/guestbook', params);
