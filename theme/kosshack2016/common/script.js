@@ -143,27 +143,6 @@
             });
         }
 
-        // .mbr-section--16by9 (16 by 9 blocks autoheight)
-        function calculate16by9(){
-            $(this).css('height', $(this).parent().width() * 9 / 16);
-        }
-        $(window).smartresize(function(){
-            $('.mbr-section--16by9').each(calculate16by9);
-        });
-        $(document).on('add.cards change.cards', function(event){
-            var enabled = $(event.target).outerFind('.mbr-section--16by9');
-            if (enabled.length){
-                enabled
-                    .attr('data-16by9', 'true')
-                    .each(calculate16by9);
-            } else {
-                $(event.target).outerFind('[data-16by9]')
-                    .css('height', '')
-                    .removeAttr('data-16by9');
-            }
-        });
-
-
         // .mbr-parallax-background
         if ($.fn.jarallax && !$.isMobile()){
             $(document).on('destroy.parallax', function(event){
