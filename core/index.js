@@ -237,7 +237,7 @@ if (!process.send) {
     winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 
     if (BLITITOR.env == 'development') { // Only in dev environment
-        require('express-print-routes')(app, path.join(__dirname, './log/site-routes.txt'));
-        fs.writeFileSync(path.join(__dirname, './log/global-vars.txt'), JSON.stringify(BLITITOR, null, 4));
+        require('express-print-routes')(app, path.join(__dirname, './log/site-routes.log'));
+        fs.writeFileSync(path.join(__dirname, './log/global-vars.log'), JSON.stringify(BLITITOR, null, 4));
     }
 }
