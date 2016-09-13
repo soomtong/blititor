@@ -116,7 +116,7 @@
                         <form id="reply_form" method="post" action="{{ route.guestbook_root + route.guestbook.reply }}">
                             <fieldset class="form-group">
                                 <label for="reply">Reply</label>
-                                <textarea class="form-control" name="reply" id="reply" rows="6">{{ item.reply }}</textarea>
+                                <textarea class="form-control" name="reply" id="reply" rows="6">{{ item.reply | striptags(true) | safe }}</textarea>
                             </fieldset>
 
                             <div class="pull-lg-right">
