@@ -12,7 +12,8 @@ var tables = {
     accountLog: common.databaseDefault.prefix + 'account_counter_log',
     accountCounter: common.databaseDefault.prefix + 'account_counter',
     visitLog: common.databaseDefault.prefix + 'visit_counter_log',
-    visitCounter: common.databaseDefault.prefix + 'visit_counter'
+    visitCounter: common.databaseDefault.prefix + 'visit_counter',
+    guestbook: common.databaseDefault.prefix + 'guestbook',
 };
 
 var query = require('./query');
@@ -113,9 +114,40 @@ function selectVisitCounterByDate(connection, dates, callback) {
     });
 }
 
+function readGuestbook(connection, page, callback) {
+    var pageSize = 10;
+    var result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
+        guestbookList: []
+    };
+
+    connection.query(query.countAllGuestbook, tables.guestbook, function (err, rows) {
+        result.total = rows[0]['count'] || 0;
+
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.maxPage = maxPage;
+        result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
+
+        connection.query(query.readGuestbookByPage, [tables.guestbook, result.index, pageSize], function (err, rows) {
+            if (!err) result.guestbookList = rows;
+            callback(err, result);
+        });
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
     readVisitLogByPage: readVisitLogByPage,
-    readAccountCounterByMonth: selectAccountCounterByMonth
+    readAccountCounterByMonth: selectAccountCounterByMonth,
+    readGuestbook: readGuestbook,
 };
