@@ -178,7 +178,11 @@ function selectByID(connection, id, callback) {
     var field = ["id", "uuid", "nickname", "photo", "level", "grant", "login_counter"];
 
     connection.query(query.selectByID, [field, tables.user, id], function (err, rows) {
-        callback(err, rows[0]);
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
     });
 }
 
@@ -186,7 +190,11 @@ function selectByUUID(connection, uuid, callback) {
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
     connection.query(query.selectByUUID, [field, tables.user, uuid], function (err, rows) {
-        callback(err, rows[0]);
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
     });
 }
 
@@ -194,7 +202,11 @@ function selectByAuthID(connection, authID, callback) {
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
     connection.query(query.selectByAuthID, [field, tables.user, authID], function (err, rows) {
-        callback(err, rows[0]);
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
     });
 }
 
@@ -202,7 +214,11 @@ function selectByNickname(connection, nickname, callback) {
     var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
     connection.query(query.selectByUUID, [field, tables.user, nickname], function (err, rows) {
-        callback(err, rows[0]);
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
     });
 }
 
@@ -210,7 +226,21 @@ function selectByUserID(connection, userID, callback) {
     var field = ['id', 'user_id', 'user_password'];
 
     connection.query(query.selectByUserID, [field, tables.auth, userID], function (err, rows) {
-        callback(err, rows[0]);
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
+    });
+}
+
+function selectAuthIDByUUID(connection, UUID, callback) {
+    connection.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
     });
 }
 
@@ -223,12 +253,6 @@ function insertAuth(connection, authData, callback) {
 function insertAccount(connection, userData, callback) {
     connection.query(query.insertInto, [tables.user, userData], function (err, result) {
         callback(err, result);
-    });
-}
-
-function selectAuthIDByUUID(connection, UUID, callback) {
-    connection.query(query.selectByUUID, ['auth_id', tables.user, UUID], function (err, rows) {
-        callback(err, rows[0]);
     });
 }
 
