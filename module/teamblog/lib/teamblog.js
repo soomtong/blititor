@@ -190,8 +190,6 @@ function viewPost(req, res) {
 
     var mysql = connection.get();
 
-    var md = new markdownIt();
-
     if (params.postID) {
         db.readPostByID(mysql, params.postID, function (err, result) {
             if (err) {
@@ -202,13 +200,7 @@ function viewPost(req, res) {
                 res.redirect('back');
             }
 
-            params.post = result[0];
-            params.tags = result[0].tags.split(',');
-            params.renderMarkdown = result['0'].flag.indexOf(postFlag.markdown) > -1;
-
-            if (params.renderMarkdown) {
-                params.rendered = md.render(result[0].content);
-            }
+            params.post = renderPost(result[0]);
 
             return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
         });
@@ -224,13 +216,7 @@ function viewPost(req, res) {
                 res.redirect('back');
             }
 
-            params.post = result[0];
-            params.tags = result[0].tags.split(',');
-            params.renderMarkdown = result['0'].flag.indexOf(postFlag.markdown) > -1;
-
-            if (params.renderMarkdown) {
-                params.rendered = md.render(result[0].content);
-            }
+            params.post = renderPost(result[0]);
 
             return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
         });
@@ -288,4 +274,18 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
             item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
         }
     }
+}
+
+function renderPost(post) {
+    var p = post;
+    var md = new markdownIt();
+
+    p.tagList = post.tags.split(',');
+    p.renderMarkdown = post.flag.indexOf(postFlag.markdown) > -1;
+
+    if (p.renderMarkdown) {
+        p.rendered = md.render(post.content);
+    }
+
+    return p;
 }

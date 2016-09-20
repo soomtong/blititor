@@ -11,7 +11,7 @@
 
     <div class="content pure-u-1 pure-u-md-3-4">
         <div>
-            <!-- A wrapper for all the blog posts -->
+            <!-- A wrapper for the blog post -->
             <div class="posts">
                 <h1 class="content-subhead" style="text-align:right">post view count, feedback count, social sharing action</h1>
 
@@ -21,13 +21,13 @@
                     <header class="post-header">
                         <img class="post-avatar" alt="{{post.nickname}}" height="48" width="48" src="{{site.theme}}/common/asset/ericf-avatar.png">
 
-                        <h2 class="post-title"><a href="{{site.root}}/post/{{post.id}}">{{post.title}}</a></h2>
+                        <h2 class="post-title">{{post.title}}</h2>
 
                         <p class="post-meta">
                             By <a class="post-author" href="{{site.root}}/author/{{post.user_id}}">{{post.nickname}}</a>
-                            {% if tags %}
+                            {% if post.tagList %}
                             under
-                            {% for tag in tags %}
+                            {% for tag in post.tagList %}
                             <a class="post-category post-category-{{cls.next()}}" href="{{site.root}}{{ route.teamblog_root + route.teamblog_tag.list }}/{{tag}}">{{tag}}</a>
                             {% endfor %}
                             {% endif %}
@@ -37,7 +37,7 @@
                     </header>
 
                     <div class="post-description">
-                        {% if renderMarkdown %}
+                        {% if post.renderMarkdown %}
                         <p>
                             {{post.rendered}}
                         </p>
