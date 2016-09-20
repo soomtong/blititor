@@ -21,7 +21,7 @@ var tables = {
 
 var query = require('./query');
 
-var fields_teamblog = ['id', 'user_uuid', 'user_id', 'nickname', 'title', 'content', 'tags', 'header_imgs', 'flag', 'pinned', 'created_at', 'updated_at'];
+var fields_teamblog = ['id', 'user_uuid', 'user_id', 'nickname', 'custom_url', 'title', 'content', 'tags', 'header_imgs', 'flag', 'pinned', 'created_at', 'updated_at'];
 
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
@@ -54,6 +54,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
         '`nickname` varchar(64), ' +
+        '`custom_url` varchar(128), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
         '`tags` text, ' +
@@ -63,6 +64,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX pinned(`pinned`), ' +
+        'INDEX custom_url(`custom_url`), ' +
         'INDEX created_at(`created_at`), ' +
         'INDEX user_id(`user_id`))';
     var sql_teamblog_history = 'CREATE TABLE IF NOT EXISTS ?? ' +
@@ -154,6 +156,7 @@ function insertDummy(databaseConfiguration, done) {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
+                        custom_url: item.custom_url,
                         title: item.title,
                         content: item.content,
                         tags: tagList.join(','),
@@ -307,6 +310,25 @@ function updatePost(connection, teamblogID, replyData, callback) {
     });
 }
 
+function selectPostByID(connection, postID, callback) {
+    connection.query(query.selectByID, [fields_teamblog, tables.teamblog, postID], function (err, result) {
+        if (err || !result) {
+            return callback(err, {});
+        }
+
+        callback(err, result);
+    });
+}
+
+function selectPostByURL(connection, postURL, callback) {
+    connection.query(query.selectByURL, [fields_teamblog, tables.teamblog, postURL], function (err, result) {
+        if (err || !result) {
+            return callback(err, {});
+        }
+        callback(err, result);
+    })
+}
+
 function updatedTagList(connection, tagData, callback) {
     connection.query(query.selectByTag, [tables.teamblogTag, tagData.tag], function (error, rows) {
         if (!error && rows[0] && rows[0].id) {
@@ -342,6 +364,8 @@ module.exports = {
     readTeamblogAllByMonth: selectAllByMonth,
     readTeamblogRecently: selectPostRecently,
     readTeamblogPinned: selectPostPinned,
+    readPostByID: selectPostByID,
+    readPostByURL: selectPostByURL,
     writePost: insertPost,
     updatePost: updatePost,
     readTags: selectTags,

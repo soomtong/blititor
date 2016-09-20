@@ -1,5 +1,6 @@
 {
-  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
+  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ? LIMIT 1",
+  "selectByURL": "SELECT ?? FROM ?? WHERE `custom_url` = ? ORDER BY `id` DESC LIMIT 1 ",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",

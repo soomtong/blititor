@@ -178,8 +178,63 @@ function savePost(req, res) {
 }
 
 function viewPost(req, res) {
-    console.log(req.params);
-    res.send('hi');
+    var params = {
+        title: '팀블로그',
+        postID: req.params['postNumber'],
+        postURL: req.params['postTitle'],
+    };
+
+    if (!params.postID && !params.postURL) {
+        return res.status(404).send('Not found');   // replace with html template
+    }
+
+    var mysql = connection.get();
+
+    var md = new markdownIt();
+
+    if (params.postID) {
+        db.readPostByID(mysql, params.postID, function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
+
+                winston.error(err);
+
+                res.redirect('back');
+            }
+
+            params.post = result[0];
+            params.tags = result[0].tags.split(',');
+            params.renderMarkdown = result['0'].flag.indexOf(postFlag.markdown) > -1;
+
+            if (params.renderMarkdown) {
+                params.rendered = md.render(result[0].content);
+            }
+
+            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+        });
+    }
+
+    if (params.postURL) {
+        db.readPostByURL(mysql, params.postURL, function (err, result) {
+            if (err) {
+                req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
+
+                winston.error(err);
+
+                res.redirect('back');
+            }
+
+            params.post = result[0];
+            params.tags = result[0].tags.split(',');
+            params.renderMarkdown = result['0'].flag.indexOf(postFlag.markdown) > -1;
+
+            if (params.renderMarkdown) {
+                params.rendered = md.render(result[0].content);
+            }
+
+            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+        });
+    }
 }
 
 // used outside of this module, just export them
