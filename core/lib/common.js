@@ -104,9 +104,11 @@ function getDatabaseDefault() {
     return databaseConfiguration;
 }
 
-function dateFormatter(dateValue, format) {
+function dateFormatter(dateValue, format, fillDefault) {
     if (!format) format = "YYYY-MM-DD";
-    return !(dateValue && dateValue.toString().indexOf('0000') < 0) ? moment(Date.now()).format(format) : moment(dateValue).format(format);
+    if (!fillDefault) fillDefault = false;
+
+    return dateValue ? moment(dateValue).format(format) : (fillDefault ? moment(Date.now()).format(format) : '');
 }
 
 function pageFormatter(url) {

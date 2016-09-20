@@ -111,7 +111,7 @@ function pageCounter(path, method, ip, ref, agent, device) {
         if (error) {
             winston.error(error);
         } else {
-            winston.verbose('Update visit counter record:', result.insertId);
+            winston.verbose('Update visit counter record:', result.insertId || result.changedRows);
         }
     });
 }

@@ -229,7 +229,7 @@ app.listen(app.get('port'), function () {
 });
 
 if (!process.send) {
-    // If run using `node app`, log GNU copyright info along with server info
+    // If run using `node app`, log copyright info along with server info
     winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @' + BLITITOR.config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
     winston.info('This is free software,');
