@@ -15,6 +15,11 @@ var Menu = [
         url: routeTable.root
     },
     {
+        id: 'volunteer_list',
+        name: 'Volunteer List',
+        url: '/volunteer'
+    },
+    {
         id: 'project_list',
         name: 'Project List',
         url: '/project'
