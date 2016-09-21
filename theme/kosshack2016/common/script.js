@@ -314,7 +314,19 @@
                 }
             });
         }
-
     });
+
+    (function () {
+        if ($('#header3-110') && $('#header3-110').length) {
+            var $list = $('#header3-110').find('.panel > .panel-body');
+
+            $list.map(function (idx, item) {
+                var len = $list.eq(idx).find('table.table tr').length;
+                if (len) {
+                    $list.eq(idx).children('p.mentor').append("<span class='volunteer-count label label-success pull-right'>" + len + "</span>");
+                }
+            });
+        }
+    })();
 
 })(jQuery);

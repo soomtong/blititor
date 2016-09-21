@@ -1325,6 +1325,10 @@ html {
     padding-bottom: 93px;
 }
 
+.mbr-section__container .mentor {
+    color: #777777;
+}
+
 .mbr-section__left {
     padding-right: 40px;
 }
