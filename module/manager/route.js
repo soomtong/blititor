@@ -16,7 +16,7 @@ router.get(routeTable.manage_root + routeTable.manage.login, manager.loginForm);
 router.post(routeTable.manage_root + routeTable.manage.login, manager.loginProcess);
 
 // for counter
-router.all(routeTable.manage_root,                                 AccountMiddleware.checkManager, manager.pageViewCounter);
+router.all(routeTable.manage_root,                                 AccountMiddleware.checkManager, manager.accountActionCounter);
 router.all(routeTable.manage_root + routeTable.manage.pageCounter, AccountMiddleware.checkManager, manager.pageViewCounter);
 router.get(routeTable.manage_root + routeTable.manage.pageLog, AccountMiddleware.checkManager, manager.pageViewLog);
 // for account
