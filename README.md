@@ -52,6 +52,18 @@ node core/setup.js module
 node core/setup.js db
 ```
 
+### Make database tables for blititor
+
+```shell
+node core/setup.js db-init
+```
+
+### Make Theme configuration
+
+```shell
+node core/setup.js theme
+```
+
 ### run node app
 ```shell
 node core/index
