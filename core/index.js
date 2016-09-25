@@ -221,8 +221,17 @@ app.use(express.static('theme', staticOptions));
 // bind route
 app.use(require('./route'));
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+io.sockets.on('connection', function(socket){
+    winston.verbose('a user connected');
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+    });
+});
+
 // start server
-app.listen(app.get('port'), function () {
+server.listen(app.get('port'), function () {
     winston.info("\x1B[32mserver listening on port " + app.get('port') + " in " + BLITITOR.env + " mode \033[0m");
     // display default route table
     // misc.showRouteTable();
