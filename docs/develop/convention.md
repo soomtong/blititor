@@ -51,7 +51,7 @@ filename.html
  
  `doc/install-guide`
   
- ## Commit subject Convention
+## Commit subject Convention
  
  커밋 제목의 규칙은 과거형으로 적습니다.
  
