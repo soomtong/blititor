@@ -20,6 +20,11 @@ var Menu = [
         url: '/marketing'
     },
     {
+        id: 'chatting',
+        name: '채팅',
+        url: '/chatting'
+    },
+    {
         id: 'professional',
         name: '맴버',
         url: '/marketing/professional'
