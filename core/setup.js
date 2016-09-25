@@ -350,7 +350,6 @@ function makeAdminAccount() {
     prompt.get(configScheme, function (err, result) {
         var query = require('../module/account/lib/query');
         var hash = common.hash(result.password);
-        console.log(require('../module/account'));
         var tables = require('../module/account/lib/database').option.tables;
         var authData = {
             user_id: result.id,
