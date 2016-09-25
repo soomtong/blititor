@@ -1,5 +1,5 @@
 var uuid = require('uuid');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var removeMarkdown = require('remove-markdown');
 var moment = require('moment');
 

@@ -1,5 +1,5 @@
 var fs = require('fs');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var mkdirp = require('mkdirp');
 var winston = require('winston');
 var moment = require('moment');
