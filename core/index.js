@@ -14,6 +14,8 @@ BLITITOR.moduleList = require('./config/module_list.json');
 global.BLITITOR = BLITITOR;
 
 // load common package
+var http = require('http');
+var socketIO = require('socket.io');
 var express = require('express');
 var expressValidator = require('express-validator');
 var multer = require('multer');
@@ -111,6 +113,7 @@ moment.locale(BLITITOR.config.locale);
 
 // ready Express server
 var app = express();
+var server = http.Server(app);
 
 // set express app
 app.set('views', 'theme');
@@ -218,17 +221,21 @@ var staticOptions = {
 app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
-// bind route
-app.use(require('./route'));
+// bind socket.io
+// 라우팅 전에 바인딩해야 `http://localhost:3010/socket.io/socket.io.js` 에 접근할 수 있습니다.
+// 이렇게 하면 따로 클라이언트 부분을 설치할 필요가 없습니다.
+var io = socketIO(server);
 
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 io.sockets.on('connection', function(socket){
     winston.verbose('a user connected');
+
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
 });
+
+// bind route
+app.use(require('./route'));
 
 // start server
 server.listen(app.get('port'), function () {

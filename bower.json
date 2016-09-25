@@ -9,8 +9,7 @@
     "jquery": "^2.2.2",
     "pure": "^0.6.0",
     "font-awesome": "^4.6.3",
-    "jwerty": "~0.3.2",
-    "socket.io-client": "~1.4.8"
+    "jwerty": "~0.3.2"
   },
   "devDependencies": {}
 }
