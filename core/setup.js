@@ -144,7 +144,6 @@ function makeDatabaseConfigFile() {
                 console.error('error connecting: ' + err.stack);
             } else {
                 // save params to database.json
-
                 fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4));
 
                 console.log(' = Verify configuration data... Done \n'.green);
@@ -350,10 +349,9 @@ function makeAdminAccount() {
 
     prompt.get(configScheme, function (err, result) {
         var query = require('../module/account/lib/query');
-
         var hash = common.hash(result.password);
-
-        var tables = require('../module/account').option.tables;
+        console.log(require('../module/account'));
+        var tables = require('../module/account/lib/database').option.tables;
         var authData = {
             user_id: result.id,
             user_password: hash
@@ -384,7 +382,7 @@ function makeAdminAccount() {
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
                         console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
-
+                        console.log(err);
                         connection.destroy();
 
                         return;
