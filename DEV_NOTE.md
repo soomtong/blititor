@@ -209,7 +209,7 @@ blititor> node core/setup template
 
 ## Convention
 
-refer `docs/develop/convention.md` go <docs/develop/convention.md>
+refer `docs/develop/convention.md` go to [Convention](docs/develop/convention.md)
 
 ## theme
 
