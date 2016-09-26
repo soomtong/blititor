@@ -51,7 +51,7 @@ switch (param1) {
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
+        var tasks = [loadModuleList, makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
