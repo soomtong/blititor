@@ -225,14 +225,33 @@ app.use(express.static('theme', staticOptions));
 // 라우팅 전에 바인딩해야 `http://localhost:3010/socket.io/socket.io.js` 에 접근할 수 있습니다.
 // 이렇게 하면 따로 클라이언트 부분을 설치할 필요가 없습니다.
 var io = socketIO(server);
+var userCount = 1;
+var currentUserList = {};
 
 io.sockets.on('connection', function(socket){
     winston.verbose('a user connected');
 
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
+    var nickname = 'guest' + userCount;
+
+    currentUserList[nickname] = socket.id;
+    userCount ++;
+
+    io.sockets.emit('join', currentUserList);
+
+    socket.on('chat message', function(data){
+        data.nickname = nickname;
+        io.emit('chat message', data);
     });
+
+    socket.on('disconnect', function(data){
+        winston.verbose('a user disconnected');
+        delete currentUserList[nickname];
+        socket.emit('leave', Object.keys(currentUserList))
+    });
+
 });
+
+
 
 // bind route
 app.use(require('./route'));
