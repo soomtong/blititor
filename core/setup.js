@@ -102,6 +102,14 @@ function makeDatabaseConfigFile() {
                 message: 'database name must be letters',
                 required: false
             },
+            db_table_prefix: {
+                description: 'Enter mysql(maria) database table prefix',
+                default: 'b_',
+                type: 'string',
+                pattern: /^\w+$/,
+                message: 'Prefix must be only letters',
+                required: false
+            },
             db_user_id: {
                 description: 'Enter mysql(maria) user name',
                 type: 'string',
@@ -116,14 +124,6 @@ function makeDatabaseConfigFile() {
                 hidden: true,
                 replace: '*',
                 required: true
-            },
-            db_table_prefix: {
-                description: 'Enter database table prefix',
-                default: 'b_',
-                type: 'string',
-                pattern: /^\w+$/,
-                message: 'Prefix must be only letters',
-                required: false
             }
         }
     };
