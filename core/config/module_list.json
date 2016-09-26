@@ -27,6 +27,13 @@
         "core": false
     },
     {
+        "folder": "chatting",
+        "useDatabase": false,
+        "ignore": false,
+        "tables": {},
+        "core": false
+    },
+    {
         "folder": "counter",
         "useDatabase": true,
         "ignore": false,
@@ -66,6 +73,10 @@
         "ignore": false,
         "tables": {
             "teamblog": "b_teamblog",
+            "teamblogHistory": "b_teamblog_history",
+            "teamblogRelated": "b_teamblog_related",
+            "teamblogTag": "b_teamblog_tag",
+            "teamblogTagRelated": "b_teamblog_tag_related",
             "user": "b_user"
         },
         "core": false

@@ -58,7 +58,7 @@ function insertDummy(databaseConfiguration, done) {
     });
 
     connection.query('select count(id) as `count` from ?? where `title` = ?', [tables.site, 'title'], function (error, rows) {
-        if (rows[0]['count'] > 0) {
+        if (rows && rows[0] && rows[0]['count'] > 0) {
             console.log('   skip records...'.white);
 
             // for async
