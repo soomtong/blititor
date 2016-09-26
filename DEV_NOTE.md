@@ -36,7 +36,7 @@ var Menu = [    // for plain page used by site.plain method (this page has each 
 ];
 ```
 
-여기에 선언을 하고 실제 브라우저에서 접근하면 페이지 없다고 (404) 띄웁니다. (성공)
+여기에 선언을 하고 실제 브라우저에서 접근하면 페이지 없다고 (404) 띄웁니다. (성공) 이제 페이지 만들어서  HTML  코딩하면 되죠.
 
 블리티터 컨벤션은 저 Menu 에서 선언한 url 의 마지막 단어를 추출해서 파일 명으로 assign 하고 있구요.
 

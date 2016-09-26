@@ -16,7 +16,7 @@ var Menu = [    // for plain page used by site.plain method (this page has each 
     },
     {
         id: 'hackathon_status',
-        name: 'Hackathon Status',
+        name: '진행상황',
         url: '/status'
     },
     {
@@ -77,6 +77,8 @@ function menuExpose(req, res, next) {
     res.locals.menu = Menu;
     res.locals.adminMenu = AdminMenu;
     res.locals.managerMenu = ManagerMenu;
+
+    winston.verbose('bind locals in app/kosshack2016: {menu, adminMenu, manageMenu}', Menu);
 
     next();
 }
