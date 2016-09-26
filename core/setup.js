@@ -119,6 +119,10 @@ function makeDatabaseConfigFile() {
     };
 
     prompt.get(configScheme, function (err, result) {
+        if(!result){
+            return console.log('\n 취소되었습니다.'.white)
+        }
+
         var params = {
             dbHost: result['db_host'],
             dbPort: result['db_port'] || common.databaseDefault.port,
@@ -242,7 +246,7 @@ function makeDatabaseTableWithReset() {
         };
 
         prompt.get(configScheme, function (err, result) {
-            if (result.ask.toUpperCase() == 'YES') {
+            if (result && result.ask.toUpperCase() == 'YES') {
                 // reset tables!
                 async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
             } else {
@@ -307,7 +311,9 @@ function makeThemeConfigFile() {
 
         prompt.get(configScheme, function (err, result) {
             // console.log(result, themeList[result.ask - 1].folderName);
-
+            if(!result){
+                return console.log('\n 취소되었습니다.'.white)
+            }
             var themeData = {
                 "appTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
@@ -348,6 +354,9 @@ function makeAdminAccount() {
     };
 
     prompt.get(configScheme, function (err, result) {
+        if(!result){
+            return console.log('\n 취소되었습니다.'.white)
+        }
         var query = require('../module/account/lib/query');
         var hash = common.hash(result.password);
         var tables = require('../module/account/lib/database').option.tables;
