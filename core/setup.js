@@ -16,6 +16,8 @@ var common = require('./lib/common');
 var misc = require('./lib/misc');
 
 var databaseFile = require('./config/app_default.json').databaseConfig;
+var databaseDefaultFile = './core/config/database_default.json';
+
 var moduleFile = 'module_list.json';
 
 prompt.message = colors.green(" B");
@@ -114,6 +116,14 @@ function makeDatabaseConfigFile() {
                 hidden: true,
                 replace: '*',
                 required: true
+            },
+            db_table_prefix: {
+                description: 'Enter database table prefix',
+                default: 'b_',
+                type: 'string',
+                pattern: /^\w+$/,
+                message: 'Prefix must be only letters',
+                required: false
             }
         }
     };
@@ -130,6 +140,8 @@ function makeDatabaseConfigFile() {
             dbUserID: result['db_user_id'],
             dbUserPassword: result['db_user_password']
         };
+
+        var dbTablePrefix = result['db_table_prefix'];
 
         var connection = mysql.createConnection({
             host: params.dbHost,
@@ -149,6 +161,15 @@ function makeDatabaseConfigFile() {
             } else {
                 // save params to database.json
                 fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4));
+
+                // read database_default.json to json
+                var databaseDefaultJSON = JSON.parse(fs.readFileSync(databaseDefaultFile, 'utf8'));
+
+                // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
+                databaseDefaultJSON.prefix = validateDatabaseTablePrefix(dbTablePrefix);
+
+                // save db_table_prefix to database_default.json
+                fs.writeFileSync(databaseDefaultFile, JSON.stringify(databaseDefaultJSON, null, 4));
 
                 console.log(' = Verify configuration data... Done \n'.green);
 
@@ -494,4 +515,20 @@ function loadModuleList() {
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
         });
     });
+}
+
+function validateDatabaseTablePrefix(prefix) {
+    if (!prefix.startsWith("b_")) {
+        if (prefix.startsWith("_")) {
+            prefix = 'b' + prefix;
+        } else {
+            prefix = 'b_' + prefix;
+        }
+    }
+
+    if (!prefix.endsWith("_")) {
+        prefix += '_';
+    }
+
+    return prefix;
 }
