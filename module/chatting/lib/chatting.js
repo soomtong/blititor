@@ -4,6 +4,8 @@ var winston = require('winston');
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
+var db = require('./database');
+var query = require('./query');
 
 function index(req, res) {
     var params = {
