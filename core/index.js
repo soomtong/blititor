@@ -251,8 +251,6 @@ io.sockets.on('connection', function(socket){
 
 });
 
-
-
 // bind route
 app.use(require('./route'));
 

@@ -8,7 +8,7 @@ var misc = require('../../core/lib/misc');
 
 var account = require('./lib/account');
 var middleware = require('./lib/middleware');
-var passport = require('./lib/passoprt');
+var passport = require('./lib/passport');
 
 var router = express.Router();
 var routeTable = misc.getRouteTable();
