@@ -33,11 +33,13 @@ router.use(Manager.route);     // to view log module
 // it uses common feature for each admin and manager, then assign in app router.
 // other features use each module's router. eg, modifying account records or log records
 router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
+router.post(routeTable.account_root + routeTable.account.signIn, Account.signIn);
 router.post(routeTable.account_root + routeTable.account.registerSimple, Account.registerSimple);
 
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
+router.use(routeTable.account_root, Account.route);
 
 // bind static page
 bindRouter();
