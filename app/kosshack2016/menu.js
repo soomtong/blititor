@@ -8,11 +8,16 @@ var routeTable = misc.getRouteTable();
 // or sometime need to make your own routeTable
 // and update own route table
 
-var Menu = [
+var Menu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
     {
         id: 'index',
         name: 'KossLab Hackathon 2016',
         url: routeTable.root
+    },
+    {
+        id: 'hackathon_status',
+        name: 'Hackathon Status',
+        url: '/status'
     },
     {
         id: 'volunteer_list',

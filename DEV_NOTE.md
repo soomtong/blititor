@@ -2,6 +2,66 @@
 
 ## Development Log
 
+### reason why we need a file `menu.js` in app folder
+
+> App 폴더의 menu.js 의 역할
+
+모든 페이지가 모듈의 기능을 가지고 있지 않기 때문에 (특히 이벤트 페이지 등)
+특정 url 과 html 페이지를 연결하기 위해서 몇몇 정보들이 필요합니다.
+
+이때 사용되는 것이 Menu 객체(변수)구요.
+
+```
+var Menu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
+    {
+        id: 'index',
+        name: 'KossLab Hackathon 2016',
+        url: routeTable.root
+    },
+    {
+        id: 'hackathon_status',
+        name: 'Hackathon Status',
+        url: '/status'
+    },
+    {
+        id: 'volunteer_list',
+        name: 'Volunteer List',
+        url: '/volunteer'
+    },
+    {
+        id: 'project_list',
+        name: 'Project List',
+        url: '/project'
+    }
+];
+```
+
+여기에 선언을 하고 실제 브라우저에서 접근하면 페이지 없다고 (404) 띄웁니다. (성공)
+
+블리티터 컨벤션은 저 Menu 에서 선언한 url 의 마지막 단어를 추출해서 파일 명으로 assign 하고 있구요.
+
+```
+function plainPage(req, res) {
+
+    var params = {
+        title: "Plain",
+        path: req.path,
+        page: req.path == '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
+    };
+
+    // winston.info(req.path, params, req.path.match(filter.page));
+    // console.log(res.locals.menu);
+
+    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
+}
+```
+
+이 부분이 복잡하긴 하지만 제 나름대로 엄청 고민해서 난이도(수위)를 조절하고 이 정도면 편리함 + 쉬움을 만족할 수 있겠다고 판단했습니다.
+
+페이지쪽 작업할 때 참고하세요.
+
+현재 kosshack2016 앱과 테마가 이 기능을 잘 쓰고 있어요.
+
 ### Winston Log Level
 
 - error: 0,
@@ -149,46 +209,7 @@ blititor> node core/setup template
 
 ## Convention
 
-### file name
-
-should use lower case for all file system, not camel case, also snake case
-
-incorrect
-
-```
-fileName.html
-file-name.html
-```
-
-correct
-
-```
-file_name.html
-filename.html
-```
-
-### variable name
-
-can use any style, camelcase recommended from many javascript code style
-
-### route name
-
-use lower case for source code, make dash for space or separation for significant
-
-incorrect
-
-```
-/account/signUp
-/account/sign_up
-```
-
-correct
-
-```
-/account/sign-in
-/account/signin
-```
-
+refer `docs/develop/convention.md` go <docs/develop/convention.md>
 
 ## theme
 
