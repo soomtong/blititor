@@ -10,6 +10,7 @@ lib-cov
 *.gz
 
 .idea
+.vscode
 node_modules
 public/lib
 public/upload

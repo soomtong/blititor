@@ -33,6 +33,11 @@ var Menu = [
         id: 'about',
         name: '소개',
         url: routeTable.about
+    },
+    {
+        id: 'login',
+        name: '로그인',
+        url: routeTable.account.signIn
     }
 ];
 
