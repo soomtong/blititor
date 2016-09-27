@@ -1,15 +1,26 @@
+var path = require('path');
+
 var winston = require('winston');
 var MySQLConnectionManager = require('mysql-connection-manager');
 
 var common = require('./common');
+
+var databaseFile = require('../config/app_default.json');
 
 var connection = initConnection();
 
 function initConnection() {
     winston.info('Access database connection');
 
-    var databaseConfiguration = BLITITOR.config.database;
-    var instance;
+    var databaseConfiguration, instance;
+
+    try {
+        databaseConfiguration = require(path.join('../..', databaseFile.databaseConfig));
+        winston.info(databaseConfiguration);
+    } catch (e) {
+        winston.warn('database config file not exist');
+    }
+
 
     function createInstance() {
         winston.warn('Get database connection by new one');

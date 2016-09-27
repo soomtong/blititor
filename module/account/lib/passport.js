@@ -1,5 +1,5 @@
 var winston = require('winston');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var useragent = require('useragent');
 
 var misc = require('../../../core/lib/misc');

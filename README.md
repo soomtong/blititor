@@ -40,6 +40,30 @@ git clone git://github.com/soomtong/blititor.git
 npm install
 ```
 
+### create module_list.json
+
+```shell
+node core/setup.js module
+```
+
+### Database configuration (mysql, mariadb)
+
+```shell
+node core/setup.js db
+```
+
+### Make database tables for blititor
+
+```shell
+node core/setup.js db-init
+```
+
+### Make Theme configuration
+
+```shell
+node core/setup.js theme
+```
+
 ### run node app
 ```shell
 node core/index

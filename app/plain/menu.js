@@ -20,6 +20,11 @@ var Menu = [
         url: '/marketing'
     },
     {
+        id: 'chatting',
+        name: '채팅',
+        url: '/chatting'
+    },
+    {
         id: 'professional',
         name: '맴버',
         url: '/marketing/professional'
@@ -28,6 +33,11 @@ var Menu = [
         id: 'about',
         name: '소개',
         url: routeTable.about
+    },
+    {
+        id: 'login',
+        name: '로그인',
+        url: routeTable.account.signIn
     }
 ];
 

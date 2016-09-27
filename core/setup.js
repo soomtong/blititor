@@ -16,6 +16,8 @@ var common = require('./lib/common');
 var misc = require('./lib/misc');
 
 var databaseFile = require('./config/app_default.json').databaseConfig;
+var databaseDefaultFile = './core/config/database_default.json';
+
 var moduleFile = 'module_list.json';
 
 prompt.message = colors.green(" B");
@@ -51,7 +53,7 @@ switch (param1) {
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
+        var tasks = [loadModuleList, makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
@@ -100,6 +102,14 @@ function makeDatabaseConfigFile() {
                 message: 'database name must be letters',
                 required: false
             },
+            db_table_prefix: {
+                description: 'Enter mysql(maria) database table prefix',
+                default: 'b_',
+                type: 'string',
+                pattern: /^\w+$/,
+                message: 'Prefix must be only letters',
+                required: false
+            },
             db_user_id: {
                 description: 'Enter mysql(maria) user name',
                 type: 'string',
@@ -119,6 +129,10 @@ function makeDatabaseConfigFile() {
     };
 
     prompt.get(configScheme, function (err, result) {
+        if(!result){
+            return console.log('\n 취소되었습니다.'.white)
+        }
+
         var params = {
             dbHost: result['db_host'],
             dbPort: result['db_port'] || common.databaseDefault.port,
@@ -126,6 +140,8 @@ function makeDatabaseConfigFile() {
             dbUserID: result['db_user_id'],
             dbUserPassword: result['db_user_password']
         };
+
+        var dbTablePrefix = result['db_table_prefix'];
 
         var connection = mysql.createConnection({
             host: params.dbHost,
@@ -144,8 +160,16 @@ function makeDatabaseConfigFile() {
                 console.error('error connecting: ' + err.stack);
             } else {
                 // save params to database.json
-
                 fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4));
+
+                // read database_default.json to json
+                var databaseDefaultJSON = JSON.parse(fs.readFileSync(databaseDefaultFile, 'utf8'));
+
+                // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
+                databaseDefaultJSON.prefix = validateDatabaseTablePrefix(dbTablePrefix);
+
+                // save db_table_prefix to database_default.json
+                fs.writeFileSync(databaseDefaultFile, JSON.stringify(databaseDefaultJSON, null, 4));
 
                 console.log(' = Verify configuration data... Done \n'.green);
 
@@ -243,7 +267,7 @@ function makeDatabaseTableWithReset() {
         };
 
         prompt.get(configScheme, function (err, result) {
-            if (result.ask.toUpperCase() == 'YES') {
+            if (result && result.ask.toUpperCase() == 'YES') {
                 // reset tables!
                 async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
             } else {
@@ -308,7 +332,9 @@ function makeThemeConfigFile() {
 
         prompt.get(configScheme, function (err, result) {
             // console.log(result, themeList[result.ask - 1].folderName);
-
+            if(!result){
+                return console.log('\n 취소되었습니다.'.white)
+            }
             var themeData = {
                 "appTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
@@ -349,11 +375,12 @@ function makeAdminAccount() {
     };
 
     prompt.get(configScheme, function (err, result) {
+        if(!result){
+            return console.log('\n 취소되었습니다.'.white)
+        }
         var query = require('../module/account/lib/query');
-
         var hash = common.hash(result.password);
-
-        var tables = require('../module/account').option.tables;
+        var tables = require('../module/account/lib/database').option.tables;
         var authData = {
             user_id: result.id,
             user_password: hash
@@ -384,7 +411,7 @@ function makeAdminAccount() {
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
                         console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
-
+                        console.log(err);
                         connection.destroy();
 
                         return;
@@ -488,4 +515,20 @@ function loadModuleList() {
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
         });
     });
+}
+
+function validateDatabaseTablePrefix(prefix) {
+    if (!prefix.startsWith("b_")) {
+        if (prefix.startsWith("_")) {
+            prefix = 'b' + prefix;
+        } else {
+            prefix = 'b_' + prefix;
+        }
+    }
+
+    if (!prefix.endsWith("_")) {
+        prefix += '_';
+    }
+
+    return prefix;
 }

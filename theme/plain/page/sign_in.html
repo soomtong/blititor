@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>Plain Demo - Pure</title>
+    {% include '../include/style.html' %}
+</head>
+<body>
+
+{% include '../include/header.html' %}
+
+<div class="login-form-wrapper">
+    <div class="content">
+        <h2 class="content-head is-center">로그인</h2>
+        <form class="pure-form pure-form-stacked" method="post" action="{{ site.root }}{{ route.account_root + route.account.login }}">
+            <fieldset class="post-meta">
+
+                <div class="pure-g">
+                    <div class="pure-u-1 pure-u-md-1-2">
+                        <label for="id">ID</label>
+                        <input id="id" name="email" class="pure-u-23-24" type="email" placeholder="Username(Email Address)">
+                    </div>
+
+                    <div class="pure-u-1 pure-u-md-1-2">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Password" class="pure-u-23-24">
+                    </div>
+
+                </div>
+
+                <label for="remember" class="pure-checkbox">
+                    <input id="remember" type="checkbox"> Save Session for Next Login
+                </label>
+
+                {% if message.error %}
+                <div class="alert alert-login">
+                    <strong>Warning!</strong> {{ message.error }}
+                </div>
+                {% endif %}
+
+            </fieldset>
+
+            <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+
+        </form>
+
+    </div>
+
+    {% include '../include/footer.html' %}
+
+</div>
+</body>
+</html>
