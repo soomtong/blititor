@@ -15,7 +15,7 @@ var query = require('./query');
 
 var token = misc.commonToken();
 
-function findByID(id, callback) {
+function findAccountByID(id, callback) {
     var mysql = connection.get();
 
     db.readAccountByID(mysql, id, function (err, account) {
@@ -28,7 +28,7 @@ function findByID(id, callback) {
     });
 }
 
-function findByUUID(UUID, callback) {
+function findAccountByUUID(UUID, callback) {
     var mysql = connection.get();
 
     db.readAccountByUUID(mysql, UUID, function (err, account) {
@@ -41,7 +41,7 @@ function findByUUID(UUID, callback) {
     });
 }
 
-function findByAuthID(authID, callback) {
+function findAccountByAuthID(authID, callback) {
     var mysql = connection.get();
 
     db.readAccountByAuthID(mysql, authID, function (err, account) {
@@ -54,7 +54,7 @@ function findByAuthID(authID, callback) {
     });
 }
 
-function authByUserID(userID, callback) {
+function findAuthByUserID(userID, callback) {
     var mysql = connection.get();
 
     db.readAuthByUserID(mysql, userID, function (err, auth) {
@@ -103,7 +103,7 @@ function register(req, res) {
 
 
 
-    authByUserID(req.body.email, function (err, account) {
+    findAuthByUserID(req.body.email, function (err, account) {
 
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
@@ -209,7 +209,7 @@ function registerSimpleForTest(req, res) {
     req.sanitize('password').trim();
 
 
-    authByUserID(req.body.email, function (err, account) {
+    findAuthByUserID(req.body.email, function (err, account) {
 
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
@@ -304,7 +304,7 @@ function showInfo(req, res) {
         message: req.flash()
     };
 
-    findByUUID(req.user.uuid, function (error, userData) {
+    findAccountByUUID(req.user.uuid, function (error, userData) {
         if (error) {
             req.flash('error', {msg: '세션 정보를 찾을 수 없습니다.'});
             return res.redirect('back');
@@ -517,8 +517,8 @@ module.exports = {
     signUp: signUp,
     signOut: signOut,
     checkToken: checkToken,
-    authByUserID: authByUserID,
-    findByID: findByID,
-    findByUUID: findByUUID,
-    findByAuthID: findByAuthID
+    findAuthByUserID: findAuthByUserID,
+    findUserByID: findAccountByID,
+    findUserByUUID: findAccountByUUID,
+    findUserByAuthID: findAccountByAuthID
 };
