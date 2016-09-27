@@ -20,3 +20,5 @@ database.json
 database.json.*
 theme.json
 theme.json.*
+config.json
+config.json.*
