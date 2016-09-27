@@ -101,84 +101,96 @@ function register(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('password').trim();
 
-    // var hash = common.hash(req.body.password);
-    common.hash(req.body.password, function (err, hash) {
-        var authData = {
-            user_id: req.body.email,
-            user_password: hash
-        };
 
-        var mysql = connection.get();
 
-        // save to auth table
-        db.writeAuth(mysql, authData, function (err, result) {
-            if (err) {
-                req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
-                req.flash('error', {msg: err.toString()});
+    authByUserID(req.body.email, function (err, account) {
 
-                winston.error(err);
+        if (account) {
+            req.flash('error', {msg: '이미 존재하는 계정입니다.'});
+            return res.redirect('back');
+        }
 
-                return res.redirect('back');
-            }
-
-            var auth_id = result['insertId'];
-
-            // save to user table
-            var userData = {
-                uuid: common.UUID4(),
-                auth_id: auth_id,
-                nickname: req.body.nickname,
-                level: 1,
-                grant: '',
-                login_counter: 0,
-                last_logged_at: new Date(),
-                created_at: new Date()
+        // var hash = common.hash(req.body.password);
+        common.hash(req.body.password, function (err, hash) {
+            var authData = {
+                user_id: req.body.email,
+                user_password: hash
             };
 
-            req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
+            var mysql = connection.get();
 
-            db.writeAccount(mysql, userData, function (err, result) {
+            // save to auth table
+            db.writeAuth(mysql, authData, function (err, result) {
                 if (err) {
-                    req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
+                    req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
+                    req.flash('error', {msg: err.toString()});
 
-                    winston.error(error);
+                    winston.error(err);
 
-                    res.redirect('back');
+                    return res.redirect('back');
                 }
 
-                var id = result['insertId'];
+                var auth_id = result['insertId'];
 
-                var user = {
-                    id: id,
-                    uuid: userData.uuid,
-                    user_id: authData.user_id,
-                    nickname: userData.nickname,
-                    level: userData.level,
-                    grant: userData.grant
+                // save to user table
+                var userData = {
+                    uuid: common.UUID4(),
+                    auth_id: auth_id,
+                    nickname: req.body.nickname,
+                    level: 1,
+                    grant: '',
+                    login_counter: 0,
+                    last_logged_at: new Date(),
+                    created_at: new Date()
                 };
 
-                counter.insertSessionCounter(token.account.join);
+                req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-                req.logIn(user, function (err) {
+                db.writeAccount(mysql, userData, function (err, result) {
                     if (err) {
-                        req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+                        req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
                         winston.error(error);
 
-                        return res.redirect('back');
+                        res.redirect('back');
                     }
 
-                    // insert login logging
-                    insertLastLog(user.uuid, userData.login_counter);
+                    var id = result['insertId'];
 
-                    var agent = useragent.parse(req.headers['user-agent']);
-                    counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+                    var user = {
+                        id: id,
+                        uuid: userData.uuid,
+                        user_id: authData.user_id,
+                        nickname: userData.nickname,
+                        level: userData.level,
+                        grant: userData.grant
+                    };
 
-                    res.redirect('/');
+                    counter.insertSessionCounter(token.account.join);
+
+                    req.logIn(user, function (err) {
+                        if (err) {
+                            req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+                            winston.error(error);
+
+                            return res.redirect('back');
+                        }
+
+                        // insert login logging
+                        insertLastLog(user.uuid, userData.login_counter);
+
+                        var agent = useragent.parse(req.headers['user-agent']);
+                        counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+
+                        res.redirect('/');
+                    });
                 });
             });
         });
+
     });
+
 }
 
 function registerSimpleForTest(req, res) {
@@ -196,81 +208,94 @@ function registerSimpleForTest(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('password').trim();
 
-    // var hash = common.hash(req.body.password);
-    common.hash(req.body.password, function (err, hash) {
-        var authData = {
-            user_id: req.body.email,
-            user_password: hash
-        };
 
-        var mysql = connection.get();
+    authByUserID(req.body.email, function (err, account) {
 
-        // save to auth table
-        db.writeAuth(mysql, authData, function (err, result) {
-            if (err) {
-                req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
+        if (account) {
+            req.flash('error', {msg: '이미 존재하는 계정입니다.'});
+            return res.redirect('back');
+        }
 
-                winston.error(err);
-
-                res.redirect('back');
-            }
-
-            var auth_id = result['insertId'];
-
-            // save to user table
-            var userData = {
-                uuid: common.UUID4(),
-                auth_id: auth_id,
-                nickname: req.body.nickname,
-                level: 9,
-                grant: 'AMC',
-                login_counter: 0,
-                last_logged_at: new Date(),
-                created_at: new Date()
+        // var hash = common.hash(req.body.password);
+        common.hash(req.body.password, function (err, hash) {
+            var authData = {
+                user_id: req.body.email,
+                user_password: hash
             };
 
-            req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
+            var mysql = connection.get();
 
-            db.writeAccount(mysql, userData, function (err, result) {
+            // save to auth table
+            db.writeAuth(mysql, authData, function (err, result) {
                 if (err) {
-                    req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
+                    req.flash('error', {msg: '계정 정보 저장에 실패했습니다.'});
 
-                    winston.error(error);
+                    winston.error(err);
 
                     res.redirect('back');
                 }
 
-                var id = result['insertId'];
+                var auth_id = result['insertId'];
 
-                var user = {
-                    id: id,
-                    uuid: userData.uuid,
-                    user_id: authData.user_id,
-                    nickname: userData.nickname,
-                    level: userData.level,
-                    grant: userData.grant
+                // save to user table
+                var userData = {
+                    uuid: common.UUID4(),
+                    auth_id: auth_id,
+                    nickname: req.body.nickname,
+                    level: 9,
+                    grant: 'AMC',
+                    login_counter: 0,
+                    last_logged_at: new Date(),
+                    created_at: new Date()
                 };
 
-                counter.insertSessionCounter(token.account.join);
+                req.flash('info', 'Saved Account by ' + userData.nickname, '(' + authData.user_id + ')');
 
-                req.logIn(user, function (err) {
+                db.writeAccount(mysql, userData, function (err, result) {
                     if (err) {
-                        req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+                        req.flash('error', {msg: '사용자 정보 저장에 실패했습니다.'});
 
                         winston.error(error);
 
-                        return res.redirect('back');
+                        res.redirect('back');
                     }
 
-                    if (req.query['q'] =='admin' || req.query['q'] == 'manage') {
-                        res.redirect('/' + req.query['q']);
-                    } else {
-                        res.redirect('/');
-                    }
+                    var id = result['insertId'];
+
+                    var user = {
+                        id: id,
+                        uuid: userData.uuid,
+                        user_id: authData.user_id,
+                        nickname: userData.nickname,
+                        level: userData.level,
+                        grant: userData.grant
+                    };
+
+                    counter.insertSessionCounter(token.account.join);
+
+                    req.logIn(user, function (err) {
+                        if (err) {
+                            req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
+
+                            winston.error(error);
+
+                            return res.redirect('back');
+                        }
+
+                        if (req.query['q'] =='admin' || req.query['q'] == 'manage') {
+                            res.redirect('/' + req.query['q']);
+                        } else {
+                            res.redirect('/');
+                        }
+                    });
                 });
             });
         });
+
     });
+
+
+
 }
 
 function showInfo(req, res) {
