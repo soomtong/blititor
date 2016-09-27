@@ -50,7 +50,7 @@
 - replace this to your name(@upgle)
 - replace this to your name(@parkjunyoung)
 - 황초롱(@ChorongHwang)
-- replace this to your name(@0122hey)
+- 하은영(@0122hey)
 - replace this to your name(@melthleeth)
 - replace this to your name(@greenbag)
 - replace this to your name(@yonghyun123)
