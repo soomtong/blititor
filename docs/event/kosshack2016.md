@@ -49,7 +49,7 @@
 
 - replace this to your name(@upgle)
 - replace this to your name(@parkjunyoung)
-- replace this to your name(@ChorongHwang)
+- 황초롱(@ChorongHwang)
 - replace this to your name(@0122hey)
 - replace this to your name(@melthleeth)
 - replace this to your name(@greenbag)
