@@ -137,7 +137,7 @@ function loginProcess(req, res) {
                             }
 
                             // insert login logging
-                            account.insertLastLog(user.uuid, userData.login_counter);
+                            account.insertLastLog(user.uuid, userData.login_counter || 0);
 
                             var agent = useragent.parse(req.headers['user-agent']);
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
