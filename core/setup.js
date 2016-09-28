@@ -117,8 +117,8 @@ function makeDatabaseConfigFile() {
                 message: 'Host name must be only letters',
                 required: true
             },
-            db_user_password: {
-                description: 'Enter your password',
+
+ipti    on        : 'Enter your password',
                 type: 'string',
                 message: 'Password must be letters',
                 hidden: true,
@@ -237,7 +237,8 @@ function makeDatabaseTableWithReset() {
     });
 
     var iteratorAsync = function (item, callback) {
-        if (!item.ignore && item.useDatabase) {
+        if
+(!item.ignore &&atabase) {
             var moduleName = item.folder;
 
             makeModuleDatabaseTableWithReset(moduleName);

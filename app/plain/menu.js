@@ -25,7 +25,7 @@ var Menu = [
         id: 'chatting',
         name: '채팅',
         logged: -1,
-        url: '/chatting'
+        url: routeTable.chatting_root
     },
     {
         id: 'professional',

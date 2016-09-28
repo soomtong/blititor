@@ -16,6 +16,7 @@ global.BLITITOR = BLITITOR;
 // load common package
 var http = require('http');
 var socketIO = require('socket.io');
+var chatting = require('../module/chatting');
 var express = require('express');
 var expressValidator = require('express-validator');
 var multer = require('multer');
@@ -114,6 +115,7 @@ moment.locale(BLITITOR.config.locale);
 // ready Express server
 var app = express();
 var server = http.Server(app);
+var io = socketIO(server);
 
 // set express app
 app.set('views', 'theme');
@@ -205,8 +207,11 @@ if (databaseConfiguration) {
 }
 
 // init session
+var sessionMiddleware = session(sessionOptions);
+
 app.use(cookieParser(BLITITOR.config.cookieSecret, {}));
-app.use(session(sessionOptions));
+app.use(sessionMiddleware);
+io.use(function(socket, next) { sessionMiddleware(socket.request, socket.request.res, next); }); // send Express session to socket
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
@@ -222,33 +227,13 @@ app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
 // bind socket.io
-// 라우팅 전에 바인딩해야 `http://localhost:3010/socket.io/socket.io.js` 에 접근할 수 있습니다.
-// 이렇게 하면 따로 클라이언트 부분을 설치할 필요가 없습니다.
-var io = socketIO(server);
-var userCount = 1;
-var currentUserList = {};
-
-io.sockets.on('connection', function(socket){
-    winston.verbose('a user connected');
-
-    var nickname = 'guest' + userCount;
-
-    currentUserList[nickname] = socket.id;
-    userCount ++;
-
-    io.sockets.emit('join', currentUserList);
-
-    socket.on('chat message', function(data){
-        data.nickname = nickname;
-        io.emit('chat message', data);
-    });
-
-    socket.on('disconnect', function(data){
-        winston.verbose('a user disconnected');
-        delete currentUserList[nickname];
-        socket.emit('leave', Object.keys(currentUserList))
-    });
-
+chatting.socketWrapper(io, function(err){
+    if(err){
+        winston.warn('Can not bind socket event.');
+    }
+    else{
+        winston.info('Binding for socket event was success.');
+    }
 });
 
 // bind route
