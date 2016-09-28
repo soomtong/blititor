@@ -24,6 +24,7 @@
     "lusca": "^1.3.0",
     "markdown-it": "^7.0.0",
     "method-override": "^2.3.5",
+    "minimist": "^1.2.0",
     "mkdirp": "latest",
     "moment": "^2.13.0",
     "morgan": "^1.6.1",

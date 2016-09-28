@@ -35,6 +35,7 @@ var winston = require('winston');
 var passport = require('passport');
 var moment = require('moment');
 var mkdirp = require('mkdirp');
+var args = require('minimist');
 
 // set log
 winston.remove(winston.transports.Console);
@@ -114,12 +115,13 @@ moment.locale(BLITITOR.config.locale);
 // ready Express server
 var app = express();
 var server = http.Server(app);
+var bootstrapArgs = args(process.argv.slice(2));
 
 // set express app
 app.set('views', 'theme');
 app.set('view engine', 'html');
 //app.set('view cache', false);
-app.set('port', BLITITOR.config.site.port);
+app.set('port', bootstrapArgs.p || BLITITOR.config.site.port);
 
 // set template engine
 nunjucks.configure(app.get('views'), {
