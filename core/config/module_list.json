@@ -28,9 +28,11 @@
     },
     {
         "folder": "chatting",
-        "useDatabase": false,
+        "useDatabase": true,
         "ignore": false,
-        "tables": {},
+        "tables": {
+            "chat": "b_chatting_log"
+        },
         "core": false
     },
     {
