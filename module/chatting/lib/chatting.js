@@ -6,7 +6,6 @@ var misc = require('../../../core/lib/misc');
 
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 var db = require('./database');
-var query = require('./query');
 
 function index(req, res) {
     var params = {
@@ -24,30 +23,30 @@ function socketWrapper(io, callback){
         var session = socket.request.session, nickname;
 
         if(session.passport.user){
-            // todo: uuid를 통해서 db에서 유저정보를 가져오는 코드
-            nickname = session.passport.user;
-            socket.logged = true;
+            findAccountByUUID(session.passport.user, function(err, data){
+                nickname = data.nickname;
+                currentUserList[nickname] = socket.id;
+                io.sockets.emit('join', currentUserList);
+            })
         }
         else{
             nickname = 'GUEST-' + userCount;
             userCount ++;
         }
 
-        currentUserList[nickname] = socket.id;
-
-        io.sockets.emit('join', currentUserList);
-
         socket.on('chat message', function(data){
-            //var chatInfo = {
-            //    from_id: "",
-            //    to_id: "",
-            //    message: data.msg,
-            //    created_at: new Date()
-            //};
-            //
-            //db.writeChattingLog(connection, chatInfo, function(err){
-            //    console.log('Insert a chattingLog to database.');
-            //});
+            var chatInfo = {
+                from_id: session.passport.user,
+                to_id: "broadcast",
+                message: data.msg,
+                created_at: new Date()
+            };
+
+            // todo: 귓속말 기능이 구현되면 to_id에 대상을 할당해주는 부분이 필요합니다.
+
+            writeChattingLog(chatInfo, function(result){
+                console.log("Insert a chatting log to database.");
+            });
 
             data.nickname = nickname;
             io.emit('chat message', data);
@@ -62,6 +61,29 @@ function socketWrapper(io, callback){
     });
 
     callback && callback();
+}
+
+function findAccountByUUID(UUID, callback) {
+    var mysql = connection.get();
+
+    db.readByUUID(mysql, UUID, function (err, account) {
+        if (err || !account) {
+            // return Error("Can't Find by This UUID");
+            return callback(err, null);
+        }
+        callback(err, account);
+    });
+}
+
+function writeChattingLog(chatInfo, callback){
+    var mysql = connection.get();
+
+    db.writeChattingLog(mysql, chatInfo, function (err, result) {
+        if (err || !chatInfo) {
+            return callback(err, null);
+        }
+        callback(err, result);
+    });
 }
 
 module.exports = {
