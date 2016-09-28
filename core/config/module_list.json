@@ -31,7 +31,8 @@
         "useDatabase": true,
         "ignore": false,
         "tables": {
-            "chat": "b_chatting_log"
+            "chat": "b_chatting_log",
+            "user": "b_user"
         },
         "core": false
     },
