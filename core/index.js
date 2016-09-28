@@ -184,6 +184,7 @@ var sessionOptions = {
 };
 
 if (databaseConfiguration) {
+    winston.info("start to make mysql connection process for global session system");
 
     sessionStore = new mysqlStore({
         host: databaseConfiguration.dbHost,
