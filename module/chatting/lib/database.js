@@ -9,7 +9,8 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    chat : common.databaseDefault.prefix + 'chatting_log'
+    chat : common.databaseDefault.prefix + 'chatting_log',
+    user: common.databaseDefault.prefix + 'user'
 };
 
 var query = require('./query');
@@ -43,8 +44,8 @@ function createScheme(databaseConfiguration, callback, done) {
 
     var sql_chatting = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`from_id` int unsigned not null, ' +
-        '`to_id` int unsigned not null, ' +
+        '`from_id` char(36) not null, ' +
+        '`to_id` char(36) not null, ' +
         '`message` text, ' +
         '`created_at` datetime ,' +
         'INDEX from_id(`from_id`) ,' + 
@@ -59,6 +60,24 @@ function createScheme(databaseConfiguration, callback, done) {
     });
 }
 
+function selectByUUID(connection, uuid, callback) {
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+
+    connection.query(query.selectByUUID, [field, tables.user, uuid], function (err, rows) {
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
+    });
+}
+
+function insertChattingLog(connection, chatInfo, callback){
+    connection.query(query.insertInto, [tables.chat, chatInfo], function (err, result) {
+        callback(err, result);
+    });
+}
+
 function insertDummy(databaseConfiguration, done) {
     done && done();
 }
@@ -67,6 +86,8 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
+    writeChattingLog: insertChattingLog,
+    readByUUID: selectByUUID,
     option: {
         tables: tables
     }

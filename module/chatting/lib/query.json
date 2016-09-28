@@ -1,5 +1,5 @@
 {
-  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
   "readChatAllLog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
