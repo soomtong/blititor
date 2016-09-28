@@ -36,6 +36,7 @@ var winston = require('winston');
 var passport = require('passport');
 var moment = require('moment');
 var mkdirp = require('mkdirp');
+var args = require('minimist');
 
 // set log
 winston.remove(winston.transports.Console);
@@ -116,12 +117,13 @@ moment.locale(BLITITOR.config.locale);
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
+var bootstrapArgv = args(process.argv.slice(2));
 
 // set express app
 app.set('views', 'theme');
 app.set('view engine', 'html');
 //app.set('view cache', false);
-app.set('port', BLITITOR.config.site.port);
+app.set('port', bootstrapArgv.port || bootstrapArgv.p || BLITITOR.config.site.port);
 
 // set template engine
 nunjucks.configure(app.get('views'), {
@@ -241,7 +243,7 @@ app.use(require('./route'));
 
 // start server
 server.listen(app.get('port'), function () {
-    winston.info("\x1B[32mserver listening on port " + app.get('port') + " in " + BLITITOR.env + " mode \033[0m");
+    winston.info("\x1B[32mServer listening on port \033[0m" + app.get('port') + "\x1B[32m in " + BLITITOR.env + " mode \033[0m");
     // display default route table
     // misc.showRouteTable();
 });

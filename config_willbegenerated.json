@@ -1,0 +1,19 @@
+{
+  "database": {
+    "dbHost": "zeston.kr",
+    "dbPort": 3306,
+    "dbName": "zeston",
+    "dbUserID": "zeston",
+    "dbUserPassword": "zeston!@#$"
+  },
+  "application": {
+    "port": 3010,
+    "appName": "",
+    "url_prefix": ""
+  },
+  "theme": {
+    "siteTheme": "",
+    "adminTheme": "",
+    "manageTheme": ""
+  }
+}

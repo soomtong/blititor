@@ -3,7 +3,10 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
-var connection = require('../../../core/lib/connection');
+
+var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
+var db = require('./database');
+var query = require('./query');
 
 function index(req, res) {
     var params = {
@@ -12,46 +15,53 @@ function index(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/chatting', params);
 }
 
-function socketWrapper(io, next){
+function socketWrapper(io, callback){
     var userCount = 1;
     var currentUserList = {};
-    try{
-        io.sockets.on('connection', function(socket){
-            winston.verbose('a user connected');
-            var session = socket.request.session, nickname;
 
-            if(session.passport.user){
-                // uuid를 통해서 db에서 유저정보를 가져오는 코드
-                nickname = session.passport.user;
-            }
-            else{
-                nickname = 'GUEST-' + userCount;
-                userCount ++;
-            }
+    io.sockets.on('connection', function(socket){
+        winston.verbose('a user connected');
+        var session = socket.request.session, nickname;
 
-            currentUserList[nickname] = socket.id;
+        if(session.passport.user){
+            // todo: uuid를 통해서 db에서 유저정보를 가져오는 코드
+            nickname = session.passport.user;
+            socket.logged = true;
+        }
+        else{
+            nickname = 'GUEST-' + userCount;
+            userCount ++;
+        }
 
-            io.sockets.emit('join', currentUserList);
+        currentUserList[nickname] = socket.id;
 
-            socket.on('chat message', function(data){
-                data.nickname = nickname;
-                io.emit('chat message', data);
-            });
+        io.sockets.emit('join', currentUserList);
 
-            socket.on('disconnect', function(data){
-                winston.verbose('a user disconnected');
-                delete currentUserList[nickname];
-                socket.emit('leave', Object.keys(currentUserList))
-            });
+        socket.on('chat message', function(data){
+            //var chatInfo = {
+            //    from_id: "",
+            //    to_id: "",
+            //    message: data.msg,
+            //    created_at: new Date()
+            //};
+            //
+            //db.writeChattingLog(connection, chatInfo, function(err){
+            //    console.log('Insert a chattingLog to database.');
+            //});
 
+            data.nickname = nickname;
+            io.emit('chat message', data);
         });
-        next();
-    }catch(e){
-        next(e);
-    }
 
+        socket.on('disconnect', function(data){
+            winston.verbose('a user disconnected');
+            delete currentUserList[nickname];
+            socket.emit('leave', Object.keys(currentUserList))
+        });
 
+    });
 
+    callback && callback();
 }
 
 module.exports = {
