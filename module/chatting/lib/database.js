@@ -60,48 +60,7 @@ function createScheme(databaseConfiguration, callback, done) {
 }
 
 function insertDummy(databaseConfiguration, done) {
-    fs.stat(__dirname + '/dummy.json', function (error, result) {
-        if (!error && result.size > 2) {
-            var connection = mysql.createConnection({
-                host: databaseConfiguration.dbHost,
-                port: databaseConfiguration.dbPort || common.databaseDefault.port,
-                database: databaseConfiguration.dbName || common.databaseDefault.database,
-                user: databaseConfiguration.dbUserID,
-                password: databaseConfiguration.dbUserPassword
-            });
-
-            var dummy = require('./dummy.json');
-            var iteratorAsync = function (item, callback) {
-                var guestbookData = {
-                    nickname: item.nickname,
-                    email: item.email,
-                    password: 'hash_0$0zVQQ3ovSe1I0DYFpv4czeDuXxNsGdOuKZJKoHliMi/V0VV/./sMm',
-                    message: item.message,
-                    flag: '',
-                    created_at: new Date(),
-                    reply: item.reply || undefined,
-                    replied_at: item.reply ? new Date() : undefined
-                };
-
-                insertMessage(connection, guestbookData, function (err, result) {
-                    console.log('   inserted records...'.white, result.insertId);
-
-                    callback(null, result);
-                });
-            };
-            var resultAsync = function (err, result) {
-                console.log(' = Inserted default records...'.blue);
-
-                // for async
-                done && done(err, result);
-
-                // close connection
-                connection.destroy();
-            };
-
-            async.mapSeries(dummy, iteratorAsync, resultAsync);
-        }
-    });
+    
 }
 
 module.exports = {
