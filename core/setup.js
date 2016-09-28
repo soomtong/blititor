@@ -72,7 +72,7 @@ switch (param1) {
         console.log(" > node core/setup all \n".white);
 }
 
-function makeDatabaseConfigFile() {
+function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n".rainbow);
 
     prompt.start();
@@ -175,15 +175,15 @@ function makeDatabaseConfigFile() {
 
                 database.createDatabase(connection, params.dbName, function (err, result) {
                     console.log(' = Make database... Done \n'.green);
-
                     connection.destroy();
+                    next && next();
                 });
             }
         });
     });
 }
 
-function makeDatabaseTable() {
+function makeDatabaseTable(next) {
     console.log(" = Make database tables for blititor \n".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
@@ -202,7 +202,6 @@ function makeDatabaseTable() {
         if (!item.ignore && item.useDatabase) {
             var moduleName = item.folder;
 
-
             makeModuleDatabaseTable(moduleName, function () {
                 callback(null, moduleName);
             });
@@ -211,15 +210,15 @@ function makeDatabaseTable() {
         }
     };
 
-    var resultAsync = function (err, result) {
-        console.log(' = Make database tables... Done \n'.green);
-    };
-
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
-        async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
-        connection.destroy();
+        async.mapSeries(moduleInfo, iteratorAsync, function(result){
+            console.log(' = Make database tables... Done \n'.green);
+            connection.destroy();
+            next && next();
+        });
     });
+
 }
 
 function makeDatabaseTableWithReset() {
@@ -301,7 +300,7 @@ function makeModuleDatabaseTableWithReset(moduleName) {
     module.deleteScheme(connectionInfo, module.createScheme);
 }
 
-function makeThemeConfigFile() {
+function makeThemeConfigFile(next) {
     console.log(" = Make Theme configuration \n".rainbow);
 
     theme.getThemeList('theme', function (themeList) {
@@ -343,7 +342,7 @@ function makeThemeConfigFile() {
             };
 
             fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
-
+            next && next();
         });
     });
 }
@@ -454,7 +453,7 @@ function makeAdminAccount() {
     });
 }
 
-function loadModuleList() {
+function loadModuleList(next) {
     console.log(" = Gathering Modules Info for Database \n".rainbow);
 
     // generate module list
@@ -513,6 +512,7 @@ function loadModuleList() {
             var ordered = temp.concat(results);
 
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
+            next && next();
         });
     });
 }

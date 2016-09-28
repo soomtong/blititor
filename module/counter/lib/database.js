@@ -106,10 +106,11 @@ function createScheme(databaseConfiguration, callback, done) {
 }
 
 function insertDummy(databaseConfiguration, done) {
-    fs.stat(__dirname + '/dummy.json', function (error, result) {
-        if (!error && result.size > 2) {
-        }
-    });
+    //fs.stat(__dirname + '/dummy.json', function (error, result) {
+    //    if (!error && result.size > 2) {
+    //    }
+    //});
+    done && done();
 }
 
 function selectByPage(connection, page, callback) {

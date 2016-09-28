@@ -60,7 +60,7 @@ function createScheme(databaseConfiguration, callback, done) {
 }
 
 function insertDummy(databaseConfiguration, done) {
-    
+    done && done();
 }
 
 module.exports = {
