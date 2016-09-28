@@ -175,9 +175,8 @@ function makeDatabaseConfigFile(next) {
 
                 database.createDatabase(connection, params.dbName, function (err, result) {
                     console.log(' = Make database... Done \n'.green);
-
                     connection.destroy();
-                    next();
+                    next && next();
                 });
             }
         });
@@ -216,7 +215,7 @@ function makeDatabaseTable(next) {
         async.mapSeries(moduleInfo, iteratorAsync, function(result){
             console.log(' = Make database tables... Done \n'.green);
             connection.destroy();
-            next();
+            next && next();
         });
     });
 
@@ -343,7 +342,7 @@ function makeThemeConfigFile(next) {
             };
 
             fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
-            next();
+            next && next();
         });
     });
 }
@@ -513,7 +512,7 @@ function loadModuleList(next) {
             var ordered = temp.concat(results);
 
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
-            next();
+            next && next();
         });
     });
 }
