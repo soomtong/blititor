@@ -68,3 +68,10 @@ node core/setup.js theme
 ```shell
 node core/index
 ```
+
+or u can override default port using option `port` or `p` 
+
+```
+node core/index -port=3000
+node core/index -p 3000
+```
