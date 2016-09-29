@@ -14,9 +14,15 @@ function initConnection() {
 
     var databaseConfiguration, instance;
 
+    function databasePublicInfo(databaseConfiguration) {
+        var info = clone(databaseConfiguration)
+        info.dbUserPassword = '**********';
+        return info
+    }
+
     try {
         databaseConfiguration = require(path.join('../..', databaseFile.databaseConfig));
-        winston.info(databaseConfiguration);
+        winston.info(databasePublicInfo(databaseConfiguration));
     } catch (e) {
         winston.warn('database config file not exist');
     }
@@ -77,3 +83,8 @@ function initConnection() {
 module.exports = {
     get: connection.getConnection
 };
+
+//TODO: Will change deep copy library.
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}

@@ -43,7 +43,7 @@ function loginProcess(req, res) {
         password: req.body.password
     };
 
-    account.authByUserID(params.managerID, function (err, auth) {
+    account.findAuthByUserID(params.managerID, function (err, auth) {
         if (err) {
             winston.verbose('something wrong in passport login system', err);
 
@@ -74,7 +74,7 @@ function loginProcess(req, res) {
                 return res.redirect('back');
             } else {
                 // retrieve with auth
-                account.findByAuthID(auth.id, function (error, userData) {
+                account.findUserByAuthID(auth.id, function (error, userData) {
                     var user = {
                         id: userData.id,
                         uuid: userData.uuid,

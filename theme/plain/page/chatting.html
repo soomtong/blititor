@@ -67,7 +67,6 @@
     });
 
     socket.on('chat message', function(data){
-        console.log(data);
         $('#messages').append($('<li>').text(data.nickname + ' : ' + data.msg));
     });
 </script>

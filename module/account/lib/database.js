@@ -257,6 +257,7 @@ function insertAccount(connection, userData, callback) {
 }
 
 function updateByUUID(connection, userData, UUID, callback) {
+    console.log(tables.user, userData, UUID);
     connection.query(query.updateAccountByUUID, [tables.user, userData, UUID], function (err, result) {
         callback(err, result);
     });

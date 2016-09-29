@@ -59,7 +59,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`content` text, ' +
         '`tags` text, ' +
         '`header_imgs` varchar(256), ' +    // presented json type array
-        '`flag` varchar(8), ' +
+        '`flag` varchar(8), ' +             // render type or some special mark for this post
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
