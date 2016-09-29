@@ -262,3 +262,9 @@ if (!process.send) {
         fs.writeFileSync(path.join(__dirname, './log/global-vars.log'), JSON.stringify(BLITITOR, null, 4));
     }
 }
+
+// for test
+var dummy = require('./dummy');
+
+// run for dummy
+dummy();
