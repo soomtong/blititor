@@ -4,7 +4,7 @@ blititor
 
 Easy to custom for the all Web Agencies and Web Masters in Korea
 
-> this code is really easy to customize for your business! - web developer journal in korean times
+> This code is really easy to customize for your business! - Web developer journal in korean times
 
 ![blititor_logo_nodejsstyle7](https://cloud.githubusercontent.com/assets/22411481/18938134/5bd7305c-8631-11e6-8415-19590e187869.png)
 
