@@ -208,9 +208,7 @@ function registerSimpleForTest(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('password').trim();
 
-
     findAuthByUserID(req.body.email, function (err, account) {
-
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
             return res.redirect('back');
