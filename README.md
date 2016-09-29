@@ -7,7 +7,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 
 > this code is really easy to customize for your business! - web developer journal in korean times
 
-## stack
+## Stack
 
 - NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
@@ -15,7 +15,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 - Jquery and many frontend frameworks
 - and wonderful NPM
 
-## demo
+## Demo
 
 check out the samples! based awesome css frameworks
 
@@ -26,7 +26,7 @@ check out the samples! based awesome css frameworks
 - kube
 - ...
 
-## usage
+## Usage
 
 prepare git, nodejs, npm
 
@@ -48,25 +48,32 @@ npm install
 node core/setup.js module
 ```
 
-### Database configuration (mysql, mariadb)
+### database configuration (mysql, mariadb)
 
 ```shell
 node core/setup.js db
 ```
 
-### Make database tables for blititor
+### make database tables for blititor
 
 ```shell
 node core/setup.js db-init
 ```
 
-### Make Theme configuration
+for preparing non-core modules ('guestbook' or 'teamblog'...)
+
+```shell
+node core/setup.js theme some_module_name
+```
+
+### make theme configuration
 
 ```shell
 node core/setup.js theme
 ```
 
 ### run node app
+
 ```shell
 node core/index
 ```
