@@ -49,9 +49,9 @@
 
 - replace this to your name(@upgle)
 - replace this to your name(@parkjunyoung)
+- 이혜진(@melthleeth)
 - 황초롱(@ChorongHwang)
 - 하은영(@0122hey)
-- replace this to your name(@melthleeth)
 - replace this to your name(@greenbag)
 - replace this to your name(@yonghyun123)
 - 김종현(@60112337)
