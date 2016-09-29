@@ -1,46 +1,46 @@
-blititor
+Blititor
 ========
 
 Easy to custom for the all Web Agencies and Web Masters in Korea
 
-> this code is really easy to customize for your business! - web developer journal in korean times
+> This code is really easy to customize for your business! - web developer journal in korean times
 
-## stack
+## Stack
 
 - NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
 - Nunjucks html template
 - Jquery and many frontend frameworks
-- and wonderful NPM
+- And wonderful NPM
 
-## demo
+## Demo
 
-check out the samples! based awesome css frameworks
+Check out the samples! Based awesome css frameworks
 
-- pure
-- bootstrap
-- foundation
-- materialize
-- kube
+- Pure
+- Bootstrap
+- Foundation
+- Materialize
+- Kube
 - ...
 
-## usage
+## Usage
 
-prepare git, nodejs, npm
+Prepare git, nodejs, npm
 
-### clone repos
+### Clone repos
 
-```shell
+```Shell
 git clone git://github.com/soomtong/blititor.git
 ```
 
-### install component with npm
+### Install component with npm
 
 ```shell
 npm install
 ```
 
-### create module_list.json
+### Create module_list.json
 
 ```shell
 node core/setup.js module
@@ -64,7 +64,7 @@ node core/setup.js db-init
 node core/setup.js theme
 ```
 
-### run node app
+### Run node app
 ```shell
 node core/index
 ```
