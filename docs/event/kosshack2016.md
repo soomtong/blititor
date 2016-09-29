@@ -48,7 +48,7 @@
 ### Members
 
 - replace this to your name(@upgle)
-- replace this to your name(@parkjunyoung)
+- 박준영(@parkjunyoung)
 - 이혜진(@melthleeth)
 - 황초롱(@ChorongHwang)
 - 하은영(@0122hey)
