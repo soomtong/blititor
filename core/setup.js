@@ -1,10 +1,8 @@
 // setup blititor process for command line interface
-var param1 = process.argv[2];
-var param2 = process.argv[3] || '';
-
 var prompt = require('prompt');
 var colors = require('colors');
 var async = require('neo-async');
+var parseArgs = require('minimist');
 
 var fs = require('fs');
 var path = require('path');
@@ -19,13 +17,16 @@ var databaseFile = require('./config/app_default.json').databaseConfig;
 var databaseDefaultFile = './core/config/database_default.json';
 
 var moduleFile = 'module_list.json';
+var params = parseArgs(process.argv.slice(2));
+var mainCommand = params._[0];
+var subCommand = params._[1];
 
 prompt.message = colors.green(" B");
 
 // todo: refactor for each module's CLI config process, that exposed each
 // or just go in to a web interface except these setups.
 // register new module then admin get noticed by file system or something others
-switch (param1) {
+switch (mainCommand) {
     case 'module':
         loadModuleList();
         break;
@@ -33,17 +34,17 @@ switch (param1) {
         makeDatabaseConfigFile();
         break;
     case 'db-init':
-        if (!param2) {
+        if (!subCommand) {
             makeDatabaseTable();
         } else {
-            makeModuleDatabaseTable(param2);
+            makeModuleDatabaseTable(subCommand);
         }
         break;
     case 'db-reset':
-        if (!param2) {
+        if (!subCommand) {
             makeDatabaseTableWithReset();
         } else {
-            makeModuleDatabaseTableWithReset(param2);
+            makeModuleDatabaseTableWithReset(subCommand);
         }
         break;
     case 'theme':
