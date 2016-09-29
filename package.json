@@ -30,7 +30,6 @@
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
     "mysql": "latest",
-    "mysql-connection-manager": "0.0.13",
     "neo-async": "^1.7.4",
     "nunjucks": "^2.4.0",
     "passport": "^0.3.2",

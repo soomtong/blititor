@@ -1,18 +1,18 @@
 var path = require('path');
 
 var winston = require('winston');
-var MySQLConnectionManager = require('mysql-connection-manager');
+var mysql = require('mysql');
 
 var common = require('./common');
 
 var databaseFile = require('../config/app_default.json');
 
-var connection = initConnection();
+var connectionPool = initializePool();
 
-function initConnection() {
+function initializePool() {
     winston.info('Access database connection');
 
-    var databaseConfiguration, instance;
+    var databaseConfiguration, connectionPoolInstance;
 
     function databasePublicInfo(databaseConfiguration) {
         var info = clone(databaseConfiguration)
@@ -28,60 +28,43 @@ function initConnection() {
     }
 
 
-    function createInstance() {
+    function createPool() {
         winston.warn('Get database connection by new one');
 
-        var manager = new MySQLConnectionManager({
+        var pool = mysql.createPool({
+            connectionLimit: 50,
+            acquireTimeout: 30000, // 30s
             host: databaseConfiguration.dbHost,
             port: databaseConfiguration.dbPort || common.databaseDefault.port,
             database: databaseConfiguration.dbName || common.databaseDefault.database,
             user: databaseConfiguration.dbUserID,
-            password: databaseConfiguration.dbUserPassword,
-            pool: {
-                maxConnections: 50,
-                maxIdleTime: 30
-            }
+            password: databaseConfiguration.dbUserPassword
         });
 
-        manager.on('connect', function(connection) {
+        pool.on('connection', function(){
             winston.verbose('데이터베이스 커넥션 완료...');
         });
 
-        manager.on('reconnect', function(connection) {
-            winston.verbose('데이터베이스 커넥션 재접속...');
+        pool.on('enqueue', function () {
+            winston.verbose('데이터베이스 커넥션 대기...');
         });
 
-        manager.on('disconnect', function() {
-            winston.verbose('데이터베이스 커넥션 해제...');
-        });
-
-        manager.on('error', function (err) {
-            winston.verbose('데이터베이스 커넥션 에러:', err);
-/*
-            if (err.code == 'PROTOCOL_CONNECTION_LOST') {
-                console.error('커넥션 로스트!!!\n');
-            } else {
-                throw err;
-            }
-*/
-        });
-
-        return manager.connection;
+        return pool;
     }
 
     return {
         getConnection: function () {
-            if (!instance) {
-                instance = createInstance();
+            if (!connectionPoolInstance) {
+                connectionPoolInstance = createPool();
             }
 
-            return instance;
+            return connectionPoolInstance;
         }
     }
 }
 
 module.exports = {
-    get: connection.getConnection
+    get: connectionPool.getConnection
 };
 
 //TODO: Will change deep copy library.

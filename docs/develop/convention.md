@@ -1,5 +1,12 @@
 # Conventions
 
+## Indents
+
+__could you do me a favor?__
+
+please use 4 space in *.js file.
+but *.html, *.css depends on each css frameworks.
+
 ## Variable or Class Convention
 
 대부분의 자바스크립트 컨벤션을 따릅니다.
