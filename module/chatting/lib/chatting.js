@@ -21,9 +21,10 @@ function socketWrapper(io, callback){
     io.sockets.on('connection', function(socket){
         winston.verbose('a user connected');
         var session = socket.request.session, nickname;
-
-        if(session.passport.user){
-            findAccountByUUID(session.passport.user, function(err, data){
+        var uuid = session.passport.user;
+        console.log(uuid);
+        if(uuid){
+            findAccountByUUID(uuid, function(err, data){
                 nickname = data.nickname;
                 currentUserList[nickname] = socket.id;
                 io.sockets.emit('join', currentUserList);
@@ -32,11 +33,13 @@ function socketWrapper(io, callback){
         else{
             nickname = 'GUEST-' + userCount;
             userCount ++;
+            currentUserList[nickname] = socket.id;
+            io.sockets.emit('join', currentUserList);
         }
 
         socket.on('chat message', function(data){
             var chatInfo = {
-                from_id: session.passport.user,
+                from_id: uuid,
                 to_id: "broadcast",
                 message: data.msg,
                 created_at: new Date()
@@ -55,7 +58,10 @@ function socketWrapper(io, callback){
         socket.on('disconnect', function(data){
             winston.verbose('a user disconnected');
             delete currentUserList[nickname];
-            socket.emit('leave', Object.keys(currentUserList))
+            if(!uuid){
+                userCount--;
+            }
+            io.sockets.emit('leave', currentUserList)
         });
 
     });
