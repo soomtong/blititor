@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>Plain Demo - Pure</title>
+    {% include '../include/style.html' %}
+    <style>
+        .footer{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 1;
+        }
+        .splash-container{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+{% include '../include/header.html' %}
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">404 not found</h1>
+        <p class="splash-subhead">
+            This is not the page you are looking for.
+        </p>
+        <p>
+            <a href="/" class="pure-button pure-button-primary">홈으로 돌아가기</a>
+        </p>
+    </div>
+</div>
+{% include '../include/footer.html' %}
+</body>
+</html>
