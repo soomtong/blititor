@@ -1,6 +1,5 @@
 var fs = require('fs');
 var path = require('path');
-var async = require('neo-async');
 
 var BLITITOR = {};
 
@@ -204,68 +203,11 @@ if (databaseConfiguration) {
 
     // var connection = require('./lib/connection');
 
-    var iteratorAsync = function (item, callback) {
-        console.log('@@@'.green, item);
-        if (!item.ignore && item.useDatabase) {
-            var moduleName = item.folder;
-            console.log('NOW THEME :'.green, moduleName);
-
-            existsThemeTable(moduleName, function () {
-                callback(null, moduleName);
-            });
-        } else {
-            callback();
-        }
-    };
-   // database.createDatabase(connection, connectionInfo.dbName, function () {
-        // make tables!
-        async.mapSeries(BLITITOR.moduleList, iteratorAsync, function(result){
-            console.log(' = Check Table ... Done \n'.green);
-            next && next();
-        });
-    //});
-
     // sessionStore = new mysqlStore(storeOption);
     sessionOptions.store = sessionStore;
 } else {
     winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");
 }
-
-//각 모듈의 db.js에 추가할 부분
-function existsThemeTable(connection, moduleName, callback) {
-    var tables = {
-        guestbook: common.databaseDefault.prefix + moduleName
-    };
-    //var sql = "SHOW TABLES LIKE ??";
-    var sql = "SHOW TABLES";
-    var tableList = [tables.teamblog, tables.teamblogHistory, tables.teamblogRelated, tables.teamblogTag, tables.teamblogTagRelated];
-
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword
-    });
-
- var query = connection.query('SHOW TABLES',function(err,rows){
-        console.log('EXISTS : ', rows);
-    });
-}
-
-// function checkThemeDatabaseTable(moduleName, callback){
-//     console.log(" = Check database tables for " + moduleName + " module".rainbow);
-
-//     var connectionInfo = require(path.join('..', databaseFile));
-//     var module = require('../module/'+ moduleName + '/lib/database');
-
-//     // inset dummy data after create table
-//     //module.
-//     existsThemeTable(connectionInfo, moduleName, function () {
-//         callback && callback(null, moduleName);
-//     });
-// }
 
 // init session
 var sessionMiddleware = session(sessionOptions);
@@ -320,3 +262,9 @@ if (!process.send) {
         fs.writeFileSync(path.join(__dirname, './log/global-vars.log'), JSON.stringify(BLITITOR, null, 4));
     }
 }
+
+// for test
+var dummy = require('./dummy');
+
+// run for dummy
+dummy();
