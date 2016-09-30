@@ -2,6 +2,8 @@
 <html lang="ko">
 <head>
     {% include './include/head.html' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+
 </head>
 <body>
 {% include './include/nav.html' %}
@@ -41,6 +43,9 @@
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                     <a href="//kosslab-kr.github.io/kosshack2016" target="_blank">실시간 운영 현황</a>
                 </h2>
+                <div>
+                    <canvas class="bubbleChart" width="500" height="500"></canvas>
+                </div>
                 <div style="padding-left: 3em;padding-top: 1em;">
                     <p>프로젝트 운영 현황으로 <a href="//kosslab-kr.github.io/kosshack2016">바로가기</a></p>
                 </div>
