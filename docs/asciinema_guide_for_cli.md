@@ -1,0 +1,1 @@
+asciinema guide for cli.md
