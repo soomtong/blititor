@@ -2,8 +2,6 @@
 <html lang="ko">
 <head>
     {% include './include/head.html' %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
-
 </head>
 <body>
 {% include './include/nav.html' %}
@@ -35,19 +33,23 @@
 <section class="mbr-section" id="header3-130">
     <div class="mbr-section__container container mbr-section__container--first">
         <div class="row">
+
             <div class="col-md-5 col-md-offset-1">
-                <a href="//kosslab-kr.github.io/kosshack2016" target="_blank"><img class="img-thumbnail" src="{{site.theme}}/common/asset/pic_status_screen.jpg" alt=""></a>
-            </div>
-            <div class="col-md-5">
                 <h2 class="mbr-article--wysiwyg mbr-header__text">
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                     <a href="//kosslab-kr.github.io/kosshack2016" target="_blank">실시간 운영 현황</a>
                 </h2>
+
+                <a href="//kosslab-kr.github.io/kosshack2016" target="_blank"><img class="img-thumbnail" src="{{site.theme}}/common/asset/pic_status_screen.jpg" alt=""></a>
+
+                <div style="padding-top: 1em;">
+                    <p>프로젝트 운영 현황으로 <a href="//kosslab-kr.github.io/kosshack2016" target="_blank">바로가기</a></p>
+                </div>
+            </div>
+
+            <div class="col-md-5">
                 <div>
                     <canvas class="bubbleChart" width="500" height="500"></canvas>
-                </div>
-                <div style="padding-left: 3em;padding-top: 1em;">
-                    <p>프로젝트 운영 현황으로 <a href="//kosslab-kr.github.io/kosshack2016">바로가기</a></p>
                 </div>
             </div>
         </div>
@@ -74,7 +76,7 @@
 </section>
 
 {% include './include/footer.html' %}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
 {% include './include/script.html' %}
 </body>
 </html>
