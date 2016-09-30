@@ -299,8 +299,26 @@ function selectPostPinned(connection, limit, callback) {
 }
 
 function insertPost(connection, teamblogData, callback) {
-    connection.query(query.insertInto, [tables.teamblog, teamblogData], function (err, result) {
-        callback(err, result);
+    connection.query(query.insertInto, [tables.teamblog, teamblogData], function (err, insertPostResult) {
+        var tagData = {
+            tag: teamblogData.tags.toString().trim(),
+            tag_count: 1,
+            created_at: new Date()
+        };
+
+        updatedTagList(connection, tagData, function (err, affectedId) {
+            var tagRelatedPostData = {
+                tag_id: affectedId,
+                tag_related_post_id: insertPostResult.insertId,
+                created_at: new Date()
+            };
+
+            insertTagRelatedPost(connection, tagRelatedPostData, function (err, insertTagRelatedPostResult) {
+                callback(err, { insertPostId: insertPostResult.insertId, insertTagId: insertTagRelatedPostResult.insertId});
+            });
+
+            console.log('   processed tag records...'.white, affectedId);
+        });
     });
 }
 
@@ -345,7 +363,7 @@ function updatedTagList(connection, tagData, callback) {
 
 function insertTagRelatedPost(connection, tagRelatedPostData, callback) {
     connection.query(query.insertInto, [tables.teamblogTagRelated, tagRelatedPostData], function (error, result) {
-        callback(error, result.insertId);
+        callback(error, result);
     });
 }
 

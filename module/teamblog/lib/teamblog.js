@@ -166,7 +166,7 @@ function savePost(req, res) {
             res.redirect('back');
         }
 
-        var post_id = result['insertId'];
+        var post_id = result['insertPostId'];
 
         winston.info('Saved post id', post_id);
 
