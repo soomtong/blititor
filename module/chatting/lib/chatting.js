@@ -39,7 +39,9 @@ function socketWrapper(io, callback){
 
         socket.on('chat message', function(data){
             var whisperCheck = false;
-            if( typeof data.nickname != 'undefined') { var whisperCheck = true; }
+            if( typeof data.nickname != 'undefined') {
+                whisperCheck = true;
+            }
 
             if(whisperCheck) {
                 var to_id = currentUserList[data.nickname];
