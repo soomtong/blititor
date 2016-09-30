@@ -1,13 +1,16 @@
 blititor
 ========
 
-![blititor_logo_nodejsstyle7](https://cloud.githubusercontent.com/assets/22411481/18938134/5bd7305c-8631-11e6-8415-19590e187869.png)
 
 Easy to custom for the all Web Agencies and Web Masters in Korea
 
-> this code is really easy to customize for your business! - web developer journal in korean times
+> This code is really easy to customize for your business! - Web developer journal in korean times
 
-## stack
+![blititor_logo_nodejsstyle7](https://cloud.githubusercontent.com/assets/22411481/18962436/cd87572a-86ab-11e6-8e6b-d145b325e119.png)
+
+(a logo presented by Hyejin Lee @melthleeth)
+
+## Stack
 
 - NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
 - Express.js + Socket.io
@@ -15,7 +18,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 - Jquery and many frontend frameworks
 - and wonderful NPM
 
-## demo
+## Demo
 
 check out the samples! based awesome css frameworks
 
@@ -26,7 +29,7 @@ check out the samples! based awesome css frameworks
 - kube
 - ...
 
-## usage
+## Usage
 
 prepare git, nodejs, npm
 
@@ -48,25 +51,39 @@ npm install
 node core/setup.js module
 ```
 
-### Database configuration (mysql, mariadb)
+### database configuration (mysql, mariadb)
 
 ```shell
 node core/setup.js db
 ```
 
-### Make database tables for blititor
+### make database tables for blititor
 
 ```shell
 node core/setup.js db-init
 ```
 
-### Make Theme configuration
+for preparing non-core modules ('guestbook' or 'teamblog'...)
+
+```shell
+node core/setup.js theme some_module_name
+```
+
+### make theme configuration
 
 ```shell
 node core/setup.js theme
 ```
 
 ### run node app
+
 ```shell
 node core/index
+```
+
+or u can override default port using option `port` or `p` 
+
+```
+node core/index -port=3000
+node core/index -p 3000
 ```

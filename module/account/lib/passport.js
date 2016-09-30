@@ -17,7 +17,7 @@ function authenticate(userID, password, done) {
     }
 */
 
-    account.authByUserID(userID, function (err, auth) {
+    account.findAuthByUserID(userID, function (err, auth) {
         if (err) {
             return done(err);
         }
@@ -48,7 +48,7 @@ function authenticate(userID, password, done) {
 function serialize(user, done) {
     winston.verbose('Serialize in process for', user);
 
-    account.findByID(user.id, function (error, user) {
+    account.findUserByID(user.id, function (error, user) {
         done(error, user.uuid);
     });
 }
@@ -56,7 +56,7 @@ function serialize(user, done) {
 function deserialize(uuid, done) {
     winston.verbose('DeSerialize in process for', uuid);
 
-    account.findByUUID(uuid, function (err, user) {
+    account.findUserByUUID(uuid, function (err, user) {
         done(err, user);
     });
 }
@@ -67,7 +67,7 @@ function loginSuccess(req, res, next) {
     // insert login logging
     var auth_id = req.user.id;
 
-    account.findByAuthID(auth_id, function (error, user) {
+    account.findUserByAuthID(auth_id, function (error, user) {
         account.insertLastLog(user.uuid, user.login_counter);
 
         var agent = useragent.parse(req.headers['user-agent']);

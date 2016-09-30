@@ -74,6 +74,7 @@ function getRouteTable() {
             "message": "/register",
             "reply": "/register/reply"
         },
+        "chatting": "/chatting",
         "teamblog_root": "/blog",
         "teamblog": {
             "list": "/",

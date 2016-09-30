@@ -1,0 +1,8 @@
+{
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "countAll": "SELECT count(id) as `count` FROM ??",
+  "readChatAllLog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
+  "insertInto": "INSERT INTO ?? SET ?",
+  "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "updateAccountById": "UPDATE ?? SET ? WHERE `id` = ?"
+}

@@ -147,8 +147,7 @@ function savePost(req, res) {
         user_uuid: req.user.uuid,
         user_id: req.user.id,
         nickname: req.user.nickname,
-        flag: req.body.flag ? '1' : '',  // todo: subtract common flag module using bitwise
-        render: req.body.render ? 'M' : '', // 1: markdown, 2: asciidoc
+        flag: req.body.render ? 'M' : '', // 1: markdown, 2: asciidoc
         title: req.body.title,
         content: req.body.content,
         tags: req.body.tags,

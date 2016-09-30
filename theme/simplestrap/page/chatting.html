@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chatting</title>
-    {% include '../include/style.html' %}
+    {% include './include/header.html' %}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 46rem; }
         form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
         form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
         #messages {
             float: left;
             width: 85%;
             list-style-type: none;
-            margin: 62px 0 0;
             padding: 0; }
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
@@ -21,26 +18,32 @@
             float: right;
             width: 15%;
             list-style-type: none;
-            margin: 62px 0 0;
             padding: 0; }
         #user-list li { padding: 5px 10px; }
-        .footer {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
 
-{% include '../include/header.html' %}
+<div class="container">
+    <div class="header clearfix">
 
-<ul id="messages"></ul>
-<ul id="user-list"></ul>
-<form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-</form>
+        {% include './include/menu.html' %}
+
+    </div>
+
+    {% include './include/flash.html' %}
+    <div class="chatWrapper">
+        <ul id="messages"></ul>
+        <ul id="user-list"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+    </div>
+
+</div>
 
 <script src="/lib/jquery/dist/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>   <!-- 모든 라우팅 셋업 전에 socket.io 를 바인딩하기 때문에 별도의 처리 없이 접근할 수 있음 -->
+<script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io();
     $('form').submit(function(){
@@ -69,7 +72,10 @@
         $('#messages').append($('<li>').text(data.nickname + ' : ' + data.msg));
     });
 </script>
-
-{% include '../include/footer.html' %}
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

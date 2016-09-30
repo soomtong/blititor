@@ -1,10 +1,8 @@
 // setup blititor process for command line interface
-var param1 = process.argv[2];
-var param2 = process.argv[3] || '';
-
 var prompt = require('prompt');
 var colors = require('colors');
 var async = require('neo-async');
+var parseArgs = require('minimist');
 
 var fs = require('fs');
 var path = require('path');
@@ -19,13 +17,16 @@ var databaseFile = require('./config/app_default.json').databaseConfig;
 var databaseDefaultFile = './core/config/database_default.json';
 
 var moduleFile = 'module_list.json';
+var params = parseArgs(process.argv.slice(2));
+var mainCommand = params._[0];
+var subCommand = params._[1];
 
 prompt.message = colors.green(" B");
 
 // todo: refactor for each module's CLI config process, that exposed each
 // or just go in to a web interface except these setups.
 // register new module then admin get noticed by file system or something others
-switch (param1) {
+switch (mainCommand) {
     case 'module':
         loadModuleList();
         break;
@@ -33,17 +34,17 @@ switch (param1) {
         makeDatabaseConfigFile();
         break;
     case 'db-init':
-        if (!param2) {
+        if (!subCommand) {
             makeDatabaseTable();
         } else {
-            makeModuleDatabaseTable(param2);
+            makeModuleDatabaseTable(subCommand);
         }
         break;
     case 'db-reset':
-        if (!param2) {
+        if (!subCommand) {
             makeDatabaseTableWithReset();
         } else {
-            makeModuleDatabaseTableWithReset(param2);
+            makeModuleDatabaseTableWithReset(subCommand);
         }
         break;
     case 'theme':
@@ -72,7 +73,7 @@ switch (param1) {
         console.log(" > node core/setup all \n".white);
 }
 
-function makeDatabaseConfigFile() {
+function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n".rainbow);
 
     prompt.start();
@@ -175,15 +176,15 @@ function makeDatabaseConfigFile() {
 
                 database.createDatabase(connection, params.dbName, function (err, result) {
                     console.log(' = Make database... Done \n'.green);
-
                     connection.destroy();
+                    next && next();
                 });
             }
         });
     });
 }
 
-function makeDatabaseTable() {
+function makeDatabaseTable(next) {
     console.log(" = Make database tables for blititor \n".rainbow);
 
     var connectionInfo = require(path.join('..', databaseFile));
@@ -202,7 +203,6 @@ function makeDatabaseTable() {
         if (!item.ignore && item.useDatabase) {
             var moduleName = item.folder;
 
-
             makeModuleDatabaseTable(moduleName, function () {
                 callback(null, moduleName);
             });
@@ -211,15 +211,15 @@ function makeDatabaseTable() {
         }
     };
 
-    var resultAsync = function (err, result) {
-        console.log(' = Make database tables... Done \n'.green);
-    };
-
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
-        async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
-        connection.destroy();
+        async.mapSeries(moduleInfo, iteratorAsync, function(result){
+            console.log(' = Make database tables... Done \n'.green);
+            connection.destroy();
+            next && next();
+        });
     });
+
 }
 
 function makeDatabaseTableWithReset() {
@@ -301,7 +301,7 @@ function makeModuleDatabaseTableWithReset(moduleName) {
     module.deleteScheme(connectionInfo, module.createScheme);
 }
 
-function makeThemeConfigFile() {
+function makeThemeConfigFile(next) {
     console.log(" = Make Theme configuration \n".rainbow);
 
     theme.getThemeList('theme', function (themeList) {
@@ -343,7 +343,7 @@ function makeThemeConfigFile() {
             };
 
             fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
-
+            next && next();
         });
     });
 }
@@ -411,7 +411,8 @@ function makeAdminAccount() {
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
                         console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
-                        console.log(err);
+                        console.log(' = ' + authData.user_id + '가 이미 존재합니다.');
+                        
                         connection.destroy();
 
                         return;
@@ -454,7 +455,7 @@ function makeAdminAccount() {
     });
 }
 
-function loadModuleList() {
+function loadModuleList(next) {
     console.log(" = Gathering Modules Info for Database \n".rainbow);
 
     // generate module list
@@ -513,6 +514,7 @@ function loadModuleList() {
             var ordered = temp.concat(results);
 
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
+            next && next();
         });
     });
 }
