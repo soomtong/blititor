@@ -46,17 +46,24 @@ function socketWrapper(io, callback){
         }
 
         socket.on('chat message', function(data){
+
             var whisperCheck = false;
+            var to_id;
+
             if( typeof data.nickname != 'undefined') {
                 whisperCheck = true;
             }
+            if (whisperCheck) {
+                to_id = currentUserList[data.nickname].socketId;
 
-            if(whisperCheck) {
-                var to_id = currentUserList[data.nickname].socketId;
-            }else{
-                var to_id = "broadcast";
+                var toUserUUID = currentUserList[data.nickname].userUUID;
+                if (uuid == toUserUUID) {
+                    return;
+                }
+
+            } else {
+                to_id = "broadcast";
             }
-
             var chatInfo = {
                 from_id: uuid,
                 to_id: to_id,
@@ -71,15 +78,13 @@ function socketWrapper(io, callback){
 
             data.nickname = nickname;
 
-            if(whisperCheck) {
+            if (whisperCheck) {
                 data.chat_type = "private";
                 io.sockets.sockets[to_id].emit('chat message' , data);
-            }else{
+            } else {
                 data.chat_type = "public";
                 io.emit('chat message', data);
             }
-
-            
         });
 
         socket.on('disconnect', function(data){
