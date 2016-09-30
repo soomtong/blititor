@@ -340,7 +340,7 @@
                     labels: Object.keys(chartData),
                     datasets: [
                         {
-                            label: '최근 100개 커밋 프로젝트 현황',
+                            label: '/kosslab-kr Repository 최근 100개 커밋 현황',
                             backgroundColor: 'rgba(255,99,132,0.2)',
                             borderColor: 'rgba(255,99,132,1)',
                             pointBackgroundColor: 'rgba(255,99,132,1)',
