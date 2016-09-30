@@ -73,7 +73,7 @@ function getThemeInfo(directory, done) {
             if (err) {
                 winston.warn(err);
             } else {
-                md = fs.readFileSync(file);
+                md = fs.readFileSync(file, 'utf8');
                 description = common.destructMarkdown(md);
             }
             done(null, description);

@@ -10,7 +10,7 @@ var salt = bcrypt.genSaltSync(8);
 function destructMarkdown(markdownText) {
     var title = markdownText.toString().match(/^##[^#].+/m)[0].trim();
     var quote = markdownText.toString().match(/^>.+/m)[0].trim();
-    var credit = markdownText.toString().match(/^###[^#].*redit(.|\n)*/igm)[0].trim().split('\n');
+    var credit = markdownText.match(/^###[^#].*redit(\n|\r)(\n|\r)(.|\n|\r)*/igm)[0].trim().split('\n');
     // console.log('markdown:',credit, credit.slice(1));
 
     return {
