@@ -38,21 +38,38 @@ function socketWrapper(io, callback){
         }
 
         socket.on('chat message', function(data){
+            var whisperCheck = false;
+            if( typeof data.nickname != 'undefined') { var whisperCheck = true; }
+
+            if(whisperCheck) {
+                var to_id = currentUserList[data.nickname];
+            }else{
+                var to_id = "broadcast";
+            }
+
             var chatInfo = {
                 from_id: uuid,
-                to_id: "broadcast",
+                to_id: to_id,
                 message: data.msg,
                 created_at: new Date()
             };
 
             // todo: 귓속말 기능이 구현되면 to_id에 대상을 할당해주는 부분이 필요합니다.
-
             writeChattingLog(chatInfo, function(result){
                 console.log("Insert a chatting log to database.");
             });
 
             data.nickname = nickname;
-            io.emit('chat message', data);
+
+            if(whisperCheck) {
+                data.chat_type = "private";
+                io.sockets.sockets[to_id].emit('chat message' , data);
+            }else{
+                data.chat_type = "public";
+                io.emit('chat message', data);
+            }
+
+            
         });
 
         socket.on('disconnect', function(data){
