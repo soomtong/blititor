@@ -314,6 +314,58 @@
                 }
             });
         }
+
+        if (!$html.hasClass('bubbleChart')){
+            $.ajax({
+                url: 'https://api.github.com/users/kosslab-kr/events?per_page=100',
+                crossDomain: true
+            }).success(function(resp){
+
+                var chartData = {};
+                for (var idx in resp){
+                    if (resp[idx].repo != undefined) {
+                        var repoName = resp[idx].repo.name.replace('kosslab-kr/','');
+                        if(repoName in chartData){
+                            chartData[repoName] += 1
+                        }else{
+                            chartData[repoName] = 1
+                        }
+                    }
+                }
+                console.log(chartData);
+
+                var values = Object.keys(chartData).map(function(v) { return chartData[v]; });
+
+                var data = {
+                    labels: Object.keys(chartData),
+                    datasets: [
+                        {
+                            label: '최근 100개 커밋 프로젝트 현황',
+                            backgroundColor: 'rgba(255,99,132,0.2)',
+                            borderColor: 'rgba(255,99,132,1)',
+                            pointBackgroundColor: 'rgba(255,99,132,1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(255,99,132,1)',
+                            data: values
+                        }
+                    ]
+                };
+                new Chart($('.bubbleChart'), {
+                    type: 'radar',
+                    data: data,
+                    options: {
+                        scale: {
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+
     });
 
     (function () {
