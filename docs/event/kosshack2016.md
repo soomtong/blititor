@@ -57,6 +57,6 @@
 - 김종현(@60112337)
 - replace this to your name(@kafkalen)
 - replace this to your name(@ryuneeee)
-- replace this to your name(@ho1234c)
-- replace this to your name(@ledgku)
+- 정종호(@ho1234c)
+- 이동규(@ledgku)
 - your name(@your id)

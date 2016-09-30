@@ -6,9 +6,9 @@
     {% include '../include/style.html' %}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        form.public { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form.public input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+        form.public button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
         #messages {
             float: left;
             width: 85%;
@@ -27,6 +27,13 @@
         .footer {
             display: none !important;
         }
+        #prvate_chat_pop { 
+            background-color: #fff; 
+            padding:20px;
+            border-radius: 7px;
+            border: 5px solid rgb(130, 224, 255); 
+        }
+        form.private textarea { padding:5px 7px; } 
     </style>
 </head>
 <body>
@@ -35,15 +42,32 @@
 
 <ul id="messages"></ul>
 <ul id="user-list"></ul>
-<form action="">
+<form class="public" action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
 
+
+<div id="prvate_chat_pop" style="display:none;">
+    <form action="" class="private">
+        <ul>
+            <li>받는 사람 : <span id="nickname_display"></span></li>
+            <li>
+                내용 : <br>
+                <input type="hidden" name="nickname" id="nickname_val">
+                <textarea rows="5" name="msg" id="msg_val" class="pure-input" required></textarea>
+            </li>
+        </ul>
+        <button class="pure-button">Send</button>
+    </form>
+</div>
+
+
 <script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>   <!-- 모든 라우팅 셋업 전에 socket.io 를 바인딩하기 때문에 별도의 처리 없이 접근할 수 있음 -->
+<script src="{{site.theme}}/common/jquery.bpopup.min.js"></script> <!-- 팝업 관련 라이브러리 -->
 <script>
     var socket = io();
-    $('form').submit(function(){
+    $('form.public').submit(function(){
         var $m = $('#m');
         socket.emit('chat message', {msg : $m.val()});
         $m.val('');
@@ -52,10 +76,36 @@
 
     function updateUserList(userList) {
         $('#user-list').text('');
-        for(var user in userList){
-            $('#user-list').append($('<li>').text(user));
+        for (var user in userList) {
+            $('#user-list').append($('<li>').text(user).data('uuid', userList[user].userUUID).data('socketId', userList[user].socketId));
         }
     }
+
+    $(document).ready(function(){
+        $(document).on('click', '#user-list li' , function(){
+            var $nickname = $(this).text();
+            var socketId = $(this).data('socketId');
+
+            if (socketId == '/#' + socket.id) {
+                return alert('나에게 귓속말을 보낼 수 없습니다');
+            }
+            $('#nickname_display').text($nickname);
+            $('#nickname_val').val($nickname);
+            $('#prvate_chat_pop').bPopup();
+        });
+    });
+
+    $('form.private').submit(function(){
+        socket.emit('chat message', { 
+                nickname : $('#nickname_val').val(),
+                msg : $('#msg_val').val()
+            }
+        );
+        $('#nickname_val').val('');
+        $('#msg_val').val('');
+        $('#prvate_chat_pop').bPopup().close();
+        return false;
+    });
 
     socket.on('join', function(data){
         updateUserList(data)
@@ -66,7 +116,12 @@
     });
 
     socket.on('chat message', function(data){
-        $('#messages').append($('<li>').text(data.nickname + ' : ' + data.msg));
+        if(data.chat_type=="public"){
+            var message = data.nickname + ' : ' + data.msg;
+        }else if(data.chat_type=="private"){
+            var message = data.nickname + '으로부터의 귓속말 : ' + data.msg;
+        }
+        $('#messages').append($('<li>').text(message));
     });
 </script>
 
