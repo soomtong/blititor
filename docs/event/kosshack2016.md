@@ -48,7 +48,7 @@
 ### Members
 
 - replace this to your name(@upgle)
-- replace this to your name(@parkjunyoung)
+- 박준영(@parkjunyoung)
 - 이혜진(@melthleeth)
 - 황초롱(@ChorongHwang)
 - 하은영(@0122hey)
@@ -57,6 +57,6 @@
 - 김종현(@60112337)
 - replace this to your name(@kafkalen)
 - replace this to your name(@ryuneeee)
-- replace this to your name(@ho1234c)
-- replace this to your name(@ledgku)
+- 정종호(@ho1234c)
+- 이동규(@ledgku)
 - your name(@your id)
