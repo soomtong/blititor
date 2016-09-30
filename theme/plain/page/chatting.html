@@ -76,14 +76,19 @@
 
     function updateUserList(userList) {
         $('#user-list').text('');
-        for(var user in userList){
-            $('#user-list').append($('<li>').text(user));
+        for (var user in userList) {
+            $('#user-list').append($('<li>').text(user).data('uuid', userList[user].userUUID).data('socketId', userList[user].socketId));
         }
     }
 
     $(document).ready(function(){
         $(document).on('click', '#user-list li' , function(){
             var $nickname = $(this).text();
+            var socketId = $(this).data('socketId');
+
+            if (socketId == '/#' + socket.id) {
+                return alert('나에게 귓속말을 보낼 수 없습니다');
+            }
             $('#nickname_display').text($nickname);
             $('#nickname_val').val($nickname);
             $('#prvate_chat_pop').bPopup();

@@ -20,33 +20,50 @@ function socketWrapper(io, callback){
 
     io.sockets.on('connection', function(socket){
         winston.verbose('a user connected');
-        var session = socket.request.session, nickname;
+
+        var nickname;
+        var session = socket.request.session;
         var uuid = session.passport ? session.passport.user : null;
-        console.log(uuid);
+
         if(uuid){
             findAccountByUUID(uuid, function(err, data){
                 nickname = data.nickname;
-                currentUserList[nickname] = socket.id;
+                currentUserList[nickname] = {
+                    socketId : socket.id,
+                    userUUID: uuid
+                };
                 io.sockets.emit('join', currentUserList);
             })
         }
         else{
             nickname = 'GUEST-' + userCount;
             userCount ++;
-            currentUserList[nickname] = socket.id;
+            currentUserList[nickname] = {
+                socketId : socket.id,
+                userUUID: null
+            };
             io.sockets.emit('join', currentUserList);
         }
 
         socket.on('chat message', function(data){
+
             var whisperCheck = false;
-            if( typeof data.nickname != 'undefined') { var whisperCheck = true; }
+            var to_id;
 
-            if(whisperCheck) {
-                var to_id = currentUserList[data.nickname];
-            }else{
-                var to_id = "broadcast";
+            if( typeof data.nickname != 'undefined') {
+                whisperCheck = true;
             }
+            if (whisperCheck) {
+                to_id = currentUserList[data.nickname].socketId;
 
+                var toUserUUID = currentUserList[data.nickname].userUUID;
+                if (uuid == toUserUUID) {
+                    return;
+                }
+
+            } else {
+                to_id = "broadcast";
+            }
             var chatInfo = {
                 from_id: uuid,
                 to_id: to_id,
@@ -61,15 +78,13 @@ function socketWrapper(io, callback){
 
             data.nickname = nickname;
 
-            if(whisperCheck) {
+            if (whisperCheck) {
                 data.chat_type = "private";
                 io.sockets.sockets[to_id].emit('chat message' , data);
-            }else{
+            } else {
                 data.chat_type = "public";
                 io.emit('chat message', data);
             }
-
-            
         });
 
         socket.on('disconnect', function(data){
