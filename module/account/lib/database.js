@@ -199,7 +199,7 @@ function selectByUUID(connection, uuid, callback) {
 }
 
 function selectByAuthID(connection, authID, callback) {
-    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at', 'login_counter'];
 
     connection.query(query.selectByAuthID, [field, tables.user, authID], function (err, rows) {
         if (err || !rows) {
@@ -257,7 +257,6 @@ function insertAccount(connection, userData, callback) {
 }
 
 function updateByUUID(connection, userData, UUID, callback) {
-    console.log(tables.user, userData, UUID);
     connection.query(query.updateAccountByUUID, [tables.user, userData, UUID], function (err, result) {
         callback(err, result);
     });
