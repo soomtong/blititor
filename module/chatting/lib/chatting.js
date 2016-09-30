@@ -26,14 +26,20 @@ function socketWrapper(io, callback){
         if(uuid){
             findAccountByUUID(uuid, function(err, data){
                 nickname = data.nickname;
-                currentUserList[nickname] = socket.id;
+                currentUserList[nickname] = {
+                    socketId : socket.id,
+                    userUUID: uuid
+                };
                 io.sockets.emit('join', currentUserList);
             })
         }
         else{
             nickname = 'GUEST-' + userCount;
             userCount ++;
-            currentUserList[nickname] = socket.id;
+            currentUserList[nickname] = {
+                socketId : socket.id,
+                userUUID: null
+            };
             io.sockets.emit('join', currentUserList);
         }
 
@@ -44,7 +50,7 @@ function socketWrapper(io, callback){
             }
 
             if(whisperCheck) {
-                var to_id = currentUserList[data.nickname];
+                var to_id = currentUserList[data.nickname].socketId;
             }else{
                 var to_id = "broadcast";
             }
