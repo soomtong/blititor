@@ -58,5 +58,5 @@
 - replace this to your name(@kafkalen)
 - replace this to your name(@ryuneeee)
 - 정종호(@ho1234c)
-- replace this to your name(@ledgku)
+- 이동규(@ledgku)
 - your name(@your id)
