@@ -20,9 +20,11 @@ function socketWrapper(io, callback){
 
     io.sockets.on('connection', function(socket){
         winston.verbose('a user connected');
-        var session = socket.request.session, nickname;
+
+        var nickname;
+        var session = socket.request.session;
         var uuid = session.passport ? session.passport.user : null;
-        console.log(uuid);
+
         if(uuid){
             findAccountByUUID(uuid, function(err, data){
                 nickname = data.nickname;
