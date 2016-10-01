@@ -13,6 +13,14 @@
 
 <div class="splash-container">
     <div class="splash">
+        {% if message.error %}
+        {% for error in message.error %}
+        <div class="alert alert-login">
+            <strong>Warning!</strong> {{ error.msg }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
         <h1 class="splash-head">{{title}}</h1>
         <p class="splash-subhead">
             This is a simple plain demo page, and it's the index page

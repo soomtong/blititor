@@ -194,13 +194,18 @@ function register(req, res) {
 }
 
 function registerSimpleForTest(req, res) {
-    req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
-    req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
+    req.assert('nickname', '닉네임이 필요합니다. 최소 2 자에서 최대 10 자까지 사용할 수 있습니다.').len(2, 20);
+    req.assert('email', '이메일 형식의 사용자 아이디가 필요합니다.').isEmail();
+    req.assert('password', '패스워드는 최소 4 자 이상의 문자열을 사용해주세요.').len(4);
 
     var errors = req.validationErrors();
 
     if (errors) {
+        if (Array.isArray(errors)) {
+            errors.map(function (item) {
+                winston.error(item);
+            });
+        }
         req.flash('error', errors);
         return res.redirect('back');
     }
