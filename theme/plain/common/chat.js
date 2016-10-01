@@ -1,20 +1,20 @@
-$(document).ready(function(){
+$(document).ready(function () {
     var $userList = $('#users');
 
-    $('#public').submit(function(){
+    $('#public').submit(function () {
         var $m = $('#m');
-        socket.emit('chat message', {msg : $m.val()});
+        socket.emit('chat message', {msg: $m.val()});
         $m.val('');
 
         return false;
     });
 
-    $('#private').submit(function(){
+    $('#private').submit(function () {
         socket.emit('chat message', {
-                nickname : $('#nickname_val').val(),
-                msg : $('#msg_val').val()
-            }
-        );
+            nickname: $('#nickname_val').val(),
+            msg: $('#msg_val').val()
+        });
+
         $('#nickname_val').val('');
         $('#msg_val').val('');
         $('#private_chat_pop').bPopup().close();
@@ -34,14 +34,15 @@ $(document).ready(function(){
         $('#private_chat_pop').bPopup();
     });
 
-
     var socket = io();
 
     socket.on('join', function (data) {
+        $userList.find('li.user-id').remove();
         updateUserList($userList, data)
     });
 
     socket.on('leave', function (data) {
+        $userList.find('li.user-id').remove();
         updateUserList($userList, data)
     });
 
@@ -58,8 +59,6 @@ $(document).ready(function(){
 });
 
 function updateUserList($userList, userList) {
-    $userList.append($('<li class="pure-menu-heading">').text('접속자 리스트'));
-
     for (var user in userList) {
         $userList.append($('<li class="pure-menu-link user-id">')
             .text(user)
