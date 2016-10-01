@@ -33,6 +33,11 @@
     color: #fff;
 }
 
+h2.logo-title {
+    padding-left: 0;
+    margin-left: 0;
+}
+
 .button-xsmall {
     font-size: 70%;
 }

@@ -46,7 +46,7 @@ function authenticate(userID, password, done) {
 }
 
 function serialize(user, done) {
-    winston.verbose('Serialize in process for', 'id=', user.id, 'user_id=', user.user_id);
+    winston.verbose('Serialize in process for', 'id=' + user.id, 'user_id=' + user.user_id);
 
     account.findUserByID(user.id, function (error, user) {
         done(error, user.uuid);
