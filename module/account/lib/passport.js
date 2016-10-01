@@ -8,6 +8,7 @@ var counter = require('../../counter');
 var account = require('./account');
 
 var token = misc.commonToken();
+var grants = misc.getUserPrivilege();
 
 function authenticate(userID, password, done) {
 /*  no need it, it checked by passport system. and that print out with `badRequestMessage` parameter
@@ -48,7 +49,8 @@ function authenticate(userID, password, done) {
 function serialize(user, done) {
     winston.verbose('Serialize in process for', 'id=' + user.id, 'user_id=' + user.user_id);
 
-    account.findUserByID(user.id, function (error, user) {
+    account.findUserByAuthID(user.id, function (error, user) {
+        if (error) winston.error(error);
         done(error, user.uuid);
     });
 }
@@ -57,6 +59,14 @@ function deserialize(uuid, done) {
     winston.verbose('DeSerialize in process for', uuid);
 
     account.findUserByUUID(uuid, function (err, user) {
+        var userGrant = [];
+
+        if (user.grant.indexOf(grants.siteAdmin) > -1) userGrant.push('시스템관리자');
+        if (user.grant.indexOf(grants.siteManager) > -1) userGrant.push('사이트운영자');
+        if (user.grant.indexOf(grants.contentManager) > -1) userGrant.push('콘텐츠담당자');
+
+        user.grant_name = userGrant;
+
         done(err, user);
     });
 }

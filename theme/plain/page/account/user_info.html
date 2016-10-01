@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>{{site.title}}</title>
+    {% include '../../include/style.html' %}
+</head>
+<body>
+
+{% include '../../include/header.html' %}
+
+<div class="application-wrapper">
+    <div class="content">
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <h2>ACCOUNT TYPE OF BLITITOR</h2>
+                <h3>블리티터는 3개 종류의 계정이 있습니다.</h3>
+                <ul>
+                    <li>관리자: 전체 계정을 관리할 수 있습니다. 기타 시스템 관리 전문 작업을 담당합니다.</li>
+                    <li>운영자: 콘텐츠 운영자 전문 작업을 담당합니다. 경우에 따라 사용자 계정을 관리하기도 합니다.</li>
+                    <li>사용자: 1 ~ 9 단계의 레벨 시스템이 있습니다.</li>
+                </ul>
+
+                <form class="pure-form pure-form-stacked" method="post" action="{{ site.root }}{{ route.account_root + route.account.login }}">
+                    <fieldset>
+                        <legend>User Account Info</legend>
+
+                        <div class="pure-g">
+                            <div class="pure-u-1">
+                                <table class="pure-table">
+                                    <thead>
+                                    <tr>
+                                        <th>아이디</th>
+                                        <th>닉네임</th>
+                                        <th>권한</th>
+                                        <th>레벨</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>{{user.user_id}}</td>
+                                        <td>{{user.nickname}}</td>
+                                        <td>
+                                            {% set comma = joiner() %}
+                                            {% for item in user.grant_name -%}
+                                            {{ comma() }} {{ item }}
+                                            {%- endfor %}
+                                        </td>
+                                        <td>{{user.level}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="ribbon l-box-lrg pure-g">
+        {% include '../../include/sub_section.html' %}
+    </div>
+
+    {% include '../../include/footer.html' %}
+
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 {
   "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
+  "selectByUUIDWithAuthID": "SELECT `auth`.??, `user`.?? FROM ?? as `auth`, ?? as `user` WHERE `user`.`uuid` = ? AND `auth`.`id` = `user`.`auth_id`",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "selectByAuthID": "SELECT ?? FROM ?? WHERE `auth_id` = ?",
   "insertInto": "INSERT INTO ?? SET ?",

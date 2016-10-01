@@ -178,7 +178,8 @@ function selectByID(connection, id, callback) {
     var field = ["id", "uuid", "nickname", "photo", "level", "grant", "login_counter"];
 
     connection.query(query.selectByID, [field, tables.user, id], function (err, rows) {
-        if (err || !rows) {
+        if (err || !rows || !rows[0]) {
+            winston.error(err);
             return callback(err, {});
         }
 
@@ -187,9 +188,10 @@ function selectByID(connection, id, callback) {
 }
 
 function selectByUUID(connection, uuid, callback) {
-    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+    var field1 = ['user_id'];
+    var field2 = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
 
-    connection.query(query.selectByUUID, [field, tables.user, uuid], function (err, rows) {
+    connection.query(query.selectByUUIDWithAuthID, [field1, field2, tables.auth, tables.user, uuid], function (err, rows) {
         if (err || !rows) {
             return callback(err, {});
         }

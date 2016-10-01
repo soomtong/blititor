@@ -101,7 +101,11 @@
                         <input id="password" name="password" type="password" placeholder="Your Password">
 
                         <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                        {% if not user.uuid %}
                         <button type="submit" class="pure-button">Sign Up</button>
+                        {% else %}
+                        <button type="submit" class="pure-button" disabled>Already Logged In</button>
+                        {% endif %}
                     </fieldset>
                 </form>
             </div>
