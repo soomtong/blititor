@@ -1,3 +1,5 @@
+var socket = io();
+
 $(document).ready(function () {
     var $userList = $('#users');
 
@@ -34,8 +36,6 @@ $(document).ready(function () {
         $('#private_chat_pop').bPopup();
     });
 
-    var socket = io();
-
     socket.on('join', function (data) {
         $userList.find('li.user-id').remove();
         updateUserList($userList, data)
@@ -47,10 +47,11 @@ $(document).ready(function () {
     });
 
     socket.on('chat message', function (data) {
+        var message = '';
         if (data.chat_type == "public") {
-            var message = data.nickname + ' : ' + data.msg;
+            message = data.nickname + ' : ' + data.msg;
         } else if (data.chat_type == "private") {
-            var message = data.nickname + '으로부터의 귓속말 : ' + data.msg;
+            message = data.nickname + '으로부터의 귓속말 : ' + data.msg;
         }
 
         $('#messages').append($('<li class="pure-menu-link">')
@@ -63,6 +64,6 @@ function updateUserList($userList, userList) {
         $userList.append($('<li class="pure-menu-link user-id">')
             .text(user)
             .data('uuid', userList[user].userUUID)
-            .data('socketId', userList[user].socketId));
+            .data('socketId', userList[user].socketID));
     }
 }

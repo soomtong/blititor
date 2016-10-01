@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var winston = require('winston');
 
 var userPrivilege = require('../config/user_level.json');
@@ -154,6 +155,15 @@ function showRouteTable() {
     winston.verbose(JSON.stringify(defaultRoute, null, 4));
 }
 
+function showGlobalVar(g) {
+    Object.keys(g).forEach(function (item) {
+        if (item.toString().indexOf('_') !== 0) {
+            winston.verbose('Saving var info of global', item, 'to log folder');
+            fs.writeFile(path.join(__dirname, '../log/global-var-' + item + '.log'), JSON.stringify(g[item], null, 4));
+        }
+    });
+}
+
 module.exports = {
     getUserPrivilege: getUserPrivilege,
     setUserPrivilege: setUserPrivilege,
@@ -163,5 +173,6 @@ module.exports = {
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,
     commonToken: commonToken,
-    showRouteTable: showRouteTable
+    showRouteTable: showRouteTable,
+    showGlobalVar: showGlobalVar,
 };

@@ -6,6 +6,7 @@ var winston = require('winston');
 var misc = require('../../core/lib/misc');
 
 // load modules
+var Chat = require('../../module/chatting');
 var Account = require('../../module/account');
 var Site = require('../../module/site');
 var Admin = require('../../module/administrator');
@@ -39,9 +40,13 @@ router.post(routeTable.account_root + routeTable.account.registerSimple, Account
 router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 router.use(routeTable.account_root, Account.route);
+router.use(routeTable.chatting, Chat.route);
 
 // bind static page
 bindRouter();
+
+// init socket.io
+Chat.initSocket(BLITITOR._socketIO);
 
 module.exports = router;
 

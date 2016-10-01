@@ -9,7 +9,7 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    chat : common.databaseDefault.prefix + 'chatting_log',
+    chattingLog : common.databaseDefault.prefix + 'chatting_log',
     user: common.databaseDefault.prefix + 'user'
 };
 
@@ -25,10 +25,11 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.chat];
+    var tableList = [tables.chattingLog];
 
     connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
+
         callback(databaseConfiguration);
     });
 }
@@ -44,14 +45,14 @@ function createScheme(databaseConfiguration, callback, done) {
 
     var sql_chatting = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`from_id` char(36) not null, ' +
-        '`to_id` char(36) not null, ' +
+        '`from_uuid` char(36) not null, ' +
+        '`to_uuid` char(36) not null, ' +
         '`message` text, ' +
         '`created_at` datetime ,' +
-        'INDEX from_id(`from_id`) ,' + 
-		'INDEX to_id(`to_id`))';
+        'INDEX from_uuid(`from_uuid`) ,' +
+		'INDEX to_uuid(`to_uuid`))';
 
-    connection.query(sql_chatting, tables.chat, function (error, result) {
+    connection.query(sql_chatting, tables.chattingLog, function (error, result) {
         // check dummy json
         callback && callback(databaseConfiguration, done);
 
@@ -60,26 +61,14 @@ function createScheme(databaseConfiguration, callback, done) {
     });
 }
 
-function selectByUUID(connection, uuid, callback) {
-    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
-
-    connection.query(query.selectByUUID, [field, tables.user, uuid], function (err, rows) {
-        if (err || !rows) {
-            return callback(err, {});
-        }
-
-        return callback(err, rows[0]);
-    });
+function insertDummy(databaseConfiguration, done) {
+    done && done();
 }
 
 function insertChattingLog(connection, chatInfo, callback){
-    connection.query(query.insertInto, [tables.chat, chatInfo], function (err, result) {
+    connection.query(query.insertInto, [tables.chattingLog, chatInfo], function (err, result) {
         callback(err, result);
     });
-}
-
-function insertDummy(databaseConfiguration, done) {
-    done && done();
 }
 
 module.exports = {
@@ -87,8 +76,8 @@ module.exports = {
     createScheme: createScheme,
     insertDummy: insertDummy,
     writeChattingLog: insertChattingLog,
-    readByUUID: selectByUUID,
     option: {
-        tables: tables
+        tables: tables,
+        core: true
     }
 };

@@ -16,7 +16,6 @@ global.BLITITOR = BLITITOR;
 // load common package
 var http = require('http');
 var socketIO = require('socket.io');
-var chatting = require('../module/chatting');
 var express = require('express');
 var expressValidator = require('express-validator');
 var multer = require('multer');
@@ -50,6 +49,7 @@ winston.add(winston.transports.Console, {
 });
 
 // load custom library
+var socket = require('./lib/socket');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
@@ -113,10 +113,10 @@ var WEEK = DAY * 7;
 // set locale
 moment.locale(BLITITOR.config.locale);
 
-// ready Express server
+// ready server
 var app = express();
 var server = http.Server(app);
-var io = socketIO(server);
+var sio = socketIO(server);
 var bootstrapArgv = args(process.argv.slice(2));
 
 // set express app
@@ -134,6 +134,11 @@ nunjucks.configure(app.get('views'), {
 // using Express behind nginx
 if (BLITITOR.env == 'production') {
     app.enable('trust proxy');
+}
+
+// bind socket.io to global for convenience
+if (!BLITITOR._socketIO) {
+    BLITITOR._socketIO = sio;
 }
 
 // use express middleware
@@ -186,7 +191,7 @@ var sessionOptions = {
 };
 
 if (databaseConfiguration) {
-    winston.info("start to make mysql connection process for global session system");
+    winston.info("Started to make mysql connection process for global session system");
 
     sessionStore = new mysqlStore({
         host: databaseConfiguration.dbHost,
@@ -201,9 +206,6 @@ if (databaseConfiguration) {
         }
     });
 
-    // var connection = require('./lib/connection');
-
-    // sessionStore = new mysqlStore(storeOption);
     sessionOptions.store = sessionStore;
 } else {
     winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");
@@ -214,11 +216,12 @@ var sessionMiddleware = session(sessionOptions);
 
 app.use(cookieParser(BLITITOR.config.cookieSecret, {}));
 app.use(sessionMiddleware);
-io.use(function(socket, next) { sessionMiddleware(socket.request, socket.request.res, next); }); // send Express session to socket
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(lusca.csrf());  // default key: _csrf
+
+sio.use(socket.bindSession(sessionMiddleware));
 
 // set static files
 var staticOptions = {
@@ -228,16 +231,6 @@ var staticOptions = {
 
 app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
-
-// bind socket.io
-chatting.socketWrapper(io, function(err){
-    if(err){
-        winston.warn('Can not bind socket event.');
-    }
-    else{
-        winston.info('Binding for socket event was success.');
-    }
-});
 
 // bind route
 app.use(require('./route'));
@@ -258,7 +251,7 @@ if (!process.send) {
     winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 
     if (BLITITOR.env == 'development') { // Only in dev environment
+        misc.showGlobalVar(BLITITOR);
         require('express-print-routes')(app, path.join(__dirname, './log/site-routes.log'));
-        fs.writeFileSync(path.join(__dirname, './log/global-vars.log'), JSON.stringify(BLITITOR, null, 4));
     }
 }

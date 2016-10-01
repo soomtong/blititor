@@ -4,6 +4,7 @@ var misc = require('../../core/lib/misc');
 
 var chatting = require('./lib/chatting');
 var middleware = require('./lib/middleware');
+
 var router = express.Router();
 var routeTable = misc.getRouteTable();
 

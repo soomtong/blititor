@@ -31,10 +31,10 @@
         "useDatabase": true,
         "ignore": false,
         "tables": {
-            "chat": "b_chatting_log",
+            "chattingLog": "b_chatting_log",
             "user": "b_user"
         },
-        "core": false
+        "core": true
     },
     {
         "folder": "counter",
