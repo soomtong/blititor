@@ -35,6 +35,7 @@ router.use(Manager.route);     // to view log module
 // other features use each module's router. eg, modifying account records or log records
 router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
 router.post(routeTable.account_root + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
+router.post(routeTable.account_root + routeTable.account.add, Account.registerSimple);
 
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);

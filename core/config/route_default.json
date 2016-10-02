@@ -31,6 +31,7 @@
     "login": "/login",
     "register": "/register",
     "registerSimple": "/register-simple",
+    "add": "/add",
     "info": "/info",
     "updateInfo": "/update"
   },

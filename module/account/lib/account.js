@@ -172,7 +172,7 @@ function register(req, res) {
 
                     counter.insertSessionCounter(token.account.join);
 
-                    req.logIn(user, function (err) {
+                    req.logIn(auth_id, function (err) {
                         if (err) {
                             req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
 
@@ -280,7 +280,13 @@ function registerSimpleForTest(req, res) {
 
                     counter.insertSessionCounter(token.account.join);
 
-                    req.logIn(user, function (err) {
+                    if (req.query['q'] =='admin' || req.query['q'] == 'manage') {
+                        winston.info('Added new account', user);
+
+                        return res.redirect('/' + req.query['q']);
+                    }
+
+                    req.logIn(auth_id, function (err) {
                         if (err) {
                             req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
 
@@ -289,20 +295,18 @@ function registerSimpleForTest(req, res) {
                             return res.redirect('back');
                         }
 
-                        if (req.query['q'] =='admin' || req.query['q'] == 'manage') {
-                            res.redirect('/' + req.query['q']);
-                        } else {
-                            res.redirect('/');
-                        }
+                        // insert login logging
+                        insertLastLog(user.uuid, userData.login_counter);
+
+                        var agent = useragent.parse(req.headers['user-agent']);
+                        counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
+
+                        res.redirect('/');
                     });
                 });
             });
         });
-
     });
-
-
-
 }
 
 function showInfo(req, res) {

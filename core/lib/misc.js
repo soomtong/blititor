@@ -46,6 +46,7 @@ function getRouteTable() {
             "account": "/account",
             "accountEdit": "/account/edit",
             "accountNew": "/account/register",
+            "accountAdd": "/account/add",
             "counter": "/counter"
         },
         "manage_root": "/manage",
@@ -66,6 +67,7 @@ function getRouteTable() {
             "login": "/login",
             "register": "/register",
             "registerSimple": "/register-simple",
+            "add": "/add",
             "info": "/info",
             "updateInfo": "/update"
         },
