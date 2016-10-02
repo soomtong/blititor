@@ -10,6 +10,6 @@ var routeTable = misc.getRouteTable();
 
 router.use(middleware.exposeLocals);
 
-router.get(routeTable.chatting, chatting.index);
+router.get(routeTable.chat.form, chatting.index);
 
 module.exports = router;

@@ -75,7 +75,10 @@ function getRouteTable() {
             "message": "/register",
             "reply": "/register/reply"
         },
-        "chatting": "/chatting",
+        "chatting_root": "/chat",
+        "chat": {
+            "form": ""
+        },
         "teamblog_root": "/blog",
         "teamblog": {
             "list": "/",

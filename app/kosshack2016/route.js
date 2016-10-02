@@ -43,13 +43,6 @@ router.use(Counter.middleware.pageCounter);
 router.use(routeTable.guestbook_root, Guestbook.route);
 
 // bind static page
-bindRouter();
+Site.bindMenu(menu, router);
 
 module.exports = router;
-
-// functions for private use
-function bindRouter() {
-    menu.map(function (item) {
-        router[item.type || 'get'](item.url, Site.plain);
-    });
-}

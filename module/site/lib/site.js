@@ -32,6 +32,12 @@ function plainPage(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
+function bindMenuToRouter(menu, router) {
+    menu.map(function (item) {
+        router[item['type'] || 'get'](item['url'], plainPage);
+    });
+}
+
 function redirectPage(url) {
     return function (req, res) {
         // winston.verbose('redirect to', url);
@@ -46,5 +52,6 @@ function redirectPage(url) {
 module.exports = {
     index: indexPage,
     plain: plainPage,
+    bindMenu: bindMenuToRouter,
     redirect: redirectPage
 };

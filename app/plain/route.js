@@ -40,19 +40,12 @@ router.post(routeTable.account_root + routeTable.account.registerSimple, Account
 router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 router.use(routeTable.account_root, Account.route);
-router.use(routeTable.chatting, Chat.route);
-
-// bind static page
-bindRouter();
+router.use(routeTable.chatting_root, Chat.route);
 
 // init socket.io
 Chat.initSocket(BLITITOR._socketIO);
 
-module.exports = router;
+// bind static page
+Site.bindMenu(menu, router);
 
-// functions for private use
-function bindRouter() {
-    menu.map(function (item) {
-        router[item.type || 'get'](item.url, Site.plain);
-    });
-}
+module.exports = router;
