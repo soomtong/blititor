@@ -42,10 +42,6 @@ var Menu = [
         name: '로그아웃',
         logged: 1,
         url: routeTable.account_root + routeTable.account.signOut
-    },
-    {
-        name: '채팅',
-        url: routeTable.chatting
     }
 ];
 

@@ -10,7 +10,6 @@ var Account = require('../../module/account');
 var Guestbook = require('../../module/guestbook');
 var Teamblog = require('../../module/teamblog');
 var Editor = require('../../module/editor');
-var Chatting = require('../../module/chatting');
 
 // load own template
 var page = require('./page');
@@ -29,7 +28,6 @@ router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage
 // bind static page
 // router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);
 router.get(routeTable.about, Site.plain);
-router.get(routeTable.chatting, Site.plain);
 
 // bind module
 router.use(routeTable.account_root, Account.route);
