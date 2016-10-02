@@ -14,8 +14,9 @@ var counter = require('../../counter');
 
 var db = require('./database');
 
-var userPrivilege = misc.getUserPrivilege();
+var userGrants = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
+var token = misc.commonToken();
 
 function loginForm(req, res) {
     var params = {
@@ -76,30 +77,36 @@ function loginProcess(req, res) {
                 // retrieve with auth
                 account.findUserByAuthID(auth.id, function (error, userData) {
                     var user = {
+                        user_id: auth.user_id,
                         id: userData.id,
                         uuid: userData.uuid,
-                        user_id: auth.user_id,
                         nickname: userData.nickname,
                         level: userData.level,
                         grant: userData.grant
                     };
 
-                    if (user.grant.indexOf(userPrivilege.siteManager) > -1) {
-                        req.logIn(user, function (err) {
+                    if (user.grant.indexOf(userGrants.siteManager) > -1) {
+                        req.logIn(auth.id, function (err) {
                             if (err) {
                                 req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
 
-                                winston.error(error);
+                                winston.error(err);
 
                                 return res.redirect('back');
                             }
+
+                            // insert login logging
+                            account.insertLastLog(user.uuid, userData.login_counter || 0);
+
+                            var agent = useragent.parse(req.headers['user-agent']);
+                            counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                             res.redirect(routeTable.manage_root);
                         });
                     } else {
                         req.flash('error', {msg: 'You have not Manager privilege'});
 
-                        winston.error(error);
+                        winston.warn('Unauthorized user accessed');
 
                         return res.redirect('back');
                     }

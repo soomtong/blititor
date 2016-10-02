@@ -14,7 +14,7 @@ var counter = require('../../counter');
 
 var db = require('./database');
 
-var userPrivilege = misc.getUserPrivilege();
+var userGrants = misc.getUserPrivilege();
 var routeTable = misc.getRouteTable();
 var token = misc.commonToken();
 
@@ -100,8 +100,6 @@ function loginProcess(req, res) {
             return res.redirect('back');
         }
 
-        // winston.verbose(auth, userID, password);
-
         bcrypt.compare(params.password, auth.user_password, function (err, result) {
             if (err) {
                 winston.error("bcrypt system error", err);
@@ -118,16 +116,16 @@ function loginProcess(req, res) {
                 // retrieve with auth
                 account.findUserByAuthID(auth.id, function (error, userData) {
                     var user = {
+                        user_id: auth.user_id,
                         id: userData.id,
                         uuid: userData.uuid,
-                        user_id: auth.user_id,
                         nickname: userData.nickname,
                         level: userData.level,
                         grant: userData.grant
                     };
 
-                    if (user.grant.indexOf(userPrivilege.siteAdmin) > -1) {
-                        req.logIn(user, function (err) {
+                    if (user.grant.indexOf(userGrants.siteAdmin) > -1) {
+                        req.logIn(auth.id, function (err) {
                             if (err) {
                                 req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
 

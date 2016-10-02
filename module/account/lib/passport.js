@@ -40,18 +40,19 @@ function authenticate(userID, password, done) {
 
                 return done(null, false, {message: 'Invalid password given'});
             } else {
-                return done(null, auth);
+                return done(null, auth.id); // important, passport session only has user.auth_id (or auth.id)
             }
         });
     });
 }
 
-function serialize(user, done) {
-    winston.verbose('Serialize in process for', 'id=' + user.id, 'user_id=' + user.user_id);
+function serialize(authID, done) {
+    account.findUserByAuthID(authID, function (error, user) {
+        if (error) return winston.error('Error in serialize', error);
 
-    account.findUserByAuthID(user.id, function (error, user) {
-        if (error) winston.error(error);
-        done(error, user.uuid);
+        winston.verbose('Serialize in process for Account', 'auth_id=' + authID, 'user_id=' + user.user_id, 'and user info', user);
+
+        done(error, user.uuid); // keep uuid for passport session
     });
 }
 
@@ -75,9 +76,9 @@ function loginSuccess(req, res, next) {
     winston.verbose('Log in process done');
 
     // insert login logging
-    var auth_id = req.user.id;
+    var authID = req.user;
 
-    account.findUserByAuthID(auth_id, function (error, user) {
+    account.findUserByAuthID(authID, function (error, user) {
         account.insertLastLog(user.uuid, user.login_counter);
 
         var agent = useragent.parse(req.headers['user-agent']);

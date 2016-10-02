@@ -189,10 +189,10 @@ function selectByID(connection, id, callback) {
 
 function selectByUUID(connection, uuid, callback) {
     var field1 = ['user_id'];
-    var field2 = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at'];
+    var field2 = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at', 'login_counter'];
 
-    connection.query(query.selectByUUIDWithAuthID, [field1, field2, tables.auth, tables.user, uuid], function (err, rows) {
-        if (err || !rows) {
+    connection.query(query.selectByUUIDWithAuth, [field1, field2, tables.auth, tables.user, uuid], function (err, rows) {
+        if (err || !rows || !rows[0]) {
             return callback(err, {});
         }
 
@@ -201,11 +201,14 @@ function selectByUUID(connection, uuid, callback) {
 }
 
 function selectByAuthID(connection, authID, callback) {
-    var field = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at', 'login_counter'];
+    var field1 = ['user_id'];
+    var field2 = ['id', 'uuid', 'nickname', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at', 'login_counter'];
 
-    connection.query(query.selectByAuthID, [field, tables.user, authID], function (err, rows) {
-        if (err || !rows) {
-            return callback(err, {});
+    connection.query(query.selectByAuthIDWithAuth, [field1, field2, tables.auth, tables.user, authID], function (err, rows) {
+        if (err || !rows || !rows[0]) {
+            winston.error("Can't Find by This authID", err, rows);
+
+            return callback(err);
         }
 
         return callback(err, rows[0]);

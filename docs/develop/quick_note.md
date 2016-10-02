@@ -2,6 +2,23 @@
 
 ## Development Log
 
+### Account Sessions
+
+Referred passport session convention for all account methods (admin login or manager login)
+
+> passport session has `user.uuid` only
+    
+- serialize by `auth.id` or `user.auth_id`
+- deserialize by `user.uuid`
+
+> but common req.user has `account` object that has `user_id` (from `auth`), `uuid`, `nickname`, `level`...
+
+thou u should use above pattern, use `auth.id` (or `user.auth_id`)
+for custom account process.
+ 
+e.g `req.logIn`
+
+
 ### reason why we need a file `menu.js` in app folder
 
 > App 폴더의 menu.js 의 역할

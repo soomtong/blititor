@@ -85,6 +85,7 @@ function initSocketWrapper(io, callback) {
             };
 
             // todo: 귓속말 기능이 구현되면 to_uuid 에 대상을 할당해주는 부분이 필요합니다.
+
             writeChattingLog(chatInfo, function (error, result) {
                 winston.verbose("Insert a chatting log to database.", result.insertId);
             });

@@ -20,7 +20,8 @@ function findAccountByID(id, callback) {
 
     db.readAccountByID(mysql, id, function (err, account) {
         if (err || !account) {
-            // return Error("Can't Find by This UUID");
+            winston.error("Can't Find by This authID", err, account);
+
             return callback(err, null);
         }
 
@@ -33,7 +34,8 @@ function findAccountByUUID(UUID, callback) {
 
     db.readAccountByUUID(mysql, UUID, function (err, account) {
         if (err || !account) {
-            // return Error("Can't Find by This UUID");
+            winston.error("Can't Find by This authID", err, account);
+
             return callback(err, null);
         }
 
@@ -46,7 +48,8 @@ function findAccountByAuthID(authID, callback) {
 
     db.readAccountByAuthID(mysql, authID, function (err, account) {
         if (err || !account) {
-            // return Error("Can't Find by This authID");
+            winston.error("Can't Find by This authID", err, account);
+
             return callback(err, null);
         }
 
@@ -59,7 +62,8 @@ function findAuthByUserID(userID, callback) {
 
     db.readAuthByUserID(mysql, userID, function (err, auth) {
         if (err || !auth) {
-            // return Error("Can't Auth by This userID");
+            winston.error("Can't Find by This userID", err, auth);
+
             return callback(err, null);
         }
 
