@@ -4,6 +4,7 @@ $(document).ready(function () {
     var $userList = $('#users');
     var $publicForm = $('#public');
     var $privateForm = $('#private');
+    var $messages = $('#messages');
 
     $publicForm.submit(function () {
         var message = $('#message_pub');
@@ -25,6 +26,9 @@ $(document).ready(function () {
             nickname: nickname.val(),
             msg: message.val()
         });
+
+        $messages.append($('<li class="pure-menu-link">')
+            .text(nickname.val() + '에게 귓속말 : ' + message.val()));
 
         nickname.val('');
         message.val('');
@@ -67,7 +71,7 @@ $(document).ready(function () {
             message = data.nickname + '으로부터의 귓속말 : ' + data.msg;
         }
 
-        $('#messages').append($('<li class="pure-menu-link">')
+        $messages.append($('<li class="pure-menu-link">')
             .text(message));
     });
 });
