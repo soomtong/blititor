@@ -169,6 +169,61 @@ function showGlobalVar(g) {
     });
 }
 
+function makeDatabaseConfigFile(databaseFile) {
+    var databaseSetting = {};
+
+    try {
+        fs.accessSync(databaseFile, fs.R_OK);
+
+        databaseSetting = require(path.join('../..', databaseFile));
+
+        BLITITOR.config.database = databaseSetting;
+
+        winston.info('database config file loaded');
+    } catch (e) {
+        winston.warn('database config file not exist');
+    }
+}
+
+function makeThemeConfigFile(themeFile) {
+    var themeSetting = {};
+
+    try {
+        fs.accessSync(themeFile, fs.R_OK);
+
+        themeSetting = require(path.join('../..', themeFile));
+
+        fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
+
+        BLITITOR.config.site.app = themeSetting.appTheme;
+        BLITITOR.config.site.theme = themeSetting.siteTheme;
+        BLITITOR.config.site.adminTheme = themeSetting.adminTheme;
+        BLITITOR.config.site.manageTheme = themeSetting.manageTheme;
+
+        winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
+        winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
+        winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
+        winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
+    } catch (e) {
+        winston.error('theme folder or config file not exist');
+
+        var file = {
+            "appTheme": "plain",
+            "siteTheme": "plain",
+            "adminTheme": "plain",
+            "manageTheme": "plain"
+        };
+
+        fs.writeFileSync(themeFile, JSON.stringify(file, null, 4));
+
+        BLITITOR.config.site.app = file.appTheme;
+        BLITITOR.config.site.theme = file.siteTheme;
+
+        winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
+        winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
+    }
+}
+
 module.exports = {
     getUserPrivilege: getUserPrivilege,
     setUserPrivilege: setUserPrivilege,
@@ -180,4 +235,6 @@ module.exports = {
     commonToken: commonToken,
     showRouteTable: showRouteTable,
     showGlobalVar: showGlobalVar,
+    makeDatabaseConfigFile: makeDatabaseConfigFile,
+    makeThemeConfigFile: makeThemeConfigFile,
 };

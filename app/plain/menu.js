@@ -24,13 +24,13 @@ var Menu = [
     {
         id: 'chatting',
         name: '채팅',
-        logged: -1,
+        logged: 1,
         url: routeTable.chatting_root + routeTable.chat.form
     },
     {
         id: 'professional',
         name: '맴버',
-        logged: 1,
+        logged: -1,
         url: '/marketing/professional'
     },
     {

@@ -43,69 +43,26 @@ winston.add(winston.transports.Console, {
     colorize: true,
     timestamp: function() {
         var date = new Date();
-        return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
+        return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
     },
     level: BLITITOR.config.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
 });
 
 // load custom library
 var socket = require('./lib/socket');
+var connection = require('./lib/connection');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
 // load Database configuration
-var databaseFile = BLITITOR.config.databaseConfig, databaseSetting;
-
-try {
-    fs.accessSync(databaseFile, fs.R_OK);
-
-    databaseSetting = require(path.join('..', databaseFile));
-
-    BLITITOR.config.database = databaseSetting;
-
-    winston.info('database config file loaded');
-} catch (e) {
-    winston.warn('database config file not exist');
-}
+// be going to sync mode
+misc.makeDatabaseConfigFile(BLITITOR.config.databaseConfig || 'database.json');
 
 // load Theme configuration
-var themeFile = BLITITOR.config.themeConfig, themeSetting;
+// be going to sync mode
+misc.makeThemeConfigFile(BLITITOR.config.themeConfig || 'theme.json');
 
-try {
-    fs.accessSync(themeFile, fs.R_OK);
-
-    themeSetting = require(path.join('..', themeFile));
-
-    fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
-
-    BLITITOR.config.site.app = themeSetting.appTheme;
-    BLITITOR.config.site.theme = themeSetting.siteTheme;
-    BLITITOR.config.site.adminTheme = themeSetting.adminTheme;
-    BLITITOR.config.site.manageTheme = themeSetting.manageTheme;
-
-    winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
-    winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
-    winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
-    winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
-} catch (e) {
-    winston.error('theme folder or config file not exist');
-
-    var file = {
-        "appTheme": "plain",
-        "siteTheme": "plain",
-        "adminTheme": "plain",
-        "manageTheme": "plain"
-    };
-
-    fs.writeFileSync(themeFile, JSON.stringify(file, null, 4));
-
-    BLITITOR.config.site.app = file.appTheme;
-    BLITITOR.config.site.theme = file.siteTheme;
-
-    winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
-    winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
-}
-
+// constants
 var HOUR = 3600000;
 var DAY = HOUR * 24;
 var WEEK = DAY * 7;
@@ -182,46 +139,21 @@ app.use(expressValidator({errorFormatter: common.errorFormatter}));
 
 // prepare session store
 var mysqlStore = mysqlSession(session);
-var databaseConfiguration = BLITITOR.config.database;
-var sessionStore;
-var sessionOptions = {
-    secret: BLITITOR.config.sessionSecret,
-    resave: true,
-    saveUninitialized: true
-};
-
-if (databaseConfiguration) {
-    winston.info("Started to make mysql connection process for global session system");
-
-    sessionStore = new mysqlStore({
-        host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
-        user: databaseConfiguration.dbUserID,
-        password: databaseConfiguration.dbUserPassword,
-        autoReconnect: false,
-        useConnectionPooling: true,
-        schema: {
-            tableName: common.databaseDefault.prefix + 'session'
-        }
-    });
-
-    sessionOptions.store = sessionStore;
-} else {
-    winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");
-}
 
 // init session
-var sessionMiddleware = session(sessionOptions);
+connection.initSession(mysqlStore, function (sessionOptions) {
+    var sessionMiddleware = session(sessionOptions);
 
+    app.use(sessionMiddleware);
+    sio.use(socket.bindSession(sessionMiddleware));
+});
+
+// middleware
 app.use(cookieParser(BLITITOR.config.cookieSecret, {}));
-app.use(sessionMiddleware);
 app.use(flash());   // requires cookieParser, session; reference locals.messages object
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(lusca.csrf());  // default key: _csrf
-
-sio.use(socket.bindSession(sessionMiddleware));
 
 // set static files
 var staticOptions = {

@@ -8,8 +8,8 @@ var fs = require('fs');
 var path = require('path');
 var mysql = require('mysql');
 
-var database = require('./admin/database');
-var theme = require('./admin/theme');
+var database = require('./lib/database');
+var theme = require('./lib/theme');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 

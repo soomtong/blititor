@@ -14,15 +14,10 @@ function initializePool() {
 
     var databaseConfiguration, connectionPoolInstance;
 
-    function databasePublicInfo(databaseConfiguration) {
-        var info = clone(databaseConfiguration)
-        info.dbUserPassword = '**********';
-        return info
-    }
-
     try {
         databaseConfiguration = require(path.join('../..', databaseFile.databaseConfig));
-        winston.info(databasePublicInfo(databaseConfiguration));
+
+        winston.info('Getting connection information for Connection Pool' ,databasePublicInfo(databaseConfiguration));
     } catch (e) {
         winston.warn('database config file not exist');
     }
@@ -63,11 +58,62 @@ function initializePool() {
     }
 }
 
+function initSession(mysqlStore, callback) {
+    var databaseConfiguration;
+
+    try {
+        databaseConfiguration = require(path.join('../..', databaseFile.databaseConfig));
+
+        winston.info('Getting connection information for Session' ,databasePublicInfo(databaseConfiguration));
+    } catch (e) {
+        winston.warn('database config file not exist, initSession');
+    }
+
+    var sessionStore;
+    var sessionOptions = {
+        secret: BLITITOR.config['sessionSecret'],
+        resave: true,
+        saveUninitialized: true
+    };
+
+    if (databaseConfiguration) {
+        winston.info("Started to make mysql connection process for global session system");
+
+        sessionStore = new mysqlStore({
+            host: databaseConfiguration.dbHost,
+            port: databaseConfiguration.dbPort || common.databaseDefault.port,
+            database: databaseConfiguration.dbName || common.databaseDefault.database,
+            user: databaseConfiguration.dbUserID,
+            password: databaseConfiguration.dbUserPassword,
+            autoReconnect: false,
+            useConnectionPooling: true,
+            schema: {
+                tableName: common.databaseDefault.prefix + 'session'
+            }
+        });
+
+        sessionOptions.store = sessionStore;
+    } else {
+        winston.warn("Database Session store is not Valid, use Internal Session store. check database configuration and restart Application!");
+    }
+
+    callback(sessionOptions);
+}
+
 module.exports = {
-    get: connectionPool.getConnection
+    get: connectionPool.getConnection,
+    initSession: initSession
 };
 
 //TODO: Will change deep copy library.
 function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
+}
+
+function databasePublicInfo(databaseConfiguration) {
+    var info = clone(databaseConfiguration);
+
+    info.dbUserPassword = '****';
+
+    return info;
 }
