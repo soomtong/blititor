@@ -122,7 +122,7 @@ function initSocketWrapper(io, callback) {
 
 function index(req, res) {
     var params = {
-        title: 'chatting'
+        title: 'Chatting'
     };
 
     res.render(BLITITOR.config.site.theme + '/page/chatting', params);

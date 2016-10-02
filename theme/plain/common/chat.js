@@ -2,23 +2,33 @@ var socket = io();
 
 $(document).ready(function () {
     var $userList = $('#users');
+    var $publicForm = $('#public');
+    var $privateForm = $('#private');
 
-    $('#public').submit(function () {
-        var $m = $('#m');
-        socket.emit('chat message', {msg: $m.val()});
-        $m.val('');
+    $publicForm.submit(function () {
+        var message = $('#message_pub');
+
+        socket.emit('chat message', {
+            msg: message.val()
+        });
+
+        message.val('');
 
         return false;
     });
 
-    $('#private').submit(function () {
+    $privateForm.submit(function () {
+        var nickname = $('#nickname');
+        var message = $('#message_pri');
+
         socket.emit('chat message', {
-            nickname: $('#nickname_val').val(),
-            msg: $('#msg_val').val()
+            nickname: nickname.val(),
+            msg: message.val()
         });
 
-        $('#nickname_val').val('');
-        $('#msg_val').val('');
+        nickname.val('');
+        message.val('');
+
         $('#private_chat_pop').bPopup().close();
 
         return false;
@@ -31,8 +41,10 @@ $(document).ready(function () {
         if (socketId == '/#' + socket.id) {
             return alert('나에게 귓속말을 보낼 수 없습니다');
         }
-        $('#nickname_display').text($nickname);
-        $('#nickname_val').val($nickname);
+
+        $('#receiver').text($nickname);
+        $('#nickname').val($nickname);
+
         $('#private_chat_pop').bPopup();
     });
 
@@ -48,6 +60,7 @@ $(document).ready(function () {
 
     socket.on('chat message', function (data) {
         var message = '';
+
         if (data.chat_type == "public") {
             message = data.nickname + ' : ' + data.msg;
         } else if (data.chat_type == "private") {

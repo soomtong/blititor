@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
-    <title>Plain Demo - Pure</title>
+    <title>{{title | default('Plain Demo - Pure')}} {{site.title}}</title>
     {% include '../include/style.html' %}
 </head>
 <body>
@@ -25,21 +25,31 @@
         </div>
     </div>
 
-    <div id="private_chat_pop" style="display:none;">
-        <form id="private" class="pure-form" onsubmit="return false">
-            <ul>
-                <li>받는 사람 : <span id="nickname_display"></span></li>
-                <li>
-                    내용 : <br>
-                    <input type="hidden" name="nickname" id="nickname_val">
-                    <textarea rows="5" name="msg" id="msg_val" class="pure-input" required></textarea>
-                </li>
-            </ul>
-            <button class="pure-button">Send</button>
-        </form>
-    </div>
-
     <div class="chatting">
+
+        <div id="private_chat_pop" class="private">
+            <div class="private-pop">
+                <form id="private" class="pure-form pure-form-aligned" onsubmit="return false">
+                    <fieldset>
+                        <legend>개인 메시지</legend>
+                        <div class="pure-control-group">
+                            <label for="receiver">받는 사람</label>
+                            <span id="receiver"></span>
+                            <input type="hidden" name="nickname" id="nickname">
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="message_pri">내용</label>
+                            <textarea rows="5" name="msg" id="message_pri" class="pure-input" required></textarea>
+                        </div>
+
+                        <div class="pure-controls">
+                            <button type="submit" class="pure-button pure-button-primary">전송</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
         <div class="pure-g">
             <div class="pure-u-1">
                 <div class="user-list">
@@ -58,13 +68,14 @@
                     <button type="submit" class="pure-button pure-button-primary">Send</button>
 
                     <div style="overflow: hidden; padding-right: .5em;">
-                        <input id="m" name="message" class="pure-u-1" placeholder="leave a message" autocomplete="off"/>
+                        <input id="message_pub" name="message" class="pure-u-1" placeholder="leave a message" autocomplete="off"/>
                     </div>                    ​
                 </form>
 
                 {% include '../include/footer.html' %}
 
             </div>
+
         </div>
     </div>
 </div>

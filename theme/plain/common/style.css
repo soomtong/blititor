@@ -167,6 +167,26 @@ input.pure-file-input[type=file] {
     float: right;
 }
 
+.chatting .private {
+    display: none;
+}
+.private-pop form {
+    background-color: #fff;
+    padding: 0.5em 1em;
+    border: 5px solid rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+}
+.private-pop .pure-control-group label {
+    width: 4em;
+}
+.private-pop .pure-control-group textarea {
+    margin-right: 0.5em;
+    min-width: 300px;
+}
+
+.private-pop .pure-controls {
+    margin: 1em 0 0 5.25em;
+}
 .message-list {
     overflow: hidden;
 }
@@ -190,11 +210,3 @@ input.pure-file-input[type=file] {
 .user-list .user-id {
     cursor: pointer;
 }
-
-#private_chat_pop {
-    background-color: #fff;
-    padding:20px;
-    border-radius: 7px;
-    border: 5px solid rgb(130, 224, 255);
-}
-form.private textarea { padding:5px 7px; }
