@@ -10,7 +10,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect(BLITITOR.config.site.url_prefix + routeTable.account_root + routeTable.account.signIn);
+    res.redirect(BLITITOR.config.site.service.url_prefix + routeTable.account_root + routeTable.account.signIn);
 }
 
 function ensureClearSession(req, res, next) {
@@ -18,7 +18,7 @@ function ensureClearSession(req, res, next) {
         return next();
     }
 
-    res.redirect(BLITITOR.config.site.url_prefix + routeTable.account_root + routeTable.account.info);
+    res.redirect(BLITITOR.config.site.service.url_prefix + routeTable.account_root + routeTable.account.info);
 }
 
 function ensureAdminAuthenticated(req, res, next) {
@@ -26,7 +26,7 @@ function ensureAdminAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect(BLITITOR.config.site.url_prefix + routeTable.admin_root + routeTable.admin.login);
+    res.redirect(BLITITOR.config.site.service.url_prefix + routeTable.admin_root + routeTable.admin.login);
 }
 
 function ensureManagerAuthenticated(req, res, next) {
@@ -34,7 +34,7 @@ function ensureManagerAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect(BLITITOR.config.site.url_prefix + routeTable.manage_root + routeTable.manage.login);
+    res.redirect(BLITITOR.config.site.service.url_prefix + routeTable.manage_root + routeTable.manage.login);
 }
 
 function exposeLocals(req, res, next) {
