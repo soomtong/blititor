@@ -62,7 +62,7 @@ function findAuthByUserID(userID, callback) {
 
     db.readAuthByUserID(mysql, userID, function (err, auth) {
         if (err || !auth) {
-            winston.error("Can't Find by This userID", err, auth);
+            winston.warn("Can't Find by This userID", err, auth);
 
             return callback(err, null);
         }
@@ -217,6 +217,7 @@ function registerSimpleForTest(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('password').trim();
 
+    // this routine have to warn a message 'Can't Find by This userID' for making new account
     findAuthByUserID(req.body.email, function (err, account) {
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
