@@ -37,11 +37,15 @@
 <p>Easy to custom for the all Web Agencies and Web Masters in Korea</p>
 
 <blockquote>
-<p>this code is really easy to customize for your business! - web developer journal in korean times</p>
+<p>This code is really easy to customize for your business! - Web developer journal in korean times</p>
 </blockquote>
 
+<p><img src="https://cloud.githubusercontent.com/assets/22411481/18962436/cd87572a-86ab-11e6-8e6b-d145b325e119.png" alt="blititor_logo_nodejsstyle7"></p>
+
+<p>(a logo presented by Hyejin Lee <a href="https://github.com/melthleeth" class="user-mention">@melthleeth</a>)</p>
+
 <h2>
-<a id="stack" class="anchor" href="#stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>stack</h2>
+<a id="stack" class="anchor" href="#stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Stack</h2>
 
 <ul>
 <li>NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)</li>
@@ -52,7 +56,7 @@
 </ul>
 
 <h2>
-<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>demo</h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h2>
 
 <p>check out the samples! based awesome css frameworks</p>
 
@@ -66,7 +70,7 @@
 </ul>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>prepare git, nodejs, npm</p>
 
@@ -81,22 +85,26 @@
 <div class="highlight highlight-source-shell"><pre>npm install</pre></div>
 
 <h3>
-  <a id="create-module-list" class="anchor" href="#create-module-list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>create module_list.json</h3>
+<a id="create-module_listjson" class="anchor" href="#create-module_listjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>create module_list.json</h3>
 
 <div class="highlight highlight-source-shell"><pre>node core/setup.js module</pre></div>
 
 <h3>
-  <a id="database-configuration" class="anchor" href="#database-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>database configuration (mysql, mariadb)</h3>
+<a id="database-configuration-mysql-mariadb" class="anchor" href="#database-configuration-mysql-mariadb" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>database configuration (mysql, mariadb)</h3>
 
 <div class="highlight highlight-source-shell"><pre>node core/setup.js db</pre></div>
 
 <h3>
-  <a id="make-database tables-for-blititor" class="anchor" href="#make-database tables-for-blititor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>make database tables for blititor</h3>
+<a id="make-database-tables-for-blititor" class="anchor" href="#make-database-tables-for-blititor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>make database tables for blititor</h3>
 
 <div class="highlight highlight-source-shell"><pre>node core/setup.js db-init</pre></div>
 
+<p>for preparing non-core modules ('guestbook' or 'teamblog'...)</p>
+
+<div class="highlight highlight-source-shell"><pre>node core/setup.js theme some_module_name</pre></div>
+
 <h3>
-  <a id="make-Theme-configuration" class="anchor" href="#make-Theme-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>make Theme configuration</h3>
+<a id="make-theme-configuration" class="anchor" href="#make-theme-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>make theme configuration</h3>
 
 <div class="highlight highlight-source-shell"><pre>node core/setup.js theme</pre></div>
 
@@ -104,6 +112,12 @@
 <a id="run-node-app" class="anchor" href="#run-node-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>run node app</h3>
 
 <div class="highlight highlight-source-shell"><pre>node core/index</pre></div>
+
+<p>or u can override default port using option <code>port</code> or <code>p</code> </p>
+
+<pre><code>node core/index -port=3000
+node core/index -p 3000
+</code></pre>
       </section>
     </div>
 
