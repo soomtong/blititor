@@ -123,7 +123,7 @@
                                 <input type="hidden" name="id" value="{{ item.id }}"/>
                                 <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                                 {% if item.reply or item.replied_at %}
-                                <button type="submit" class="btn btn-info">Update</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                                 {% else %}
                                 <button type="submit" class="btn btn-info">Reply</button>
                                 {% endif %}
