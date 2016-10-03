@@ -6,7 +6,7 @@
 
 there are locals exposing routines in each steps
 
-- site.title: defined in `BLITITOR.config.site.title` at `core/index.js`
+- site.title: defined in `BLITITOR.config.site.application.title` at `core/index.js`
 - app.title: defined in each application's `menu.js`
 - title: defined in each response pages
  
@@ -17,7 +17,7 @@ u can use this locals in every html pages, like this.
 ```
 or
 ```
-<title>{{title | default(app.title)}} - {{site.title}}</title>
+<title>{{title | default(app.title)}} - {{site.application.title}}</title>
 ```
 
 ### Account Sessions

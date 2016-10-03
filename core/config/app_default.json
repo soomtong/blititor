@@ -1,20 +1,7 @@
 {
   "locale": "ko",
   "logLevel": "debug",
-  "site": {
-    "title": "BLITITOR",
-    "app": "",
-    "theme": "",
-    "adminTheme": "",
-    "manageTheme": "",
-    "host": "",
-    "url_prefix": "",
-    "port": 3010
-  },
-  "databaseConfig": "database.json",
-  "themeConfig": "theme.json",
-  "author": "soomtong",
-  "revision": "0.1.0",
+  "configFile": "config.json",
   "cookieSecret": "blititor",
   "sessionSecret": "blititor"
 }

@@ -56,11 +56,11 @@ var misc = require('./lib/misc');
 
 // load Database configuration
 // be going to sync mode
-misc.makeDatabaseConfigFile(BLITITOR.config.databaseConfig || 'database.json');
+misc.checkDatabaseConfiguration(BLITITOR.config.configFile || 'config.json');
 
 // load Theme configuration
 // be going to sync mode
-misc.makeThemeConfigFile(BLITITOR.config.themeConfig || 'theme.json');
+misc.checkThemeConfiguration(BLITITOR.config.configFile || 'config.json');
 
 // constants
 var HOUR = 3600000;
@@ -80,7 +80,7 @@ var bootstrapArgv = args(process.argv.slice(2));
 app.set('views', 'theme');
 app.set('view engine', 'html');
 //app.set('view cache', false);
-app.set('port', bootstrapArgv.port || bootstrapArgv.p || BLITITOR.config.site.port);
+app.set('port', bootstrapArgv['port'] || bootstrapArgv.p || BLITITOR.config.site.service.port);
 
 // set template engine
 nunjucks.configure(app.get('views'), {

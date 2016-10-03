@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var winston = require('winston');
+var colors = require('colors');
 
 var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
@@ -169,58 +170,82 @@ function showGlobalVar(g) {
     });
 }
 
-function makeDatabaseConfigFile(databaseFile) {
+function checkDatabaseConfigFile(configFile) {
     var databaseSetting = {};
 
     try {
-        fs.accessSync(databaseFile, fs.R_OK);
+        fs.accessSync(configFile, fs.R_OK);
 
-        databaseSetting = require(path.join('../..', databaseFile));
+        databaseSetting = require(path.join('../..', configFile))['database'];
 
         BLITITOR.config.database = databaseSetting;
 
-        winston.info('database config file loaded');
+        winston.info('database config information in that file is loaded');
     } catch (e) {
-        winston.warn('database config file not exist');
+        winston.error('database config information in that file is not exist');
+        console.error('----------------------------------------------------------------------------'.bgRed);
+        console.error(' Go to make `node core/setup db` and create database connection information '.bgRed);
+        console.error('----------------------------------------------------------------------------'.bgRed);
+
+        process.exit(1);
     }
 }
 
-function makeThemeConfigFile(themeFile) {
+function checkThemeConfigFile(configFile) {
+    var config = {};
+    var appSetting = {};
     var themeSetting = {};
 
     try {
-        fs.accessSync(themeFile, fs.R_OK);
+        fs.accessSync(configFile, fs.R_OK);
 
-        themeSetting = require(path.join('../..', themeFile));
+        config = require(path.join('../..', configFile));
 
+        appSetting = config['application'];
+        themeSetting = config['theme'];
+
+        fs.accessSync('./app/' + appSetting.appName, fs.R_OK);
         fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
-
-        BLITITOR.config.site.app = themeSetting.appTheme;
-        BLITITOR.config.site.theme = themeSetting.siteTheme;
-        BLITITOR.config.site.adminTheme = themeSetting.adminTheme;
-        BLITITOR.config.site.manageTheme = themeSetting.manageTheme;
-
-        winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
-        winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
-        winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
-        winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
     } catch (e) {
         winston.error('theme folder or config file not exist');
 
-        var file = {
-            "appTheme": "plain",
+        appSetting = {
+            "port": 3010,
+            "appName": "plain",
+            "url_prefix": "",
+            "title": "Blititor"
+        };
+        themeSetting = {
             "siteTheme": "plain",
             "adminTheme": "plain",
             "manageTheme": "plain"
         };
 
-        fs.writeFileSync(themeFile, JSON.stringify(file, null, 4));
+        config['application'] = appSetting;
+        config['theme'] = themeSetting;
 
-        BLITITOR.config.site.app = file.appTheme;
-        BLITITOR.config.site.theme = file.siteTheme;
+        fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
 
-        winston.verbose("Set site app to '" + BLITITOR.config.site.app + "'");
-        winston.verbose("Set site theme to '" + BLITITOR.config.site.theme + "'");
+        winston.error('added app and theme information to config.json');
+
+    } finally {
+        // bind some vars to global, u can check this parameters in `core/log/global-var-config.log`
+        BLITITOR.config.site = {
+            "service": {
+                "port": appSetting.port,
+                "url_prefix": appSetting.url_prefix
+            },
+            "app": appSetting.appName,
+            "title": appSetting.title,
+            "theme": themeSetting.siteTheme,
+            "adminTheme": themeSetting.adminTheme,
+            "manageTheme": themeSetting.manageTheme
+        };
+
+        winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
+        winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
+        winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
+        winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
     }
 }
 
@@ -235,6 +260,6 @@ module.exports = {
     commonToken: commonToken,
     showRouteTable: showRouteTable,
     showGlobalVar: showGlobalVar,
-    makeDatabaseConfigFile: makeDatabaseConfigFile,
-    makeThemeConfigFile: makeThemeConfigFile,
+    checkDatabaseConfiguration: checkDatabaseConfigFile,
+    checkThemeConfiguration: checkThemeConfigFile,
 };

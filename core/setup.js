@@ -13,7 +13,7 @@ var theme = require('./lib/theme');
 var common = require('./lib/common');
 var misc = require('./lib/misc');
 
-var databaseFile = require('./config/app_default.json').databaseConfig;
+var configFile = require('./config/app_default.json').configFile;
 var databaseDefaultFile = './core/config/database_default.json';
 
 var moduleFile = 'module_list.json';
@@ -76,6 +76,8 @@ switch (mainCommand) {
 function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n".rainbow);
 
+    var databaseDefault = JSON.parse(fs.readFileSync(databaseDefaultFile, 'utf8'));
+
     prompt.start();
 
     var configScheme = {
@@ -89,7 +91,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_port: {
                 description: 'Enter mysql(maria) port',
-                default: '3306',
+                default: databaseDefault.port,
                 type: 'integer',
                 pattern: /^[0-9]+$/,
                 message: 'Port number must be only number',
@@ -97,7 +99,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_name: {
                 description: 'Enter mysql(maria) database name',
-                default: 'db_blititor',
+                default: databaseDefault.database,
                 type: 'string',
                 pattern: /^\w+$/,
                 message: 'database name must be letters',
@@ -105,7 +107,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_table_prefix: {
                 description: 'Enter mysql(maria) database table prefix',
-                default: 'b_',
+                default: databaseDefault.prefix,
                 type: 'string',
                 pattern: /^\w+$/,
                 message: 'Prefix must be only letters',
@@ -130,50 +132,57 @@ function makeDatabaseConfigFile(next) {
     };
 
     prompt.get(configScheme, function (err, result) {
+        var config = {};
+
+        try {
+            config = require(path.join('..', configFile));
+        } catch (e) {
+            console.log(' = Make new config.json file in root folder...'.blue);
+            fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
+        }
+
         if(!result){
             return console.log('\n 취소되었습니다.'.white)
         }
 
+        // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
+        var dbTablePrefix = validateDatabaseTablePrefix(result['db_table_prefix']);
+
         var params = {
             dbHost: result['db_host'],
-            dbPort: result['db_port'] || common.databaseDefault.port,
+            dbPort: result['db_port'] || databaseDefault.port,
             dbName: result['db_name'],
+            tablePrefix: dbTablePrefix,
             dbUserID: result['db_user_id'],
             dbUserPassword: result['db_user_password']
         };
 
-        var dbTablePrefix = result['db_table_prefix'];
-
         var connection = mysql.createConnection({
             host: params.dbHost,
-            port: params.dbPort || common.databaseDefault.port,
-            // database: params.dbName || undefined,
+            port: params.dbPort || databaseDefault.port,
+            database: params.dbName || undefined,
             user: params.dbUserID,
             password: params.dbUserPassword
         });
 
         connection.connect(function(err) {
-            console.log(' = Verify configuration data...'.blue);
+            console.log(' = Verify database connection...'.blue);
 
             if (err) {
-                console.log(' = Verify configuration data... Failed'.red);
+                console.log(' = Verify database connection... Failed'.red);
 
                 console.error('error connecting: ' + err.stack);
+
+                process.exit(1);
             } else {
                 // save params to database.json
-                fs.writeFileSync(databaseFile, JSON.stringify(params, null, 4));
+                config.database = params;
 
-                // read database_default.json to json
-                var databaseDefaultJSON = JSON.parse(fs.readFileSync(databaseDefaultFile, 'utf8'));
-
-                // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
-                databaseDefaultJSON.prefix = validateDatabaseTablePrefix(dbTablePrefix);
-
-                // save db_table_prefix to database_default.json
-                fs.writeFileSync(databaseDefaultFile, JSON.stringify(databaseDefaultJSON, null, 4));
+                fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
 
                 console.log(' = Verify configuration data... Done \n'.green);
 
+                // todo: if no database make new one
                 database.createDatabase(connection, params.dbName, function (err, result) {
                     console.log(' = Make database... Done \n'.green);
                     connection.destroy();
@@ -187,7 +196,7 @@ function makeDatabaseConfigFile(next) {
 function makeDatabaseTable(next) {
     console.log(" = Make database tables for blititor \n".rainbow);
 
-    var connectionInfo = require(path.join('..', databaseFile));
+    var connectionInfo = require(path.join('..', configFile));
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
     var connection = mysql.createConnection({
@@ -225,7 +234,7 @@ function makeDatabaseTable(next) {
 function makeDatabaseTableWithReset() {
     console.log(" = Reset database tables for blititor \n".rainbow);
 
-    var connectionInfo = require(path.join('..', databaseFile));
+    var connectionInfo = require(path.join('..', configFile));
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
     var connection = mysql.createConnection({
@@ -282,7 +291,7 @@ function makeDatabaseTableWithReset() {
 function makeModuleDatabaseTable(moduleName, callback) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
-    var connectionInfo = require(path.join('..', databaseFile));
+    var connectionInfo = require(path.join('..', configFile));
     var module = require('../module/'+ moduleName + '/lib/database');
 
     // inset dummy data after create table
@@ -294,7 +303,7 @@ function makeModuleDatabaseTable(moduleName, callback) {
 function makeModuleDatabaseTableWithReset(moduleName) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
-    var connectionInfo = require(path.join('..', databaseFile));
+    var connectionInfo = require(path.join('..', configFile));
     var module = require('../module/'+ moduleName + '/lib/database');
 
     // delete scheme before create table
@@ -387,7 +396,7 @@ function makeAdminAccount() {
         };
 
         // save administrator account to user table
-        var connectionInfo = require(path.join('..', databaseFile));
+        var connectionInfo = require(path.join('..', configFile));
 
         var connection = mysql.createConnection({
             host: connectionInfo.dbHost,
