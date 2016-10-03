@@ -78,7 +78,7 @@ function menuExpose(req, res, next) {
     res.locals.adminMenu = AdminMenu;
     res.locals.managerMenu = ManagerMenu;
 
-    winston.verbose('bind locals in app/kosshack2016: {menu, adminMenu, manageMenu}', Menu);
+    winston.verbose('bind locals in app/kosshack2016: {menu, adminMenu, manageMenu}');//, Menu);
 
     next();
 }

@@ -3,6 +3,7 @@ var path = require('path');
 var winston = require('winston');
 var colors = require('colors');
 
+var siteDefault = require('../config/site_default.json');
 var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
 
@@ -210,15 +211,15 @@ function checkThemeConfigFile(configFile) {
         winston.error('theme folder or config file not exist');
 
         appSetting = {
-            "port": 3010,
-            "appName": "plain",
-            "url_prefix": "",
-            "title": "Blititor"
+            "port": siteDefault.port,
+            "appName": siteDefault.theme,
+            "url_prefix": siteDefault.url_prefix,
+            "title": siteDefault.title
         };
         themeSetting = {
-            "siteTheme": "plain",
-            "adminTheme": "plain",
-            "manageTheme": "plain"
+            "siteTheme": siteDefault.theme,
+            "adminTheme": siteDefault.theme,
+            "manageTheme": siteDefault.theme
         };
 
         config['application'] = appSetting;

@@ -14,6 +14,7 @@ var common = require('./lib/common');
 var misc = require('./lib/misc');
 
 var configFile = require('./config/app_default.json').configFile;
+var siteDefault = require('./config/site_default.json');
 
 var moduleFile = 'module_list.json';
 var params = parseArgs(process.argv.slice(2));
@@ -312,6 +313,15 @@ function makeModuleDatabaseTableWithReset(moduleName) {
 function makeThemeConfigFile(next) {
     console.log(" = Make Theme configuration \n".rainbow);
 
+    var config = {};
+
+    try {
+        config = require(path.join('..', configFile));
+    } catch (e) {
+        console.log(' = Make new config.json file in root folder...'.blue);
+        fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
+    }
+
     theme.getThemeList('theme', function (themeList) {
         console.log('');
 
@@ -350,7 +360,25 @@ function makeThemeConfigFile(next) {
                 "manageTheme": themeList[result.ask - 1].folderName || "simplestrap"
             };
 
-            fs.writeFileSync('theme.json', JSON.stringify(themeData, null, 4));
+            if (!config.application) {
+                config.application = {
+                    "port": siteDefault.port,
+                    "appName": themeData.appTheme,
+                    "url_prefix": siteDefault.url_prefix,
+                    "title": siteDefault.title
+                }
+            } else {
+                config.application.appName = themeData.appTheme;
+            }
+
+            config.theme = {
+                "siteTheme": themeData.siteTheme,
+                "adminTheme": themeData.adminTheme,
+                "manageTheme": themeData.manageTheme
+            };
+
+            fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
+
             next && next();
         });
     });
