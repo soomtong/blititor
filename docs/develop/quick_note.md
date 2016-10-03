@@ -2,6 +2,24 @@
 
 ## Development Log
 
+### Page's title in a browser
+
+there are locals exposing routines in each steps
+
+- site.title: defined in `BLITITOR.config.site.title` at `core/index.js`
+- app.title: defined in each application's `menu.js`
+- title: defined in each response pages
+ 
+u can use this locals in every html pages, like this.
+
+```
+<title>{{app.title}} - {{site.title}}</title>
+```
+or
+```
+<title>{{title | default(app.title)}} - {{site.title}}</title>
+```
+
 ### Account Sessions
 
 Referred passport session convention for all account methods (admin login or manager login)

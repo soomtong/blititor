@@ -14,6 +14,7 @@ var Manager = require('../../module/manager');
 var Counter = require('../../module/counter');
 
 // load locals
+var app = require('./app.json');
 var menu = require('./menu');
 
 // init
@@ -22,6 +23,7 @@ var routeTable = misc.getRouteTable();
 
 // middleware
 router.use(menu.expose);
+router.use(menu.exposeLocals(app));
 router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);

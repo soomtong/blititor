@@ -15,5 +15,8 @@
     "siteTheme": "",
     "adminTheme": "",
     "manageTheme": ""
+  },
+  "site": {
+    "title": ""
   }
 }
