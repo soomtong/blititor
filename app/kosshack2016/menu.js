@@ -83,5 +83,15 @@ function menuExpose(req, res, next) {
     next();
 }
 
+function localsExpose(appLocals) {
+    return function (req, res, next) {
+        res.locals.app = appLocals;
+
+        winston.verbose('bind locals in app: {app}');
+        next();
+    };
+}
+
 module.exports = Menu;
 module.exports.expose = menuExpose;
+module.exports.exposeLocals = localsExpose;

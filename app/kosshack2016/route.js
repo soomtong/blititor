@@ -22,6 +22,7 @@ var routeTable = misc.getRouteTable();
 
 // middleware
 router.use(menu.expose);
+router.use(menu.exposeLocals({title: "공개SW개발자센터 해카톤 2016"}));
 router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);

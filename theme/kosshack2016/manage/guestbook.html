@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{app.title}} - {{site.title}}</title>
+    <title>{{site.title}}</title>
     {% include './include/style.html' %}
 </head>
 <body>
@@ -13,9 +13,9 @@
     <div class="describe">
         <div class="pure-g">
             <div class="pure-u-1">
-                <h3>사이트 운영자는 등록된 회원과 페이지 로그를 확인할 수 있습니다.</h3>
+                <h3>사이트 운영자는 게스트북 정보와 페이지 로그를 확인할 수 있습니다.</h3>
                 <ul>
-                    <li>회원 정보 열람</li>
+                    <li>방명록 정보 열람</li>
                     <li>페이지 접속 정보 열람</li>
                 </ul>
             </div>
@@ -27,11 +27,10 @@
             <div class="pure-u-1">
                 <form class="pure-form" method="post">
                     <label>
-                        <input type="text" class="pure-input" placeholder="Date or Referrer">
+                        <input type="text" class="pure-input" placeholder="Nickname">
                     </label>
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                     <button type="submit" class="pure-button">Search</button>
-                    <a href="{{site.root}}{{ route.manage_root + route.manage.pageCounter }}" class="pure-button pull-right">카운터</a>
                 </form>
             </div>
         </div>
@@ -41,10 +40,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>페이지</th>
-                        <th>아이피 (계정)</th>
-                        <th>레퍼러</th>
-                        <th>기록일시</th>
+                        <th>문의자 (계정)</th>
+                        <th>내용</th>
+                        <th>답변</th>
+                        <th>문의일시</th>
+                        <th>응답일시</th>
                     </tr>
                     </thead>
 
@@ -53,10 +53,11 @@
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
                         <td>{{total - loop.index0 - (pageSize * (page - 1))}}</td>
-                        <td>{{item.path}} ({{item.method}})</td>
-                        <td>{{item.ip}}</td>
-                        <td>{{item.ref}}</td>
+                        <td>{{item.nickname}} ({{item.email}})</td>
+                        <td>{{item.message | safe}}</td>
+                        <td>{{item.reply | safe}}</td>
                         <td>{{item.created_at}}</td>
+                        <td>{{item.replied_at}}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -70,23 +71,23 @@
                     <ul class="cd-pagination no-space move-buttons custom-icons">
                         {% if hasPrev %}
                         {% if page > 1 %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{page - 1}}">Prev</a>
-                        {% else %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}">Prev</a>
-                        {% endif %}
-                        {% endif %}
+                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.guestbook_root }}?p={{page - 1}}">Prev</a>
+                            {% else %}
+                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.guestbook_root }}">Prev</a>
+                            {% endif %}
+                            {% endif %}
 
-                        {% for i in range(1, maxPage + 1) -%}
-                        {% if i == page %}
-                        <li><a class="current" href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
-                        {% else %}
-                        <li><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
-                        {% endif %}
-                        {%- endfor %}
+                            {% for i in range(1, maxPage + 1) -%}
+                            {% if i == page %}
+                        <li><a class="current" href="{{site.root}}{{ route.manage_root + route.guestbook_root }}?p={{i}}">{{i}}</a>
+                            {% else %}
+                        <li><a href="{{site.root}}{{ route.manage_root + route.guestbook_root }}?p={{i}}">{{i}}</a>
+                            {% endif %}
+                            {%- endfor %}
 
-                        {% if hasNext %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{page + 1}}">Next</a>
-                        {% endif %}
+                            {% if hasNext %}
+                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.guestbook_root }}?p={{page + 1}}">Next</a>
+                            {% endif %}
                     </ul>
                 </nav>
                 {% endif %}
@@ -94,7 +95,7 @@
         </div>
     </div>
 
-    {% include '../include/footer.html' %}
+    {% include './include/footer.html' %}
 
 </div>
 </body>
