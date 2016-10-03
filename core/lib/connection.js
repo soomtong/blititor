@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 var common = require('./common');
 
-var databaseFile = require('../config/app_default.json');
+var configFile = require('../config/app_default.json').configFile;
 
 var connectionPool = initializePool();
 
@@ -15,7 +15,7 @@ function initializePool() {
     var databaseConfiguration, connectionPoolInstance;
 
     try {
-        databaseConfiguration = require(path.join('../..', databaseFile.configFile))['database'];
+        databaseConfiguration = require(path.join('../..', configFile))['database'];
 
         winston.info('Getting connection information for Connection Pool' ,databasePublicInfo(databaseConfiguration));
     } catch (e) {
@@ -62,8 +62,7 @@ function initSession(mysqlStore, callback) {
     var databaseConfiguration;
 
     try {
-        // databaseConfiguration = require(path.join('../..', databaseFile.databaseConfig));
-        databaseConfiguration = require(path.join('../..', databaseFile.configFile))['database'];
+        databaseConfiguration = require(path.join('../..', configFile))['database'];
 
         winston.info('Getting connection information for Session' ,databasePublicInfo(databaseConfiguration));
     } catch (e) {

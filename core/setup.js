@@ -14,7 +14,6 @@ var common = require('./lib/common');
 var misc = require('./lib/misc');
 
 var configFile = require('./config/app_default.json').configFile;
-var databaseDefaultFile = './core/config/database_default.json';
 
 var moduleFile = 'module_list.json';
 var params = parseArgs(process.argv.slice(2));
@@ -76,7 +75,7 @@ switch (mainCommand) {
 function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n".rainbow);
 
-    var databaseDefault = JSON.parse(fs.readFileSync(databaseDefaultFile, 'utf8'));
+    var databaseDefault = require('./config/database_default.json');
 
     prompt.start();
 
@@ -196,7 +195,7 @@ function makeDatabaseConfigFile(next) {
 function makeDatabaseTable(next) {
     console.log(" = Make database tables for blititor \n".rainbow);
 
-    var connectionInfo = require(path.join('..', configFile));
+    var connectionInfo = require(path.join('..', configFile))['database'];
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
     var connection = mysql.createConnection({
@@ -234,7 +233,7 @@ function makeDatabaseTable(next) {
 function makeDatabaseTableWithReset() {
     console.log(" = Reset database tables for blititor \n".rainbow);
 
-    var connectionInfo = require(path.join('..', configFile));
+    var connectionInfo = require(path.join('..', configFile))['database'];
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
     var connection = mysql.createConnection({
@@ -291,7 +290,7 @@ function makeDatabaseTableWithReset() {
 function makeModuleDatabaseTable(moduleName, callback) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
-    var connectionInfo = require(path.join('..', configFile));
+    var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
 
     // inset dummy data after create table
@@ -303,7 +302,7 @@ function makeModuleDatabaseTable(moduleName, callback) {
 function makeModuleDatabaseTableWithReset(moduleName) {
     console.log(" = Make database tables for " + moduleName + " module".rainbow);
 
-    var connectionInfo = require(path.join('..', configFile));
+    var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
 
     // delete scheme before create table
@@ -396,7 +395,7 @@ function makeAdminAccount() {
         };
 
         // save administrator account to user table
-        var connectionInfo = require(path.join('..', configFile));
+        var connectionInfo = require(path.join('..', configFile))['database'];
 
         var connection = mysql.createConnection({
             host: connectionInfo.dbHost,
