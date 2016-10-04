@@ -88,6 +88,7 @@ var ManagerMenu = [
     }
 ];
 
+/*
 function menuExpose(req, res, next) {
 
     // var pages = BLITITOR.route.pages;
@@ -101,7 +102,9 @@ function menuExpose(req, res, next) {
 
     next();
 }
+*/
 
+/*
 function localsExpose(appLocals) {
     return function (req, res, next) {
         res.locals.app = appLocals;
@@ -110,7 +113,8 @@ function localsExpose(appLocals) {
         next();
     };
 }
+*/
 
 module.exports = Menu;
-module.exports.expose = menuExpose;
-module.exports.exposeLocals = localsExpose;
+module.exports.AdminMenu = AdminMenu;
+module.exports.ManagerMenu = ManagerMenu;

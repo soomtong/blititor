@@ -32,6 +32,18 @@ function plainPage(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
+function exposeAppLocals(locals, menu) {
+    return function (req, res, next) {
+        res.locals.app = locals;
+        res.locals.menu = menu;
+        res.locals.adminMenu = menu.AdminMenu || {};
+        res.locals.managerMenu = menu.ManagerMenu || {};
+
+        winston.verbose('bind locals in app: {app, menu}');
+        next();
+    }
+}
+
 function bindMenuToRouter(menu, router) {
     menu.map(function (item) {
         router[item['type'] || 'get'](item['url'], plainPage);
@@ -53,5 +65,6 @@ module.exports = {
     index: indexPage,
     plain: plainPage,
     bindMenu: bindMenuToRouter,
+    exposeAppLocals: exposeAppLocals,
     redirect: redirectPage
 };
