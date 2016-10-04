@@ -23,8 +23,6 @@ var routeTable = misc.getRouteTable();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
-// router.use(menu.expose);
-// router.use(menu.exposeLocals(app));
 router.use(Account.middleware.exposeLocals);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
@@ -53,19 +51,6 @@ Chat.initSocket(BLITITOR._socketIO);
 Site.bindMenu(menu, router);
 
 module.exports = {
-    // exposeLocals: exposeLocals,
     exposeLocals: appLocals,
-    // exposeMenu: exposeMenu,
     router: router,
 };
-
-/*
-function exposeLocals(req, res, next) {
-    res.locals.app = app.locals;
-    res.locals.menu = menu;
-    res.locals.adminMenu = menu.AdminMenu;
-    res.locals.managerMenu = menu.ManagerMenu;
-
-    winston.verbose('bind locals in app: {app, menu}', app.locals, menu);
-    next();
-}*/

@@ -45,18 +45,9 @@ var Menu = [
     }
 ];
 
-function menuExpose(req, res, next) {
+var AdminMenu = {};
+var ManagerMenu = {};
 
-    // var pages = BLITITOR.route.pages;
-    // console.log('pages:', pages);
-
-    //todo: retrieve from database site menu record which should match with `pages` items
-    // read from database
-    res.locals.menu = Menu;
-
-    next();
-}
-
-module.exports = {
-    expose: menuExpose,
-};
+module.exports = Menu;
+module.exports.AdminMenu = AdminMenu;
+module.exports.ManagerMenu = ManagerMenu;

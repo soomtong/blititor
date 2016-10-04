@@ -84,19 +84,6 @@ var ManagerMenu = [
     }
 ];
 
-function menuExpose(req, res, next) {
-
-    // var pages = BLITITOR.route.pages;
-    winston.info('Expose app menu in app router', req.path);
-
-    //todo: retrieve from database site menu record which should match with `pages` items
-    // read from database
-    res.locals.menu = Menu;
-    res.locals.adminMenu = AdminMenu;
-    res.locals.managerMenu = ManagerMenu;
-
-    next();
-}
-
 module.exports = Menu;
-module.exports.expose = menuExpose;
+module.exports.AdminMenu = AdminMenu;
+module.exports.ManagerMenu = ManagerMenu;

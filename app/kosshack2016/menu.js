@@ -67,31 +67,6 @@ var ManagerMenu = [
     }
 ];
 
-function menuExpose(req, res, next) {
-
-    // var pages = BLITITOR.route.pages;
-    // console.log('pages:', pages);
-
-    //todo: retrieve from database site menu record which should match with `pages` items
-    // read from database
-    res.locals.menu = Menu;
-    res.locals.adminMenu = AdminMenu;
-    res.locals.managerMenu = ManagerMenu;
-
-    winston.verbose('bind locals in app/kosshack2016: {menu, adminMenu, manageMenu}');//, Menu);
-
-    next();
-}
-
-function localsExpose(appLocals) {
-    return function (req, res, next) {
-        res.locals.app = appLocals;
-
-        winston.verbose('bind locals in app: {app}');
-        next();
-    };
-}
-
 module.exports = Menu;
-module.exports.expose = menuExpose;
-module.exports.exposeLocals = localsExpose;
+module.exports.AdminMenu = AdminMenu;
+module.exports.ManagerMenu = ManagerMenu;
