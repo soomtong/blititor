@@ -57,7 +57,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`custom_url` varchar(128), ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
-        '`tags` text, ' +
+        '`tags` varchar(256), ' +
         '`header_imgs` varchar(256), ' +    // presented json type array
         '`flag` varchar(8), ' +             // render type or some special mark for this post
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently

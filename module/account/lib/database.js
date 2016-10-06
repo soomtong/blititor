@@ -82,8 +82,8 @@ function createScheme(databaseConfiguration, callback, done) {
                         callback && callback(databaseConfiguration, done);
 
                         connection.destroy();
-                    })
-                })
+                    });
+                });
             });
         });
     });
