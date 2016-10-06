@@ -61,6 +61,11 @@ var ManagerMenu = [
         url: routeTable.manage_root + routeTable.manage.account
     },
     {
+        id: 'gallery',
+        name: '갤러리',
+        url: routeTable.manage_root + routeTable.manage.gallery
+    },
+    {
         id: 'guestbook',
         name: '방명록 관리',
         url: routeTable.manage_root + routeTable.guestbook_root

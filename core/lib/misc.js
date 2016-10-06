@@ -55,6 +55,8 @@ function getRouteTable() {
         "manage": {
             "login": "/login",
             "account": "/account",
+            "gallery": "/gallery",
+            "galleryCategory": "/gallery/category",
             "pageLog": "/page/log",
             "pageView": "/page",
             "pageCounter": "/counter/page",
@@ -81,6 +83,10 @@ function getRouteTable() {
         },
         "chatting_root": "/chat",
         "chat": {
+            "form": ""
+        },
+        "gallery_root": "/gallery",
+        "gallery": {
             "form": ""
         },
         "teamblog_root": "/blog",

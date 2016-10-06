@@ -11,12 +11,15 @@
     "account": "/account",
     "accountEdit": "/account/edit",
     "accountNew": "/account/register",
+    "accountAdd": "/account/add",
     "counter": "/counter"
   },
   "manage_root": "/manage",
   "manage": {
     "login": "/login",
     "account": "/account",
+    "gallery": "/gallery",
+    "galleryCategory": "/gallery/category",
     "pageLog": "/page/log",
     "pageView": "/page",
     "pageCounter": "/counter/page",
@@ -43,6 +46,10 @@
   },
   "chatting_root": "/chat",
   "chat": {
+    "form": ""
+  },
+  "gallery_root": "/gallery",
+  "gallery": {
     "form": ""
   },
   "teamblog_root": "/blog",
