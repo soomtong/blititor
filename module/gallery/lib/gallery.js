@@ -48,19 +48,31 @@ function uploadImage(req, res) {
 }
 
 function saveImage(req, res) {
-    var post = {
+    var params = {
         image: req.body['image'],
         path: req.body['path'],
         thumbnail: req.body['thumb'],
         message: req.body['message'] || '',
-        email: req.body['email'],
-        access_ip: req.ip
+        category: req.body['category'] || 0
     };
 
-    console.log(post);
-    // database.save(post, function () {
+    console.log(params);
+
+    var mysql = connection.get();
+
+    db.createGalleryImageItem(mysql, params, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: err});
+
+            winston.error(err);
+
+            return res.redirect('back');
+        }
+
+        winston.warn('Inserted gallery image:', result);
+
         return res.redirect('back');
-    // });
+    });
 }
 
 module.exports = {
@@ -113,12 +125,12 @@ function processFile(file, callback) {
                 if (h > m) {
                     image.resize(w - Math.floor((h - m) * r), m, function (err, image) {
                         image.writeFile(folder.upload + name, function (err) {
-                            console.log('upload done resize w, h');
+                            // console.log('upload done resize w, h');
                         });
                     });
                 } else {
                     image.writeFile(folder.upload + name, function (err) {
-                        console.log('upload done resize w');
+                        // console.log('upload done resize w');
                     });
                 }
             });
@@ -130,12 +142,12 @@ function processFile(file, callback) {
 
                 image.resize(w - Math.floor((h - m) * r), m, function (err, image) {
                     image.writeFile(folder.upload + name, function (err) {
-                        console.log('upload done resize h');
+                        // console.log('upload done resize h');
                     });
                 });
             } else {
                 image.writeFile(folder.upload + name, function (err) {
-                    console.log('upload done resize nothing');
+                    // console.log('upload done resize nothing');
                 });
             }
         }

@@ -7,6 +7,7 @@ $(function () {
         var thumbnail = '/upload/gallery/thumb/';
         var path = file.path.split('/');
         var name = path[path.length - 1];
+        var categoryID = $('#add_image').parent().parent().parent().data('id');
 
         console.log(file);
 
@@ -18,8 +19,9 @@ $(function () {
 
             $('<img class="thumbnail" />').attr('src', thumbnail + name).appendTo('#files');
             $('<input name="thumb" type="hidden">').attr('value', name).appendTo('#add_image');
-            $('<input name="image" type="hidden">').attr('value', file.name).appendTo('#add_image');
+            $('<input name="image" type="hidden">').attr('value', file.originalname).appendTo('#add_image');
             $('<input name="path" type="hidden">').attr('value', file.path).appendTo('#add_image');
+            $('<input name="category" type="hidden">').attr('value', categoryID).appendTo('#add_image');
 
             $('#add_image button[type=submit]').prop('disabled', false).text('전송하기').addClass('button-secondary').removeClass('button-warning');
 

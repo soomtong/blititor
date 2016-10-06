@@ -28,7 +28,7 @@ function deleteScheme(databaseConfiguration, callback) {
     var sql = "DROP TABLE IF EXISTS ??";
     var tableList = [tables.galleryCategory, tables.galleryImage];
 
-    connection.query(sql, tableList, function (error, results, fields) {
+    connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
 
         callback(databaseConfiguration);
@@ -46,10 +46,11 @@ function createScheme(databaseConfiguration, callback, done) {
 
     var sql_gallery_image = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`category` tinyint, ' +
+        '`category` tinyint default 0, ' +
         '`sort` int unsigned not null default 0, ' +
         '`hide` int(1) default 0, ' +
         '`image` varchar(128) not null, `thumbnail` varchar(128) not null, ' +
+        '`path` varchar(256) not null, ' +
         '`title` varchar(128), ' +
         '`link` varchar(128), ' +
         '`tags` varchar(128), ' +
@@ -81,8 +82,29 @@ function insertDummy(databaseConfiguration, done) {
     done && done();
 }
 
-function insertCategory(connection, chatInfo, callback){
-    connection.query(query.insertInto, [tables.chattingLog, chatInfo], function (err, result) {
+function insertCategory(connection, params, callback) {
+    var titleData = {
+        title: params.title,
+        sub_title: params.subTitle,
+        created_at: new Date()
+    };
+
+    connection.query(query.insertInto, [tables.galleryCategory, titleData], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function insertImage(connection, params, callback){
+    var imageData = {
+        category: Number(params.category),
+        image: params.image,
+        thumbnail: params.thumbnail,
+        path: params.path,
+        title: params.message,
+        created_at: new Date()
+    };
+
+    connection.query(query.insertInto, [tables.galleryImage, imageData], function (err, result) {
         callback(err, result);
     });
 }
@@ -92,6 +114,7 @@ module.exports = {
     createScheme: createScheme,
     insertDummy: insertDummy,
     addCategory: insertCategory,
+    createGalleryImageItem: insertImage,
     option: {
         tables: tables,
         core: false
