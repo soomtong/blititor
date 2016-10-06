@@ -9,7 +9,8 @@
     "jquery": "^2.2.2",
     "pure": "^0.6.0",
     "font-awesome": "^4.6.3",
-    "jwerty": "~0.3.2"
+    "jwerty": "~0.3.2",
+    "blueimp-file-upload": "^9.12.5"
   },
   "devDependencies": {}
 }

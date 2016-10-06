@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>{{site.title}}</title>
     {% include './include/style.html' %}
+    <link href="/lib/blueimp-file-upload/css/jquery.fileupload.css" rel="stylesheet">
+    <link href="/lib/blueimp-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet">
 </head>
 <body>
 
@@ -63,18 +65,34 @@
                     <tbody>
                     <tr>
                         <td colspan="4" class="img-holder">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
-                            <p class="add-image">
-                                <button type="button" class="pure-button button-success">이미지 추가</button>
-                            </p>
+                            <div class="files" id="files">
+                                <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
+                                <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
+                                <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
+                                <img src="//placeimg.com/80/60/1" alt="" class="thumbnail">
+
+                            </div>
+
+                            <div class="add-image" style="margin: 1em 0.5em">
+                                <form id="add_image" method="post" class="pure-form" enctype="multipart/form-data" action="{{site.root}}{{ route.gallery_root + route.gallery.upload }}">
+
+                                    <input type="text" name="message" class="pure-input-1" id="image_message" placeholder="title" maxlength="100">
+
+                                    <div id="progress" class="progress">
+                                        <div class="progress-bar progress-bar-success"></div>
+                                    </div>
+
+                                    <div class="pure-button button-success fileinput-button">
+                                        <span>이미지 업로드</span>
+                                        <!-- The file input field used as target for the file upload widget -->
+                                        <input id="gallery_image_file" type="file" name="files">
+                                    </div>
+
+                                    <button type="submit" class="pure-button button-warning" disabled>이미지를 추가해주세요</button>
+
+                                    <input type="hidden" name="_csrf" value="{{ _csrf }}">
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -116,5 +134,13 @@
     {% include './include/footer.html' %}
 
 </div>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="/lib/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="/lib/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script src="{{site.manageTheme}}/manage/common/gallery.js"></script>
 </body>
 </html>

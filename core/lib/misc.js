@@ -87,7 +87,8 @@ function getRouteTable() {
         },
         "gallery_root": "/gallery",
         "gallery": {
-            "form": ""
+            "form": "",
+            "upload": "/upload"
         },
         "teamblog_root": "/blog",
         "teamblog": {

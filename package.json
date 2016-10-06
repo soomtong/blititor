@@ -22,6 +22,7 @@
     "express-validator": "latest",
     "knex": "^0.9.0",
     "lusca": "^1.3.0",
+    "lwip": "0.0.9",
     "markdown-it": "^7.0.0",
     "method-override": "^2.3.5",
     "minimist": "^1.2.0",
