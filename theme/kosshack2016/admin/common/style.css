@@ -210,3 +210,23 @@ input.pure-file-input[type=file] {
 .user-list .user-id {
     cursor: pointer;
 }
+
+.thumbnail {
+    margin: 8px 5px 5px 5px;
+    display: inline-block;
+    max-width: 100%;
+    padding: 4px;
+    line-height: 1.45;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.gallery {
+
+}
+
+.gallery .add-image {
+    text-align: right;
+    margin-right: 0.8em;
+}

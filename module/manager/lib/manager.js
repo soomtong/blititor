@@ -270,6 +270,7 @@ function guestbookList(req, res) {
     };
 
     var mysql = connection.get();
+
     db.readGuestbook(mysql, Number(params.page - 1), function (error, result) {
         params.pagination = true;
         params.total = result.total;
@@ -289,6 +290,67 @@ function guestbookList(req, res) {
     });
 }
 
+function galleryManager(req, res) {
+    var params = {
+        title: "운영자 화면",
+        page: Number(req.query['p']) || 1
+    };
+
+    var mysql = connection.get();
+
+    db.readGalleryCategory(mysql, Number(params.page - 1), function (error, result) {
+        params.pagination = true;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.categoryList = result.categoryList;
+
+        params.categoryList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at);
+        });
+
+        res.render(BLITITOR.config.site.adminTheme + '/manage/gallery', params);
+    });
+
+}
+
+function galleryCategory(req, res) {
+    var params = {
+        type: req.body.type,
+        title: req.body.title || '',
+        subTitle: req.body.sub_title || '',
+        xhr: req.xhr || false
+    };
+
+    var mysql = connection.get();
+
+    switch (params.type) {
+        case 'add':
+            db.createGalleryCategory(mysql, params, function (error, result) {
+                if (!params.xhr) return res.redirect('back');
+                else return res.send({
+                    "status": "success",
+                    "data": {
+                        "title": params.title,
+                        "sub_title": params.subTitle,
+                        "id": result.insertId
+                    }
+                });
+            });
+
+            break;
+
+        default:
+            return res.send({
+                "status": "fail",
+                "data": {"msg": "no title exist"}
+            });
+    }
+}
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -297,4 +359,6 @@ module.exports = {
     accountList: accountList,
     accountActionCounter: accountCounter,
     guestbookList: guestbookList,
+    galleryManager: galleryManager,
+    galleryCategory: galleryCategory,
 };

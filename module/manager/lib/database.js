@@ -14,6 +14,8 @@ var tables = {
     visitLog: common.databaseDefault.prefix + 'visit_counter_log',
     visitCounter: common.databaseDefault.prefix + 'visit_counter',
     guestbook: common.databaseDefault.prefix + 'guestbook',
+    galleryCategory : common.databaseDefault.prefix + 'gallery_category',
+    galleryImage: common.databaseDefault.prefix + 'gallery_image',
 };
 
 var query = require('./query');
@@ -144,10 +146,54 @@ function readGuestbook(connection, page, callback) {
     });
 }
 
+function insertGalleryCategory(connection, params, callback) {
+    var titleData = {
+        title: params.title,
+        sub_title: params.subTitle,
+        created_at: new Date()
+    };
+
+    connection.query(query.insertInto, [tables.galleryCategory, titleData], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function selectGalleryCategory(connection, page, callback) {
+    var pageSize = 3;
+    var result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
+        categoryList: []
+    };
+
+    connection.query(query.countAllGalleryCategory, tables.galleryCategory, function (err, rows) {
+        result.total = rows[0]['count'] || 0;
+
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.maxPage = maxPage;
+        result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
+
+        connection.query(query.readGalleryCategoryByPage, [tables.galleryCategory, result.index, pageSize], function (err, rows) {
+            if (!err) result.categoryList = rows;
+            callback(err, result);
+        });
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
     readVisitLogByPage: readVisitLogByPage,
     readAccountCounterByMonth: selectAccountCounterByMonth,
     readGuestbook: readGuestbook,
+    createGalleryCategory: insertGalleryCategory,
+    readGalleryCategory: selectGalleryCategory,
 };

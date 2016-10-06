@@ -1,4 +1,5 @@
 {
+  "insertInto": "INSERT INTO ?? SET ?",
   "selectAccountByUUID": "SELECT ?? FROM ?? auth, ?? user WHERE auth.id = user.auth_id AND user.uuid = ?",
   "countAllAccount": "SELECT count(auth.id) as `count` FROM ?? auth, ?? user WHERE auth.id = user.auth_id",
   "countAllVisitLog": "SELECT count(id) as `count` FROM ??",
@@ -12,5 +13,7 @@
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "selectByUUIDWithLimit": "SELECT ?? FROM ?? WHERE `uuid` = ? ORDER BY id DESC LIMIT ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?"
+  "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?",
+  "countAllGalleryCategory": "SELECT count(id) as `count` FROM ??",
+  "readGalleryCategoryByPage": "SELECT * FROM ?? ORDER BY sort, id ASC LIMIT ?, ?"
 }

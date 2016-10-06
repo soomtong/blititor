@@ -62,6 +62,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` tinyint unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`sort` tinyint unsigned not null default 0, ' +
         '`title` varchar(64), ' +
+        '`sub_title` varchar(256), ' +
         '`created_at` datetime, ' +
         'INDEX sort(`sort`))';
 
