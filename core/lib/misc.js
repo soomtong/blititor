@@ -57,6 +57,7 @@ function getRouteTable() {
             "account": "/account",
             "gallery": "/gallery",
             "galleryCategory": "/gallery/category",
+            "galleryImage": "/gallery/image",
             "pageLog": "/page/log",
             "pageView": "/page",
             "pageCounter": "/counter/page",
@@ -87,7 +88,7 @@ function getRouteTable() {
         },
         "gallery_root": "/gallery",
         "gallery": {
-            "form": "",
+            "image": "/image",
             "upload": "/upload"
         },
         "teamblog_root": "/blog",

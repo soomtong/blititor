@@ -15,5 +15,6 @@
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?",
   "countAllGalleryCategory": "SELECT count(id) as `count` FROM ??",
-  "readGalleryCategoryByPage": "SELECT * FROM ?? ORDER BY sort, id ASC LIMIT ?, ?"
+  "readGalleryCategoryByPage": "SELECT * FROM ?? ORDER BY sort, id ASC LIMIT ?, ?",
+  "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY sort, id ASC"
 }

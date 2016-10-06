@@ -21,7 +21,7 @@ var uploader = new jqueryFileUploader({
 
 router.use(middleware.exposeLocals);
 
-// router.get(routeTable.gallery.form, gallery.index);
+router.get(routeTable.gallery.image + '/:cate', gallery.imageList);
 router.post(routeTable.gallery.upload, AccountMiddleware.checkSignedIn, gallery.createItem);
 router.post(routeTable.gallery.upload + '/image', AccountMiddleware.checkSignedIn, gallery.uploadImage);
 

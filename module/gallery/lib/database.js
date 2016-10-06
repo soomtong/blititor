@@ -109,12 +109,19 @@ function insertImage(connection, params, callback){
     });
 }
 
+function selectGalleryImageList(connection, params, callback) {
+    connection.query(query.readGalleryImageList, [tables.galleryImage, params.category], function (err, rows) {
+        if (!err) callback(err, rows);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
     addCategory: insertCategory,
     createGalleryImageItem: insertImage,
+    readGalleryImageList: selectGalleryImageList,
     option: {
         tables: tables,
         core: false

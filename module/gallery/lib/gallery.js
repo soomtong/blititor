@@ -30,6 +30,19 @@ function index(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/gallery', params);
 }
 
+function imageList(req, res) {
+    var params = {
+        category: req.params['cate'] || 1,
+        xhr: req.xhr || false
+    };
+
+    var mysql = connection.get();
+
+    db.readGalleryImageList(mysql, params, function (error, result) {
+        return res.send(result);
+    });
+}
+
 function uploadImage(req, res) {
     // Check if upload failed or was aborted
     if (req.files[0] && req.files[0].fieldname == 'files') {
@@ -77,6 +90,7 @@ function saveImage(req, res) {
 
 module.exports = {
     // index: index,
+    imageList: imageList,
     uploadImage: uploadImage,
     createItem: saveImage
 };

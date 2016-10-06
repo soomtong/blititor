@@ -1,10 +1,11 @@
 /* global $, window */
 'use strict';
+var thumbnail = '/upload/gallery/thumb/';
+
 $(function () {
     var done = function (e, data) {
         var file = data.result;
 
-        var thumbnail = '/upload/gallery/thumb/';
         var path = file.path.split('/');
         var name = path[path.length - 1];
         var categoryID = $('#add_image').parent().parent().parent().data('id');
@@ -15,7 +16,7 @@ $(function () {
             // $('#files').empty();
             // $('<p/>').text('잘못된 파일이 전송되었습니다.').appendTo('#files');
         } else {
-            $('#files').empty();
+            // $('#files').empty();
 
             $('<img class="thumbnail" />').attr('src', thumbnail + name).appendTo('#files');
             $('<input name="thumb" type="hidden">').attr('value', name).appendTo('#add_image');
@@ -49,3 +50,13 @@ $(function () {
         progressall: progress
     });
 });
+
+$.get('/gallery/image/1', {}, function (response, status, xhr) {
+    response.map(function (item) {
+        $('<img class="thumbnail" />')
+            .attr('src', thumbnail + item['thumbnail'])
+            .attr('title', item['image'])
+            .appendTo('#files');
+    });
+});
+

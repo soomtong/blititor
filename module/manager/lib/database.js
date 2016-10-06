@@ -188,6 +188,12 @@ function selectGalleryCategory(connection, page, callback) {
     });
 }
 
+function selectGalleryImageList(connection, params, callback) {
+    connection.query(query.readGalleryImageList, [tables.galleryImage, params.category], function (err, rows) {
+        if (!err) callback(err, result);
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
@@ -196,4 +202,5 @@ module.exports = {
     readGuestbook: readGuestbook,
     createGalleryCategory: insertGalleryCategory,
     readGalleryCategory: selectGalleryCategory,
+    readGalleryImageList: selectGalleryImageList,
 };

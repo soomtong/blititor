@@ -351,6 +351,19 @@ function galleryCategory(req, res) {
     }
 }
 
+function galleryImageList(req, res) {
+    var params = {
+        category: req.body.cate,
+        xhr: req.xhr || false
+    };
+
+    var mysql = connection.get();
+
+    db.readGalleryImageList(mysql, params, function (error, result) {
+        return res.send(result);
+    });
+}
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -359,6 +372,7 @@ module.exports = {
     accountList: accountList,
     accountActionCounter: accountCounter,
     guestbookList: guestbookList,
+    galleryImageList: galleryImageList,
     galleryManager: galleryManager,
     galleryCategory: galleryCategory,
 };

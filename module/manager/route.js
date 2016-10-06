@@ -27,5 +27,6 @@ router.get(routeTable.manage_root + routeTable.guestbook_root, AccountMiddleware
 // for gallery
 router.get(routeTable.manage_root + routeTable.manage.gallery, AccountMiddleware.checkManager, manager.galleryManager);
 router.post(routeTable.manage_root + routeTable.manage.galleryCategory, AccountMiddleware.checkManager, manager.galleryCategory);
+router.get(routeTable.manage_root + routeTable.manage.galleryImage, AccountMiddleware.checkManager, manager.galleryImageList);
 
 module.exports = router;
