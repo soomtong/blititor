@@ -396,6 +396,37 @@ function galleryImageSort(req, res) {
     async.mapSeries(params.sortArray, iterator, result);
 }
 
+function galleryImageDelete(req, res) {
+    var params = {
+        file: req.body.file
+    };
+
+    var folder = {
+        temp: 'public/upload/temp/',
+        thumb: 'public/upload/gallery/thumb/',
+        image: 'public/upload/gallery/image/'
+    };
+
+    console.log(params.file);
+    // remove file
+    fs.unlink(folder.temp + params.file.filename, function (err) {
+        winston.info('removed uploaded file in temp', folder.temp, params.file.filename);
+    });
+    fs.unlink(folder.thumb + params.file.filename, function (err) {
+        winston.info('removed uploaded file in temp', folder.thumb, params.file.filename);
+    });
+    fs.unlink(folder.image + params.file.filename, function (err) {
+        winston.info('removed uploaded file in temp', folder.image, params.file.filename);
+    });
+
+    res.send({
+        "status": "success",
+        "data": {
+            "filename": params.file.filename
+        }
+    });
+}
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -408,4 +439,5 @@ module.exports = {
     galleryManager: galleryManager,
     galleryCategory: galleryCategory,
     galleryImageSort: galleryImageSort,
+    galleryImageDelete: galleryImageDelete,
 };

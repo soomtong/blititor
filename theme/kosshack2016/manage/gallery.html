@@ -30,13 +30,13 @@
             <div class="pure-u-1">
                 <form class="pure-form" method="post" action="{{site.root}}{{ route.manage_root + route.manage.galleryCategory }}">
                     <label>
-                        <input type="text" name="title" class="pure-input-1-3" placeholder="Category name">
+                        <input type="text" name="title" class="pure-input-1-3" placeholder="Category name" tabindex="1">
                     </label>
                     <input type="text" name="type" value="add" hidden>
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
-                    <button type="submit" class="pure-button">추가</button>
+                    <button type="submit" class="pure-button" tabindex="3">추가</button>
                     <p>
-                        <input type="text" name="sub_title" class="pure-input-1" placeholder="Sub title">
+                        <input type="text" name="sub_title" class="pure-input-1" placeholder="Sub title" tabindex="2">
                     </p>
                 </form>
 <!--

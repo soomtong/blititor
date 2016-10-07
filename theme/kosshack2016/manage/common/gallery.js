@@ -56,6 +56,7 @@ $(function () {
 
     $('.gallery').on('click', 'tr.toggle-category', function (e) {
         selectedCategoryID = $(this).data('id');
+        console.log('activate category', selectedCategoryID);
 
         $('tr.toggle-category').removeClass('selected-category');
         $(this).addClass('selected-category');
@@ -65,56 +66,62 @@ $(function () {
             headers: { 'X-CSRF-Token': secretToken },
             dataType: 'json',
             formData: { category: selectedCategoryID },
-            done: imageUploaded($uploadEl, selectedCategoryID, thumbnailFolder, secretToken),
+            done: imageUploaded($uploadEl, thumbnailFolder, secretToken),
             progressall: imageUploadProgress('#progress .progress-bar')
         });
 
         $('#add_image').show();
     });
-});
 
-function imageUploadProgress(element) {
-    return function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $(element).css('width', progress + '%');
-    };
-}
+    function imageUploadProgress(element) {
+        return function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $(element).css('width', progress + '%');
+        };
+    }
 
-function imageUploaded($uploadEl, categoryID, thumbnailFolder, secretToken) {
-    return function (e, data) {
-        var file = data.result;
+    function imageUploaded($uploadEl, thumbnailFolder, secretToken) {
 
-        var path = file.path.split('/');
-        var name = path[path.length - 1];
+        return function (e, data) {
+            var categoryID = selectedCategoryID;
+            var file = data.result;
 
-        if (file.errors && file.errors.length > 0) {
-            // $('#files').empty();
-            // $('<p/>').text('잘못된 파일이 전송되었습니다.').appendTo('#files');
-        } else {
-            $('#holder_' + categoryID + ' .img-holder .files')
-                .append($('<img class="thumbnail" />').attr('src', thumbnailFolder + name).addClass('uploaded'))
-                .on('click', 'img.uploaded', function (e) {
-                    console.log('clicked', $(this));
-                    // delete temp file
-                    var fileData = {
-                        file: file,
-                        '_csrf': secretToken
-                    };
+            console.log(categoryID, file);
 
-                    $.post('/manage/gallery/image/remove', fileData, function (data) {
-                        console.log(data);
+            var path = file.path.split('/');
+            var name = path[path.length - 1];
+
+            if (file.errors && file.errors.length > 0) {
+                // $('#files').empty();
+                // $('<p/>').text('잘못된 파일이 전송되었습니다.').appendTo('#files');
+            } else {
+                $('#holder_' + categoryID + ' .img-holder .files')
+                    .append($('<img class="thumbnail" />').attr('src', thumbnailFolder + name).addClass('uploaded'))
+                    .on('click', 'img.uploaded', function (e) {
+                        // delete temp file
+                        var fileData = {
+                            file: file,
+                            '_csrf': secretToken
+                        };
+
+                        var $uploaded = $(this);
+
+                        $.post('/manage/gallery/image/remove', fileData, function (data) {
+                            console.log(data);
+                            console.log($uploaded.remove());
+                        });
                     });
-                });
 
-            $('#add_image')
-                .append($('<input name="thumb" type="hidden">').attr('value', name))
-                .append($('<input name="image" type="hidden">').attr('value', file.originalname))
-                .append($('<input name="path" type="hidden">').attr('value', file.path))
-                .append($('<input name="category" type="hidden">').attr('value', categoryID))
-                .find('button[type=submit]').prop('disabled', false).text('전송하기')
-                .addClass('button-error').removeClass('button-warning');
+                $('#add_image')
+                    .append($('<input name="thumb" type="hidden">').attr('value', name))
+                    .append($('<input name="image" type="hidden">').attr('value', file.originalname))
+                    .append($('<input name="path" type="hidden">').attr('value', file.path))
+                    .append($('<input name="category" type="hidden">').attr('value', categoryID))
+                    .find('button[type=submit]').prop('disabled', false).text('전송하기')
+                    .addClass('button-error').removeClass('button-warning');
 
-            $uploadEl.prop('disabled', true).parent().addClass('disabled');
-        }
-    };
-}
+                $uploadEl.prop('disabled', true).parent().prop('disabled', true);
+            }
+        };
+    }
+});
