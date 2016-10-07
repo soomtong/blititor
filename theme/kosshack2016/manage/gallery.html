@@ -55,7 +55,7 @@
                 <table class="pure-table pure-table-horizontal table-wide">
                     {% for item in categoryList %}
                     <thead>
-                    <tr id="cate_{{ item.id }}">
+                    <tr id="cate_{{ item.id }}" class="toggle-category" data-id="{{ item.id }}">
                         <th width="16px" data-sort="{{ item.sort }}">{{loop.index + (pageSize * (page - 1))}}</th>
                         <th title="{{ item.sub_title }}">{{ item.title }}</th>
                         <th width="24px" title="count" class="counter">0</th>
@@ -63,36 +63,37 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-id="{{ item.id }}">
+                    <tr id="holder_{{ item.id }}" class="gallery-wrap" data-id="{{ item.id }}">
                         <td colspan="4" class="img-holder">
-                            <div class="files" id="files">
-                            </div>
-
-                            <div class="add-image" style="margin: 1em 0.5em">
-                                <form id="add_image" method="post" class="pure-form" enctype="multipart/form-data" action="{{site.root}}{{ route.gallery_root + route.gallery.upload }}">
-
-                                    <input type="text" name="message" class="pure-input-1" id="image_message" placeholder="title" maxlength="100">
-
-                                    <div id="progress" class="progress">
-                                        <div class="progress-bar progress-bar-success"></div>
-                                    </div>
-
-                                    <div class="pure-button button-success fileinput-button">
-                                        <span>이미지 업로드</span>
-                                        <!-- The file input field used as target for the file upload widget -->
-                                        <input id="gallery_image_file" type="file" name="files">
-                                    </div>
-
-                                    <button type="submit" class="pure-button button-warning" disabled>이미지를 추가해주세요</button>
-
-                                    <input type="hidden" name="_csrf" value="{{ _csrf }}">
-                                </form>
+                            <div class="files">
                             </div>
                         </td>
                     </tr>
                     </tbody>
                     {% endfor %}
                 </table>
+
+                <div class="add-image">
+                    <form style="display: none;" id="add_image" method="post" class="pure-form" enctype="multipart/form-data" action="{{site.root}}{{ route.gallery_root + route.gallery.upload }}">
+
+                        <input type="text" name="message" class="pure-input-1" id="image_message" placeholder="title" maxlength="100">
+
+                        <div id="progress" class="progress">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+
+                        <div class="pure-button button-success fileinput-button">
+                            <span>이미지 업로드</span>
+                            <!-- The file input field used as target for the file upload widget -->
+                            <input id="gallery_image_file" type="file" name="files">
+                        </div>
+
+                        <button type="submit" class="pure-button button-warning" disabled>이미지를 추가해주세요</button>
+
+                        <input type="hidden" name="_csrf" value="{{ _csrf }}">
+                    </form>
+                </div>
+
             </div>
         </div>
         <div class="pure-g">
