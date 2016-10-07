@@ -1,4 +1,5 @@
 var fs = require('fs');
+var async = require('neo-async');
 var winston = require('winston');
 var imageProcessor = require('lwip');
 var mkdirp = require('mkdirp');
@@ -49,6 +50,8 @@ function categoryList(req, res) {
 
 function uploadImage(req, res) {
     // Check if upload failed or was aborted
+    // console.log(req.files);
+
     if (req.files[0] && req.files[0].fieldname == 'files') {
         var file = req.files[0];
 
@@ -64,7 +67,7 @@ function uploadImage(req, res) {
     }
 }
 
-function saveImage(req, res) {
+function createImageItem(req, res) {
     var params = {
         image: req.body['image'],
         path: req.body['path'],
@@ -73,30 +76,53 @@ function saveImage(req, res) {
         category: req.body['category'] || 0
     };
 
-    console.log(params);
-
     var mysql = connection.get();
 
-    db.createGalleryImageItem(mysql, params, function (err, result) {
-        if (err) {
-            req.flash('error', {msg: err});
+    if (Array.isArray(params.image)) {
+        params.image.map(function (item, idx) {
+            // console.log(item, idx);
 
-            winston.error(err);
+            var imageFile = {
+                image: params.image[idx],
+                path: params.path[idx],
+                thumbnail: params.thumbnail[idx],
+                message: params.message || '',
+                category: params.category[idx] || 0
+            };
 
-            return res.redirect('back');
-        }
+            db.createGalleryImageItem(mysql, imageFile, function (err, result) {
+                if (err) {
+                    winston.error(err);
+                }
+            });
+        });
 
-        winston.warn('Inserted gallery image:', result);
+        winston.warn('Inserted gallery images:', params.image.length);
 
         return res.redirect('back');
-    });
+
+    } else {
+        db.createGalleryImageItem(mysql, params, function (err, result) {
+            if (err) {
+                req.flash('error', {msg: err});
+
+                winston.error(err);
+
+                return res.redirect('back');
+            }
+
+            winston.warn('Inserted gallery image:', result);
+
+            return res.redirect('back');
+        });
+    }
 }
 
 module.exports = {
     imageList: imageList,
     categoryList: categoryList,
     uploadImage: uploadImage,
-    createItem: saveImage
+    createImageItem: createImageItem
 };
 
 function processFile(file, callback) {

@@ -24,7 +24,7 @@ router.use(middleware.exposeLocals);
 
 router.get(routeTable.gallery.list, CounterMiddleware.pageCounter, gallery.categoryList);
 router.get(routeTable.gallery.image + '/:cate', gallery.imageList);
-router.post(routeTable.gallery.upload, AccountMiddleware.checkSignedIn, gallery.createItem);
+router.post(routeTable.gallery.upload, AccountMiddleware.checkSignedIn, gallery.createImageItem);
 router.post(routeTable.gallery.upload + '/image', AccountMiddleware.checkSignedIn, gallery.uploadImage);
 
 module.exports = router;
