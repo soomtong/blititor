@@ -30,35 +30,23 @@
     </div>
 </section>
 
-<section class="mbr-section" id="header3-130">
-    <div class="mbr-section__container container mbr-section__container--first">
-        <div class="row">
+<section class="mbr-section" id="content1-99">
+    <div class="mbr-section__container container mbr-section__container--middle">
+        <div class="row" id="gallery_video">
+            <div class="media mbr-description col-md-10 col-md-offset-1">
+                <h3 class="mbr-article--wysiwyg mbr-header__text">
+                    <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                    갤러리 영상
+                </h3>
 
-            <div class="col-md-5 col-md-offset-1">
-                <h2 class="mbr-article--wysiwyg mbr-header__text">
-                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <a href="//kosslab-kr.github.io/kosshack2016" target="_blank">실시간 운영 현황</a>
-                </h2>
-
-                <a href="//kosslab-kr.github.io/kosshack2016" target="_blank"><img class="img-thumbnail" src="{{site.theme}}/common/asset/pic_status_screen.jpg" alt=""></a>
-
-                <div style="padding-top: 1em;">
-                    <p>프로젝트 운영 현황으로 <a href="//kosslab-kr.github.io/kosshack2016" target="_blank">바로가기</a></p>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <div>
-                    <canvas class="bubbleChart" width="500" height="500"></canvas>
+                <div class="media-body">
+                    <p class="mbr-reviews__text">
+                        곧 업데이트됩니다.
+                    </p>
                 </div>
             </div>
         </div>
 
-    </div>
-</section>
-
-<section class="mbr-section" id="content1-99">
-    <div class="mbr-section__container container mbr-section__container--middle">
 
         {% for item in cateList %}
         <div class="row gallery-wrap" id="gallery_{{ item.id }}" data-id="{{ item.id }}">
