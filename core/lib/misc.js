@@ -88,6 +88,7 @@ function getRouteTable() {
         },
         "gallery_root": "/gallery",
         "gallery": {
+            "list": "/",
             "image": "/image",
             "upload": "/upload"
         },

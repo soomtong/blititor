@@ -1,9 +1,6 @@
 {
-  "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
-  "countAll": "SELECT count(id) as `count` FROM ??",
-  "readChatAllLog": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "insertInto": "INSERT INTO ?? SET ?",
-  "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "updateAccountById": "UPDATE ?? SET ? WHERE `id` = ?",
-  "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY sort, id ASC"
+  "countAll": "SELECT count(id) as `count` FROM ??",
+  "readGalleryCategory": "SELECT * FROM ?? ORDER BY `sort`, `id` ASC",
+  "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `id` ASC"
 }

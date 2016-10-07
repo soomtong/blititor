@@ -315,26 +315,27 @@
             });
         }
 
-        if (!$html.hasClass('bubbleChart')){
+        if (!$html.hasClass('bubbleChart')) {
             $.ajax({
                 url: 'https://api.github.com/users/kosslab-kr/events?per_page=100',
                 crossDomain: true
-            }).success(function(resp){
+            }).success(function (resp) {
 
                 var chartData = {};
-                for (var idx in resp){
+                for (var idx in resp) {
                     if (resp[idx].repo != undefined) {
-                        var repoName = resp[idx].repo.name.replace('kosslab-kr/','');
-                        if(repoName in chartData){
+                        var repoName = resp[idx].repo.name.replace('kosslab-kr/', '');
+                        if (repoName in chartData) {
                             chartData[repoName] += 1
-                        }else{
+                        } else {
                             chartData[repoName] = 1
                         }
                     }
                 }
-                console.log(chartData);
-
-                var values = Object.keys(chartData).map(function(v) { return chartData[v]; });
+                // console.log(chartData);
+                var values = Object.keys(chartData).map(function (v) {
+                    return chartData[v];
+                });
 
                 var data = {
                     labels: Object.keys(chartData),
@@ -365,7 +366,22 @@
             });
         }
 
+        if (!$html.hasClass('gallery-wrap')) {
+            var imageFolder = '/upload/gallery/image/';
 
+            $('.gallery-wrap').map(function (idx, item) {
+                $.get('/gallery/image/' + $(item).data('id'), {}, function (response, status, xhr) {
+                    response.map(function (item) {
+                        // console.log(item);
+                        $('<img class="img-thumbnail center-block" />')
+                            .attr('src', imageFolder + item['thumbnail'])
+                            .attr('title', item['image'])
+                            .appendTo('#image_list');
+                        $('<br>').appendTo('#image_list');
+                    });
+                });
+            });
+        }
     });
 
     (function () {

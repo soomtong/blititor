@@ -109,7 +109,12 @@ function insertImage(connection, params, callback){
     });
 }
 
-function selectGalleryImageList(connection, params, callback) {
+function selectCategory(connection, callback) {
+    connection.query(query.readGalleryCategory, [tables.galleryCategory], function (err, rows) {
+        if (!err) callback(err, rows);
+    });
+}
+function selectImageList(connection, params, callback) {
     connection.query(query.readGalleryImageList, [tables.galleryImage, params.category], function (err, rows) {
         if (!err) callback(err, rows);
     });
@@ -121,7 +126,8 @@ module.exports = {
     insertDummy: insertDummy,
     addCategory: insertCategory,
     createGalleryImageItem: insertImage,
-    readGalleryImageList: selectGalleryImageList,
+    readGalleryCategory: selectCategory,
+    readGalleryImageList: selectImageList,
     option: {
         tables: tables,
         core: false

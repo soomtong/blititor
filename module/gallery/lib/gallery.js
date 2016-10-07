@@ -22,14 +22,6 @@ var folder = {
 mkdirp.sync(folder.thumb);
 mkdirp.sync(folder.upload);
 
-function index(req, res) {
-    var params = {
-        title: 'Gallery'
-    };
-
-    res.render(BLITITOR.config.site.theme + '/page/gallery', params);
-}
-
 function imageList(req, res) {
     var params = {
         category: req.params['cate'] || 1,
@@ -40,6 +32,18 @@ function imageList(req, res) {
 
     db.readGalleryImageList(mysql, params, function (error, result) {
         return res.send(result);
+    });
+}
+
+function categoryList(req, res) {
+    var params = {};
+
+    var mysql = connection.get();
+
+    db.readGalleryCategory(mysql, function (error, result) {
+        params.cateList = result || [];
+
+        res.render(BLITITOR.config.site.theme + '/page/gallery/list', params);
     });
 }
 
@@ -89,8 +93,8 @@ function saveImage(req, res) {
 }
 
 module.exports = {
-    // index: index,
     imageList: imageList,
+    categoryList: categoryList,
     uploadImage: uploadImage,
     createItem: saveImage
 };
