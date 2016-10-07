@@ -20,6 +20,9 @@
     "account": "/account",
     "gallery": "/gallery",
     "galleryCategory": "/gallery/category",
+    "galleryImage": "/gallery/image",
+    "galleryImageSort": "/gallery/image/sort",
+    "galleryImageRemove": "/gallery/image/remove",
     "pageLog": "/page/log",
     "pageView": "/page",
     "pageCounter": "/counter/page",
@@ -50,7 +53,8 @@
   },
   "gallery_root": "/gallery",
   "gallery": {
-    "form": "",
+    "list": "/",
+    "image": "/image",
     "upload": "/upload"
   },
   "teamblog_root": "/blog",

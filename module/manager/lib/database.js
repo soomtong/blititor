@@ -194,6 +194,16 @@ function selectGalleryImageList(connection, params, callback) {
     });
 }
 
+function updateGalleryImage(connection, params, callback) {
+    var sortData = {
+        sort: Number(params.sort) || 1
+    };
+
+    connection.query(query.updateGalleryImageSortOrder, [tables.galleryImage, sortData, params.category, params.id], function (err, result) {
+        if (!err) callback(err, result);
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
@@ -203,4 +213,5 @@ module.exports = {
     createGalleryCategory: insertGalleryCategory,
     readGalleryCategory: selectGalleryCategory,
     readGalleryImageList: selectGalleryImageList,
+    updateGalleryImage: updateGalleryImage,
 };

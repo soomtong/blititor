@@ -1,4 +1,5 @@
 var fs = require('fs');
+var async = require('neo-async');
 var bcrypt = require('bcryptjs');
 var mkdirp = require('mkdirp');
 var winston = require('winston');
@@ -364,6 +365,37 @@ function galleryImageList(req, res) {
     });
 }
 
+function galleryImageSort(req, res) {
+    var params = {
+        category: req.body.category,
+        sortArray: req.body.sort
+    };
+
+    var mysql = connection.get();
+
+    var iterator = function (item, idx, done) {
+        params.sort = idx + 1;
+        params.id = item;
+
+        db.updateGalleryImage(mysql, params, function (error, result) {
+            // console.log(error, result);
+            done(error, params.id)
+        });
+    };
+
+    var result = function (error, result) {
+        res.send({
+            "status": "success",
+            "data": {
+                "category": params.category,
+                "result": result
+            }
+        });
+    };
+
+    async.mapSeries(params.sortArray, iterator, result);
+}
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -375,4 +407,5 @@ module.exports = {
     galleryImageList: galleryImageList,
     galleryManager: galleryManager,
     galleryCategory: galleryCategory,
+    galleryImageSort: galleryImageSort,
 };

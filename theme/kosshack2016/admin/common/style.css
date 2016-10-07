@@ -235,6 +235,13 @@ input.pure-file-input[type=file] {
     margin: 2em 0;
 }
 
+.gallery-wrap .img-holder img.uploaded {
+    cursor: pointer;
+}
+.gallery-wrap .img-holder img.uploaded:hover {
+    background: rgb(202, 60, 60);
+}
+
 .progress {
     margin: 1em 0;
     height: 20px;

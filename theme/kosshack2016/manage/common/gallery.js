@@ -38,6 +38,8 @@ $(function () {
                             sortTable.push($(el).data('sort'));
                         });
 
+                        console.log(sortTable);
+
                         var sortingData = {
                             category: cate_id,
                             sort: sortTable,
@@ -45,7 +47,6 @@ $(function () {
                         };
 
                         $.post('/manage/gallery/image/sort', sortingData, function (data) {
-                            console.log(data);
                             sortTable = [];
                         });
                     });
@@ -64,7 +65,7 @@ $(function () {
             headers: { 'X-CSRF-Token': secretToken },
             dataType: 'json',
             formData: { category: selectedCategoryID },
-            done: imageUploaded($uploadEl, selectedCategoryID, thumbnailFolder),
+            done: imageUploaded($uploadEl, selectedCategoryID, thumbnailFolder, secretToken),
             progressall: imageUploadProgress('#progress .progress-bar')
         });
 
@@ -79,7 +80,7 @@ function imageUploadProgress(element) {
     };
 }
 
-function imageUploaded($uploadEl, categoryID, thumbnailFolder) {
+function imageUploaded($uploadEl, categoryID, thumbnailFolder, secretToken) {
     return function (e, data) {
         var file = data.result;
 
@@ -91,7 +92,19 @@ function imageUploaded($uploadEl, categoryID, thumbnailFolder) {
             // $('<p/>').text('잘못된 파일이 전송되었습니다.').appendTo('#files');
         } else {
             $('#holder_' + categoryID + ' .img-holder .files')
-                .append($('<img class="thumbnail" />').attr('src', thumbnailFolder + name));
+                .append($('<img class="thumbnail" />').attr('src', thumbnailFolder + name).addClass('uploaded'))
+                .on('click', 'img.uploaded', function (e) {
+                    console.log('clicked', $(this));
+                    // delete temp file
+                    var fileData = {
+                        file: file,
+                        '_csrf': secretToken
+                    };
+
+                    $.post('/manage/gallery/image/remove', fileData, function (data) {
+                        console.log(data);
+                    });
+                });
 
             $('#add_image')
                 .append($('<input name="thumb" type="hidden">').attr('value', name))

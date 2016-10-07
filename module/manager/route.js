@@ -26,7 +26,8 @@ router.get(routeTable.manage_root + routeTable.manage.accountCounter, AccountMid
 router.get(routeTable.manage_root + routeTable.guestbook_root, AccountMiddleware.checkManager, manager.guestbookList);
 // for gallery
 router.get(routeTable.manage_root + routeTable.manage.gallery, AccountMiddleware.checkManager, manager.galleryManager);
-router.post(routeTable.manage_root + routeTable.manage.galleryImageSort, AccountMiddleware.checkManager, function (req, res) {
+router.post(routeTable.manage_root + routeTable.manage.galleryImageSort, AccountMiddleware.checkManager, manager.galleryImageSort);
+router.post(routeTable.manage_root + routeTable.manage.galleryImageRemove, AccountMiddleware.checkManager, function (req, res) {
     console.log(req.body);
 
     res.send(req.body);
