@@ -15,9 +15,9 @@ var Menu = [    // for plain page used by site.plain method (this page has each 
         url: routeTable.root
     },
     {
-        id: 'hackathon_status',
-        name: '진행상황',
-        url: '/status'
+        id: 'hackathon_gallery',
+        name: '갤러리',
+        url: '/gallery'
     },
     {
         id: 'volunteer_list',
