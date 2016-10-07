@@ -370,15 +370,18 @@
             var imageFolder = '/upload/gallery/image/';
 
             $('.gallery-wrap').map(function (idx, el) {
-                if ($(el).data('id')) {
-                    $.get('/gallery/image/' + Number($(el).data('id')), {}, function (response, status, xhr) {
+                var cateID = $(el).data('id');
+
+                if (cateID) {
+                    $.get('/gallery/image/' + Number(cateID), {}, function (response, status, xhr) {
                         response.map(function (item) {
                             // console.log(item);
                             $('<img class="img-thumbnail center-block" />')
                                 .attr('src', imageFolder + item['thumbnail'])
                                 .attr('title', item['image'])
-                                .appendTo('#image_list');
-                            $('<br>').appendTo('#image_list');
+                                .appendTo('#gallery_' + cateID + ' .image-list');
+                            $('<br>')
+                                .appendTo('#gallery_' + cateID + ' .image-list');
                         });
                     });
                 }
