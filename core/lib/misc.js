@@ -58,6 +58,7 @@ function getRouteTable() {
             "gallery": "/gallery",
             "galleryCategory": "/gallery/category",
             "galleryImage": "/gallery/image",
+            "galleryImageSort": "/gallery/image/sort",
             "pageLog": "/page/log",
             "pageView": "/page",
             "pageCounter": "/counter/page",

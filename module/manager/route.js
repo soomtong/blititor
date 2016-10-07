@@ -26,6 +26,11 @@ router.get(routeTable.manage_root + routeTable.manage.accountCounter, AccountMid
 router.get(routeTable.manage_root + routeTable.guestbook_root, AccountMiddleware.checkManager, manager.guestbookList);
 // for gallery
 router.get(routeTable.manage_root + routeTable.manage.gallery, AccountMiddleware.checkManager, manager.galleryManager);
+router.post(routeTable.manage_root + routeTable.manage.galleryImageSort, AccountMiddleware.checkManager, function (req, res) {
+    console.log(req.body);
+
+    res.send(req.body);
+});
 router.post(routeTable.manage_root + routeTable.manage.galleryCategory, AccountMiddleware.checkManager, manager.galleryCategory);
 router.get(routeTable.manage_root + routeTable.manage.galleryImage, AccountMiddleware.checkManager, manager.galleryImageList);
 
