@@ -66,13 +66,19 @@ node core/setup.js db-init
 for preparing non-core modules ('guestbook' or 'teamblog'...)
 
 ```shell
-node core/setup.js theme some_module_name
+node core/setup.js db-init some_module_name
 ```
 
 ### make theme configuration
 
 ```shell
 node core/setup.js theme
+```
+
+### make admin account
+
+```shell
+node core/setup.js admin
 ```
 
 ### run node app
