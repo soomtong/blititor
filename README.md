@@ -31,7 +31,7 @@ check out the samples! based awesome css frameworks
 
 ## Usage
 
-prepare git, nodejs, npm
+prepare git, nodejs, npm, bower
 
 ### clone repos
 
@@ -39,10 +39,11 @@ prepare git, nodejs, npm
 git clone git://github.com/soomtong/blititor.git
 ```
 
-### install component with npm
+### install component with npm and bower
 
 ```shell
 npm install
+bower install
 ```
 
 ### create module_list.json
