@@ -7,6 +7,7 @@ var gallery = require('./lib/gallery');
 var middleware = require('./lib/middleware');
 
 var AccountMiddleware = require('../account/lib/middleware');
+var CounterMiddleware = require('../counter/lib/middleware');
 
 var router = express.Router();
 var routeTable = misc.getRouteTable();
@@ -21,7 +22,7 @@ var uploader = new jqueryFileUploader({
 
 router.use(middleware.exposeLocals);
 
-router.get(routeTable.gallery.list, gallery.categoryList);
+router.get(routeTable.gallery.list, CounterMiddleware.pageCounter, gallery.categoryList);
 router.get(routeTable.gallery.image + '/:cate', gallery.imageList);
 router.post(routeTable.gallery.upload, AccountMiddleware.checkSignedIn, gallery.createItem);
 router.post(routeTable.gallery.upload + '/image', AccountMiddleware.checkSignedIn, gallery.uploadImage);

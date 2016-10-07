@@ -369,17 +369,19 @@
         if (!$html.hasClass('gallery-wrap')) {
             var imageFolder = '/upload/gallery/image/';
 
-            $('.gallery-wrap').map(function (idx, item) {
-                $.get('/gallery/image/' + $(item).data('id'), {}, function (response, status, xhr) {
-                    response.map(function (item) {
-                        // console.log(item);
-                        $('<img class="img-thumbnail center-block" />')
-                            .attr('src', imageFolder + item['thumbnail'])
-                            .attr('title', item['image'])
-                            .appendTo('#image_list');
-                        $('<br>').appendTo('#image_list');
+            $('.gallery-wrap').map(function (idx, el) {
+                if ($(el).data('id')) {
+                    $.get('/gallery/image/' + Number($(el).data('id')), {}, function (response, status, xhr) {
+                        response.map(function (item) {
+                            // console.log(item);
+                            $('<img class="img-thumbnail center-block" />')
+                                .attr('src', imageFolder + item['thumbnail'])
+                                .attr('title', item['image'])
+                                .appendTo('#image_list');
+                            $('<br>').appendTo('#image_list');
+                        });
                     });
-                });
+                }
             });
         }
     });
