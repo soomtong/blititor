@@ -1,7 +1,7 @@
 var fs = require('fs');
 var async = require('neo-async');
 var winston = require('winston');
-var imageProcessor = require('lwip');
+var imageProcessor = require('jimp');
 var mkdirp = require('mkdirp');
 
 var common = require('../../../core/lib/common');
@@ -9,11 +9,6 @@ var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');
 
 var db = require('./database');
-
-var size = {
-    width: 80,
-    height: 60
-};
 
 var folder = {
     thumb: 'public/upload/gallery/thumb/',
@@ -55,7 +50,7 @@ function uploadImage(req, res) {
     if (req.files[0] && req.files[0].fieldname == 'files') {
         var file = req.files[0];
 
-        processFile(file, function (err) {
+        processFileWithJIMP(file, function (err) {
             if (err) {
                 return res.send({ errors: [err] });
             } else {
@@ -125,75 +120,43 @@ module.exports = {
     createImageItem: createImageItem
 };
 
-function processFile(file, callback) {
+function processFileWithJIMP(file, callback) {
     var path = file.path.split('/');
     var name = path[path.length - 1];
 
-    // thumbnail
-    imageProcessor.open(file.path, function (error, image) {
-        image.cover(size.width, size.height, function (err, image) {
-            if (err) {
-                callback(err);
-            } else {
-                image.writeFile(folder.thumb + name, function (err) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        // move file to upload folder
-                        callback();
-                    }
-                });
-            }
-        });
-    });
+    var marginWidth = 1200;
+    var marginHeight = 1800;
+    var thumbnailSize = {
+        width: 80,
+        height: 60
+    };
 
-    // resize
-    imageProcessor.open(file.path, function (error, image) {
-        var h, w, r, m;
+    imageProcessor.read(file.path, function (err, image) {
+        if (err) {
+            winston.error('Image Process Error', err);
 
-        m = 1200;
-        w = image.width();
-        h = image.height();
-        r = h / w;
-
-        //console.log(image, w, h, r);
-
-        if (w > m) {
-            image.resize(m, h - Math.floor((w - m) * r), function (err, image) {
-                w = image.width();
-                h = image.height();
-                r = w / h;
-
-                //console.log(image, w, h, r);
-
-                if (h > m) {
-                    image.resize(w - Math.floor((h - m) * r), m, function (err, image) {
-                        image.writeFile(folder.upload + name, function (err) {
-                            // console.log('upload done resize w, h');
-                        });
-                    });
-                } else {
-                    image.writeFile(folder.upload + name, function (err) {
-                        // console.log('upload done resize w');
-                    });
-                }
-            });
-        } else {
-            if (h > m) {
-                r = w / h;
-
-                //console.log(image, w, h, r);
-
-                image.resize(w - Math.floor((h - m) * r), m, function (err, image) {
-                    image.writeFile(folder.upload + name, function (err) {
-                        // console.log('upload done resize h');
-                    });
-                });
-            } else {
-                image.writeFile(folder.upload + name, function (err) {
-                    // console.log('upload done resize nothing');
-                });
-            }
+            return callback(err);
         }
+
+        // make resize by case
+        if (image.bitmap.width > marginWidth) {
+            if (image.bitmap.height > marginHeight) {
+                image.resize(imageProcessor.AUTO, marginHeight).write(folder.upload + name);
+            } else {
+                image.resize(marginWidth, imageProcessor.AUTO).write(folder.upload + name);
+            }
+        } else if (image.bitmap.height > marginHeight * 2) {
+            image.resize(imageProcessor.AUTO, marginHeight).write(folder.upload + name);
+        } else {
+            image.quality(80).write(folder.upload + name);
+        }
+
+        // make thumbnail
+        image.cover(thumbnailSize.width, thumbnailSize.height)
+            .quality(80)
+            .write(folder.thumb + name, function (err) {
+                if (err) callback(err);
+                else callback();
+            });
     });
 }
