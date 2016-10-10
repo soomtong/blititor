@@ -20,12 +20,12 @@
                 <form method="post" action="{{ route.account_root + route.account.login }}">
                     <fieldset class="form-group">
                         <label for="exampleInputEmail1">Username</label>
-                        <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <input name="account_id" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                         <small class="text-muted">We'll never share your email with anyone else.</small>
                     </fieldset>
                     <fieldset class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input name="account_password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                     </fieldset>
 
                     {% if message.error %}

@@ -16,7 +16,7 @@ var routeTable = misc.getRouteTable();
 // Passport Stuffs
 Passport.serializeUser(passport.serialize);
 Passport.deserializeUser(passport.deserialize);
-Passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, passport.authenticate));
+Passport.use(new LocalStrategy({usernameField: 'account_id', passwordField: 'account_password'}, passport.authenticate));
 
 router.use(middleware.exposeLocals);
 

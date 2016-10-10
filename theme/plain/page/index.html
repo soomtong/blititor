@@ -93,10 +93,10 @@
                         <input id="nickname" name="nickname" type="text" placeholder="Your Name">
 
                         <label for="email">이메일 <small>고유한 계정이 되는 아이디입니다</small></label>
-                        <input id="email" name="email" type="email" placeholder="Your Email">
+                        <input id="email" name="account_id" type="email" placeholder="Your Email">
 
                         <label for="password">패스워드 <small>4자 이상의 패스워드를 사용해주세요</small></label>
-                        <input id="password" name="password" type="password" placeholder="Your Password">
+                        <input id="password" name="account_password" type="password" placeholder="Your Password">
 
                         <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                         {% if not user.uuid %}

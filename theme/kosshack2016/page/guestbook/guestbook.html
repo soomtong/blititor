@@ -54,12 +54,12 @@
                     <form id="message_form" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
                         <fieldset class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                            <input type="email" name="account_id" class="form-control" id="email" placeholder="Enter email">
                             <small class="text-muted">We'll never share your email with anyone else.</small>
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                            <input type="password" name="account_password" class="form-control" id="password" placeholder="Password">
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="nickname">Nickname</label>
@@ -120,7 +120,7 @@
                             </fieldset>
 
                             <div class="pull-lg-right">
-                                <input type="hidden" name="id" value="{{ item.id }}"/>
+                                <input type="hidden" name="account_id" value="{{ item.id }}"/>
                                 <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                                 {% if item.reply or item.replied_at %}
                                 <button type="submit" class="btn btn-warning">Update</button>
