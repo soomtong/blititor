@@ -67,8 +67,8 @@ function loginForm(req, res) {
 }
 
 function loginProcess(req, res) {
-    req.assert('id', 'Email as Admin ID field is not valid').notEmpty().withMessage('Admin ID is required').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
+    req.assert('account_id', 'Email as Admin ID field is not valid').notEmpty().withMessage('Admin ID is required').isEmail();
+    req.assert('account_password', 'Password must be at least 4 characters long').len(4);
 
     var errors = req.validationErrors();
 
@@ -80,8 +80,8 @@ function loginProcess(req, res) {
     req.sanitize('password').trim();
 
     var params = {
-        adminID: req.body.id,
-        password: req.body.password
+        adminID: req.body.account_id,
+        password: req.body.account_password
     };
 
     account.findAuthByUserID(params.adminID, function (err, auth) {
@@ -252,8 +252,8 @@ function accountProcess(req, res) {
     req.assert('uuid', 'uuid is required').notEmpty();
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
-    if (req.body.password/* && (req.body.password.toString().length >= 4)*/) {
-        req.assert('password', 'Password must be at least 4 characters long').len(4);
+    if (req.body.account_password/* && (req.body.password.toString().length >= 4)*/) {
+        req.assert('account_password', 'Password must be at least 4 characters long').len(4);
 
         params.updatePassword = true;
     }
@@ -321,7 +321,7 @@ function accountProcess(req, res) {
 
         // update auth table, it is async routine
         if (params.updatePassword) {
-            common.hash(req.body.password, function (err, hash) {
+            common.hash(req.body.account_password, function (err, hash) {
                 if (err) {
                     req.flash('error', {msg: err});
 

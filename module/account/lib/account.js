@@ -91,9 +91,9 @@ function insertLastLog(uuid, loginCounter) {
 
 function register(req, res) {
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
-    req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
+    req.assert('account_id', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
+    req.assert('account_password', 'Password must be at least 4 characters long').len(4);
+    req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.account_password);
     
     var errors = req.validationErrors();
 
@@ -103,11 +103,9 @@ function register(req, res) {
     }
 
     req.sanitize('nickname').escape();
-    req.sanitize('password').trim();
+    req.sanitize('account_password').trim();
 
-
-
-    findAuthByUserID(req.body.email, function (err, account) {
+    findAuthByUserID(req.body.account_id, function (err, account) {
 
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
@@ -115,9 +113,9 @@ function register(req, res) {
         }
 
         // var hash = common.hash(req.body.password);
-        common.hash(req.body.password, function (err, hash) {
+        common.hash(req.body.account_password, function (err, hash) {
             var authData = {
-                user_id: req.body.email,
+                user_id: req.body.account_id,
                 user_password: hash
             };
 
@@ -199,8 +197,8 @@ function register(req, res) {
 
 function registerSimpleForTest(req, res) {
     req.assert('nickname', '닉네임이 필요합니다. 최소 2 자에서 최대 10 자까지 사용할 수 있습니다.').len(2, 20);
-    req.assert('email', '이메일 형식의 사용자 아이디가 필요합니다.').isEmail();
-    req.assert('password', '패스워드는 최소 4 자 이상의 문자열을 사용해주세요.').len(4);
+    req.assert('account_id', '이메일 형식의 사용자 아이디가 필요합니다.').isEmail();
+    req.assert('account_password', '패스워드는 최소 4 자 이상의 문자열을 사용해주세요.').len(4);
 
     var errors = req.validationErrors();
 
@@ -215,19 +213,19 @@ function registerSimpleForTest(req, res) {
     }
 
     req.sanitize('nickname').escape();
-    req.sanitize('password').trim();
+    req.sanitize('account_password').trim();
 
     // this routine have to warn a message 'Can't Find by This userID' for making new account
-    findAuthByUserID(req.body.email, function (err, account) {
+    findAuthByUserID(req.body.account_id, function (err, account) {
         if (account) {
             req.flash('error', {msg: '이미 존재하는 계정입니다.'});
             return res.redirect('back');
         }
 
         // var hash = common.hash(req.body.password);
-        common.hash(req.body.password, function (err, hash) {
+        common.hash(req.body.account_password, function (err, hash) {
             var authData = {
-                user_id: req.body.email,
+                user_id: req.body.account_id,
                 user_password: hash
             };
 
@@ -341,9 +339,9 @@ function updateInfo(req, res) {
 
     req.assert('nickname', 'screen name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
 
-    if (req.body.password/* && (req.body.password.toString().length >= 4)*/) {
-        req.assert('password', 'Password must be at least 4 characters long').len(4);
-        req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.password);
+    if (req.body.account_password/* && (req.body.password.toString().length >= 4)*/) {
+        req.assert('account_password', 'Password must be at least 4 characters long').len(4);
+        req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.account_password);
 
         params.updatePassword = true;
         // params.password = common.hash(req.body.password);
@@ -405,7 +403,7 @@ function updateInfo(req, res) {
 
         // update auth table, it is async routine
         if (params.updatePassword) {
-            common.hash(req.body.password, function (err, hash) {
+            common.hash(req.body.account_password, function (err, hash) {
                 if (err) {
                     req.flash('error', {msg: err});
 
@@ -488,7 +486,7 @@ function signOut(req, res) {
 function checkToken(req, res) {
     var params = {
         type: req.query('type'),
-        email: req.body.email,
+        email: req.body.account_id,
         nickname: req.body.nickname
     };
 

@@ -28,8 +28,8 @@ function loginForm(req, res) {
 }
 
 function loginProcess(req, res) {
-    req.assert('id', 'Email as Manager ID field is not valid').notEmpty().withMessage('Manager ID is required').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
+    req.assert('account_id', 'Email as Manager ID field is not valid').notEmpty().withMessage('Manager ID is required').isEmail();
+    req.assert('account_password', 'Password must be at least 4 characters long').len(4);
 
     var errors = req.validationErrors();
 
@@ -38,11 +38,11 @@ function loginProcess(req, res) {
         return res.redirect('back');
     }
 
-    req.sanitize('password').trim();
+    req.sanitize('account_password').trim();
 
     var params = {
-        managerID: req.body.id,
-        password: req.body.password
+        managerID: req.body.account_id,
+        password: req.body.account_password
     };
 
     account.findAuthByUserID(params.managerID, function (err, auth) {

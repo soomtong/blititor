@@ -48,8 +48,8 @@ function guestbookForm(req, res) {
 
 // todo: experiment, bind ajax call and emit event
 function registerMessage(req, res) {
-    req.assert('email', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
+    req.assert('account_id', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
+    req.assert('account_password', 'Password must be at least 4 characters long').len(4);
     req.assert('message', 'message is required').len(10).withMessage('Must be 10 chars over').notEmpty();
     
     var errors = req.validationErrors();
@@ -63,11 +63,11 @@ function registerMessage(req, res) {
     req.sanitize('nickname').escape();
     req.sanitize('message').escape();
 
-    var hash = common.hash(req.body.password);
+    var hash = common.hash(req.body.account_password);
 
     var guestbookData = {
         nickname: req.body.nickname,
-        email: req.body.email,
+        email: req.body.account_id,
         password: hash,
         message: req.body.message,
         flag: req.body.hidden ? '1' : '',  // todo: subtract common flag module using bitwise
@@ -96,7 +96,7 @@ function registerMessage(req, res) {
 }
 
 function updateReply(req, res) {
-    req.assert('id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
+    req.assert('account_id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
     req.assert('reply', 'reply message is required').len(2).withMessage('Must be 2 chars over').notEmpty();
 
     var errors = req.validationErrors();
@@ -107,7 +107,7 @@ function updateReply(req, res) {
         return res.redirect('back');
     }
 
-    req.sanitize('id').escape();
+    req.sanitize('account_id').escape();
     req.sanitize('reply').escape();
 
     var replyData = {
@@ -117,7 +117,7 @@ function updateReply(req, res) {
 
     var mysql = connection.get();
 
-    db.writeReply(mysql, req.body.id, replyData, function (err, result) {
+    db.writeReply(mysql, req.body.account_id, replyData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 
