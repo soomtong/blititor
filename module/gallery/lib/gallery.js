@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
 var imageProcessor = require('jimp');
@@ -11,8 +12,8 @@ var connection = require('../../../core/lib/connection');
 var db = require('./database');
 
 var folder = {
-    thumb: 'public/upload/gallery/thumb/',
-    upload: 'public/upload/gallery/image/'
+    thumb: path.join('public', 'upload', 'gallery', 'thumb'),
+    upload: path.join('public', 'upload', 'gallery', 'image')
 };
 
 mkdirp.sync(folder.thumb);

@@ -177,7 +177,7 @@ function showGlobalVar(g) {
     Object.keys(g).forEach(function (item) {
         if (item.toString().indexOf('_') !== 0) {
             winston.verbose('Saving var info of global', item, 'to log folder');
-            fs.writeFile(path.join(__dirname, '../log/global-var-' + item + '.log'), JSON.stringify(g[item], null, 4));
+            fs.writeFile(path.join(__dirname, '..', 'log', 'global-var-' + item + '.log'), JSON.stringify(g[item], null, 4));
         }
     });
 }

@@ -122,14 +122,14 @@ var multerUploader = multer({
 });
 
 try {
-    mkdirp.sync('./public/upload/temp');
+    mkdirp.sync(path.join('public', 'upload', 'temp'));
 } catch (e) {
     winston.warn('file upload folder not exist');
 }
 
 app.use(logger('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
-app.use(favicon('public/favicon.ico'));
+app.use(favicon(path.join('public', 'favicon.ico')));
 app.use(multerUploader.any());  // should set before csrf middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -176,9 +176,10 @@ server.listen(app.get('port'), function () {
 
 if (!process.send) {
     // If run using `node app`, log copyright info along with server info
-    winston.info('BLITITOR v' + BLITITOR.config.revision + ' Copyright (C) 2015 @' + BLITITOR.config.author + '.');
+    var config = require('../package.json');
+    winston.info('BLITITOR v' + config.version + ' Copyright (C) 2016 @' + config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
-    winston.info('This is free software,');
+    winston.info('This is free software, under ' + config.license + ' license');
     winston.info('and you are welcome to redistribute it under certain conditions.');
     winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 

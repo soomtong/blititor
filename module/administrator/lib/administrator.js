@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var bcrypt = require('bcryptjs');
 var mkdirp = require('mkdirp');
 var winston = require('winston');
@@ -295,11 +296,11 @@ function accountProcess(req, res) {
 
         profileImage = req.files[0];
 
-        mkdirp('./public/upload/' + UUID, function (err) {
+        mkdirp(path.join('public', 'upload', UUID), function (err) {
             if (err) winston.error('Error in Make user folder');
 
             // move to user folder from temp
-            fs.renameSync(req.files[0].path, './public/upload/' + UUID + '/' + profileImage.filename);
+            fs.renameSync(req.files[0].path, path.join('public', 'upload', UUID, profileImage.filename));
 
             // set file info to database
             userData.photo = profileImage.filename;

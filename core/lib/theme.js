@@ -1,8 +1,10 @@
 var fs = require('fs');
+var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
 
 var common = require('./common');
+var misc = require('./misc');
 
 function getThemeList(themeFolder, callback) {
     fs.readdir(themeFolder, function (error, directories) {
@@ -18,7 +20,7 @@ function getThemeInfo(directory, done) {
 
     function getScreenshot(done) {
         var screenshot;
-        var file = 'theme/' + directory + '/screenshot.jpg';
+        var file = path.join('theme', directory, 'screenshot.jpg');
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);
@@ -31,7 +33,7 @@ function getThemeInfo(directory, done) {
 
     function getDescription(done) {
         var description = {}, md;
-        var file = 'theme/' + directory + '/description.md';
+        var file = path.join('theme', directory, 'description.md');
         fs.access(file, fs.R_OK, function (err) {
             if (err) {
                 winston.warn(err);

@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var async = require('neo-async');
 var bcrypt = require('bcryptjs');
 var mkdirp = require('mkdirp');
@@ -409,13 +410,13 @@ function galleryImageDelete(req, res) {
 
     console.log(params.file);
     // remove file
-    fs.unlink(folder.temp + params.file.filename, function (err) {
+    fs.unlink(path.join(folder.temp, params.file.filename), function (err) {
         winston.info('removed uploaded file in temp', folder.temp, params.file.filename);
     });
-    fs.unlink(folder.thumb + params.file.filename, function (err) {
+    fs.unlink(path.join(folder.thumb, params.file.filename), function (err) {
         winston.info('removed uploaded file in temp', folder.thumb, params.file.filename);
     });
-    fs.unlink(folder.image + params.file.filename, function (err) {
+    fs.unlink(path.join(folder.image, params.file.filename), function (err) {
         winston.info('removed uploaded file in temp', folder.image, params.file.filename);
     });
 

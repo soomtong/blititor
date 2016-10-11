@@ -1,6 +1,6 @@
 {
   "name": "blititer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "engines": {
     "node": "~4.2.1 || ~0.12.0",
@@ -47,7 +47,7 @@
   },
   "scripts": {
     "dev": "nodemon core/index.js",
-    "prepare": "node core/setup.js module",
+    "prepare": "node core/setup.js all",
     "setup": "node core/setup.js",
     "start": "node core/index.js",
     "prod": "echo \"set production\" && exit 0",
@@ -55,5 +55,28 @@
   },
   "devDependencies": {
     "express-print-routes": "^1.0.0"
-  }
+  },
+  "description": "blititor ========",
+  "main": "core/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soomtong/blititor.git"
+  },
+  "keywords": [
+    "blititor",
+    "web",
+    "template",
+    "web",
+    "service",
+    "template"
+  ],
+  "author": "soomtong@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soomtong/blititor/issues"
+  },
+  "homepage": "https://github.com/soomtong/blititor#readme"
 }
