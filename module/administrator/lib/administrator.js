@@ -124,7 +124,7 @@ function loginProcess(req, res) {
                         grant: userData.grant
                     };
 
-                    if (user.grant.indexOf(userGrants.siteAdmin) > -1) {
+                    if (user.grant.includes(userGrants.siteAdmin)) {
                         req.logIn(auth.id, function (err) {
                             if (err) {
                                 req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});
@@ -230,9 +230,9 @@ function accountForm(req, res) {
 
             params.account.created_at = common.dateFormatter(result.created_at);
             params.account.updated_at = common.dateFormatter(result.updated_at);
-            params.account.grant_admin = result.grant.indexOf('A') > -1;
-            params.account.grant_manager = result.grant.indexOf('M') > -1;
-            params.account.grant_content = result.grant.indexOf('C') > -1;
+            params.account.grant_admin = result.grant.includes('A');
+            params.account.grant_manager = result.grant.includes('M');
+            params.account.grant_content = result.grant.includes('C');
 
             res.render(BLITITOR.config.site.adminTheme + '/admin/account_form', params);
         });

@@ -263,11 +263,11 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         });
     }
 
-    if (item.flag && (item.flag.toString().indexOf(postFlag.headedPicture.value) !== -1)) {
+    if (item.flag && (item.flag.toString().includes(postFlag.headedPicture.value))) {
         item.headedPicture = true;
         item.images = JSON.parse(item['header_imgs']);
     } else {
-        if (item.flag && (item.flag.toString().indexOf(postFlag.markdown.value) !== -1)) {
+        if (item.flag && (item.flag.toString().includes(postFlag.markdown.value))) {
             item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
         } else {
             item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
@@ -280,7 +280,7 @@ function renderPost(post) {
     var md = new markdownIt();
 
     p.tagList = post.tags.split(',');
-    p.renderMarkdown = post.flag.indexOf(postFlag.markdown) > -1;
+    p.renderMarkdown = post.flag.includes(postFlag.markdown);
 
     if (p.renderMarkdown) {
         p.rendered = md.render(post.content);

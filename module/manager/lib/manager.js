@@ -86,7 +86,7 @@ function loginProcess(req, res) {
                         grant: userData.grant
                     };
 
-                    if (user.grant.indexOf(userGrants.siteManager) > -1) {
+                    if (user.grant.includes(userGrants.siteManager)) {
                         req.logIn(auth.id, function (err) {
                             if (err) {
                                 req.flash('error', {msg: '로그인 과정에 문제가 발생했습니다.'});

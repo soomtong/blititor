@@ -139,7 +139,7 @@ function insertDummy(databaseConfiguration, done) {
                 var iteratorAsync = function (item, callback) {
                     var flag = '', header_imgs = '';
 
-                    if (item.render && (item.render.toString().indexOf(postFlag.markdown.value) !== -1)) {
+                    if (item.render && (item.render.toString().includes(postFlag.markdown.value))) {
                         flag = flag.concat(postFlag.markdown.value);
                     }
 

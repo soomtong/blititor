@@ -22,7 +22,7 @@ function ensureClearSession(req, res, next) {
 }
 
 function ensureAdminAuthenticated(req, res, next) {
-    if (req.isAuthenticated() && req.user.grant.indexOf(userPrivilege.siteAdmin) > -1) {
+    if (req.isAuthenticated() && req.user.grant.includes(userPrivilege.siteAdmin)) {
         return next();
     }
 
@@ -30,7 +30,7 @@ function ensureAdminAuthenticated(req, res, next) {
 }
 
 function ensureManagerAuthenticated(req, res, next) {
-    if (req.isAuthenticated() && req.user.grant.indexOf(userPrivilege.siteManager) > -1) {
+    if (req.isAuthenticated() && req.user.grant.includes(userPrivilege.siteManager)) {
         return next();
     }
 

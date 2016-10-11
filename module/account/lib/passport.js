@@ -62,9 +62,9 @@ function deserialize(uuid, done) {
     account.findUserByUUID(uuid, function (err, user) {
         var userGrant = [];
 
-        if (user.grant.indexOf(grants.siteAdmin) > -1) userGrant.push('시스템관리자');
-        if (user.grant.indexOf(grants.siteManager) > -1) userGrant.push('사이트운영자');
-        if (user.grant.indexOf(grants.contentManager) > -1) userGrant.push('콘텐츠담당자');
+        if (user.grant.includes(grants.siteAdmin)) userGrant.push('시스템관리자');
+        if (user.grant.includes(grants.siteManager)) userGrant.push('사이트운영자');
+        if (user.grant.includes(grants.contentManager)) userGrant.push('콘텐츠담당자');
 
         user.grant_name = userGrant;
 
