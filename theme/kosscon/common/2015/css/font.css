@@ -1,0 +1,10 @@
+@font-face {
+font-family: "NanumBarunGothic";
+src: url('css/fonts/NanumBarunGothic.eot');
+src: url('css/fonts/NanumBarunGothic.eot#iefix') format('embedded-opentype'),
+     url('css/fonts/NanumBarunGothic.woff') format('woff'),
+     url('css/fonts/NanumBarunGothic.ttf') format('truetype'),
+     url('css/fonts/NanumBarunGothic.svg#NSKR200') format('svg');
+font-style:normal;
+color:#666666; 
+}

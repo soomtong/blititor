@@ -29,6 +29,7 @@ function plainPageWithSubPath(req, res) {
 
     // winston.info(req.path, params, req.path.match(filter.page));
     // console.log(req.path.lastIndexOf('/'), req.path.toString().length  -1 );
+    // console.log(params.page);
 
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
