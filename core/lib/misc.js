@@ -55,6 +55,7 @@ function getRouteTable() {
         "manage": {
             "login": "/login",
             "account": "/account",
+            "reservation": "/reservation",
             "gallery": "/gallery",
             "galleryCategory": "/gallery/category",
             "galleryImage": "/gallery/image",
