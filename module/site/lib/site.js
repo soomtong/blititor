@@ -3,21 +3,6 @@ var common = require('../../../core/lib/common');
 
 var filter = common.regexFilter();
 
-function indexPage(req, res) {
-    var params = {
-        title: "Home",
-    };
-
-    winston.info('this is a index page', req.path);
-
-    //500 Error
-    //throw Error('make noise!');
-
-    // load recent articles
-
-    res.render(BLITITOR.config.site.theme + '/page/index', params);
-}
-
 function plainPage(req, res) {
 
     var params = {
@@ -26,27 +11,37 @@ function plainPage(req, res) {
         page: req.path == '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
 
+    //500 Error
+    //throw Error('make noise!');
+
     // winston.info(req.path, params, req.path.match(filter.page));
-    // console.log(res.locals.menu);
 
     res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
-function exposeAppLocals(locals, menu) {
-    return function (req, res, next) {
-        res.locals.app = locals;
-        res.locals.menu = menu;
-        res.locals.adminMenu = menu.AdminMenu || {};
-        res.locals.managerMenu = menu.ManagerMenu || {};
+function plainPageWithSubPath(req, res) {
 
-        winston.verbose('bind locals in app: {app, menu}');
-        next();
-    }
+    var params = {
+        title: "Plain",
+        path: req.path,
+        page: req.path.lastIndexOf('/') == req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
+    };
+
+    // winston.info(req.path, params, req.path.match(filter.page));
+    // console.log(req.path.lastIndexOf('/'), req.path.toString().length  -1 );
+
+    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
 }
 
 function bindMenuToRouter(menu, router) {
     menu.map(function (item) {
         router[item['type'] || 'get'](item['url'], plainPage);
+    });
+}
+
+function bindMenuToRouter2(menu, router) {
+    menu.map(function (item) {
+        router[item['type'] || 'get'](item['url'], plainPageWithSubPath);
     });
 }
 
@@ -61,10 +56,21 @@ function redirectPage(url) {
     };
 }
 
+function exposeAppLocals(locals, menu) {
+    return function (req, res, next) {
+        res.locals.app = locals;
+        res.locals.menu = menu;
+        res.locals.adminMenu = menu.AdminMenu || {};
+        res.locals.managerMenu = menu.ManagerMenu || {};
+
+        winston.verbose('bind locals in app: {app, menu}');
+        next();
+    }
+}
+
 module.exports = {
-    index: indexPage,
-    plain: plainPage,
+    redirect: redirectPage,
     bindMenu: bindMenuToRouter,
+    bindMenuWithSubPath: bindMenuToRouter2,
     exposeAppLocals: exposeAppLocals,
-    redirect: redirectPage
 };
