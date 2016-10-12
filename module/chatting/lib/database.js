@@ -78,6 +78,6 @@ module.exports = {
     writeChattingLog: insertChattingLog,
     option: {
         tables: tables,
-        core: true
+        core: false
     }
 };

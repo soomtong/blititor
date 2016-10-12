@@ -34,7 +34,7 @@
             "chattingLog": "b_chatting_log",
             "user": "b_user"
         },
-        "core": true
+        "core": false
     },
     {
         "folder": "counter",
@@ -53,6 +53,17 @@
         "folder": "editor",
         "useDatabase": false,
         "ignore": false
+    },
+    {
+        "folder": "gallery",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "galleryCategory": "b_gallery_category",
+            "galleryImage": "b_gallery_image",
+            "user": "b_user"
+        },
+        "core": false
     },
     {
         "folder": "guestbook",

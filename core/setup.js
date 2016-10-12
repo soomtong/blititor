@@ -208,8 +208,9 @@ function makeDatabaseTable(next) {
     });
 
     var iteratorAsync = function (item, callback) {
-        console.log('\n = Make database table...'.green, item.folder);
-        if (!item.ignore && item.useDatabase) {
+        if (!item.ignore && item.useDatabase && item.core) {
+            console.log('\n = Make database table...'.green, item.folder);
+
             var moduleName = item.folder;
 
             makeModuleDatabaseTable(moduleName, function () {
@@ -246,7 +247,7 @@ function makeDatabaseTableWithReset() {
     });
 
     var iteratorAsync = function (item, callback) {
-        if (!item.ignore && item.useDatabase) {
+        if (!item.ignore && item.useDatabase && item.core) {
             var moduleName = item.folder;
 
             makeModuleDatabaseTableWithReset(moduleName);
