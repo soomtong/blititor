@@ -220,7 +220,7 @@ function checkThemeConfigFile(configFile) {
         fs.accessSync('./app/' + appSetting.appName, fs.R_OK);
         fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
     } catch (e) {
-        winston.error('theme folder or config file not exist');
+        winston.error('theme folder or config file not exist', e);
 
         appSetting = {
             "port": siteDefault.port,
