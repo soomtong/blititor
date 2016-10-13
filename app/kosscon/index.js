@@ -36,7 +36,6 @@ router.use(Manager.route);     // to view log module
 router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
 
 // no need to count
-// router.use(routeTable.gallery_root, Gallery.route);
 
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);

@@ -2,11 +2,11 @@
   {
     "email": "noname@mail.net",
     "password": "$2a$08$rCi5ZgC2hxQ2XE6FsV/NKebzclpyMfoAGXpW9sdBwWnqe8.DCrEty",
-    "nickname": "영원히"
+    "nickname": "무명씨"
   },
   {
     "email": "test@mail.net",
     "password": "$2a$08$rCi5ZgC2hxQ2XE6FsV/NKebzclpyMfoAGXpW9sdBwWnqe8.DCrEty",
-    "nickname": "Tester"
+    "nickname": "테스터"
   }
 ]

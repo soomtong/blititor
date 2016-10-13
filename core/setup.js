@@ -290,7 +290,7 @@ function makeDatabaseTableWithReset() {
 }
 
 function makeModuleDatabaseTable(moduleName, callback) {
-    console.log(" = Make database tables for " + moduleName + " module".rainbow);
+    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module".rainbow);
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
@@ -302,7 +302,7 @@ function makeModuleDatabaseTable(moduleName, callback) {
 }
 
 function makeModuleDatabaseTableWithReset(moduleName) {
-    console.log(" = Make database tables for " + moduleName + " module".rainbow);
+    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module".rainbow);
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
@@ -465,7 +465,7 @@ function makeAdminAccount() {
                         auth_id: auth_id,
                         nickname: '관리자',
                         level: 9,
-                        grant: 'A',
+                        grant: 'AMC',
                         login_counter: 1,
                         last_logged_at: new Date(),
                         created_at: new Date()
