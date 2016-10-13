@@ -3,6 +3,7 @@
         <a class="pure-menu-heading" href="{{site.root}}/">{{site.title}}</a>
 
         <ul class="pure-menu-list">
+            {% if user %}
             {% for item in adminMenu %}
             {% if item.url == site.url %}
             <li class="pure-menu-item pure-menu-selected"><a href="{{site.root}}{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
@@ -10,7 +11,6 @@
             <li class="pure-menu-item"><a href="{{site.root}}{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
             {% endif %}
             {% endfor %}
-            {% if user %}
             <li class="pure-menu-item"><a href="{{site.root}}{{ route.account_root + route.account.signOut }}" class="pure-menu-link">로그아웃</a></li>
             {% endif %}
         </ul>

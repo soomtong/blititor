@@ -82,7 +82,7 @@ var ManagerMenu = [
     },
     {
         id: 'reservation',
-        name: '등록자 명단',
+        name: '예약자 명단',
         url: routeTable.manage_root + routeTable.manage.reservation
     }
 ];
