@@ -34,16 +34,19 @@ var Menu = [
     {
         id: '2014program',
         name: 'KOSSCON 2014',
+        useSubPath: true,
         url: '/2014/program'
     },
     {
         id: '2014info',
         name: 'KOSSCON 2014',
+        useSubPath: true,
         url: '/2014/info'
     },
     {
         id: '2014registration',
         name: 'KOSSCON 2014',
+        useSubPath: true,
         url: '/2014/registration'
     }
 ];

@@ -46,7 +46,7 @@ router.use(Counter.middleware.pageCounter);
 // router.use(routeTable.guestbook_root, Guestbook.route);
 
 // bind static page
-Site.bindMenuWithSubPath(menu, router);
+Site.bindMenu(menu, router);
 
 module.exports = {
     exposeLocals: appLocals,

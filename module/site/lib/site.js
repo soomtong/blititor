@@ -36,13 +36,8 @@ function plainPageWithSubPath(req, res) {
 
 function bindMenuToRouter(menu, router) {
     menu.map(function (item) {
-        router[item['type'] || 'get'](item['url'], plainPage);
-    });
-}
-
-function bindMenuToRouter2(menu, router) {
-    menu.map(function (item) {
-        router[item['type'] || 'get'](item['url'], plainPageWithSubPath);
+        if (!item.useSubPath) item.useSubPath = false;
+        router[item['type'] || 'get'](item['url'], !item.useSubPath ? plainPage : plainPageWithSubPath);
     });
 }
 
@@ -72,6 +67,5 @@ function exposeAppLocals(locals, menu) {
 module.exports = {
     redirect: redirectPage,
     bindMenu: bindMenuToRouter,
-    bindMenuWithSubPath: bindMenuToRouter2,
     exposeAppLocals: exposeAppLocals,
 };
