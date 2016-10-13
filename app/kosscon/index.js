@@ -45,6 +45,8 @@ router.use(Counter.middleware.pageCounter);
 // router.use(routeTable.guestbook_root, Guestbook.route);
 
 // bind static page
+router.all('/2016', Site.redirect(routeTable.root));
+
 Site.bindMenu(menu, router);
 
 module.exports = {
