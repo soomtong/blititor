@@ -1,0 +1,3 @@
+install guide
+
+and troubleshooting

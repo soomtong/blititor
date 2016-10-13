@@ -56,7 +56,7 @@
   "devDependencies": {
     "express-print-routes": "^1.0.0"
   },
-  "description": "blititor ========",
+  "description": "Old School Web Site Template for All Web Agencies and Developers",
   "main": "core/index.js",
   "directories": {
     "doc": "docs"
@@ -67,8 +67,6 @@
   },
   "keywords": [
     "blititor",
-    "web",
-    "template",
     "web",
     "service",
     "template"
