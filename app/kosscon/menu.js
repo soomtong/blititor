@@ -12,6 +12,11 @@ var Menu = [
         url: routeTable.root
     },
     {
+        id: '2016home',
+        name: 'Home',
+        url: '/home'
+    },
+    {
         id: 'conference_program',
         name: 'Program',
         url: '/program'

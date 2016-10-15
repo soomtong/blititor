@@ -1,0 +1,402 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Nanum Gothic", "나눔바른고딕", NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", "돋움", dotum, Helvetica, Arial, sans-serif;
+}
+
+.header {
+  background: #4c82de; //For browsers that do not support gradients
+  background: -webkit-linear-gradient(86deg, #4c82de, #5257cf); // For Safari 5.1 to 6.0
+  background: -o-linear-gradient(86deg, #4c82de, #5257cf); // For Opera 11.1 to 12.0
+  background: -moz-linear-gradient(86deg, #4c82de, #5257cf); // For Firefox 3.6 to 15
+  background: linear-gradient(86deg, #4c82de, #5257cf); // Standard syntax
+
+  font-family: "Roboto", "Noto Sans KR", Helvetica, Arial, sans-serif;
+
+  .logo {
+    margin: 2em 1em 1em 3em;
+    max-height:40px;
+    max-width: 200px;
+    float: left;
+  }
+
+  .menu {
+    margin: 1.8em 2em 0 0;
+    color: #FFFFFF;
+    float: right;
+    li {
+      float: left;
+      list-style: none;
+      padding: 1em;
+      a {
+        text-decoration: none;
+        color: #FFFFFF;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media screen and (max-width: 414px) {
+    .logo {
+      display: none;
+    }
+    .menu {
+      float: left;
+    }
+  }
+}
+
+.hero {
+  color: #FFFFFF;
+  display: table;
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+
+  @media screen and (max-width: 767px) {
+    min-height: 400px;
+    padding: 0 2em;
+  }
+}
+
+.text-vertical-center {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+
+  h1 {
+    margin: 0 1.4em 1em 1.4em;
+    padding: 0;
+    font-size: 4.6em;
+    font-weight: bold;
+    font-family: "Noto Sans KR", "Nanum Gothic", "굴림", "돋움", Arial, Verdana, sans-serif;
+  }
+
+  h2 {
+    font-size: 1.7em;
+  }
+
+  h2.location {
+    margin-top: 10px;
+  }
+
+  @media only screen and (min-width: 320px) {
+    h1 {
+      font-size: 1.8em;
+    }
+  }
+
+  @media only screen and (min-width: 360px) {
+    h1 {
+      font-size: 1.9em;
+    }
+  }
+
+  @media only screen and (min-width: 375px) {
+    h1 {
+      font-size: 2.2em;
+    }
+  }
+
+  @media only screen and (min-width: 414px) {
+    h1 {
+      font-size: 3.2em;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    h1 {
+      font-size: 4.2em;
+    }
+  }
+
+}
+
+.about {
+  margin: 120px 0 80px;
+
+  h2 {
+    color: #4A90E2;
+    margin: 1em 2em;
+    font-size: 2.4em;
+  }
+
+  p.lead {
+    color: #333333;
+    margin: 1em 2em;
+    font-size: 17px;
+  }
+
+  @media screen and (max-width: 767px) {
+    h2 {
+      margin: 0 0.5em 2em;
+      font-size: 2.2em;
+    }
+    p.lead {
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+  }
+
+  .category {
+    margin-top: 8em;
+    text-align: center;
+
+    span {
+      margin: 4em auto;
+      padding: 76px 18px 0;
+      color: #ABABAB;
+    }
+
+    .mobile {
+      background: url("/kosscon/common/asset/home-subject-mobile.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+    .web {
+      background: url("/kosscon/common/asset/home-subject-web.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+    .iot {
+      background: url("/kosscon/common/asset/home-subject-iot.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+    .app {
+      background: url("/kosscon/common/asset/home-subject-app.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+    .kernel {
+      background: url("/kosscon/common/asset/home-subject-kernel.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+    .platform {
+      background: url("/kosscon/common/asset/home-subject-platform.png") top center no-repeat;
+      background-size: 60px 60px;
+    }
+  }
+
+  .link {
+    margin-top: 4em;
+
+    a {
+      span {
+        display: inline-block;
+        margin: 4em auto;
+        padding: 160px 8em 0;
+        color: #4A90E2;
+      }
+
+      .program {
+        background: url("/kosscon/common/asset/home-shortcut-program.png") top center no-repeat;
+        background-size: 180px 140px;
+      }
+
+      .register {
+        background: url("/kosscon/common/asset/home-shortcut-register.png") top center no-repeat;
+        background-size: 180px 140px;
+      }
+    }
+  }
+}
+
+.gift {
+  hr.hr {
+    margin-left: 3em;
+    margin-right: 3em;
+  }
+
+  .gift-condition {
+    margin-bottom: 3em;
+
+    h2 {
+      color: #4A90E2;
+      margin-top: 5em;
+      margin-bottom: 2em;
+      text-align: center;
+    }
+
+    .lead {
+      font-size: 1.2em;
+      line-height: 1.8;
+      text-align: center;
+      .strong {
+        color: #4A90E2;
+      }
+    }
+  }
+
+  .product {
+    display: inline-block;
+    margin-left: 1em;
+
+    img {
+      padding-bottom: 1em;
+    }
+    
+    .count {
+      color: #979797;
+      font-size: 0.9em;
+      margin-top: 0.6em;
+      display: inline-block;
+    }
+  }
+
+  .divider {
+    border-left: 1px solid #DFDFDF;
+  }
+
+  .notice {
+    p {
+      text-align: center;
+      color: #979797;
+    }
+    padding-top: 7em;
+    padding-bottom: 9em;
+  }
+
+  @media screen and (max-width: 767px) {
+    .lead {
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+  }
+
+  h3 {
+    color: #777777;
+    font-size: 1.2em;
+    padding-left:1em;
+    text-decoration: underline;
+  }
+}
+
+.pre-con {
+  background: url("/kosscon/common/asset/home-lastet-bg.jpg") center center no-repeat;
+  min-height: 324px;
+  color: #FFFFFF;
+
+  .container {
+    padding-top: 150px;
+  }
+  .title, .link {
+    display: table;
+    position: relative;
+    //width: 50%;
+    //min-height: 320px;
+  }
+
+  h4 {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+    font-size: 2em;
+  }
+
+  .links {
+    padding-top: 0.5em;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    a {
+      display: inline;
+      color: #FFFFFF;
+      margin-right: 1em;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .container {
+      padding-left: 4em;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .container {
+      padding-left: 1em;
+    }
+  }
+
+  @media only screen and (max-width: 320px) {
+    h4 {
+      font-size: 1.4em;
+    }
+  }
+}
+
+.footer {
+  color: #9B9B9B;
+
+  .sponsor {
+    display: inline-block;
+    margin-top: 3em;
+    margin-bottom: 6em;
+
+    h3 {
+      position: absolute;
+      top: -0.7em;
+      left: -3em;
+      font-size: 14px;
+    }
+
+    ul {
+      padding: 0;
+      display: inline-block;
+      position: relative;
+      float: left;
+      margin-left: 8em;
+
+      @media screen and (max-width: 320px) {
+        margin-left: 5em;
+      }
+    }
+
+    li {
+      padding-right: 2em;
+      list-style: none;
+      float: left;
+    }
+
+    li:last-child {
+      padding-right: 0;
+    }
+
+    .msip {
+      img {
+        width: 132px;
+        height: 32px;
+      }
+    }
+
+    .nipa {
+      a img {
+        width: 168px;
+        height: 32px;
+      }
+    }
+    .ipa {
+      a img {
+        width: 147px;
+        height: 32px;
+      }
+    }
+    .kosslab {
+      a img {
+        width: 177px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+#to-top {
+  display: none;
+  position: fixed;
+  bottom: 5px;
+  right: 1.25em;
+}

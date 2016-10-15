@@ -6,6 +6,7 @@
 
 ### Resource
 
+- [Stylish Portfolio Template](https://github.com/BlackrockDigital/startbootstrap-stylish-portfolio)
 - [jQuery.typist](http://albburtsev.github.io/jquery.typist/)
 
 ### History
