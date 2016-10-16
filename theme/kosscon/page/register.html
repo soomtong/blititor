@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+
+<header id="top" class="header">
+
+    {% include './include/menu.html' %}
+
+    <section id="page_header" class="page-header">
+        <h1>REGISTER</h1>
+    </section>
+</header>
+
+<section id="register" class="register">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>사전 등록</h2>
+                <p class="lead">
+                    KOSSCON은 공개SW에 관심있는 개발자, 커뮤니티 및 관련 기업인, 학생 등 국민 누구나 사전 등록 후 참가하실 수 있습니다.
+                    <br>
+                    참관 인원은 300명으로 제한되어 있으므로 참가를 원하실 경우 지금 등록하세요.
+                </p>
+                <p>
+                    <span class="strong">일시</span> 2016년 11월 10일 목요일 09:30 ~ 17:30
+                </p>
+                <p>
+                    <span class="strong">장소</span> 코엑스 컨퍼런스(남) 307호 (A, B, C) / 308호 (B, C)
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <div class="row">
+                    <form class="form-horizontal" method="post" action="">
+                        <input type="hidden" name="_csrf" value="{{_csrf}}">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="홍길동">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">이메일</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" placeholder="email-account@mail.net">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">휴대폰</label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control" id="phone" placeholder="01011112222">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 additional-text">
+                                <a href="">개인정보 취급방침 보기</a><a href="">사전 등록 확인</a>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">사전 등록하기</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="location" class="location">
+    <hr class="hr">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>찾아오는 길</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="map">
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6329.564549403013!2d127.05509797630837!3d37.51305299999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd6bf8dde518b69a4!2z7L2U7JeR7IqkIOy7qOuypOyFmOyEvO2EsCDqt7jrnpzrk5zrs7zro7g!5e0!3m2!1sko!2sus!4v1476627323456">
+        </iframe>
+    </div>
+
+    <div class="container">
+        <div class="row transport">
+            <div class="col-sm-6 trans">
+                <p><span class="strong">승용차 이용고객</span> GATE3(서문)을 통하여 옥상 및 지하주차장으로 진입.</p>
+                <p><span class="strong">지하철 이용고객</span> 삼성역 5, 6번 출구와 연결된 통로로 진입, 밀레니엄 광장을 통하여 코엑스몰로 진입</p>
+                <p><span class="strong">버스 이용고객</span> 그랜드 인터컨티넨탈 호텔(삼성역 5번 출구) 앞 | 23201 정류장</p>
+            </div>
+
+            <div class="col-sm-6 buses">
+                <p><span class="strong b1">간선버스</span> 146, 341, 360, 333, 740, N13(심야), N61(심야)</p>
+                <p><span class="strong b2">지선버스</span> 6411</p>
+                <p><span class="strong b3">마을버스</span> 강남07, 강남05</p>
+                <p><span class="strong b4">광역버스</span> 1100, 1700, 2000, 2000-1, 7007, 8001, 9414</p>
+                <p><span class="strong b5">공항리무진</span> 6000</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% include './include/footer.html' %}
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/lib/jquery.typist/dist/jquery.typist.min.js"></script>
+<script src="{{site.theme}}/common/script.js"></script>
+</body>
+</html>

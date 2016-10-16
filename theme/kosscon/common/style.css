@@ -4,7 +4,7 @@ body {
   height: 100%;
 }
 body {
-  font-family: "Nanum Gothic", "나눔바른고딕", NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", "돋움", dotum, Helvetica, Arial, sans-serif;
+  font-family: "나눔바른고딕", NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", "돋움", dotum, Helvetica, Arial, sans-serif;
 }
 .header {
   background: #4c82de;
@@ -114,77 +114,99 @@ body {
   text-transform: uppercase;
   letter-spacing: 8px;
 }
-.about {
+.about,
+.register {
   margin: 120px 0 80px;
 }
-.about h2 {
+.about h2,
+.register h2 {
   color: #4A90E2;
   margin: 1em 2em;
   font-size: 2.4em;
 }
-.about p.lead {
+.about p.lead,
+.register p.lead {
   color: #333333;
   margin: 1em 2em;
   font-size: 17px;
 }
+.about .strong,
+.register .strong {
+  font-weight: bold;
+  padding-right: 2px;
+}
 @media screen and (max-width: 767px) {
-  .about h2 {
+  .about h2,
+  .register h2 {
     margin: 0 0.5em 2em;
     font-size: 2.2em;
   }
-  .about p.lead {
+  .about p.lead,
+  .register p.lead {
     text-align: left;
     font-size: 16px;
     line-height: 1.8;
   }
 }
-.about .category {
+.about .category,
+.register .category {
   margin-top: 8em;
   text-align: center;
 }
-.about .category span {
+.about .category span,
+.register .category span {
   margin: 4em auto;
   padding: 76px 18px 0;
   color: #ABABAB;
 }
-.about .category .mobile {
+.about .category .mobile,
+.register .category .mobile {
   background: url("/kosscon/common/asset/home-subject-mobile.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .category .web {
+.about .category .web,
+.register .category .web {
   background: url("/kosscon/common/asset/home-subject-web.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .category .iot {
+.about .category .iot,
+.register .category .iot {
   background: url("/kosscon/common/asset/home-subject-iot.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .category .app {
+.about .category .app,
+.register .category .app {
   background: url("/kosscon/common/asset/home-subject-app.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .category .kernel {
+.about .category .kernel,
+.register .category .kernel {
   background: url("/kosscon/common/asset/home-subject-kernel.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .category .platform {
+.about .category .platform,
+.register .category .platform {
   background: url("/kosscon/common/asset/home-subject-platform.png") top center no-repeat;
   background-size: 60px 60px;
 }
-.about .link {
+.about .link,
+.register .link {
   margin-top: 4em;
 }
-.about .link a span {
+.about .link a span,
+.register .link a span {
   display: inline-block;
   margin: 4em auto;
   padding: 160px 8em 0;
   color: #4A90E2;
 }
-.about .link a .program {
+.about .link a .program,
+.register .link a .program {
   background: url("/kosscon/common/asset/home-shortcut-program.png") top center no-repeat;
   background-size: 180px 140px;
 }
-.about .link a .register {
+.about .link a .register,
+.register .link a .register {
   background: url("/kosscon/common/asset/home-shortcut-register.png") top center no-repeat;
   background-size: 180px 140px;
 }
@@ -300,6 +322,10 @@ body {
   margin-top: 3.8em;
   margin-bottom: 1.5em;
 }
+.program .small {
+  color: #979797;
+  padding-left: 3px;
+}
 .program .table-responsive {
   font-size: 1.15em;
   border-left: 0;
@@ -345,6 +371,100 @@ body {
   .program .tutorial-section-3 {
     height: 117px;
   }
+}
+.register form {
+  margin-top: 4em;
+  padding-top: 2em;
+  border-top: 3px solid #979797;
+}
+.register form .form-group .form-control {
+  height: 50px;
+  border-radius: 0;
+  background: #F5F5F5;
+}
+.register form .form-group .control-label {
+  color: #979797;
+  text-align: left;
+  padding-top: 17px;
+  font-weight: normal;
+}
+.register form .form-group .additional-text {
+  padding-top: 1.6em;
+  text-align: right;
+  text-decoration: underline;
+}
+.register form .form-group .additional-text a {
+  color: #4A90E2;
+  margin: 0 0.5em;
+}
+.register form .form-group button {
+  margin-top: 1em;
+  letter-spacing: 2px;
+  padding: 10px 36px;
+  border-radius: 1px;
+  background-color: #4A90E2;
+}
+.location h2 {
+  color: #4A90E2;
+  font-size: 1.9em;
+  margin-top: 3.8em;
+  margin-bottom: 1.5em;
+}
+.location .map {
+  height: 500px;
+}
+@media (max-width: 768px) {
+  .location .map {
+    height: 75%;
+  }
+}
+.location .map iframe {
+  pointer-events: none;
+}
+.location .transport {
+  margin-top: 4em;
+  margin-bottom: 4em;
+  color: #333333;
+}
+.location .transport .strong {
+  padding-right: 0.8em;
+}
+.location .transport .trans p {
+  position: relative;
+  margin-left: 8.8em;
+}
+.location .transport .trans .strong {
+  position: absolute;
+  left: -8em;
+  top: 0;
+  color: #222222;
+  font-weight: bold;
+}
+.location .transport .buses p {
+  position: relative;
+  margin-left: 7.8em;
+}
+.location .transport .buses .strong {
+  position: absolute;
+  left: -7em;
+  top: 0;
+  color: #222222;
+  font-weight: bold;
+}
+.location .transport .buses .b1 {
+  color: #3454A4;
+}
+.location .transport .buses .b2 {
+  color: #4FA031;
+}
+.location .transport .buses .b3 {
+  color: #5EAC40;
+}
+.location .transport .buses .b4 {
+  color: #EC404F;
+}
+.location .transport .buses .b5 {
+  color: #81BEE6;
 }
 .footer {
   padding-top: 1em;

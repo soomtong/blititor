@@ -22,9 +22,9 @@ var Menu = [
         url: '/program'
     },
     {
-        id: 'reservation_list',
-        name: 'Reservation List',
-        url: '/reservation'
+        id: 'register_form',
+        name: 'Reservation Form',
+        url: '/register'
     },
     {
         id: '2015index',
