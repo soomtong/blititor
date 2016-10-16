@@ -115,7 +115,21 @@ body {
       font-size: 4.2em;
     }
   }
+}
 
+.page-header {
+  min-height: 280px;
+  padding: 1em;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+
+  h1 {
+    color: #FFFFFF;
+    margin-top: 196px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+  }
 }
 
 .about {
@@ -329,13 +343,81 @@ body {
   }
 }
 
+.program {
+  padding-bottom: 5em;
+
+  h2 {
+    color: #4A90E2;
+    font-size: 1.9em;
+    margin-top: 3.8em;
+    margin-bottom: 1.5em;
+  }
+
+  .table-responsive {
+    font-size: 1.15em;
+    border-left: 0;
+    border-right: 0;
+    border-color: #979797;
+
+    table {
+      border-bottom: 1px solid #979797;
+    }
+
+    th {
+      font-size: 0.85em;
+      color: #9B9B9B;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      padding-left: 1px;
+      border-top-width: 3px;
+      border-color: #979797;
+    }
+
+    td {
+      padding-left: 1px;
+      padding-top: 0.8em;
+      padding-bottom: 0.8em;
+    }
+
+    .subject {
+      width: 11em;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .table-responsive {
+      font-size: 1.0em;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .lunch, .finale {
+      color: #FFFFFF;
+    }
+
+    .tutorial-section-1 {
+      height: 94px;
+    }
+    .tutorial-section-2 {
+      height: 118px;
+    }
+    .tutorial-section-3 {
+      height: 117px;
+    }
+
+
+  }
+}
+
 .footer {
+  padding-top: 1em;
   color: #9B9B9B;
+  background: #f9f9f9;
 
   .sponsor {
     display: inline-block;
     margin-top: 3em;
-    margin-bottom: 6em;
+    margin-bottom: 2em;
 
     h3 {
       position: absolute;

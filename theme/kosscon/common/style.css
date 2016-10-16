@@ -101,6 +101,19 @@ body {
     font-size: 4.2em;
   }
 }
+.page-header {
+  min-height: 280px;
+  padding: 1em;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+}
+.page-header h1 {
+  color: #FFFFFF;
+  margin-top: 196px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+}
 .about {
   margin: 120px 0 80px;
 }
@@ -278,13 +291,70 @@ body {
     font-size: 1.4em;
   }
 }
-.footer {
+.program {
+  padding-bottom: 5em;
+}
+.program h2 {
+  color: #4A90E2;
+  font-size: 1.9em;
+  margin-top: 3.8em;
+  margin-bottom: 1.5em;
+}
+.program .table-responsive {
+  font-size: 1.15em;
+  border-left: 0;
+  border-right: 0;
+  border-color: #979797;
+}
+.program .table-responsive table {
+  border-bottom: 1px solid #979797;
+}
+.program .table-responsive th {
+  font-size: 0.85em;
   color: #9B9B9B;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1px;
+  border-top-width: 3px;
+  border-color: #979797;
+}
+.program .table-responsive td {
+  padding-left: 1px;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+}
+.program .table-responsive .subject {
+  width: 11em;
+}
+@media only screen and (max-width: 767px) {
+  .program .table-responsive {
+    font-size: 1.0em;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .program .lunch,
+  .program .finale {
+    color: #FFFFFF;
+  }
+  .program .tutorial-section-1 {
+    height: 94px;
+  }
+  .program .tutorial-section-2 {
+    height: 118px;
+  }
+  .program .tutorial-section-3 {
+    height: 117px;
+  }
+}
+.footer {
+  padding-top: 1em;
+  color: #9B9B9B;
+  background: #f9f9f9;
 }
 .footer .sponsor {
   display: inline-block;
   margin-top: 3em;
-  margin-bottom: 6em;
+  margin-bottom: 2em;
 }
 .footer .sponsor h3 {
   position: absolute;
