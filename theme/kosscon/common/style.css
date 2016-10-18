@@ -45,6 +45,37 @@ body {
     float: left;
   }
 }
+.bg-image {
+  transition: background 1s linear;
+}
+.bg-image-1 {
+  background: url(/kosscon/common/asset/home-hero-1.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bg-image-2 {
+  background: url(/kosscon/common/asset/home-hero-2.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bg-image-3 {
+  background: url(/kosscon/common/asset/home-hero-3.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bg-image-4 {
+  background: url(/kosscon/common/asset/home-hero-4.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .hero {
   color: #FFFFFF;
   display: table;
@@ -315,6 +346,27 @@ body {
 }
 .program {
   padding-bottom: 5em;
+  /*
+  @media only screen and (min-width: 1200px) {
+    .tutorial tr th:first-child, .tutorial tr td:first-child {
+      display: none;
+    }
+
+    .lunch, .finale {
+      color: #FFFFFF;
+    }
+
+    .tutorial-section-1 {
+      height: 94px;
+    }
+    .tutorial-section-2 {
+      height: 141px;
+    }
+    .tutorial-section-3 {
+      height: 141px;
+    }
+  }
+  */
 }
 .program h2 {
   color: #4A90E2;
@@ -352,24 +404,13 @@ body {
 .program .table-responsive .subject {
   width: 11em;
 }
+.program .table-responsive .label {
+  font-size: 0.6em;
+  font-weight: normal;
+}
 @media only screen and (max-width: 767px) {
   .program .table-responsive {
     font-size: 1.0em;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  .program .lunch,
-  .program .finale {
-    color: #FFFFFF;
-  }
-  .program .tutorial-section-1 {
-    height: 94px;
-  }
-  .program .tutorial-section-2 {
-    height: 118px;
-  }
-  .program .tutorial-section-3 {
-    height: 117px;
   }
 }
 .register form {

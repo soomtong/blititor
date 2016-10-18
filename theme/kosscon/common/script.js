@@ -1,6 +1,22 @@
-
-// Animate Typo
 $(function () {
+    function changeImages() {
+        var prevIndex = index;
+        index = (index + 1) % img_array.length;
+
+        $backgroundImage.removeClass(img_array[prevIndex]);
+        $backgroundImage.addClass(img_array[index]);
+
+        setTimeout(changeImages, timer);
+    }
+
+    var img_array = ['bg-image-1', 'bg-image-2', 'bg-image-3', 'bg-image-4'];
+    var timer = 8000;
+    var index = 0;
+    var $backgroundImage = $('.bg-image');
+
+    setTimeout(changeImages, timer);
+
+    // Animate Typo
     $('#typing_text').typist({
         speed: 8,
         text: 'OPEN. TECH. BUSINESS.'

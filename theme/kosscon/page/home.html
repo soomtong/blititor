@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<header id="top" class="header">
+<header id="top" class="header bg-image bg-image-1">
 
     {% include './include/menu.html' %}
 
@@ -67,14 +67,14 @@
             <div class="col-sm-12 text-center">
                 <p class="link">
                     <a href="/program"><span class="program">프로그램 보기<i class="glyphicon glyphicon-chevron-right"></i></span></a>
-                    <a href="/register"><span class="register">사전 등록 및 정보<i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                    {#<a href="/register"><span class="register">사전 등록 및 정보<i class="glyphicon glyphicon-chevron-right"></i></span></a>#}
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="gift" class="gift">
+{#<section id="gift" class="gift">
     <hr class="hr">
 
     <div class="container">
@@ -151,7 +151,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>#}
 
 <section id="prev_con" class="pre-con">
     <div class="container">
@@ -171,9 +171,5 @@
 
 {% include './include/footer.html' %}
 
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/lib/jquery.typist/dist/jquery.typist.min.js"></script>
-<script src="{{site.theme}}/common/script.js"></script>
 </body>
 </html>
