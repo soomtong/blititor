@@ -39,6 +39,9 @@ $(function() {
     // Bind Ajax
     $('.secret').off('click').on('click', getPhoneSecret);
 
+    // Bind Form
+    $('#form_submit').on('click', sendReservation);
+
     // Enable map zooming with mouse scroll when the user clicks the map
     // $('#location').off('click', '.map').on('click', '.map', onMapClickHandler);
     $('.map').off('click').on('click', onMapClickHandler);
@@ -185,6 +188,7 @@ var sendReservation = function (event) {
     }
 
     if (!$phone_secret.val()) {
+        $phone.focus();
         $phone_secret.siblings('.phone_secret_message').fadeIn(function () {
             var that = this;
             setTimeout(function () {

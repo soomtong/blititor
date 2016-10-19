@@ -81,7 +81,11 @@ function createReservation(req, res) {
     };
 
     // custom data for status
-    var sectionStatusData = [req.body.register_apply_tutorial1, req.body.register_apply_tutorial2, req.body.register_apply_tutorial3];
+    var sectionStatusData = [];
+
+    if (req.body.register_apply_tutorial1) sectionStatusData.push(req.body.register_apply_tutorial1);
+    if (req.body.register_apply_tutorial2) sectionStatusData.push(req.body.register_apply_tutorial2);
+    if (req.body.register_apply_tutorial3) sectionStatusData.push(req.body.register_apply_tutorial3);
 
     // console.log(reservationData, sectionStatusData);
 

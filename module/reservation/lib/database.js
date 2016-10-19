@@ -65,6 +65,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`sort` int unsigned not null default 0, ' +
         '`category` tinyint default 0, ' +
         '`hide` int(1) default 0, ' +
+        '`close` int(1) default 0, ' +
         '`title` varchar(64), ' +
         '`sub_title` varchar(256), ' +
         '`counter` int unsigned not null default 0, ' +
