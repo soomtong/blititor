@@ -52,26 +52,32 @@ function reservationStatusList(req, res) {
 }
 
 function createReservation(req, res) {
-    req.assert('name', 'Name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
-    req.assert('email', 'Email  is required').notEmpty().withMessage('Email ID is required').isEmail();
-    req.assert('phone', 'Phone number is required').notEmpty().withMessage('Phone number field is required');
+    req.assert('register_name', 'Name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
+    req.assert('register_email', 'Email is required').notEmpty().withMessage('Email ID should be email type string').isEmail();
+    req.assert('register_phone', 'Phone number is required').notEmpty();
+    req.assert('register_phone_secret', 'Phone Secret number is required').notEmpty();
 
     var errors = req.validationErrors();
 
     if (errors) {
+        var reservedSession = req.session['reservation'] || {};
+
+        winston.warn('phone number with secret number', reservedSession.phone, reservedSession.phone_secret);
+        winston.warn(errors);
         req.flash('error', errors);
         return res.redirect('back');
     }
 
-    req.sanitize('name').escape();
-    req.sanitize('email').trim();
-    req.sanitize('phone').trim();
+    req.sanitize('register_name').escape();
+    req.sanitize('register_email').trim();
+    req.sanitize('register_phone').trim();
 
     // remove dash in phone field
     var reservationData = {
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone
+        name: req.body.register_name,
+        email: req.body.register_email,
+        phone: req.body.register_phone,
+        info:  req.body.register_info,
     };
 
     var params = {};
@@ -120,11 +126,32 @@ function createReservation(req, res) {
     });
 }
 
+function generateSecret(req, res) {
+    var params = {
+        phone: req.body.phone
+    };
+
+    req.session.reservation = {
+        phone: params.phone,
+        phone_secret: '1234'
+    };
+
+    // send ajax to phone message service
+
+    res.send({
+        "status": "success",
+        "data": {
+            "phone": params.phone
+        }
+    });
+}
+
 module.exports = {
     form: reservationForm,
     register: createReservation,
     list: reservationList,
-    status: reservationStatusList
+    status: reservationStatusList,
+    sendSecret: generateSecret
 };
 
 function findReservationByGiven(reservationData, callback) {

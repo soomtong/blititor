@@ -1,21 +1,3 @@
-$(function () {
-    function changeImages() {
-        var prevIndex = index;
-        index = (index + 1) % img_array.length;
-
-        $backgroundImage.removeClass(img_array[prevIndex]);
-        $backgroundImage.addClass(img_array[index]);
-
-        setTimeout(changeImages, timer);
-    }
-
-    var img_array = ['bg-image-1', 'bg-image-2', 'bg-image-3', 'bg-image-4'];
-    var timer = 8000;
-    var index = 0;
-    var $backgroundImage = $('.bg-image');
-
-    setTimeout(changeImages, timer);
-});
 // Closes the sidebar menu
 $("#menu-close").click(function(e) {
     e.preventDefault();
@@ -33,6 +15,26 @@ $(function() {
         speed: 8,
         text: 'OPEN SOURCE. REAL ACTION.'
     });
+
+    function changeImages() {
+        var prevIndex = index;
+        index = (index + 1) % img_array.length;
+
+        $backgroundImage.removeClass(img_array[prevIndex]);
+        $backgroundImage.addClass(img_array[index]);
+
+        setTimeout(changeImages, timer);
+    }
+
+    var img_array = ['bg-image-1', 'bg-image-2', 'bg-image-3', 'bg-image-4'];
+    var timer = 8000;
+    var index = 0;
+    var $backgroundImage = $('.bg-image');
+
+    // Background Images
+    if ($backgroundImage.length) {
+        setTimeout(changeImages, timer);
+    }
 
     // Bind Ajax
     $('.secret').off('click').on('click', getPhoneSecret);
@@ -91,12 +93,10 @@ var onMapMouseleaveHandler = function (event) {
     that.find('iframe').css("pointer-events", "none");
 };
 var onMapClickHandler = function (event) {
-    if(event.handled !== true) // This will prevent event triggering more then once
-    {
-        console.log('Clicked');
+    // This will prevent event triggering more then once
+    if(event.handled !== true) {
         event.handled = true;
     }
-    console.log('clicked');
 
     var that = $(this);
     // Disable the click handler until the user leaves the map area
@@ -107,17 +107,103 @@ var onMapClickHandler = function (event) {
     that.on('mouseleave', onMapMouseleaveHandler);
 };
 var getPhoneSecret = function (event) {
-    if(event.handled !== true) // This will prevent event triggering more then once
-    {
-        console.log('Clicked');
+    // This will prevent event triggering more then once
+    if(event.handled !== true) {
         event.handled = true;
     }
-    console.log('clicked');
 
     var that = $(this);
-    that.hide();
+    var $phone = $('#phone');
+    var $secret = $('#phone_secret');
+    var $message = $('#phone_message');
+    var secretToken = $('input[name="_csrf"]').eq(0).val();
+    var actionURL = $('input[name="phone_secret"]').eq(0).val();
 
-    $('#phone_secret').show();
+    if (!$phone.val()) {
+        $phone.focus();
+        $message.fadeIn(function () {
+            setTimeout(function () {
+                $message.fadeOut(1);
+            }, 1500);
+        });
+        return false;
+    }
+
+    $.post(actionURL, {phone: $phone.val(), _csrf: secretToken}, function (result) {
+        console.log(result);
+
+        that.hide();
+
+        $secret.show();
+    });
 
     // return false;
+};
+
+var sendReservation = function (event) {
+    var that = $(this);
+    var $name = $('#name');
+    var $email = $('#email');
+    var $phone = $('#phone');
+    var $phone_secret = $('#phone_secret');
+    var $info = $('#info');
+
+    if (!$name.val()) {
+        $name.focus();
+        $name.siblings('.name_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
+
+    if (!$email.val()) {
+        $email.focus();
+        $email.siblings('.email_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
+
+    if (!$phone.val()) {
+        $phone.focus();
+        $phone.siblings('.phone_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
+
+    if (!$phone_secret.val()) {
+        $phone_secret.siblings('.phone_secret_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
+
+    if (!$info.val()) {
+        $info.focus();
+        $info.siblings('.info_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
 };

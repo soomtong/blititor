@@ -52,10 +52,9 @@ function createScheme(databaseConfiguration, callback, done) {
         '`info` varchar(128), ' +
         '`stat` varchar(128), ' +
         '`flag` varchar(1), ' +
-        '`status_id` int unsigned, ' +
+        '`status_id` varchar(256), ' +
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
-        'INDEX status_id(`status_id`), ' +
         'INDEX updated_at(`updated_at`), ' +
         'INDEX category(`category`))';
     var sql_reservation_status = 'CREATE TABLE IF NOT EXISTS ?? ' +

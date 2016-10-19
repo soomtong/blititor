@@ -478,6 +478,10 @@ body {
 .register form .disabled {
   color: #979797;
 }
+.register form .message {
+  padding-top: 0.5em;
+  margin-bottom: 0;
+}
 .location h2 {
   color: #4A90E2;
   font-size: 1.9em;

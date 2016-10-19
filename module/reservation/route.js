@@ -16,5 +16,6 @@ router.use(middleware.exposeLocals);
 router.get(routeTable.reservation.form, reservation.form);
 router.post(routeTable.reservation.form, reservation.register);
 router.get(routeTable.reservation.status, reservation.status);
+router.post(routeTable.reservation.phoneSecret, reservation.sendSecret);
 
 module.exports = router;
