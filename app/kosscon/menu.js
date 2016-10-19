@@ -22,6 +22,24 @@ var Menu = [
         url: '/program'
     },
     {
+        id: 'conference_keynote',
+        name: 'Keynote',
+        useSubPath: true,
+        url: '/program/keynote'
+    },
+    {
+        id: 'conference_presentation',
+        name: 'Presentation',
+        useSubPath: true,
+        url: '/program/presentation'
+    },
+    {
+        id: 'conference_tutorial',
+        name: 'Tutorial',
+        useSubPath: true,
+        url: '/program/tutorial'
+    },
+    {
         id: 'register_form',
         name: 'Reservation Form',
         url: '/register'

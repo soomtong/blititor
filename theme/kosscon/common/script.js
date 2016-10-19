@@ -15,12 +15,6 @@ $(function () {
     var $backgroundImage = $('.bg-image');
 
     setTimeout(changeImages, timer);
-
-    // Animate Typo
-    $('#typing_text').typist({
-        speed: 8,
-        text: 'OPEN. TECH. BUSINESS.'
-    });
 });
 // Closes the sidebar menu
 $("#menu-close").click(function(e) {
@@ -34,6 +28,19 @@ $("#menu-toggle").click(function(e) {
 });
 // Scrolls to the selected menu item on the page
 $(function() {
+    // Animate Typo
+    $('#typing_text').typist({
+        speed: 8,
+        text: 'OPEN SOURCE. REAL ACTION.'
+    });
+
+    // Bind Ajax
+    $('.secret').off('click').on('click', getPhoneSecret);
+
+    // Enable map zooming with mouse scroll when the user clicks the map
+    // $('#location').off('click', '.map').on('click', '.map', onMapClickHandler);
+    $('.map').off('click').on('click', onMapClickHandler);
+
     $('a[href*=\\#]:not([href=\\#],[data-toggle],[data-target],[data-slide])').click(function() {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
             var target = $(this.hash);
@@ -46,42 +53,51 @@ $(function() {
             }
         }
     });
-});
-//#to-top button appears after scrolling
-var fixed = false;
-$(document).scroll(function() {
-    if ($(this).scrollTop() > 250) {
-        if (!fixed) {
-            fixed = true;
-            // $('#to-top').css({position:'fixed', display:'block'});
-            $('#to-top').show("slow", function() {
-                $('#to-top').css({
-                    position: 'fixed',
-                    display: 'block'
+
+    //#to-top button appears after scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+        if ($(this).scrollTop() > 250) {
+            if (!fixed) {
+                fixed = true;
+                // $('#to-top').css({position:'fixed', display:'block'});
+                $('#to-top').show("slow", function() {
+                    $('#to-top').css({
+                        position: 'fixed',
+                        display: 'block'
+                    });
                 });
-            });
-        }
-    } else {
-        if (fixed) {
-            fixed = false;
-            $('#to-top').hide("slow", function() {
-                $('#to-top').css({
-                    display: 'none'
+            }
+        } else {
+            if (fixed) {
+                fixed = false;
+                $('#to-top').hide("slow", function() {
+                    $('#to-top').css({
+                        display: 'none'
+                    });
                 });
-            });
+            }
         }
-    }
+    });
+
 });
 // Disable Google Maps scrolling
 // See http://stackoverflow.com/a/25904582/1607849
 // Disable scroll zooming and bind back the click event
 var onMapMouseleaveHandler = function (event) {
     var that = $(this);
-    that.on('click', onMapClickHandler);
+    that.off('click').on('click', onMapClickHandler);
     that.off('mouseleave', onMapMouseleaveHandler);
     that.find('iframe').css("pointer-events", "none");
 };
 var onMapClickHandler = function (event) {
+    if(event.handled !== true) // This will prevent event triggering more then once
+    {
+        console.log('Clicked');
+        event.handled = true;
+    }
+    console.log('clicked');
+
     var that = $(this);
     // Disable the click handler until the user leaves the map area
     that.off('click', onMapClickHandler);
@@ -90,5 +106,18 @@ var onMapClickHandler = function (event) {
     // Handle the mouse leave event
     that.on('mouseleave', onMapMouseleaveHandler);
 };
-// Enable map zooming with mouse scroll when the user clicks the map
-$('.map').on('click', onMapClickHandler);
+var getPhoneSecret = function (event) {
+    if(event.handled !== true) // This will prevent event triggering more then once
+    {
+        console.log('Clicked');
+        event.handled = true;
+    }
+    console.log('clicked');
+
+    var that = $(this);
+    that.hide();
+
+    $('#phone_secret').show();
+
+    // return false;
+};

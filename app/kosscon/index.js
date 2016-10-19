@@ -43,6 +43,11 @@ router.use(Counter.middleware.pageCounter);
 
 // modules
 // router.use(routeTable.guestbook_root, Guestbook.route);
+router.post('/register', function (req, res) {
+    console.log(req.body);
+
+    res.redirect('back');
+});
 
 // bind static page
 router.all('/2016', Site.redirect(routeTable.root));
