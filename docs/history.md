@@ -6,7 +6,17 @@
 
 ## A Team
 
+> 0.4.0
+
+## Exhibition 2
+
 > 0.3.0
+
+KOSSCon 2016 테마를 릴리즈합니다.
+
+- Reservation 모듈이 포함되었습니다.
+- Gallery 모듈이 포함되었습니다.
+- 각 앱의 스캐폴딩이 개선되었습니다.
 
 ## Exhibition
 

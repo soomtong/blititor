@@ -475,6 +475,9 @@ body {
   color: #979797;
   padding-left: 5px;
 }
+.register form .disabled {
+  color: #979797;
+}
 .location h2 {
   color: #4A90E2;
   font-size: 1.9em;

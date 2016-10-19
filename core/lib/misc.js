@@ -79,6 +79,11 @@ function getRouteTable() {
             "info": "/info",
             "updateInfo": "/update"
         },
+        "reservation_root": "/reservation",
+        "reservation": {
+            "form": "/",
+            "status": "/status"
+        },
         "guestbook_root": "/guestbook",
         "guestbook": {
             "form": "/",
