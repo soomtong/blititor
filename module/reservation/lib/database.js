@@ -50,11 +50,14 @@ function createScheme(databaseConfiguration, callback, done) {
         '`email` varchar(256), ' +
         '`phone` varchar(16), ' +
         '`info` varchar(128), ' +
-        '`stat` varchar(128), ' +
-        '`flag` varchar(1), ' +
-        '`status_id` varchar(256), ' +
+        '`status` varchar(128), ' +   // applied status id a string divided ','
+        '`flag` varchar(1), ' +        // special flag for the future
+        '`comment` varchar(256), ' +
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
+        'INDEX name(`name`), ' +
+        'INDEX email(`email`), ' +
+        'INDEX phone(`phone`), ' +
         'INDEX updated_at(`updated_at`), ' +
         'INDEX category(`category`))';
     var sql_reservation_status = 'CREATE TABLE IF NOT EXISTS ?? ' +
@@ -143,12 +146,44 @@ function insertStatus(connection, statusData, callback) {
     });
 }
 
+function selectReservationByIdentifier(connection, reservationData, callback) {
+    connection.query(query.selectByIdentifier, [tables.reservationList, reservationData.category, reservationData.name, reservationData.email, reservationData.phone], function (err, rows) {
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
+    });
+}
+
+function insertReservation(connection, reservationData, callback) {
+    connection.query(query.insertInto, [tables.reservationList, reservationData], function (err, rows) {
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
+    });
+}
+
+function updateReservation(connection, params, callback) {
+    connection.query(query.updateByID, [tables.reservationList, params.reservationData, params.id], function (err, rows) {
+        if (err || !rows) {
+            return callback(err, {});
+        }
+
+        return callback(err, rows[0]);
+    });
+}
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
     readReservationStatus: selectReservationStatus,
     addStatus: insertStatus,
+    readReservationByReservationData: selectReservationByIdentifier,
+    createReservation: insertReservation,
+    updateReservation: updateReservation,
     // createGalleryImageItem: insertImage,
     // readGalleryCategory: selectCategory,
     // readGalleryImageList: selectImageList,

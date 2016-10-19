@@ -130,9 +130,9 @@
                                 <label class="radio">
                                     {% set closed = true if status[index].counter >= status[index].max_count else false %}
                                     {% if closed %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                    <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
                                     {% else %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}"> {{status[index].title}}
+                                    <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}"> {{status[index].title}}
                                     {% endif %}
                                     <span class="small">{{status[index].sub_title}}</span>
                                     {% if closed %}
@@ -151,9 +151,9 @@
                                 <label class="radio">
                                     {% set closed = true if status[index].counter >= status[index].max_count else false %}
                                     {% if closed %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                    <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
                                     {% else %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}"> {{status[index].title}}
+                                    <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}"> {{status[index].title}}
                                     {% endif %}
                                     <span class="small">{{status[index].sub_title}}</span>
                                     {% if closed %}

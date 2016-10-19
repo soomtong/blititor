@@ -74,11 +74,16 @@ function createReservation(req, res) {
 
     // remove dash in phone field
     var reservationData = {
+        category: 1,
         name: req.body.register_name,
         email: req.body.register_email,
-        phone: req.body.register_phone,
-        info:  req.body.register_info,
+        phone: req.body.register_phone
     };
+
+    // custom data for status
+    var sectionStatusData = [req.body.register_apply_tutorial1, req.body.register_apply_tutorial2, req.body.register_apply_tutorial3];
+
+    // console.log(reservationData, sectionStatusData);
 
     var params = {};
 
@@ -88,6 +93,15 @@ function createReservation(req, res) {
 
         if (reservation) {
             // go update
+            params = {
+                id: reservation.id,
+                reservationData: {
+                    info: req.body.register_info,
+                    updated_at: new Date(),
+                    status: sectionStatusData.join(',')
+                }
+            };
+
             db.updateReservation(mysql, params, function (err, result) {
                 if (err) {
                     req.flash('error', {msg: err});
@@ -102,11 +116,16 @@ function createReservation(req, res) {
                 params.name = reservationData.name;
                 params.mode = 'updated';
 
-                return res.render('done', params);
+                return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
             });
         } else {
             // go insert
-            db.insertReservation(mysql, params, function (err, result) {
+            reservationData.info = req.body.register_info;
+            reservationData.status = sectionStatusData.join(',');
+            reservationData.created_at = new Date();
+            reservationData.updated_at = new Date();
+
+            db.createReservation(mysql, reservationData, function (err, result) {
                 if (err) {
                     req.flash('error', {msg: err});
 
@@ -120,7 +139,7 @@ function createReservation(req, res) {
                 params.name = reservationData.name;
                 params.mode = 'inserted';
 
-                return res.render('done', params);
+                return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
             });
         }
     });
@@ -146,6 +165,23 @@ function generateSecret(req, res) {
     });
 }
 
+function findReservationByGiven(reservationData, callback) {
+    var mysql = connection.get();
+
+    db.readReservationByReservationData(mysql, reservationData, function (err, result) {
+        if (err || !result) {
+            winston.warn("Can't Find by This reservationData, Go insert New Reservation Data", err, result);
+
+            callback(err, null);
+        } else {
+            winston.warn("Found by This reservationData, Go update Reservation Data", err, result);
+
+            callback(err, result);
+        }
+    });
+}
+
+
 module.exports = {
     form: reservationForm,
     register: createReservation,
@@ -154,16 +190,3 @@ module.exports = {
     sendSecret: generateSecret
 };
 
-function findReservationByGiven(reservationData, callback) {
-    var mysql = connection.get();
-
-    db.readReservationByReservationdata(mysql, reservationData, function (err, rows) {
-        if (err || !rows) {
-            winston.warn("Can't Find by This reservationData", err, rows);
-
-            return callback(err, null);
-        }
-
-        callback(err, rows[0]);
-    });
-}
