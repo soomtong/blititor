@@ -184,7 +184,23 @@ function readReservationStatusByID(connection, statusIDs, callback) {
         }
 
         return callback(err, rows);
-    })
+    });
+}
+
+function increaseReservationStatus(connection, statusID, callback) {
+    connection.query(query.increaseStatusByID, [tables.reservationStatus, statusID], function (err, result) {
+        if (err) winston.error(err);
+
+        return callback(err, result);
+    });
+}
+
+function decreaseReservationStatus(connection, statusID, callback) {
+    connection.query(query.decreaseStatusByID, [tables.reservationStatus, statusID], function (err, result) {
+        if (err) winston.error(err);
+
+        return callback(err, result);
+    });
 }
 
 module.exports = {
@@ -197,9 +213,8 @@ module.exports = {
     readReservationByReservationData: selectReservationByIdentifier,
     createReservation: insertReservation,
     updateReservation: updateReservation,
-    // createGalleryImageItem: insertImage,
-    // readGalleryCategory: selectCategory,
-    // readGalleryImageList: selectImageList,
+    increaseReservationStatus: increaseReservationStatus,
+    decreaseReservationStatus: decreaseReservationStatus,
     option: {
         tables: tables,
         core: false

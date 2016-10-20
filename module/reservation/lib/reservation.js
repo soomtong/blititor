@@ -105,8 +105,11 @@ function createReservation(req, res) {
                     info: req.body.register_info,
                     updated_at: new Date(),
                     status: sectionStatusData.join(',')
-                }
+                },
+                prevReservationStatus: reservation.status
             };
+
+            updateReservationStatus(params.reservationData.status, params.prevReservationStatus);
 
             db.updateReservation(mysql, params, function (err, result) {
                 if (err) {
@@ -139,6 +142,8 @@ function createReservation(req, res) {
             reservationData.status = sectionStatusData.join(',');
             reservationData.created_at = new Date();
             reservationData.updated_at = new Date();
+
+            updateReservationStatus(reservationData.status);
 
             db.createReservation(mysql, reservationData, function (err, result) {
                 if (err) {
@@ -229,6 +234,31 @@ function getReservationStatusByID(sectionData, callback) {
     });
 }
 
+function updateReservationStatus(status, prevStatus) {
+    var mysql = connection.get();
+
+    // decrease
+    if (prevStatus) {
+        prevStatus = prevStatus.split(',');
+
+        prevStatus.map(function (item) {
+            db.decreaseReservationStatus(mysql, item, function (error, result) {
+                winston.info('decreased status', item);
+            });
+        });
+    }
+
+    // increase
+    if (status) {
+        status = status.split(',');
+
+        status.map(function (item) {
+            db.increaseReservationStatus(mysql, item, function (error, result) {
+                winston.info('decreased status', item);
+            });
+        });
+    }
+}
 
 module.exports = {
     form: reservationForm,
