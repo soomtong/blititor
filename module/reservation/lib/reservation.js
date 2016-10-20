@@ -79,7 +79,7 @@ function createReservation(req, res) {
         category: 1,
         name: req.body.register_name,
         email: req.body.register_email,
-        phone: req.body.register_phone
+        phone: req.body.register_phone.replace(/-/g, '')
     };
 
     // custom data for status
@@ -170,7 +170,7 @@ function createReservation(req, res) {
 
 function generateSecret(req, res) {
     var params = {
-        phone: req.body.phone,
+        phone: req.body.phone.replace(/-/g, ''),
         secretNumber: common.randomNumber(4)
     };
 

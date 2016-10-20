@@ -36,6 +36,11 @@ $(function() {
         setTimeout(changeImages, timer);
     }
 
+    // Prevent temporary
+    $('#program').find('a').on('click', function () {
+        return false;
+    });
+
     // Bind Ajax
     $('.secret').off('click').on('click', getPhoneSecret);
 
