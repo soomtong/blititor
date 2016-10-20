@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
+var request = require('superagent');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -52,19 +53,20 @@ function reservationStatusList(req, res) {
 }
 
 function createReservation(req, res) {
+    var reservedSession = req.session['reservation'] || {};
+
     req.assert('register_name', 'Name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
     req.assert('register_email', 'Email is required').notEmpty().withMessage('Email ID should be email type string').isEmail();
     req.assert('register_phone', 'Phone number is required').notEmpty();
-    req.assert('register_phone_secret', 'Phone Secret number is required').notEmpty();
+    req.assert('register_phone_secret', '휴대폰 인증정보가 일치하지 않습니다.').equals(reservedSession.secretNumber);
 
     var errors = req.validationErrors();
 
     if (errors) {
-        var reservedSession = req.session['reservation'] || {};
-
-        winston.warn('phone number with secret number', reservedSession.phone, reservedSession.phone_secret);
+        winston.error('phone number with secret number', reservedSession.phone, reservedSession.secretNumber);
         winston.warn(errors);
         req.flash('error', errors);
+
         return res.redirect('back');
     }
 
@@ -115,12 +117,21 @@ function createReservation(req, res) {
                     return res.redirect('back');
                 }
 
-                winston.warn('Updated reservation:', result);
+                winston.warn('Updated reservation Count:', result.changedRows);
 
                 params.name = reservationData.name;
-                params.mode = 'updated';
+                params.mode = '갱신 완료';
 
-                return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                if (sectionStatusData.length) {
+                    getReservationStatusByID(sectionStatusData, function (error, rows) {
+                        params.sectionList = rows;
+
+                        return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                    })
+                } else {
+                    return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                }
+
             });
         } else {
             // go insert
@@ -138,12 +149,20 @@ function createReservation(req, res) {
                     return res.redirect('back');
                 }
 
-                winston.warn('Inserted reservation:', result);
+                winston.warn('Inserted reservation ID:', result.insertId);
 
                 params.name = reservationData.name;
-                params.mode = 'inserted';
+                params.mode = '입력 완료';
 
-                return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                if (sectionStatusData.length) {
+                    getReservationStatusByID(sectionStatusData, function (error, rows) {
+                        params.sectionList = rows;
+
+                        return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                    })
+                } else {
+                    return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                }
             });
         }
     });
@@ -151,22 +170,39 @@ function createReservation(req, res) {
 
 function generateSecret(req, res) {
     var params = {
-        phone: req.body.phone
+        phone: req.body.phone,
+        secretNumber: common.randomNumber(4)
     };
 
-    req.session.reservation = {
-        phone: params.phone,
-        phone_secret: '1234'
-    };
+    winston.info('Generated phone secret number', params);
 
-    // send ajax to phone message service
+    req.session.reservation = params;
 
-    res.send({
-        "status": "success",
-        "data": {
-            "phone": params.phone
-        }
-    });
+    // post request to phone message service
+    var host = 'http://welltag.com/kosscon2016/sms_send.asp';
+
+    request
+        .post(host)
+        .type('form')
+        .send({hp: params.phone, code: params.secretNumber})
+        .end(function (error, response) {
+            // Calling the end function will send the request
+            if (response.statusCode == 200 && response.text.includes('"result_code":"200"')) {
+                res.send({
+                    "status": "success",
+                    "data": {
+                        "phone": params.phone
+                    }
+                });
+            } else {
+                res.send({
+                    "status": "fail",
+                    "data": {
+                        "phone": params.phone
+                    }
+                });
+            }
+        });
 }
 
 function findReservationByGiven(reservationData, callback) {
@@ -174,14 +210,22 @@ function findReservationByGiven(reservationData, callback) {
 
     db.readReservationByReservationData(mysql, reservationData, function (err, result) {
         if (err || !result) {
-            winston.warn("Can't Find by This reservationData, Go insert New Reservation Data", err, result);
+            // winston.warn("Can't Find by This reservationData, Go insert New Reservation Data", err, result);
 
             callback(err, null);
         } else {
-            winston.warn("Found by This reservationData, Go update Reservation Data", err, result);
+            // winston.warn("Found by This reservationData, Go update Reservation Data", err, result);
 
             callback(err, result);
         }
+    });
+}
+
+function getReservationStatusByID(sectionData, callback) {
+    var mysql = connection.get();
+
+    db.readReservationStatusByID(mysql, sectionData, function (err, rows) {
+        callback(err, rows);
     });
 }
 

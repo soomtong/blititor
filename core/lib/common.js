@@ -42,6 +42,18 @@ function randomString(len) {
     return buf.join('');
 }
 
+function randomNumber(len) {
+    var buf = [],
+        chars = '0123456789',
+        charLen = chars.length;
+
+    for (var i = 0; i < len; ++i) {
+        buf.push(chars[getRandomInt(0, charLen - 1)]);
+    }
+
+    return buf.join('');
+}
+
 // todo: customize errorFormatter()
 function errorFormatter(param, msg, value) {
     var namespace = param.split('.')
@@ -130,6 +142,7 @@ module.exports = {
     destructMarkdown: destructMarkdown,
     regexFilter: regexFilter,
     randomString: randomString,
+    randomNumber: randomNumber,
     UUID1: getUUID1,
     UUID4: getUUID4,
     hash: getHash,

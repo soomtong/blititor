@@ -133,11 +133,13 @@ var getPhoneSecret = function (event) {
     }
 
     $.post(actionURL, {phone: $phone.val(), _csrf: secretToken}, function (result) {
-        console.log(result);
+        if (result.status == 'success') {
+            that.hide();
 
-        that.hide();
-
-        $secret.show();
+            $secret.show();
+        } else {
+            alert('휴대폰 인증 서비스가 실패되었습니다. 잠시 후 다시 이용해 주세요.');
+        }
     });
 
     // return false;

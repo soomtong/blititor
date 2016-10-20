@@ -482,6 +482,17 @@ body {
   padding-top: 0.5em;
   margin-bottom: 0;
 }
+.register .apply-section-title {
+  color: #fff;
+  background-color: #4A90E2;
+  border-color: #4A90E2;
+  text-align: center;
+}
+.register .speaker {
+  padding-left: 5px;
+  font-size: 0.8em;
+  color: #4A90E2;
+}
 .location h2 {
   color: #4A90E2;
   font-size: 1.9em;

@@ -1,6 +1,7 @@
 {
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "selectByIDs": "SELECT * FROM ?? WHERE `id` in (?)",
   "countAll": "SELECT count(id) as `count` FROM ??",
   "readReservationStatus": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `updated_at`, `id` ASC",
   "readReservationList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` ASC",

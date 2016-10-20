@@ -158,29 +158,41 @@ function selectReservationByIdentifier(connection, reservationData, callback) {
 }
 
 function insertReservation(connection, reservationData, callback) {
-    connection.query(query.insertInto, [tables.reservationList, reservationData], function (err, rows) {
-        if (err || !rows) {
+    connection.query(query.insertInto, [tables.reservationList, reservationData], function (err, result) {
+        if (err || !result) {
             return callback(err, {});
         }
 
-        return callback(err, rows[0]);
+        return callback(err, result);
     });
 }
 
 function updateReservation(connection, params, callback) {
-    connection.query(query.updateByID, [tables.reservationList, params.reservationData, params.id], function (err, rows) {
+    connection.query(query.updateByID, [tables.reservationList, params.reservationData, params.id], function (err, result) {
+        if (err || !result) {
+            return callback(err, {});
+        }
+
+        return callback(err, result);
+    });
+}
+
+function readReservationStatusByID(connection, statusIDs, callback) {
+    connection.query(query.selectByIDs, [tables.reservationStatus, statusIDs], function (err, rows) {
         if (err || !rows) {
             return callback(err, {});
         }
 
-        return callback(err, rows[0]);
-    });
+        return callback(err, rows);
+    })
 }
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
     readReservationStatus: selectReservationStatus,
+    readReservationStatusByID: readReservationStatusByID,
     addStatus: insertStatus,
     readReservationByReservationData: selectReservationByIdentifier,
     createReservation: insertReservation,
