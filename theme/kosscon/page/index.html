@@ -1,50 +1,23 @@
 <!DOCTYPE html>
-<html lang="ko-kr">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>{{app.title}} - {{site.title}}</title>
-    <meta name="generator" content="Blititor alpha">
-    <meta name="description" content="공개SW개발자센터 컨퍼런스 2016">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="공개SW개발자LAB 컨퍼런스 2016">
-    <meta property="og:description" content="공개SW개발자센터 컨퍼런스 2016 안내 및 신청 페이지입니다.">
-    <meta property="og:image" content="http://kosslab.kr/images/common/oss-logo.png">
-    <meta property="og:url" content="http://kosscon.kr/">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="공개SW개발자LAB 컨퍼런스 2016">
-    <meta name="twitter:description" content="공개SW개발자센터 컨퍼런스 2016 안내 및 신청 페이지입니다.">
-    <meta name="twitter:image" content="http://kosslab.kr/images/common/oss-logo.png">
-    <meta name="twitter:domain" content="http://kosscon.kr/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="icon" type="image/png" href="{{site.theme}}/common/asset/icon_logo_32.png" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{site.theme}}/common/asset/icon_logo_72.png">
-    <!-- Bootstrap Core CSS -->
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{site.theme}}/common/style_temp.css" type="text/css">
-    <!-- Custom Fonts -->
-    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    {% include './include/head.html' %}
 </head>
 <body>
 
-<!-- Header -->
-<header id="top" class="header">
-    <div class="text-vertical-center">
-        <div class="typing-effect">
-            <h1 id="typing_text"></h1>
-            <h3 id="typing_text_subtitle"></h3>
+<header id="top" class="header bg-image bg-image-1">
+
+    {% include './include/menu.html' %}
+
+    <section id="hero" class="hero">
+        <div class="text-vertical-center">
+            <div class="typing-effect">
+                <h1 id="typing_text"></h1>
+            </div>
+            <h2>2016. 11. 10. 목요일 09:30 ~ 17:30</h2>
+            <h2 class="location">코엑스 컨퍼런스 홀</h2>
         </div>
-        <br>
-        <a href="#about" class="btn btn-dark btn-lg">coming soon</a>
-    </div>
+    </section>
 </header>
 
 <section id="about" class="about">
@@ -52,161 +25,151 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>
-                    공개 소프트웨어 개발자가
-                    {<span class="text-muted">소개</span>하는 <span class="text-info">트랜드</span>,
+                    공개 소프트웨어 개발자가 <br class="visible-xs visible-sm visible-md">
+                    {<span class="text-muted">소개</span>하는 <span class="text-info">트랜드</span>, <br class="visible-xs">
                     <span class="text-muted">공유</span>하는 <span class="text-info">노하우</span>}
                 </h2>
                 <p class="lead">
-                    KOSSCON 은 공개SW개발자Lab 의 프로젝트 발표와 함께 최신 기술과 비즈니스에 대한 지식을 공유하는 컨퍼런스입니다. <br>
-                    본 행사는 공개SW 에 관심 있는 관련 기업인, 개발자, 학생 등 누구나 신청가능하며 참여할 수 있습니다.
+                    KOSSCON 은 공개SW개발자Lab 의 프로젝트 발표와 함께
+                    최신 기술과 비즈니스에 대한 지식을 공유하는 컨퍼런스입니다. <br>
+                    본 행사는 공개SW 에 관심 있는 관련 기업인, 개발자, 학생 등 누구나
+                    신청 가능하며 참여할 수 있습니다.
                 </p>
             </div>
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container -->
-</section>
-
-<section id="portfolio" class="portfolio bg-previous">
-    <div class="container">
         <div class="row">
-            <div class="col-lg-10 col-lg-offset-1 text-center">
-                <h2>지난 KOSSCON 안내</h2>
-                <hr class="small">
+            <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="portfolio-item">
-                            <a href="/2015">
-                                <img class="img-portfolio img-responsive img-thumbnail" src="{{site.theme}}/common/asset/pic_kosscon2015.jpg">
-                            </a>
-                        </div>
+
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="mobile">Mobile</span>
                     </div>
-                    <div class="col-md-6">
-                        <div class="portfolio-item">
-                            <a href="/2014">
-                                <img class="img-portfolio img-responsive img-thumbnail" src="{{site.theme}}/common/asset/pic_kosscon2014.jpg">
-                            </a>
-                        </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="web">Web</span>
                     </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="iot">IoT</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="app">App</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="kernel">Kernel</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="platform">Platform</span>
+                    </div>
+
                 </div>
-                <!-- /.row (nested) -->
-                <!--<a href="#" class="btn btn-dark">View More Items</a>-->
             </div>
-            <!-- /.col-lg-10 -->
         </div>
-        <!-- /.row -->
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <p class="link">
+                    <a href="/program"><span class="program">프로그램 보기<i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                    {#<a href="/register"><span class="register">사전 등록 및 정보<i class="glyphicon glyphicon-chevron-right"></i></span></a>#}
+                </p>
+            </div>
+        </div>
     </div>
-    <!-- /.container -->
 </section>
 
-<!-- Footer -->
-<footer>
+{#<section id="gift" class="gift">
+    <hr class="hr">
+
     <div class="container">
-        <div class="row">
-            <div class="col-lg-10 col-lg-offset-1 text-center">
-                <h4><strong>KOSSLAB</strong>
-                </h4>
-                <p>(06151) 서울시 강남구 테헤란로 311, 7층 KossLab(역삼동 702-10 아남타워)
-                    <br></p>
-                <ul class="list-unstyled">
-                    <li><i class="fa fa-phone fa-fw"></i> 02-561-0552</li>
+        <div class="row gift-condition">
+            <div class="col-sm-12">
+                <h2>참관 혜택</h2>
+
+                <p class="lead">
+                    행사에 참여하신 모든 분께 점심 식권 및 다과를 제공합니다.
+                    <br>
+                    또한 사전 등록 후 참여하신 <span class="strong">선착순 100 분께 사은품</span>을,
+                    강의 종료 후 <span class="strong">추첨을 통해 경품</span>을 드립니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="row visible-xs">
+            <div class="col-xs-12">
+                <h3>경품</h3>
+                <ul class="gift-1">
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">1 명</span>
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">1 명</span>
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">3 명</span>
+                    </li>
                 </ul>
-                <br>
-                <hr class="small">
-                <p class="text-muted">Copyrightⓒ 공개SW개발자Lab All RIGHTS RESERVED</p>
+            </div>
+            <div class="col-xs-12">
+                <h3>사은품</h3>
+                <ul class="gift-2">
+                    <li>
+                        Samsung Galaxy Note 7
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row hidden-xs">
+            <div class="col-sm-8 col-xs-12 text-center">
+                <div class="product">
+                    <img src="//placeimg.com/195/195/1" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">1 명</span>
+                </div>
+                <div class="product">
+                    <img src="//placeimg.com/195/195/2" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">1 명</span>
+                </div>
+                <div class="product">
+                    <img src="//placeimg.com/195/195/3" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">3 명</span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12 text-center divider">
+                <div class="product">
+                    <img src="//placeimg.com/300/195/1" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">선착순</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 notice">
+                <p>
+                    행사 주관기관의 사정에 의해 일부 품목 및 제품, 수량이 변경될 수 있습니다.
+                </p>
             </div>
         </div>
     </div>
-    <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
-</footer>
-<script src="/lib/jquery/dist/jquery.min.js"></script>
-<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/lib/jquery.typist/dist/jquery.typist.min.js"></script>
-<script>
-    // Animate Typo
-    $(function () {
-        $('#typing_text').typist({
-            speed: 8,
-            text: '2016년 공개SW개발자LAB 컨퍼런스'
-        });
-        $('#typing_text_subtitle').typist({
-            speed: 32,
-            cursor: false,
-            text: '- 2016 KOSSCON -'
-        });
-    });
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=\\#]:not([href=\\#],[data-toggle],[data-target],[data-slide])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    //#to-top button appears after scrolling
-    var fixed = false;
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 250) {
-            if (!fixed) {
-                fixed = true;
-                // $('#to-top').css({position:'fixed', display:'block'});
-                $('#to-top').show("slow", function() {
-                    $('#to-top').css({
-                        position: 'fixed',
-                        display: 'block'
-                    });
-                });
-            }
-        } else {
-            if (fixed) {
-                fixed = false;
-                $('#to-top').hide("slow", function() {
-                    $('#to-top').css({
-                        display: 'none'
-                    });
-                });
-            }
-        }
-    });
-    // Disable Google Maps scrolling
-    // See http://stackoverflow.com/a/25904582/1607849
-    // Disable scroll zooming and bind back the click event
-    var onMapMouseleaveHandler = function (event) {
-        var that = $(this);
-        that.on('click', onMapClickHandler);
-        that.off('mouseleave', onMapMouseleaveHandler);
-        that.find('iframe').css("pointer-events", "none");
-    };
-    var onMapClickHandler = function (event) {
-        var that = $(this);
-        // Disable the click handler until the user leaves the map area
-        that.off('click', onMapClickHandler);
-        // Enable scrolling zoom
-        that.find('iframe').css("pointer-events", "auto");
-        // Handle the mouse leave event
-        that.on('mouseleave', onMapMouseleaveHandler);
-    };
-    // Enable map zooming with mouse scroll when the user clicks the map
-    $('.map').on('click', onMapClickHandler);
-</script>
+</section>#}
+
+<section id="prev_con" class="pre-con">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 title">
+                <h4>지난 KOSSCON 다시보기</h4>
+            </div>
+            <div class="col-sm-6 link">
+                <div class="links">
+                    <a href="/2015"><span>KOSSCON 2015 <i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                    <a href="/2014"><span>KOSSCON 2014 <i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include './include/footer.html' %}
 
 </body>
-
 </html>
