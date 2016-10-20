@@ -239,7 +239,7 @@ function updateReservationStatus(status, prevStatus) {
 
     // decrease
     if (prevStatus) {
-        prevStatus = prevStatus.split(',');
+        prevStatus = prevStatus.split(','); // in fact it's bad habit, i know. will go into details next time.
 
         prevStatus.map(function (item) {
             db.decreaseReservationStatus(mysql, item, function (error, result) {
@@ -250,7 +250,7 @@ function updateReservationStatus(status, prevStatus) {
 
     // increase
     if (status) {
-        status = status.split(',');
+        status = status.split(','); // in fact it's bad habit, i know. will go into details next time.
 
         status.map(function (item) {
             db.increaseReservationStatus(mysql, item, function (error, result) {
