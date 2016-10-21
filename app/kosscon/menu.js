@@ -45,6 +45,18 @@ var Menu = [
         url: '/register'
     },
     {
+        id: 'register_confirm',
+        name: 'Reservation Confirm',
+        useSubPath: true,
+        url: '/register/confirm'
+    },
+    {
+        id: 'edm_1',
+        name: 'Direct Mail 1',
+        useSubPath: true,
+        url: '/register/dm1'
+    },
+    {
         id: '2015index',
         name: 'KOSSCON 2015',
         url: '/2015'
