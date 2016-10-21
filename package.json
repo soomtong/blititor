@@ -32,6 +32,7 @@
     "multer": "^1.1.0",
     "mysql": "latest",
     "neo-async": "^1.7.4",
+    "nodemailer": "^2.6.4",
     "nunjucks": "^2.4.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

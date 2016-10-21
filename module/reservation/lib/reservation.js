@@ -3,12 +3,15 @@ var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
 var request = require('superagent');
+var nodemailer = require('nodemailer');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');
 
 var db = require('./database');
+
+var auth = require('../../../config').service.nodemailer.auth;
 
 function reservationForm(req, res) {
     var params = {
@@ -135,6 +138,8 @@ function createReservation(req, res) {
                     return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
                 }
 
+                sendConfirmMail(reservationData.email);
+
             });
         } else {
             // go insert
@@ -259,6 +264,42 @@ function updateReservationStatus(status, prevStatus) {
         });
     }
 }
+
+function sendConfirmMail(email) {
+    // send updated confirm mail
+    var transporter = nodemailer.createTransport({
+        service: 'gmail', // no need to set host or port etc.
+        auth: {
+            user: auth.user,
+            pass: auth.pass
+        }
+    });
+
+    // create template based sender function
+    var sendMail = transporter.templateSender({
+        subject: 'Hello ✔',
+        text: 'Hello, {{name}}', // plaintext body
+        html: '<p>Hello, <strong>{{name}}</strong> <strong>{{mode}}</strong></p>' // html body
+    }, {
+        from: '"KossCon 관리자" <kosscon@kosslab.kr>',
+    });
+
+    var receiver = {
+        name: '김철수',
+        mode: '갱신'
+    };
+
+    // use template based sender to send a message
+    sendMail({to: email}, receiver, function (err, info) {
+        if (err) {
+            console.log('Error');
+        } else {
+            console.log('Password reminder sent');
+        }
+    });
+}
+
+sendConfirmMail('soomtong@gmail.com');
 
 module.exports = {
     form: reservationForm,
