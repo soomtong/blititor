@@ -11,7 +11,12 @@ var connection = require('../../../core/lib/connection');
 
 var db = require('./database');
 
-var auth = require('../../../config').service.nodemailer.auth;
+var gmailAuth = require('../../../config').service.nodemailer.auth;
+var slackAPI = {
+    "uri": "https://slack.com/api/chat.postMessage",
+    "token": "xoxp-90827312708-90841972183-94710945638-d6149c93a3a9840e30c299796f91d3d8",
+    "channel": "C2SM667BP"
+};
 
 function reservationForm(req, res) {
     var params = {
@@ -270,8 +275,8 @@ function sendConfirmMail(email) {
     var transporter = nodemailer.createTransport({
         service: 'gmail', // no need to set host or port etc.
         auth: {
-            user: auth.user,
-            pass: auth.pass
+            user: gmailAuth.user,
+            pass: gmailAuth.pass
         }
     });
 
@@ -292,14 +297,29 @@ function sendConfirmMail(email) {
     // use template based sender to send a message
     sendMail({to: email}, receiver, function (err, info) {
         if (err) {
-            console.log('Error');
+            console.log('Error', err, info);
         } else {
             console.log('Password reminder sent');
         }
     });
 }
 
-sendConfirmMail('soomtong@gmail.com');
+function sendSlackMessage(message) {
+    request
+        .post(slackAPI.uri)
+        .type('form')
+        .send({
+            token: slackAPI.token,
+            channel: slackAPI.channel,
+            text: message})
+        .end(function (error, response) {
+            // Calling the end function will send the request
+            if (error || !response.body.ok) console.log(error, response.body.ok);
+        });
+}
+
+// sendConfirmMail('soomtong@gmail.com');
+// sendSlackMessage('Test!!!');
 
 module.exports = {
     form: reservationForm,
