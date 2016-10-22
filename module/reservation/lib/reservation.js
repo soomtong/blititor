@@ -11,10 +11,10 @@ var connection = require('../../../core/lib/connection');
 
 var db = require('./database');
 
-var gmailAuth = require('../../../config').service.nodemailer.auth;
+var mailAuth = require('../../../config').service.nodemailer;
 var slackAPI = {
     "uri": "https://slack.com/api/chat.postMessage",
-    "token": "xoxp-90827312708-90841972183-94710945638-d6149c93a3a9840e30c299796f91d3d8",
+    "token": require('../../../config').service.slack.token,
     "channel": "C2SM667BP"
 };
 
@@ -273,10 +273,10 @@ function updateReservationStatus(status, prevStatus) {
 function sendConfirmMail(email) {
     // send updated confirm mail
     var transporter = nodemailer.createTransport({
-        service: 'gmail', // no need to set host or port etc.
+        host: mailAuth.host,
         auth: {
-            user: gmailAuth.user,
-            pass: gmailAuth.pass
+            user: mailAuth.auth.user,
+            pass: mailAuth.auth.pass
         }
     });
 
