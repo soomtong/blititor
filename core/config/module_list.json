@@ -75,8 +75,32 @@
         "core": false
     },
     {
+        "folder": "mailgun",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {},
+        "core": false
+    },
+    {
         "folder": "manager",
         "useDatabase": false,
+        "ignore": false,
+        "tables": {},
+        "core": false
+    },
+    {
+        "folder": "reservation",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "reservationList": "b_reservation_list",
+            "reservationStatus": "b_reservation_status"
+        },
+        "core": false
+    },
+    {
+        "folder": "slack",
+        "useDatabase": true,
         "ignore": false,
         "tables": {},
         "core": false
