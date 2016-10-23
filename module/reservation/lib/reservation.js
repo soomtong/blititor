@@ -3,7 +3,8 @@ var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
 var request = require('superagent');
-var nodemailer = require('nodemailer');
+var mailgun = require('mailgun-js');
+var mailcomposer = require('mailcomposer');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -11,12 +12,11 @@ var connection = require('../../../core/lib/connection');
 
 var db = require('./database');
 
-var mailAuth = require('../../../config').service.nodemailer;
-var slackAPI = {
-    "uri": "https://slack.com/api/chat.postMessage",
-    "token": require('../../../config').service.slack.token,
-    "channel": "C2SM667BP"
-};
+var slackToken = misc.serviceToken('slack');
+var mailgunToken = misc.serviceToken('mailgun');
+
+var slackProvider = misc.serviceProvider('slack');
+var mailgunProvider = misc.serviceProvider('mailgun');
 
 function reservationForm(req, res) {
     var params = {
@@ -103,6 +103,7 @@ function createReservation(req, res) {
 
     findReservationByGiven(reservationData, function (error, reservation) {
 
+        var message;
         var mysql = connection.get();
 
         if (reservation) {
@@ -132,6 +133,16 @@ function createReservation(req, res) {
 
                 params.name = reservationData.name;
                 params.mode = '갱신 완료';
+                params.message = `${params.name} (${reservationData.phone}) 님의 사전 예약이 ${params.mode}  되었습니다.`;
+
+                // send notifications
+                sendSlackMessage(params.message);
+                sendConfirmMail({
+                    email: reservationData.email,
+                    name: params.name,
+                    mode: params.mode
+                });
+
 
                 if (sectionStatusData.length) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
@@ -142,9 +153,6 @@ function createReservation(req, res) {
                 } else {
                     return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
                 }
-
-                sendConfirmMail(reservationData.email);
-
             });
         } else {
             // go insert
@@ -168,6 +176,15 @@ function createReservation(req, res) {
 
                 params.name = reservationData.name;
                 params.mode = '입력 완료';
+                params.message = `${params.name} (${reservationData.phone}) 님의 사전 예약이 ${params.mode}  되었습니다.`;
+
+                // send notifications
+                sendSlackMessage(params.message);
+                sendConfirmMail({
+                    email: reservationData.email,
+                    name: params.name,
+                    mode: params.mode
+                });
 
                 if (sectionStatusData.length) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
@@ -195,6 +212,13 @@ function generateSecret(req, res) {
 
     // post request to phone message service
     var host = 'http://welltag.com/kosscon2016/sms_send.asp';
+
+    return res.send({
+        "status": "success",
+        "data": {
+            "phone": params.phone
+        }
+    });
 
     request
         .post(host)
@@ -270,41 +294,55 @@ function updateReservationStatus(status, prevStatus) {
     }
 }
 
-function sendConfirmMail(email) {
+function sendConfirmMail(receiver) {
+    var mailer = mailgun({apiKey: mailgunToken, domain: mailgunProvider});
+
+    var mailTitle = `코스콘 2016 사전 신청이 ${receiver.mode} 되었습니다.`;
+    var mailSender = '"KossCon 관리자" <kosscon@kosslab.kr>';
+
+    console.log(receiver);
+
     // send updated confirm mail
-    var transporter = nodemailer.createTransport({
-        host: mailAuth.host,
-        auth: {
-            user: mailAuth.auth.user,
-            pass: mailAuth.auth.pass
-        }
-    });
+    fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'page', 'register', 'confirm.html'), function (err, confirmHtml) {
+        if (err) return winston.error("Can't read confirm mail html template");
 
-    // create template based sender function
-    var sendMail = transporter.templateSender({
-        subject: 'Hello ✔',
-        text: 'Hello, {{name}}', // plaintext body
-        html: '<p>Hello, <strong>{{name}}</strong> <strong>{{mode}}</strong></p>' // html body
-    }, {
-        from: '"KossCon 관리자" <kosscon@kosslab.kr>',
-    });
+        fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'page', 'register', 'confirm.txt'), function (err, conformText) {
+            if (err) return winston.error("Can't read confirm mail text template");
 
-    var receiver = {
-        name: '김철수',
-        mode: '갱신'
-    };
+            var mail = mailcomposer({
+                from: mailSender,
+                to: receiver.email,
+                subject: mailTitle,
+                body: conformText.toString().replace('[[*1*]]', receiver.name).replace('[[*2*]]', receiver.mode),
+                html: confirmHtml.toString().replace('[[*1*]]', receiver.name).replace('[[*2*]]', receiver.mode)
+            });
 
-    // use template based sender to send a message
-    sendMail({to: email}, receiver, function (err, info) {
-        if (err) {
-            console.log('Error', err, info);
-        } else {
-            console.log('Password reminder sent');
-        }
+            mail.build(function (mailBuildError, message) {
+                var dataToSend = {
+                    to: receiver.email,
+                    message: message.toString('ascii')
+                };
+
+                mailer.messages().sendMime(dataToSend, function (sendError, body) {
+                    if (sendError) {
+                        return winston.error(sendError);
+                    }
+
+                    winston.info('Sent confirm mail to', receiver.email);
+                });
+            });
+        });
     });
 }
 
 function sendSlackMessage(message) {
+    var slackChannel = "C2SM667BP";
+    var slackAPI = {
+        "uri": slackProvider,
+        "token": slackToken,
+        "channel": slackChannel
+    };
+
     request
         .post(slackAPI.uri)
         .type('form')
@@ -317,9 +355,6 @@ function sendSlackMessage(message) {
             if (error || !response.body.ok) console.log(error, response.body.ok);
         });
 }
-
-// sendConfirmMail('soomtong@gmail.com');
-// sendSlackMessage('Test!!!');
 
 module.exports = {
     form: reservationForm,

@@ -2,6 +2,25 @@
 
 ## Development Log
 
+### how to set Fish shell environment variable 
+
+```
+set -x NODE_ENV production
+```
+
+### Service Provider Token
+
+describe in `config.json` like below
+
+```
+"service": {
+    "token": {
+        "slack": "1234--9898",
+        "mailgun": "1212--8882"
+    }
+}
+```
+
 ### Page's title in a browser
 
 there are locals exposing routines in each steps

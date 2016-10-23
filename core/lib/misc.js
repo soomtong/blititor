@@ -7,6 +7,33 @@ var siteDefault = require('../config/site_default.json');
 var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
 
+var serviceTokens = loadServiceToken();
+var serviceProviders = loadServiceProvider();
+
+function loadServiceToken() {
+    var tokens;
+
+    try {
+        tokens = require('../../config.json').service.token;
+    } catch (e) {
+        winston.error("Can't Get Service Provider Token in `config.json`");
+    }
+
+    return tokens || {};
+}
+
+function loadServiceProvider() {
+    var providers;
+
+    try {
+        providers = require('../../config.json').service.provider;
+    } catch (e) {
+        winston.error("Can't Get Service Provider Token in `config.json`");
+    }
+
+    return providers || {};
+}
+
 function getUserPrivilege() {
     // return userPrivilege;
     // for code assist
@@ -268,6 +295,26 @@ function checkThemeConfigFile(configFile) {
     }
 }
 
+function serviceToken(vendor) {
+    var token;
+
+    token = serviceTokens[vendor];
+
+    if (!token) winston.error("No exist '" + vendor + "' token information");
+
+    return token || "";
+}
+
+function serviceProvider(vendor) {
+    var provider;
+
+    provider = serviceProviders[vendor];
+
+    if (!provider) winston.error("No exist '" + vendor + "' provider information");
+
+    return provider || "";
+}
+
 module.exports = {
     getUserPrivilege: getUserPrivilege,
     setUserPrivilege: setUserPrivilege,
@@ -277,6 +324,8 @@ module.exports = {
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,
     commonToken: commonToken,
+    serviceToken: serviceToken,
+    serviceProvider: serviceProvider,
     showRouteTable: showRouteTable,
     showGlobalVar: showGlobalVar,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
