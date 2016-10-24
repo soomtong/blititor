@@ -31,7 +31,7 @@ function mailgunMessage1(receiver) {
     var mailer = mailgun({apiKey: mailgunToken, domain: mailgunProvider});
 
     var mailTitle = `KOSSCON 2016 사전 신청이 ${receiver.mode} 되었습니다.`;
-    var mailSender = '"KossCon 관리자" <kosscon@kosslab.kr>';
+    var mailSender = '"KOSSCON 관리자" <kosscon@kosslab.kr>';
 
     // send updated confirm mail
     fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'page', 'register', 'confirm.html'), function (err, confirmHtml) {
