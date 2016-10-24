@@ -47,6 +47,9 @@ $(function() {
     // Bind Form
     $('#form_submit').on('click', sendReservation);
 
+    // Reset Radio
+    $('#skip_tutorial').on('click', resetTutorials);
+
     // Enable map zooming with mouse scroll when the user clicks the map
     // $('#location').off('click', '.map').on('click', '.map', onMapClickHandler);
     $('.map').off('click').on('click', onMapClickHandler);
@@ -217,4 +220,13 @@ var sendReservation = function (event) {
 
         return false;
     }
+};
+
+var resetTutorials = function (event) {
+    $('input[name="register_apply_tutorial1"]').removeAttr('checked');
+    $('input[name="register_apply_tutorial2"]').removeAttr('checked');
+    $('input[name="register_apply_tutorial3"]').removeAttr('checked');
+    $('input[name="register_apply_tutorial1"]').eq(0).prop('checked', true);
+    $('input[name="register_apply_tutorial2"]').eq(0).prop('checked', true);
+    $('input[name="register_apply_tutorial3"]').eq(0).prop('checked', true);
 };
