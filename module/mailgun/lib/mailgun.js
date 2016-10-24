@@ -30,7 +30,7 @@ function sendMail(composer, mailer, receiver) {
 function mailgunMessage1(receiver) {
     var mailer = mailgun({apiKey: mailgunToken, domain: mailgunProvider});
 
-    var mailTitle = `코스콘 2016 사전 신청이 ${receiver.mode} 되었습니다.`;
+    var mailTitle = `KOSSCON 2016 사전 신청이 ${receiver.mode} 되었습니다.`;
     var mailSender = '"KossCon 관리자" <kosscon@kosslab.kr>';
 
     // send updated confirm mail

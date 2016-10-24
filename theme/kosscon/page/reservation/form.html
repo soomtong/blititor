@@ -57,7 +57,7 @@
                         <div class="form-group phone">
                             <label for="phone" class="col-sm-2 control-label">휴대폰</label>
                             <div class="col-sm-10 form-inline">
-                                <input type="tel" name="register_phone" class="form-control" style="min-width: 55%" id="phone" placeholder="010-1234-5678 또는 01012345678" size="20" maxlength="14">
+                                <input type="tel" name="register_phone" class="form-control" style="min-width: 55%" id="phone" placeholder="01012345678" size="20" maxlength="14">
                                 <button type="button" class="btn btn-info btn-lg secret">전화번호 인증 받기</button>
                                 <input type="number" name="register_phone_secret" class="form-control" style="min-width: 35%; display: none" id="phone_secret" placeholder="0000" maxlength="4" min="0" max="9999">
                                 <p class="small message phone_secret_message" id="phone_secret_message" style="display: none;">전화번호 인증 과정이 필요합니다.</p>
@@ -110,9 +110,14 @@
                             각 세션에 대한 <span class="strong">정보</span>와 튜토리얼의 <span class="strong">난이도</span>는 프로그램 페이지를 참고해 주세요.
                         </p>
 
-                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 1</h4>
+                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">11:10-12:30</span></h4>
 
                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <label class="radio">
+                                    <input type="radio" name="register_apply_tutorial1" value="" checked>  참여하지 않음
+                                </label>
+                            </li>
                             {% for index in range(0,4) %}
                             <li class="list-group-item">
                                 <label class="radio">
@@ -131,9 +136,13 @@
                             {% endfor %}
                         </ul>
 
-                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 2</h4>
-
+                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 2 <span class="small">13:30-15:30</span></h4>
                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <label class="radio">
+                                    <input type="radio" name="register_apply_tutorial2" value="" checked>  참여하지 않음
+                                </label>
+                            </li>
                             {% for index in range(4,8) %}
                             <li class="list-group-item">
                                 <label class="radio">
@@ -152,9 +161,14 @@
                             {% endfor %}
                         </ul>
 
-                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 3</h4>
+                        <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 3 <span class="small">15:50-17:50</span></h4>
 
                         <ul class="list-group">
+                            <li class="list-group-item">
+                                <label class="radio">
+                                    <input type="radio" name="register_apply_tutorial3" value="" checked>  참여하지 않음
+                                </label>
+                            </li>
                             {% for index in range(8,12) %}
                             <li class="list-group-item">
                                 <label class="radio">

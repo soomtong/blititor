@@ -37,7 +37,7 @@ var moment = require('moment');
 var mkdirp = require('mkdirp');
 var args = require('minimist');
 
-// set log
+// set log level
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {
     colorize: true,
