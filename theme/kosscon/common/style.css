@@ -520,11 +520,11 @@ body {
 }
 .location .transport .trans p {
   position: relative;
-  margin-left: 8.8em;
+  margin-left: 9.8em;
 }
 .location .transport .trans .strong {
   position: absolute;
-  left: -8em;
+  left: -9em;
   top: 0;
   color: #222222;
   font-weight: bold;
