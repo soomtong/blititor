@@ -4,26 +4,255 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Bootstrap Core CSS -->
-    <link href="https://kosscon.kr/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="https://kosscon.kr/kosscon/common/style.css" type="text/css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            font-family: 나눔바른고딕, NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", 돋움, dotum, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            height: 501px;
+            line-height: 20px;
+            margin: 0px;
+        }
+
+        .header {
+            background: url(http://dm.kosscon.com/home-hero-1.jpg) no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .hero {
+            color: #FFFFFF;
+            display: table;
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+        }
+
+        .text-vertical-center {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .page-header {
+            position: relative;
+            border-bottom: 1px solid rgb(238, 238, 238);
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            font-family: Roboto, "Noto Sans KR", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            height: 280px;
+            line-height: 20px;
+            margin: 0px;
+            min-height: 280px;
+            padding: 14px;
+        }
+
+        .page-header h1 {
+            line-height: 1.1;
+            text-align: left;
+            position: absolute;
+            left: 300px;
+            top: 120px;
+            color: #FFFFFF;
+            font-size: 2.2em;
+            letter-spacing: 3px;
+        }
+
+        .about {
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            font-size: 14px;
+            line-height: 20px;
+            margin: 50px 80px 0px;
+        }
+
+        .about h1 {
+            color: #4A90E2;
+            font-size: 2.4em;
+            line-height: 1.1;
+            padding: 8px 0;
+        }
+
+        .about h2 {
+            color: #4A90E2;
+            margin: 1em 2em;
+            font-size: 2.4em;
+            line-height: 1.2;
+        }
+
+        .about p {
+            font-size: 1.4em;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+
+        .btn-lg {
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.3333333;
+            border-radius: 6px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .about .category {
+            margin-top: 8em;
+            text-align: center;
+        }
+
+        .about .category span {
+            margin: 4em auto;
+            padding: 76px 18px 0;
+            color: #ABABAB;
+        }
+
+        .about .strong {
+            font-weight: bold;
+            padding-right: 2px;
+        }
+
+        .about .link {
+            margin-top: 4em;
+        }
+
+        .table tr {
+            border-top: 1px solid #979797;
+        }
+
+        .table td {
+            padding: 1em 0;
+            vertical-align: top;
+            border-top: 1px solid #DFDFDF;
+        }
+
+        .footer {
+            background: #4c82de;
+            background: -webkit-linear-gradient(86deg, #4c82de, #5257cf);
+            background: -o-linear-gradient(86deg, #4c82de, #5257cf);
+            background: -moz-linear-gradient(86deg, #4c82de, #5257cf);
+            background: linear-gradient(86deg, #4c82de, #5257cf);
+            background-clip: border-box;
+            background-origin: padding-box;
+            background-size: auto;
+            box-sizing: border-box;
+            color: rgb(155, 155, 155);
+            display: block;
+            font-family: 나눔바른고딕, NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", 돋움, dotum, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            min-height: 140px;
+            padding-top:40px;
+            padding-left: 70px;
+            margin-top: 140px;
+        }
+
+        .footer .logo {
+            height: 50px;
+            margin-right: 50px;
+        }
+
+        .text-vertical-center h1 {
+            margin: 0 1.4em 1em 1.4em;
+            padding: 0;
+            font-size: 4.6em;
+            font-weight: bold;
+            font-family: "Noto Sans KR", "Nanum Gothic", "돋움", Arial, Verdana, sans-serif;
+        }
+
+        .text-vertical-center h2 {
+            font-size: 1.7em;
+        }
+
+        .row {
+            margin-right: -15px;
+            margin-left: -15px;
+            box-sizing: border-box;
+        }
+
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        @media (min-width: 768px) {
+            .col-sm-2 {
+                width: 16.66666667%;
+                float: left;
+            }
+        }
+
+        @media only screen and (min-width: 320px) {
+            .text-vertical-center h1 {
+                font-size: 1.8em;
+            }
+        }
+        @media only screen and (min-width: 360px) {
+            .text-vertical-center h1 {
+                font-size: 1.9em;
+            }
+        }
+        @media only screen and (min-width: 375px) {
+            .text-vertical-center h1 {
+                font-size: 2.2em;
+            }
+        }
+        @media only screen and (min-width: 414px) {
+            .text-vertical-center h1 {
+                font-size: 3.2em;
+            }
+        }
+        @media only screen and (min-width: 768px) {
+            .text-vertical-center h1 {
+                font-size: 4.2em;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<header id="top" class="header" style="background: url(https://kosscon.kr//kosscon/common/asset/home-hero-1.jpg) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;">
+<header id="top" class="header">
 
-    <div class="logo">
-        <a href="https://kosscon.kr"><img class="img-responsive" src="https://kosscon.kr/kosscon/common/asset/kosscon-2016-logo.png" alt="KOSSCON 2016"></a>
+    <div class="logo" style="padding: 2em 0 0 3em;">
+        <a href="https://kosscon.kr"><img class="img-responsive" style="height: 63px;" src="http://dm.kosscon.com/kosscon-2016-logo.png" alt="KOSSCON 2016"></a>
     </div>
 
     <section id="hero" class="hero">
@@ -36,7 +265,7 @@
     </section>
 </header>
 
-<section id="about" class="about">
+<div id="about" class="about">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -67,29 +296,29 @@
                     <br>
                 </p>
 
-                <div class="row" style="padding: 1em 2em;">
+                <div class="row" style="padding: 1em 2em;height: 10em;">
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-mobile.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-mobile.png) top center no-repeat;
                         background-size: 60px 60px;">Mobile</span>
                     </div>
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-web.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-web.png) top center no-repeat;
                         background-size: 60px 60px;">Web</span>
                     </div>
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-iot.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-iot.png) top center no-repeat;
                         background-size: 60px 60px;">IoT</span>
                     </div>
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-app.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-app.png) top center no-repeat;
                         background-size: 60px 60px;">App</span>
                     </div>
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-kernel.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-kernel.png) top center no-repeat;
                         background-size: 60px 60px;">Kernel</span>
                     </div>
                     <div class="category col-sm-2 col-xs-6">
-                        <span class="" style="background: url(https://kosscon.kr/kosscon/common/asset/home-subject-platform.png) top center no-repeat;
+                        <span class="" style="background: url(http://dm.kosscon.com/home-subject-platform.png) top center no-repeat;
                         background-size: 60px 60px;">Platform</span>
                     </div>
                 </div>
@@ -121,42 +350,15 @@
 
         </div>
     </div>
-</section>
+</div>
 
-<footer id="footer" class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 sponsor">
-                <ul class="upper">
-                    <h3>주최</h3>
-                    <li class="msip">
-                        <a href="http://www.msip.go.kr">
-                            <img src="/kosscon/common/asset/footer-msip-logo.png" alt="MSIP">
-                        </a>
-                    </li>
-                </ul>
-                <ul class="lower">
-                    <h3>주관</h3>
-                    <li class="nipa">
-                        <a href="http://www.nipa.kr">
-                            <img src="/kosscon/common/asset/footer-nipa-logo.png" alt="NIPA">
-                        </a>
-                    </li>
-                    <li class="ipa">
-                        <a href="http://www.koipa.or.kr">
-                            <img src="/kosscon/common/asset/footer-ipa-logo.png" alt="IPA">
-                        </a>
-                    </li>
-                    <li class="kosslab">
-                        <a href="http://www.kosslab.kr">
-                            <img src="/kosscon/common/asset/footer-kosslab-logo.png" alt="KOSSLAB">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+<div class="footer">
+    <img class="logo" src="http://dm.kosscon.com/kosscon-2016-logo.png" alt="KOSSCON 2016">
+    <span class="sponsor">
+        <img src="http://dm.kosscon.com/sponsor.png" alt="SPONSOR">
+    </span>
+</div>
+
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
