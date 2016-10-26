@@ -374,6 +374,10 @@ body {
   margin-top: 3.8em;
   margin-bottom: 1.5em;
 }
+.program h2 span.small {
+  display: block;
+  font-size: 0.6em;
+}
 .program .small {
   color: #979797;
   padding-left: 3px;
@@ -412,6 +416,51 @@ body {
   .program .table-responsive {
     font-size: 1.0em;
   }
+}
+.tutorial h3 {
+  text-align: center;
+  font-size: 1.4em;
+}
+.tutorial .tag {
+  padding-bottom: 4em;
+}
+.tutorial .profile {
+  padding-top: 2em;
+  color: #979797;
+  text-align: center;
+  font-size: 1.1em;
+}
+.tutorial .description {
+  margin-top: 3em;
+  margin-bottom: 1em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #DFDFDF;
+}
+.tutorial .desc-list {
+  margin-top: 10px;
+  margin-left: -30px;
+  color: #333333;
+  list-style: url('data:image/gif;base64,R0lGODlhBQAKAIABAAAAAP///yH5BAEAAAEALAAAAAAFAAoAAAIIjI+ZwKwPUQEAOw==');
+}
+.tutorial dt {
+  text-align: left;
+  color: #4A90E2;
+  font-size: 1.2em;
+  font-weight: normal;
+  width: 120px;
+}
+.tutorial dd {
+  font-size: 1.2em;
+  margin-left: 130px;
+  color: #979797;
+}
+.go-reservation .lead {
+  padding-top: 5em;
+  font-size: 1.2em;
+}
+.go-reservation .link {
+  font-size: 1.4em;
 }
 .register form {
   margin-top: 4em;
