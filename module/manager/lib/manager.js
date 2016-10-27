@@ -455,6 +455,28 @@ function reservationList(req, res) {
     });
 }
 
+function reservationListFull(req, res) {
+    var params = {
+        title: "운영자 화면",
+        cate: Number(req.query['c']) || 1
+    };
+
+    var mysql = connection.get();
+
+    db.readReservationListFull(mysql, Number(params.cate), function (error, result) {
+        params.pagination = false;
+        params.total = result.total;
+        params.reservationList = result.reservationList;
+
+        params.reservationList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
+            item.updated_at = common.dateFormatter(item.updated_at, 'MM-DD HH:m');
+        });
+
+        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation_download', params);
+    });
+}
+
 function reservationStatus(req, res) {
     var params = {
         title: "운영자 화면",
@@ -477,6 +499,33 @@ function reservationStatus(req, res) {
     });
 }
 
+function reservationTutorialStatus(req, res) {
+    var params = {
+        status_id: req.body.id || req.query.id,
+        category: req.body.cate || 1,
+        xhr: req.xhr || false
+    };
+
+    var mysql = connection.get();
+
+    db.readTutorialStatus(mysql, params, function (error, result) {
+        return res.send(result);
+    });
+}
+/*
+
+var mysql = connection.get();
+var params = {
+    status_id: '2',
+    category: '1',
+    xhr: false
+};
+
+db.readTutorialStatus(mysql, params, function (error, result) {
+    console.log(error, result);
+});
+*/
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -491,5 +540,7 @@ module.exports = {
     galleryImageSort: galleryImageSort,
     galleryImageDelete: galleryImageDelete,
     reservationList: reservationList,
+    reservationListFull: reservationListFull,
     reservationStatus: reservationStatus,
+    reservationTutorialStatus: reservationTutorialStatus,
 };

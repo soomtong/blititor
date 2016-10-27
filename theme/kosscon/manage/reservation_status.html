@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="pure-g">
-            <div class="pure-u-1 gallery">
+            <div class="pure-u-1 reservation-status">
                 <table class="pure-table pure-table-horizontal table-wide">
                     <thead>
                     <tr id="cate_{{ item.id }}" class="toggle-category" data-id="{{ item.id }}">
@@ -54,7 +54,7 @@
                     {% for item in reservationStatus %}
                     <tr id="holder_{{ item.id }}" class="gallery-wrap" data-id="{{ item.id }}">
                         <td data-sort="{{ item.sort }}">{{loop.index}}</td>
-                        <td>{{ item.title }} {{ item.sub_title }}</td>
+                        <td class="title"><a href="{{site.root}}{{ route.manage_root + route.manage.tutorialStatus }}?id={{item.id}}">{{ item.title }}</a><span class="small">{{ item.sub_title }}</span></td>
                         <td>{{ item.counter }}</td>
                         <td>{{item.max_count}}</td>
                     </tr>
@@ -68,5 +68,7 @@
     {% include './include/footer.html' %}
 
 </div>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="{{site.manageTheme}}/manage/common/tutorial_status.js"></script>
 </body>
 </html>

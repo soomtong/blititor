@@ -270,6 +270,57 @@ function selectReservationList(connection, page, category, callback) {
     });
 }
 
+function readReservationListFull(connection, category, callback) {
+    var result = {
+        total: 0,
+        reservationList: [],
+        statusInfo: {}
+    };
+
+    selectReservationStatus(connection, category, function (error, statusInfo) {
+
+        statusInfo.map(function (item) {
+            result.statusInfo[item.id] = item.title;
+        });
+
+        connection.query(query.countAllReservationList, [tables.reservationList, category], function (err, rows) {
+
+            result.total = rows[0]['count'] || 0;
+
+            connection.query(query.readReservationList, [tables.reservationList, category], function (err, rows) {
+                if (err) {
+                    winston.error(err);
+                } else {
+                    result.reservationList = rows;
+
+                    result.reservationList.map(function (item) {
+                        if (item.status && item.status.length) {
+                            var statusTitle = [];
+                            var status = item.status.split(',');
+
+                            status.map(function (info) {
+                                statusTitle.push({id: info, title: result.statusInfo[info]});
+                            });
+
+                            item.statusInfo = statusTitle;
+                        }
+                    });
+                }
+
+                callback(err, result);
+            });
+
+        });
+    });
+}
+
+function readTutorialStatus(connection, params, callback) {
+    var statusField = 'status';
+    connection.query(query.readTutorialStatusList, [tables.reservationList, params.category, statusField], function (err, rows) {
+        if (!err) callback(err, rows);
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
@@ -282,4 +333,6 @@ module.exports = {
     updateGalleryImage: updateGalleryImage,
     readReservationStatus: selectReservationStatus,
     readReservationList: selectReservationList,
+    readReservationListFull: readReservationListFull,
+    readTutorialStatus: readTutorialStatus,
 };

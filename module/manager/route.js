@@ -32,6 +32,8 @@ router.post(routeTable.manage_root + routeTable.manage.galleryCategory, AccountM
 router.get(routeTable.manage_root + routeTable.manage.galleryImage, AccountMiddleware.checkManager, manager.galleryImageList);
 // for reservation
 router.get(routeTable.manage_root + routeTable.manage.reservation, AccountMiddleware.checkManager, manager.reservationList);
+router.get(routeTable.manage_root + routeTable.manage.reservationClean, AccountMiddleware.checkManager, manager.reservationListFull);
 router.get(routeTable.manage_root + routeTable.manage.tutorial, AccountMiddleware.checkManager, manager.reservationStatus);
+router.get(routeTable.manage_root + routeTable.manage.tutorialStatus, AccountMiddleware.checkManager, manager.reservationTutorialStatus);
 
 module.exports = router;

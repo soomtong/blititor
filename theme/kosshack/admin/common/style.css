@@ -271,3 +271,9 @@ input.pure-file-input[type=file] {
 .progress-bar-success {
     background-color: #5cb85c;
 }
+
+.reservation-status .title .small {
+    padding-left: 1em;
+    color: #acacac;
+    font-size: 0.8em;
+}
