@@ -119,6 +119,11 @@ var ManagerMenu = [
         id: 'reservation',
         name: '예약자 명단',
         url: routeTable.manage_root + routeTable.manage.reservation
+    },
+    {
+        id: 'tutorial',
+        name: '튜토리얼 현황',
+        url: routeTable.manage_root + routeTable.manage.tutorial
     }
 ];
 

@@ -83,6 +83,7 @@ function getRouteTable() {
             "login": "/login",
             "account": "/account",
             "reservation": "/reservation",
+            "tutorial": "/tutorial",
             "gallery": "/gallery",
             "galleryCategory": "/gallery/category",
             "galleryImage": "/gallery/image",

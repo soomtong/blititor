@@ -16,6 +16,8 @@ var tables = {
     guestbook: common.databaseDefault.prefix + 'guestbook',
     galleryCategory : common.databaseDefault.prefix + 'gallery_category',
     galleryImage: common.databaseDefault.prefix + 'gallery_image',
+    reservationList: common.databaseDefault.prefix + 'reservation_list',
+    reservationStatus : common.databaseDefault.prefix + 'reservation_status'
 };
 
 var query = require('./query');
@@ -204,6 +206,70 @@ function updateGalleryImage(connection, params, callback) {
     });
 }
 
+function selectReservationStatus(connection, category, callback) {
+    connection.query(query.readReservationStatus, [tables.reservationStatus, category], function (err, rows) {
+        if (err) winston.error(err);
+
+        callback(err, rows);
+    });
+}
+
+function selectReservationList(connection, page, category, callback) {
+    var pageSize = 10;
+    var result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
+        reservationList: [],
+        statusInfo: {}
+    };
+
+    selectReservationStatus(connection, category, function (error, statusInfo) {
+
+        statusInfo.map(function (item) {
+            result.statusInfo[item.id] = item.title;
+        });
+
+        connection.query(query.countAllReservationList, [tables.reservationList, category], function (err, rows) {
+            result.total = rows[0]['count'] || 0;
+
+            var maxPage = Math.floor(result.total / pageSize);
+            if (maxPage < result.page) {
+                result.page = maxPage;
+            }
+
+            result.maxPage = maxPage;
+            result.index = Number(result.page) * pageSize;
+            if (result.index < 0) result.index = 0;
+
+            connection.query(query.readReservationListByPage, [tables.reservationList, category, result.index, pageSize], function (err, rows) {
+                if (err) {
+                    winston.error(err);
+                } else {
+                    result.reservationList = rows;
+
+                    result.reservationList.map(function (item) {
+                        if (item.status && item.status.length) {
+                            var statusTitle = [];
+                            var status = item.status.split(',');
+
+                            status.map(function (info) {
+                                statusTitle.push({id: info, title: result.statusInfo[info]});
+                            });
+
+                            item.statusInfo = statusTitle;
+                        }
+                    });
+                }
+
+                callback(err, result);
+            });
+        });
+    });
+}
+
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
@@ -214,4 +280,6 @@ module.exports = {
     readGalleryCategory: selectGalleryCategory,
     readGalleryImageList: selectGalleryImageList,
     updateGalleryImage: updateGalleryImage,
+    readReservationStatus: selectReservationStatus,
+    readReservationList: selectReservationList,
 };

@@ -316,7 +316,6 @@ function galleryManager(req, res) {
 
         res.render(BLITITOR.config.site.adminTheme + '/manage/gallery', params);
     });
-
 }
 
 function galleryCategory(req, res) {
@@ -428,6 +427,56 @@ function galleryImageDelete(req, res) {
     });
 }
 
+function reservationList(req, res) {
+    var params = {
+        title: "운영자 화면",
+        cate: Number(req.query['c']) || 1,
+        page: Number(req.query['p']) || 1
+    };
+
+    var mysql = connection.get();
+
+    db.readReservationList(mysql, Number(params.page - 1), Number(params.cate), function (error, result) {
+        params.pagination = true;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.reservationList = result.reservationList;
+
+        params.reservationList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
+            item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:m');
+        });
+
+        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation', params);
+    });
+}
+
+function reservationStatus(req, res) {
+    var params = {
+        title: "운영자 화면",
+        cate: Number(req.query['c']) || 1
+    };
+
+    var mysql = connection.get();
+
+    db.readReservationStatus(mysql, Number(params.cate), function (error, rows) {
+        params.reservationStatus = rows;
+
+/*
+        params.reservationStatus.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at);
+        });
+*/
+
+        console.log(params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation_status', params);
+    });
+}
+
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
@@ -441,4 +490,6 @@ module.exports = {
     galleryCategory: galleryCategory,
     galleryImageSort: galleryImageSort,
     galleryImageDelete: galleryImageDelete,
+    reservationList: reservationList,
+    reservationStatus: reservationStatus,
 };

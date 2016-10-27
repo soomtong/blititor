@@ -17,5 +17,9 @@
   "countAllGalleryCategory": "SELECT count(id) as `count` FROM ??",
   "readGalleryCategoryByPage": "SELECT * FROM ?? ORDER BY sort, id ASC LIMIT ?, ?",
   "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY sort, id ASC",
-  "updateGalleryImageSortOrder": "UPDATE ?? SET ? WHERE `category` = ? AND `id` = ?"
+  "updateGalleryImageSortOrder": "UPDATE ?? SET ? WHERE `category` = ? AND `id` = ?",
+  "readReservationStatus": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `updated_at`, `id` ASC",
+  "readReservationList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` ASC",
+  "countAllReservationList": "SELECT count(id) as `count` FROM ?? WHERE `category` = ?",
+  "readReservationListByPage": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` DESC LIMIT ?, ?"
 }
