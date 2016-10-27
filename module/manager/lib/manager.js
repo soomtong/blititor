@@ -150,7 +150,7 @@ function accountList(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at);
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/account', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/account', params);
     });
 }
 
@@ -183,7 +183,7 @@ function accountCounter(req, res) {
             item.date = common.dateFormatter(item.date, 'M월 D일');
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/account_counter', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/account_counter', params);
     });
 }
 
@@ -217,7 +217,7 @@ function pageLogList(req, res) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/page_log', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/page_log', params);
     });
 }
 
@@ -261,7 +261,7 @@ function visitCounter(req, res) {
         params.sum = result.sum;
         params.list = result.visitCounter;
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/index', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
     });
 }
 
@@ -288,7 +288,7 @@ function guestbookList(req, res) {
             item.replied_at = common.dateFormatter(item.replied_at);
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/guestbook', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook', params);
     });
 }
 
@@ -314,7 +314,7 @@ function galleryManager(req, res) {
             item.created_at = common.dateFormatter(item.created_at);
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/manage/gallery', params);
+        res.render(BLITITOR.config.site.manageTheme + '/manage/gallery', params);
     });
 }
 
