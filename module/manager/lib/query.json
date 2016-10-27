@@ -22,5 +22,5 @@
   "readReservationList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` DESC",
   "countAllReservationList": "SELECT count(id) as `count` FROM ?? WHERE `category` = ?",
   "readReservationListByPage": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` DESC LIMIT ?, ?",
-  "readTutorialStatusList": "SELECT * from ?? WHERE FIND_IN_SET(?, ??)"
+  "readTutorialStatusList": "SELECT * from ?? WHERE `category` = ? and FIND_IN_SET(?, `status`)"
 }

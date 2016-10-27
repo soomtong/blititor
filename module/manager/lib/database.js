@@ -315,8 +315,7 @@ function readReservationListFull(connection, category, callback) {
 }
 
 function readTutorialStatus(connection, params, callback) {
-    var statusField = 'status';
-    connection.query(query.readTutorialStatusList, [tables.reservationList, params.category, statusField], function (err, rows) {
+    connection.query(query.readTutorialStatusList, [tables.reservationList, params.category, params.status_id], function (err, rows) {
         if (!err) callback(err, rows);
     });
 }

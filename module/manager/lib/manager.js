@@ -509,22 +509,16 @@ function reservationTutorialStatus(req, res) {
     var mysql = connection.get();
 
     db.readTutorialStatus(mysql, params, function (error, result) {
-        return res.send(result);
+        params.reservationList = result;
+
+        params.reservationList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
+            item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:mm');
+        });
+
+        res.render(BLITITOR.config.site.manageTheme + '/manage/partial/reservation_status_list', params);
     });
 }
-/*
-
-var mysql = connection.get();
-var params = {
-    status_id: '2',
-    category: '1',
-    xhr: false
-};
-
-db.readTutorialStatus(mysql, params, function (error, result) {
-    console.log(error, result);
-});
-*/
 
 module.exports = {
     loginForm: loginForm,
