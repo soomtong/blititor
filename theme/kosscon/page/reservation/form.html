@@ -108,6 +108,8 @@
                             튜토리얼의 경우 세션의 특성에 따라 한정된 인원을 수용하고 있으며 <span class="strong">선착순</span> 마감되고 있습니다.
                             <br>
                             각 세션에 대한 <span class="strong">정보</span>와 튜토리얼의 <span class="strong">난이도</span>는 <a href="/program/tutorial">튜토리얼</a> 페이지를 참고해 주세요.
+                            <br>
+                            튜토리얼 세션 진행자의 <span class="strong">준비사항</span>을 반드시 숙지하여 주시기 바랍니다.
                         </p>
 
                         <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">11:10-12:30</span></h4>
@@ -127,7 +129,7 @@
                                     {% else %}
                                     <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}"> {{status[index].title}}
                                     {% endif %}
-                                    <span class="small">{{status[index].sub_title}}</span>
+                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
                                     {% if closed %}
                                     <span class="label label-danger closed">마감되었습니다</span>
                                     {% endif %}
@@ -152,7 +154,7 @@
                                     {% else %}
                                     <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}"> {{status[index].title}}
                                     {% endif %}
-                                    <span class="small">{{status[index].sub_title}}</span>
+                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
                                     {% if closed %}
                                     <span class="label label-danger closed">마감되었습니다</span>
                                     {% endif %}
@@ -178,7 +180,7 @@
                                     {% else %}
                                     <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}"> {{status[index].title}}
                                     {% endif %}
-                                    <span class="small">{{status[index].sub_title}}</span>
+                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
                                     {% if closed %}
                                     <span class="label label-danger closed">마감되었습니다</span>
                                     {% endif %}

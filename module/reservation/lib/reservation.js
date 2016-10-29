@@ -234,6 +234,8 @@ function generateSecret(req, res) {
                     }
                 });
             } else {
+                winston.error('failed sent sms to', params.phone);
+
                 res.send({
                     "status": "fail",
                     "data": {
