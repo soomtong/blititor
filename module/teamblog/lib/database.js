@@ -137,7 +137,7 @@ function insertDummy(databaseConfiguration, done) {
                 var dummy = require('./dummy.json');
 
                 var iteratorAsync = function (item, callback) {
-                    var flag = '', header_imgs = '';
+                    var flag = '';
 
                     if (item.render && (item.render.toString().includes(postFlag.markdown.value))) {
                         flag = flag.concat(postFlag.markdown.value);
@@ -150,6 +150,8 @@ function insertDummy(databaseConfiguration, done) {
                     // separated array list
                     var tagList = item.tags.split(',').map(function (tag) {
                         return tag.trim();
+                    }).filter(function (tag) {
+                        return !!tag;
                     });
 
                     var teamblogData = {
@@ -167,32 +169,9 @@ function insertDummy(databaseConfiguration, done) {
                     };
 
                     insertPost(connection, teamblogData, function (err, result) {
-                        console.log('   inserted post records...'.white, result.insertId);
+                        console.log('   inserted post records...'.white, result['insertId']);
 
-                        var iterator2Async = function (item, callback) {
-                            var tagData = {
-                                tag: item.toString().trim(),
-                                tag_count: 1,
-                                created_at: new Date()
-                            };
-
-                            updatedTagList(connection, tagData, function (err, affectedId) {
-                                var tagRelatedPostData = {
-                                    tag_id: affectedId,
-                                    tag_related_post_id: result.insertId,
-                                    created_at: new Date()
-                                };
-
-                                insertTagRelatedPost(connection, tagRelatedPostData, function (err, result) {
-                                    callback(err, result);
-                                });
-
-                                console.log('   processed tag records...'.white, affectedId);
-                            });
-                        };
-
-                        // going sync
-                        async.mapSeries(tagList, iterator2Async, callback);
+                        callback(err, result);
                     });
                 };
 
@@ -300,25 +279,40 @@ function selectPostPinned(connection, limit, callback) {
 
 function insertPost(connection, teamblogData, callback) {
     connection.query(query.insertInto, [tables.teamblog, teamblogData], function (err, insertPostResult) {
-        var tagData = {
-            tag: teamblogData.tags.toString().trim(),
-            tag_count: 1,
-            created_at: new Date()
-        };
-
-        updatedTagList(connection, tagData, function (err, affectedId) {
-            var tagRelatedPostData = {
-                tag_id: affectedId,
-                tag_related_post_id: insertPostResult.insertId,
-                created_at: new Date()
+        if (teamblogData.tags) {
+            var resultAsync = function (err, result) {
+                callback(err, insertPostResult);
             };
 
-            insertTagRelatedPost(connection, tagRelatedPostData, function (err, insertTagRelatedPostResult) {
-                callback(err, { insertPostId: insertPostResult.insertId, insertTagId: insertTagRelatedPostResult.insertId});
-            });
+            var iteratorAsync = function (item, done) {
+                var tagData = {
+                    tag: item.toString().trim(),
+                    tag_count: 1,
+                    created_at: new Date()
+                };
 
-            console.log('   processed tag records...'.white, affectedId);
-        });
+                updateTagList(connection, tagData, function (err, affectedId) {
+                    var tagRelatedPostData = {
+                        tag_id: affectedId,
+                        tag_related_post_id: insertPostResult['insertId'],
+                        created_at: new Date()
+                    };
+
+                    insertTagRelatedPost(connection, tagRelatedPostData, function (err, result) {
+                        done(err, result);
+                    });
+
+                    winston.info('Processed tag records...'.white, affectedId);
+                });
+            };
+
+            // going sync
+            var tagList = teamblogData.tags.split(',');
+
+            async.mapSeries(tagList, iteratorAsync, resultAsync);
+        } else {
+            callback(err, insertPostResult);
+        }
     });
 }
 
@@ -347,14 +341,18 @@ function selectPostByURL(connection, postURL, callback) {
     })
 }
 
-function updatedTagList(connection, tagData, callback) {
+function updateTagList(connection, tagData, callback) {
     connection.query(query.selectByTag, [tables.teamblogTag, tagData.tag], function (error, rows) {
         if (!error && rows[0] && rows[0].id) {
+            // update this tag status
             connection.query(query.updateCounterByTag, [tables.teamblogTag, 'tag_count', 'tag_count', tagData.tag], function (error, result) {
+                if (error) winston.error(error);
                 callback(error, rows[0].id);
             });
         } else {
+            // insert new tag
             connection.query(query.insertInto, [tables.teamblogTag, tagData], function (error, result) {
+                if (error) winston.error(error);
                 callback(error, result.insertId);
             });
         }

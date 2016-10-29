@@ -143,6 +143,12 @@ function savePost(req, res) {
     req.sanitize('title').escape();
     req.sanitize('tags').escape();
 
+    var tagList = req.body.tags.split(',').map(function (tag) {
+        return tag.trim();
+    }).filter(function (tag) {
+        return !!tag;
+    });
+
     var postData = {
         user_uuid: req.user.uuid,
         user_id: req.user.id,
@@ -150,7 +156,7 @@ function savePost(req, res) {
         flag: req.body.render ? 'M' : '', // 1: markdown, 2: asciidoc
         title: req.body.title,
         content: req.body.content,
-        tags: req.body.tags,
+        tags: tagList.join(','),
         created_at: new Date()
     };
 
@@ -166,7 +172,7 @@ function savePost(req, res) {
             res.redirect('back');
         }
 
-        var post_id = result['insertPostId'];
+        var post_id = result['insertId'];
 
         winston.info('Saved post id', post_id);
 
