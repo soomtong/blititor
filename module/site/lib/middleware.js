@@ -8,6 +8,18 @@ function exposeLocals(req, res, next) {
     next();
 }
 
+function cacheControl(req, res, next) {
+    if (!BLITITOR.config['cacheControl']) {     // to distinguish by global middleware
+        res.set({
+            'Cache-Control': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
+            'Pragma': 'no-cache'
+        });
+    }
+
+    next();
+}
+
 module.exports = {
-    exposeLocals: exposeLocals
+    exposeLocals: exposeLocals,
+    cacheControl: cacheControl,
 };

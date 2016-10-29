@@ -23,6 +23,7 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
 router.use(Account.middleware.exposeLocals);
+// router.use(Site.middleware.cacheControl);
 router.use(Site.middleware.exposeLocals);
 router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
