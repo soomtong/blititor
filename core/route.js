@@ -9,6 +9,7 @@ var router = express.Router();
 
 // Global middleware
 router.use(middleware.exposeLocals);
+router.use(middleware.cacheControl);
 router.use(middleware.checkDatabase);
 
 // route for application

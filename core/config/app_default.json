@@ -3,5 +3,6 @@
   "logLevel": "debug",
   "configFile": "config.json",
   "cookieSecret": "blititor",
-  "sessionSecret": "blititor"
+  "sessionSecret": "blititor",
+  "cacheControl": false
 }

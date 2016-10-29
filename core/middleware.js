@@ -31,6 +31,21 @@ function checkDatabaseConfig(req, res, next) {
     }
 }
 
+// Browser Cache Control
+function cacheControl(req, res, next) {
+    if (BLITITOR.config['cacheControl']) {
+        res.set({
+            'Cache-Control': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
+            'Pragma': 'no-cache',
+            'Keep-Alive': 'timeout=3, max=993',
+        });
+
+        winston.verbose('set header with no-cache');
+    }
+
+    next();
+}
+
 function testMiddleware1(req, res, next) {
     console.log('Route Middleware Test Method 1');
     next();
@@ -45,5 +60,6 @@ module.exports = {
     test1: testMiddleware1,
     test2: testMiddleware2,
     exposeLocals: exposeLocals,
-    checkDatabase: checkDatabaseConfig
+    cacheControl: cacheControl,
+    checkDatabase: checkDatabaseConfig,
 };
