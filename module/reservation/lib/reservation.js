@@ -22,6 +22,19 @@ function reservationForm(req, res) {
 
     db.readReservationStatus(mysql, params.category, function (error, results) {
         params.status = results;
+        params.closedTutorial = true;
+
+        var maxTutorials = results.length;
+
+        for (var i = 0; i < maxTutorials; i++) {
+            if (results[i].counter < results[i].max_count) {
+                params.closedTutorial = false;
+
+                winston.verbose('Tutorial Section is not closed');
+
+                break;
+            }
+        }
 
         return res.render(BLITITOR.config.site.theme + '/page/reservation/form', params);
     });

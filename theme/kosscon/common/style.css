@@ -675,3 +675,6 @@ body {
   bottom: 5px;
   right: 1.25em;
 }
+#go_to_end {
+  border-top: 0;
+}

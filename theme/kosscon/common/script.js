@@ -40,10 +40,26 @@ $(function() {
     $('.secret').off('click').on('click', getPhoneSecret);
 
     // Bind Form
-    $('#form_submit').on('click', sendReservation);
+    $('#register_form').on('click', 'button.submit', sendReservation);
 
     // Reset Radio
     $('#skip_tutorial').on('click', resetTutorials);
+
+    // Collapse
+    var $sectionCollapse = $('#update_section_data');
+
+    if (!$('#toggle_collapse').length) {
+        $sectionCollapse.collapse();
+    } else {
+        $sectionCollapse.on('show.bs.collapse', function () {
+            $('#form_submit').hide();
+            $('#form_update_submit').text('사전 등록 내용 갱신');
+        });
+        $sectionCollapse.on('hide.bs.collapse', function () {
+            $('#form_submit').show();
+            $('#form_update_submit').text('사전 등록 신청');
+        });
+    }
 
     // Enable map zooming with mouse scroll when the user clicks the map
     // $('#location').off('click', '.map').on('click', '.map', onMapClickHandler);
