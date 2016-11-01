@@ -462,6 +462,11 @@ body {
 .go-reservation .link {
   font-size: 1.4em;
 }
+.additional-message {
+  margin-top: 2em;
+  font-size: 1.2em;
+  color: #979797;
+}
 .register form {
   margin-top: 4em;
   padding-top: 2em;
@@ -498,6 +503,14 @@ body {
   padding: 10px 36px;
   border-radius: 1px;
   background-color: #4A90E2;
+}
+.register form .form-group button.update {
+  margin-top: 1em;
+  letter-spacing: 2px;
+  padding: 10px 36px;
+  border-radius: 1px;
+  border-color: #EC404F;
+  background-color: #EC404F;
 }
 .register form h3 {
   margin: 3em 1em 1.5em 0;

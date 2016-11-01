@@ -31,12 +31,11 @@
                 <p>
                     <span class="strong">장소</span> 코엑스 컨퍼런스(남) 307호 (A, B, C) / 308호 (B, C)
                 </p>
-                 <p class="lead">
+                 <p class="additional-message">
                  현재 튜토리얼 세션은 마감되었습니다. <br>
                  (*튜토리얼 세션의 경우 기 등록자의 불참의사에 따라 일부 세션이 재오픈 될 수 있습니다.) <br>
                  <br>
                  컨퍼런스 참가등록은 가능합니다!!  지금 등록 해 주세요!!
-                    <br>
                 </p>
             </div>
         </div>
@@ -125,89 +124,97 @@
                             튜토리얼 세션 진행자의 <span class="strong">준비사항</span>을 반드시 숙지하여 주시기 바랍니다.
                         </p>
 
-                        <h4 class="section hidden"><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">11:10-12:30</span></h4>
-
-                        <ul class="list-group hidden">
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    <input type="radio" name="register_apply_tutorial1" value="" checked>  참여하지 않음
-                                </label>
-                            </li>
-                            {% for index in range(0,4) %}
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    {% set closed = true if status[index].counter >= status[index].max_count else false %}
-                                    {% if closed %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
-                                    {% else %}
-                                    <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}"> {{status[index].title}}
-                                    {% endif %}
-                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
-                                    {% if closed %}
-                                    <span class="label label-danger closed">마감되었습니다</span>
-                                    {% endif %}
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-
-                        <h4 class="section hidden"><i class="glyphicon glyphicon-ok"></i>Section 2 <span class="small">13:30-15:30</span></h4>
-                        <ul class="list-group hidden">
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    <input type="radio" name="register_apply_tutorial2" value="" checked>  참여하지 않음
-                                </label>
-                            </li>
-                            {% for index in range(4,8) %}
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    {% set closed = true if status[index].counter >= status[index].max_count else false %}
-                                    {% if closed %}
-                                    <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
-                                    {% else %}
-                                    <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}"> {{status[index].title}}
-                                    {% endif %}
-                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
-                                    {% if closed %}
-                                    <span class="label label-danger closed">마감되었습니다</span>
-                                    {% endif %}
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-
-                        <h4 class="section hidden"><i class="glyphicon glyphicon-ok"></i>Section 3 <span class="small">15:50-17:50</span></h4>
-
-                        <ul class="list-group hidden">
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    <input type="radio" name="register_apply_tutorial3" value="" checked>  참여하지 않음
-                                </label>
-                            </li>
-                            {% for index in range(8,12) %}
-                            <li class="list-group-item">
-                                <label class="radio">
-                                    {% set closed = true if status[index].counter >= status[index].max_count else false %}
-                                    {% if closed %}
-                                    <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
-                                    {% else %}
-                                    <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}"> {{status[index].title}}
-                                    {% endif %}
-                                    <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
-                                    {% if closed %}
-                                    <span class="label label-danger closed">마감되었습니다</span>
-                                    {% endif %}
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-
-                        <hr id="go_to_end">
-
                         <div class="form-group">
                             <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg submit" id="form_submit">사전 등록하기</button>
+                                <button class="btn btn-primary update" type="button" data-toggle="collapse" data-target="#update_section_data" aria-expanded="false" aria-controls="update_section_data">
+                                    튜토리얼을 신청 내용을 변경하고 싶습니다
+                                </button>
                             </div>
+                        </div>
+                        <div class="collapse" id="update_section_data">
+
+                            <h4 class="section "><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">11:10-12:30</span></h4>
+
+                            <ul class="list-group ">
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        <input type="radio" name="register_apply_tutorial1" value="" checked>  참여하지 않음
+                                    </label>
+                                </li>
+                                {% for index in range(0,4) %}
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        {% set closed = true if status[index].counter >= status[index].max_count else false %}
+                                        {% if closed %}
+                                        <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                        {% else %}
+                                        <input type="radio" name="register_apply_tutorial1" value="{{status[index].id}}"> {{status[index].title}}
+                                        {% endif %}
+                                        <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
+                                        {% if closed %}
+                                        <span class="label label-danger closed">마감되었습니다</span>
+                                        {% endif %}
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                            <h4 class="section "><i class="glyphicon glyphicon-ok"></i>Section 2 <span class="small">13:30-15:30</span></h4>
+                            <ul class="list-group ">
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        <input type="radio" name="register_apply_tutorial2" value="" checked>  참여하지 않음
+                                    </label>
+                                </li>
+                                {% for index in range(4,8) %}
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        {% set closed = true if status[index].counter >= status[index].max_count else false %}
+                                        {% if closed %}
+                                        <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                        {% else %}
+                                        <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}"> {{status[index].title}}
+                                        {% endif %}
+                                        <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
+                                        {% if closed %}
+                                        <span class="label label-danger closed">마감되었습니다</span>
+                                        {% endif %}
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                            <h4 class="section "><i class="glyphicon glyphicon-ok"></i>Section 3 <span class="small">15:50-17:50</span></h4>
+
+                            <ul class="list-group ">
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        <input type="radio" name="register_apply_tutorial3" value="" checked>  참여하지 않음
+                                    </label>
+                                </li>
+                                {% for index in range(8,12) %}
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        {% set closed = true if status[index].counter >= status[index].max_count else false %}
+                                        {% if closed %}
+                                        <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                        {% else %}
+                                        <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}"> {{status[index].title}}
+                                        {% endif %}
+                                        <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
+                                        {% if closed %}
+                                        <span class="label label-danger closed">마감되었습니다</span>
+                                        {% endif %}
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="form-group">
+                                <div class="col-sm-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg submit" id="form_submit">사전 등록 내용 변경하기</button>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
