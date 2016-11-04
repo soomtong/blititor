@@ -43,7 +43,7 @@ winston.add(winston.transports.Console, {
     colorize: true,
     timestamp: function() {
         var date = new Date();
-        return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5) + ' [' + global.process.pid + ']';
+        return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5);// + ' [' + global.process.pid + ']';
     },
     level: BLITITOR.config.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
 });

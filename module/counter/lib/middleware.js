@@ -28,7 +28,7 @@ function pageCounter(req, res, next) {
 
     counter.insertPageCounter(url, method, ip, ref, agent, device);
 
-    winston.verbose('logged counter in counter: {page}');
+    winston.verbose('logged counter in counter: {page} with', ip, ref || '');
 
     next();
 }

@@ -494,7 +494,7 @@ function reservationStatus(req, res) {
         });
 */
 
-        console.log(params);
+        // console.log(params);
         res.render(BLITITOR.config.site.manageTheme + '/manage/reservation_status', params);
     });
 }
