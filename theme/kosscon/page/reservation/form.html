@@ -16,6 +16,28 @@
 
 <section id="register" class="register">
     <div class="container">
+        {% set closed = true %}
+        {% if closed %}
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>사전 등록이 마감되었습니다.</h2>
+                <p class="lead">
+                    KOSSCON은 공개SW에 관심있는 개발자, 커뮤니티 및 관련 기업인, 학생 등 국민 누구나 사전 등록 후 참가하실 수 있습니다.
+                    <br>
+                </p>
+                <p>
+                    <span class="strong">일시</span> 2016년 11월 10일 목요일 10:00 ~ 18:00
+                </p>
+                <p>
+                    <span class="strong">장소</span> 코엑스 컨퍼런스(남) 307호 (A, B, C) / 308호 (B, C)
+                </p>
+                <p class="additional-message">
+                    현재 사전 등록이 마감되었습니다. <br>
+                    올해에도 알찬 행사가 될 수 있도록 준비하겠습니다. 감사합니다.
+                </p>
+            </div>
+        </div>
+        {% else %}
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>사전 등록</h2>
@@ -122,7 +144,7 @@
                         <div class="form-group">
                             <div class="col-sm-12 text-center">
                                 <button class="btn btn-primary update" type="button" id="toggle_collapse" data-toggle="collapse" data-target="#update_section_data" aria-expanded="false" aria-controls="update_section_data">
-                                    튜토리얼을 신청 내용을 변경하고 싶습니다
+                                    튜토리얼을 신청 및 변경 합니다
                                 </button>
                             </div>
                         </div>
@@ -238,6 +260,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 
