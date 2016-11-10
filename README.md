@@ -94,3 +94,9 @@ or u can override default port using option `port` or `p`
 node core/index -port=3000
 node core/index -p 3000
 ```
+
+or run dev mode using nodemon
+
+```
+npm start dev
+```
