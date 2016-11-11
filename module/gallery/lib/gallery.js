@@ -122,8 +122,7 @@ module.exports = {
 };
 
 function processFileWithJIMP(file, callback) {
-    var path = file.path.split('/');
-    var name = path[path.length - 1];
+    var name = file.filename;
 
     var marginWidth = 1200;
     var marginHeight = 1800;
@@ -142,20 +141,20 @@ function processFileWithJIMP(file, callback) {
         // make resize by case
         if (image.bitmap.width > marginWidth) {
             if (image.bitmap.height > marginHeight) {
-                image.resize(imageProcessor.AUTO, marginHeight).write(folder.upload + name);
+                image.resize(imageProcessor.AUTO, marginHeight).write(path.join(folder.upload, name));
             } else {
-                image.resize(marginWidth, imageProcessor.AUTO).write(folder.upload + name);
+                image.resize(marginWidth, imageProcessor.AUTO).write(path.join(folder.upload, name));
             }
         } else if (image.bitmap.height > marginHeight * 2) {
-            image.resize(imageProcessor.AUTO, marginHeight).write(folder.upload + name);
+            image.resize(imageProcessor.AUTO, marginHeight).write(path.join(folder.upload, name));
         } else {
-            image.quality(80).write(folder.upload + name);
+            image.quality(80).write(path.join(folder.upload, name));
         }
 
         // make thumbnail
         image.cover(thumbnailSize.width, thumbnailSize.height)
             .quality(80)
-            .write(folder.thumb + name, function (err) {
+            .write(path.join(folder.thumb, name), function (err) {
                 if (err) callback(err);
                 else callback();
             });
