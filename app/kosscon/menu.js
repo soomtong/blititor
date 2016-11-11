@@ -17,6 +17,11 @@ var Menu = [
         url: '/preview'
     },
     {
+        id: 'conference_gallery',
+        name: '갤러리',
+        url: '/gallery'
+    },
+    {
         id: 'conference_program',
         name: 'Program',
         url: '/program'
@@ -124,7 +129,12 @@ var ManagerMenu = [
         id: 'tutorial',
         name: '튜토리얼 현황',
         url: routeTable.manage_root + routeTable.manage.tutorial
-    }
+    },
+    {
+        id: 'gallery',
+        name: '갤러리',
+        url: routeTable.manage_root + routeTable.manage.gallery
+    },
 ];
 
 module.exports = Menu;

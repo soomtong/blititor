@@ -12,6 +12,7 @@ var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
 var Counter = require('../../module/counter');
 var Reservation = require('../../module/reservation');
+var Gallery = require('../../module/gallery');
 
 // load locals
 var app = require('./app.json');
@@ -43,6 +44,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // modules
+router.use(routeTable.gallery_root, Gallery.route);
 router.use(routeTable.reservation_root, Reservation.route);
 /*
 router.post('/register', function (req, res) {

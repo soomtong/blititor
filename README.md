@@ -98,5 +98,5 @@ node core/index -p 3000
 or run dev mode using nodemon
 
 ```
-npm start dev
+npm run dev
 ```

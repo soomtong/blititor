@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body>
+
+<header id="top" class="header">
+
+    {% include '../include/menu.html' %}
+
+    <section id="page_header" class="page-header">
+        <h1>Gallery</h1>
+    </section>
+</header>
+
+<section id="gallery" class="gallery">
+    <div class="container">
+        {% for item in cateList %}
+        <div class="row gallery-wrap" id="gallery_{{ item.id }}" data-id="{{ item.id }}">
+            <div class="media col-md-10 col-md-offset-1">
+                <h3 class="">
+                    <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                    {{ item.title }}
+                </h3>
+
+                <div class="media-body">
+                    <p class="">{{ item.sub_title }}</p>
+
+                    <div class="image-list"></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+{% include '../include/footer.html' %}
+
+</body>
+</html>

@@ -49,7 +49,7 @@
     "winston": "^2.1.1"
   },
   "scripts": {
-    "start:dev": "nodemon core/index.js",
+    "dev": "nodemon core/index.js",
     "prepare": "node core/setup.js all",
     "setup": "node core/setup.js",
     "start": "node core/index.js",

@@ -61,6 +61,29 @@ $(function() {
         });
     }
 
+    // Load Gallery
+    if ($('#gallery').find('.gallery-wrap').length) {
+        var imageFolder = '/upload/gallery/image/';
+
+        $('.gallery-wrap').map(function (idx, el) {
+            var cateID = $(el).data('id');
+
+            if (cateID) {
+                $.get('/gallery/image/' + Number(cateID), {}, function (response, status, xhr) {
+                    response.map(function (item) {
+                        // console.log(item);
+                        $('<img class="img-thumbnail center-block" />')
+                            .attr('src', imageFolder + item['thumbnail'])
+                            .attr('title', item['image'])
+                            .appendTo('#gallery_' + cateID + ' .image-list');
+                        $('<br>')
+                            .appendTo('#gallery_' + cateID + ' .image-list');
+                    });
+                });
+            }
+        });
+    }
+
     // Enable map zooming with mouse scroll when the user clicks the map
     // $('#location').off('click', '.map').on('click', '.map', onMapClickHandler);
     $('.map').off('click').on('click', onMapClickHandler);
