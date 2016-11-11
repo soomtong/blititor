@@ -14,15 +14,12 @@
     </section>
 </header>
 
-<section id="gallery" class="gallery">
+<section id="gallery" class="gallery program">
     <div class="container">
         {% for item in cateList %}
         <div class="row gallery-wrap" id="gallery_{{ item.id }}" data-id="{{ item.id }}">
-            <div class="media col-md-10 col-md-offset-1">
-                <h3 class="">
-                    <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
-                    {{ item.title }}
-                </h3>
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+                <h2>{{ item.title }}</h2>
 
                 <div class="media-body">
                     <p class="">{{ item.sub_title }}</p>
