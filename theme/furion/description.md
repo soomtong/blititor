@@ -10,4 +10,4 @@ Pure CSS Framework 를 사용한 블로그 테마
 
 ### Credit
 
-soomtong (soomtong@gmail.com)
+- soomtong (github.com/soomtong)

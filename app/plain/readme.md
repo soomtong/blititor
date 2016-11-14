@@ -38,4 +38,4 @@ use specified url for location module then confirm the end of location '/'
 
 ### Credit
 
-soomtong (soomtong@gmail.com)
+- soomtong (github.com/soomtong)

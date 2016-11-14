@@ -34,4 +34,4 @@ based on plain and pure css framework and their sample
 
 ### Credit
 
-soomtong (soomtong@gmail.com)
+- soomtong (github.com/soomtong)

@@ -15,4 +15,4 @@
 
 ### Credit
 
-soomtong (soomtong@gmail.com)
+- soomtong (github.com/soomtong)
