@@ -87,7 +87,8 @@ function getHash(password, callback) {
 }
 
 function getHeaderTextFromMarkdown(markdown, limit, joiner) {
-    var arr = markdown.split(/\r*\n/), len = arr.length;
+    var arr = markdown.split(/\r*\n/);
+    var len = arr.length;
     var text = [];
     var reduced = '';
 
@@ -103,6 +104,31 @@ function getHeaderTextFromMarkdown(markdown, limit, joiner) {
         }
 
         // check count length
+        if (text.join('\n').length > limit) {
+            reduced = ' ...';
+            break;
+        }
+    }
+
+    return joiner ? text.join(joiner).substr(0, limit).trim() + reduced : text.join('\n').substr(0, limit).trim() + reduced;
+}
+
+function getHeaderTextFromDelta(delta, limit, joiner) {
+    var arr = JSON.parse(delta)['ops'];
+    var len = arr.length;
+    var text = [];
+    var reduced = '';
+
+    limit = limit || 30;
+
+    for (var i = 0; i < len; i++) {
+        var temp = '';
+        temp = arr[i]['insert'];
+
+        if (temp) {
+            text.push(temp);
+        }
+
         if (text.join('\n').length > limit) {
             reduced = ' ...';
             break;
@@ -147,5 +173,6 @@ module.exports = {
     UUID4: getUUID4,
     hash: getHash,
     getHeaderTextFromMarkdown: getHeaderTextFromMarkdown,
+    getHeaderTextFromDelta: getHeaderTextFromDelta,
     databaseDefault: getDatabaseDefault()
 };
