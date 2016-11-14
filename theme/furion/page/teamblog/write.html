@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     {% include '../../include/head.html' %}
-    <link rel="stylesheet" type="text/css" href="{{site.theme}}/common/trix.css">
-    <script type="text/javascript" src="{{site.theme}}/common/trix.js"></script>
+    <link href="https://cdn.quilljs.com/1.1.5/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.1.5/quill.js"></script>
 </head>
 <body>
 <div id="layout" class="pure-g">
@@ -23,9 +23,12 @@
                             <label for="title">Title</label>
                             <input type="text" name="title" class="pure-u-1" id="title" placeholder="Title">
                         </fieldset>
-                        <input id="x" type="hidden" name="content">
                         <fieldset class="form-group">
-                            <trix-editor input="x" class="trix-editor"></trix-editor>
+                            <div id="editor" class="web-editor">
+                                <p>안녕하세요!</p>
+                                <p>블리티터 <strong>퓨리온</strong> 테마로 선보이는 팀블로그 모듈입니다.</p>
+                                <p><br></p>
+                            </div>
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="tags">Tags</label>
@@ -73,5 +76,10 @@
         </div>
     </div>
 </div>
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+</script>
 </body>
 </html>
