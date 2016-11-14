@@ -31,6 +31,10 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <textarea name="content" id="content" cols="30" rows="10" hidden></textarea>
+                            <input type="hidden" name="render" value="D" hidden>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label for="tags">Tags</label>
                             <input type="text" name="tags" class="pure-u-1" id="tags" placeholder="Separated by comma(,)">
                         </fieldset>
@@ -79,6 +83,16 @@
 <script>
     var quill = new Quill('#editor', {
         theme: 'snow'
+    });
+
+    quill.on('text-change', function(delta, oldDelta, source) {
+        if (source == 'api') {
+            console.log("An API call triggered this change.");
+        } else if (source == 'user') {
+            console.log("A user action triggered this change.");
+        }
+
+        document.getElementById('content').innerText = JSON.stringify(quill.getContents());
     });
 </script>
 </body>

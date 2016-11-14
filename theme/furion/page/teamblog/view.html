@@ -25,7 +25,7 @@
 
                         <p class="post-meta">
                             By <a class="post-author" href="{{site.root}}/author/{{post.user_id}}">{{post.nickname}}</a>
-                            {% if post.tagList %}
+                            {% if post.tagList and post.tagList.length %}
                             under
                             {% for tag in post.tagList %}
                             <a class="post-category post-category-{{cls.next()}}" href="{{site.root}}{{ route.teamblog_root + route.teamblog_tag.list }}/{{tag}}">{{tag}}</a>
@@ -38,13 +38,17 @@
 
                     <div class="post-description">
                         {% if post.renderMarkdown %}
-                        <p>
-                            {{post.rendered}}
-                        </p>
+                        <div class="markdown">
+                            {{post.rendered | safe }}
+                        </div>
+                        {% elif post.renderDelta %}
+                        <div class="delta">
+                            {{post.rendered | safe }}
+                        </div>
                         {% else %}
-                        <p>
+                        <div>
                             {{post.content | safe}}
-                        </p>
+                        </div>
                         {% endif %}
                     </div>
 

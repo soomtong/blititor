@@ -2,6 +2,7 @@ var fs = require('fs');
 var moment = require('moment');
 var winston = require('winston');
 var markdownIt = require('markdown-it');
+var quillRender = require('quilljs-renderer');
 var striptags = require('striptags');
 
 var common = require('../../../core/lib/common');
@@ -131,6 +132,7 @@ function writeForm(req, res) {
 
 function savePost(req, res) {
     req.assert('content', 'content is required').len(10).withMessage('Must be 10 chars over').notEmpty();
+    req.assert('title', 'title is required').notEmpty(10);
 
     var errors = req.validationErrors();
 
@@ -153,7 +155,7 @@ function savePost(req, res) {
         user_uuid: req.user.uuid,
         user_id: req.user.id,
         nickname: req.user.nickname,
-        flag: req.body.render ? 'M' : '', // 1: markdown, 2: asciidoc
+        flag: misc.setFlag(req.body.render),
         title: req.body.title,
         content: req.body.content,
         tags: tagList.join(','),
@@ -197,12 +199,12 @@ function viewPost(req, res) {
 
     if (params.postID) {
         db.readPostByID(mysql, params.postID, function (err, result) {
-            if (err) {
+            if (err || !result[0]) {
                 req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
 
-                winston.error(err);
+                winston.error('can not read this post', err);
 
-                res.redirect('back');
+                return res.redirect('back');
             }
 
             params.post = renderPost(result[0]);
@@ -213,12 +215,12 @@ function viewPost(req, res) {
 
     if (params.postURL) {
         db.readPostByURL(mysql, params.postURL, function (err, result) {
-            if (err) {
+            if (err || !result[0]) {
                 req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
 
-                winston.error(err);
+                winston.error('can not read this post', err);
 
-                res.redirect('back');
+                return res.redirect('back');
             }
 
             params.post = renderPost(result[0]);
@@ -275,6 +277,8 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
     } else {
         if (item.flag && (item.flag.toString().includes(postFlag.markdown.value))) {
             item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
+        } else if (item.flag && (item.flag.toString().includes(postFlag.delta.value))) {
+            item.preview = common.getHeaderTextFromDelta(item['content'], previewLen, '<br>');
         } else {
             item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
         }
@@ -285,11 +289,19 @@ function renderPost(post) {
     var p = post;
     var md = new markdownIt();
 
-    p.tagList = post.tags.split(',');
-    p.renderMarkdown = post.flag.includes(postFlag.markdown);
+    p.tagList = post.tags.split(',').filter(function (item) {
+        return item;
+    });
+    p.renderMarkdown = post.flag.includes(postFlag.markdown.value);
+    p.renderDelta = post.flag.includes(postFlag.delta.value);
 
     if (p.renderMarkdown) {
         p.rendered = md.render(post.content);
+    }
+
+    if (p.renderDelta) {
+        quillRender.loadFormat('html');
+        p.rendered = new quillRender.Document(JSON.parse(post.content)).convertTo('html');
     }
 
     return p;
