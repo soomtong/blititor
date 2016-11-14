@@ -197,10 +197,26 @@ function commonFlag() {
     return {
         post: {
             pinned: {id: 'pinned_post', value: 1},
+            delta: {id: 'delta_post', value: 'D'},  // dalta format from `quill.js` editor
             markdown: {id: 'markdown_post', value: 'M'},
-            asciidoc: {id: 'asciidoc_post', value: 'D'},
+            asciidoc: {id: 'asciidoc_post', value: 'A'},
             headedPicture: {id: 'picture_headed_post', value: 'H'}
         }
+    }
+}
+
+function setFlag(flag) {
+    var flagList = commonFlag();
+
+    switch (flag) {
+        case flagList.post.markdown.value:
+            return flagList.post.markdown.value;
+            break;
+        case flagList.post.delta.value:
+            return flagList.post.delta.value;
+            break;
+        default:
+            return '';
     }
 }
 
@@ -326,6 +342,7 @@ module.exports = {
     setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,
+    setFlag: setFlag,
     commonToken: commonToken,
     serviceToken: serviceToken,
     serviceProvider: serviceProvider,
