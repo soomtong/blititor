@@ -12,7 +12,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 
 ## Stack
 
-- NodeJS + MysqlDB(MariaDB) + Sphinx + Nginx (recommended)
+- NodeJS + MysqlDB(MariaDB) + Nginx(Caddy) + Sphinx
 - Express.js + Socket.io
 - Nunjucks html template
 - Jquery and many frontend frameworks

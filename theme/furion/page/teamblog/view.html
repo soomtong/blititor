@@ -3,6 +3,7 @@
 <head>
     {% include '../../include/head.html' %}
     <link rel="stylesheet" type="text/css" href="{{site.theme}}/common/pagination.css">
+    <link rel="stylesheet" type="text/css" href="{{site.theme}}/common/github-markdown.css">
 </head>
 <body>
 <div id="layout" class="pure-g">
@@ -38,7 +39,7 @@
 
                     <div class="post-description">
                         {% if post.renderMarkdown %}
-                        <div class="markdown">
+                        <div class="markdown markdown-body">
                             {{post.rendered | safe }}
                         </div>
                         {% elif post.renderDelta %}

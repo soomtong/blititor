@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     {% include '../../include/head.html' %}
-    <link href="https://cdn.quilljs.com/1.1.5/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.1.5/quill.js"></script>
 </head>
 <body>
 <div id="layout" class="pure-g">
@@ -24,15 +22,13 @@
                             <input type="text" name="title" class="pure-u-1" id="title" placeholder="Title">
                         </fieldset>
                         <fieldset class="form-group">
-                            <div id="editor" class="web-editor">
-                                <p>안녕하세요!</p>
-                                <p>블리티터 <strong>퓨리온</strong> 테마로 선보이는 팀블로그 모듈입니다.</p>
-                                <p><br></p>
-                            </div>
+                            <textarea name="content" class="pure-input-1 web-editor" id="content" placeholder="마크다운 사용할 수 있습니다. CTRL(CMD)+ENTER 키를 눌러 미리보기 할 수 있습니다."></textarea>
                         </fieldset>
                         <fieldset class="form-group">
-                            <textarea name="content" id="content" cols="30" rows="10" hidden></textarea>
-                            <input type="hidden" name="render" value="D" hidden>
+                            <label for="markdown" class="pure-checkbox">
+                                <input id="markdown" type="checkbox" name="render" value="M" checked> 마크다운 문법을 사용합니다
+                                <a href="https://guides.github.com/features/mastering-markdown/"><span class="small">Github Flavored Markdown Syntax</span></a>
+                            </label>
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="tags">Tags</label>
@@ -47,7 +43,7 @@
                         {% endfor %}
                         {% endif %}
 
-                        <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                        <input type="hidden" name="_csrf" value="{{ _csrf }}">
                         <button type="submit" class="pure-button pure-button-primary">Submit</button>
                     </form>
 
@@ -80,20 +76,5 @@
         </div>
     </div>
 </div>
-<script>
-    var quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-
-    quill.on('text-change', function(delta, oldDelta, source) {
-        if (source == 'api') {
-            console.log("An API call triggered this change.");
-        } else if (source == 'user') {
-            console.log("A user action triggered this change.");
-        }
-
-        document.getElementById('content').innerText = JSON.stringify(quill.getContents());
-    });
-</script>
 </body>
 </html>
