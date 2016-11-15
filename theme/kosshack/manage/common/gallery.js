@@ -38,8 +38,6 @@ $(function () {
                             sortTable.push($(el).data('sort'));
                         });
 
-                        console.log(sortTable);
-
                         var sortingData = {
                             category: cate_id,
                             sort: sortTable,
@@ -55,8 +53,8 @@ $(function () {
     });
 
     $('.gallery').on('click', 'tr.toggle-category', function (e) {
+        resetProgressBar();
         selectedCategoryID = $(this).data('id');
-        console.log('activate category', selectedCategoryID);
 
         $('tr.toggle-category').removeClass('selected-category');
         $(this).addClass('selected-category');
@@ -67,11 +65,21 @@ $(function () {
             dataType: 'json',
             formData: { category: selectedCategoryID },
             done: imageUploaded($uploadEl, thumbnailFolder, secretToken),
-            progressall: imageUploadProgress('#progress .progress-bar')
+            progressall: imageUploadProgress('#progress .progress-bar'),
+            send: function (e, data) {
+                resetProgressBar();
+
+                return true;
+            }
         });
 
         $('#add_image').show();
     });
+
+    function resetProgressBar() {
+        $('#progress').empty();
+        $('#progress').append('<div class="progress-bar progress-bar-success">');
+    }
 
     function imageUploadProgress(element) {
         return function (e, data) {
@@ -81,20 +89,17 @@ $(function () {
     }
 
     function imageUploaded($uploadEl, thumbnailFolder, secretToken) {
-
         return function (e, data) {
             var categoryID = selectedCategoryID;
             var file = data.result;
 
-            console.log(categoryID, file);
-
-            var path = file.path.split('/');
-            var name = path[path.length - 1];
-
-            if (file.errors && file.errors.length > 0) {
+            if (!file || (file.errors && file.errors.length > 0)) {
                 // $('#files').empty();
                 // $('<p/>').text('잘못된 파일이 전송되었습니다.').appendTo('#files');
             } else {
+                var path = file.path.split('/');
+                var name = path[path.length - 1];
+
                 $('#holder_' + categoryID + ' .img-holder .files')
                     .append($('<img class="thumbnail" />').attr('src', thumbnailFolder + name).addClass('uploaded'))
                     .on('click', 'img.uploaded', function (e) {
