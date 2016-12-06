@@ -61,11 +61,13 @@
 .label-info {
     background: #df2d4f;
 }
-
+.textarea-holder {
+    position: relative;
+}
 
 .web-editor {
-    line-height: 1.6;
-    padding: 1em;
+    line-height: 1.5;
+    padding: 1.2em 1em;
     width: 100%;
     min-height: 300px;
     max-height: 500px;
@@ -75,6 +77,13 @@
     box-shadow: inset 0 1px 3px #ddd;
     border-radius: 4px;
     box-sizing: border-box;
+}
+.tail {
+    position: absolute;
+    background: rgba(226, 78, 47, 0.5);
+    width: 4px;
+    min-height: 20px;
+    margin-top: 14px;
 }
 
 .ql-editor {

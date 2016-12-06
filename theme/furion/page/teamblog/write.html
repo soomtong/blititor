@@ -21,8 +21,9 @@
                             <label for="title">Title</label>
                             <input type="text" name="title" class="pure-u-1" id="title" placeholder="Title">
                         </fieldset>
-                        <fieldset class="form-group">
-                            <textarea name="content" class="pure-input-1 web-editor" id="content" placeholder="마크다운 문법을 사용할 수 있습니다."></textarea>
+                        <fieldset class="form-group textarea-holder">
+                            <textarea name="content" class="pure-input-1 web-editor" id="content"></textarea>
+                            <!--<div class="tail" id="textarea_caret"></div>-->
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="markdown" class="pure-checkbox">
@@ -76,5 +77,29 @@
         </div>
     </div>
 </div>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="{{site.theme}}/common/textarea-helper.js"></script>
+<script>
+    $('#content').on('keyup paste cut mouseup', function () {
+        // Get the textarea's content height.
+        var contentHeight = $(this).textareaHelper('height');
+        // Set the textarea to the content height. i.e. expand as we type.
+        $(this).height(contentHeight);
+
+        // Follow the caret arounbd.
+        /*
+        $('#textarea_caret').css(
+            $(this).textareaHelper('caretPos')
+        );
+        */
+
+        console.log($(this).textareaHelper('caretPos'));
+        console.log($(this).textareaHelper('preText'));
+        console.log($(this).textareaHelper('postText'));
+    });
+
+    // Call it manually at first.
+//    $('textarea').keyup();
+</script>
 </body>
 </html>
