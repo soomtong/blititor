@@ -3,6 +3,9 @@ var path = require('path');
 var winston = require('winston');
 var colors = require('colors');
 
+var displayRoutes = require('express-routemap');
+var printRoutes = require('express-print-routes');
+
 var siteDefault = require('../config/site_default.json');
 var userPrivilege = require('../config/user_level.json');
 var defaultRoute = require('../config/route_default.json');
@@ -235,6 +238,11 @@ function showGlobalVar(g) {
     });
 }
 
+function showRoutes(app) {
+    printRoutes(app, path.join(__dirname, '..', 'log/site-routes.log'));
+    displayRoutes(app);
+}
+
 function checkDatabaseConfigFile(configFile) {
     var databaseSetting = {};
 
@@ -348,6 +356,7 @@ module.exports = {
     serviceProvider: serviceProvider,
     showRouteTable: showRouteTable,
     showGlobalVar: showGlobalVar,
+    showRoutes: showRoutes,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
 };

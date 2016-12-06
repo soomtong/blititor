@@ -46,7 +46,8 @@
     "superagent": "^2.3.0",
     "useragent": "latest",
     "uuid": "^2.0.2",
-    "winston": "^2.1.1"
+    "winston": "^2.1.1",
+    "express-routemap": "latest"
   },
   "scripts": {
     "dev": "nodemon core/index.js",

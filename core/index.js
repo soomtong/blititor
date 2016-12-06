@@ -185,6 +185,6 @@ if (!process.send) {
 
     if (BLITITOR.env == 'development') { // Only in dev environment
         misc.showGlobalVar(BLITITOR);
-        require('express-print-routes')(app, path.join(__dirname, './log/site-routes.log'));
+        misc.showRoutes(app);
     }
 }
