@@ -42,6 +42,25 @@
     border: 1px solid #DF7514;
     background: #DF7514;
 }
+.label {
+    margin: 0 0.1em;
+    padding: 0.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: 80%;
+}
+.label-design {
+    background: #5aba59;
+}
+.label-pure {
+    background: #4d85d1;
+}
+.label-help {
+    background: #8156a7;
+}
+.label-info {
+    background: #df2d4f;
+}
 
 
 .web-editor {
