@@ -27,7 +27,7 @@ var flash = require('connect-flash');
 var device = require('express-device');
 var compress = require('compression');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var errorHandler = require('errorhandler');
 var lusca = require('lusca');
 var nunjucks = require('nunjucks');
@@ -127,7 +127,7 @@ try {
     winston.warn('file upload folder not exist');
 }
 
-app.use(logger('combined', { stream: logFile }));
+app.use(morgan('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
 app.use(favicon(path.join('public', 'favicon.ico')));
 app.use(multerUploader.any());  // should set before csrf middleware

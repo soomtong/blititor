@@ -1,6 +1,6 @@
 {
   "name": "blititer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "engines": {
     "node": "~4.2.1 || ~0.12.0",
@@ -17,6 +17,7 @@
     "express": "^4.13.3",
     "express-device": "^0.4.2",
     "express-mysql-session": "latest",
+    "express-routemap": "latest",
     "express-session": "latest",
     "express-status-monitor": "0.0.9",
     "express-validator": "latest",
@@ -46,8 +47,7 @@
     "superagent": "^2.3.0",
     "useragent": "latest",
     "uuid": "^2.0.2",
-    "winston": "^2.1.1",
-    "express-routemap": "latest"
+    "winston": "^2.1.1"
   },
   "scripts": {
     "dev": "nodemon core/index.js",
