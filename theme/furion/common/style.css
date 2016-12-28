@@ -89,6 +89,8 @@
     min-height: 22px;
     margin-top: 11px;
     display: none;
+    top: -2000em;
+    left: -2000em;
 }
 
 .ql-editor {
@@ -100,6 +102,15 @@
     margin-top: 2em;
 }
 
-.dynamic-preview {
+.preview-mode {
     text-align: right;
+}
+
+.preview-mode label {
+    display: inline-block!important;
+    padding: 0 0.5em;
+}
+
+.preview-full {
+    display: none;
 }

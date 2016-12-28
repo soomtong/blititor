@@ -37,9 +37,12 @@
                                         <a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="label label-help">Help</a>
                                     </label>
                                 </div>
-                                <div class="pure-u-1-2 dynamic-preview">
-                                    <label for="dynamic_preview" class="pure-checkbox">
-                                        <input id="dynamic_preview" type="checkbox" name="dynamic_preview" value="1" checked> 다이나믹 프리뷰
+                                <div class="pure-u-1-2 preview-mode">
+                                    <label for="dynamic_preview" class="pure-radio">
+                                        <input id="dynamic_preview" type="radio" name="preview_mode" value="D" checked> 다이나믹 프리뷰
+                                    </label>
+                                    <label for="full_preview" class="pure-radio">
+                                        <input id="full_preview" type="radio" name="preview_mode" value="F"> 풀 프리뷰
                                     </label>
                                 </div>
                             </div>
@@ -113,13 +116,14 @@
         $content.on('keyup paste cut mouseup', function () {
             var info = $(this).textareaHelper();
 
-            if (dynamic_preview) {
-                dynamicPreview($(info['pre']).text(), $(info['post']).text());
-            } else {
-                fullPreview(info['str']);
-            }
+            updatePreview(dynamic_preview, info);
 
             $caret.css(info['caretPos']);
+        });
+
+        $('input[name="preview_mode"]').on('change', function() {
+            dynamic_preview = this.value === 'D';
+            updatePreview(dynamic_preview);
         });
     });
 
@@ -132,9 +136,27 @@
     }
 
     function fullPreview(text) {
-        console.log(text);
         $('.preview-full .post-description p').text(text);
     }
+
+    function updatePreview(dynamic_preview, info) {
+        if (info === undefined) {
+            if (!dynamic_preview) {
+                $('.preview-full').show();
+                $('.preview-pre').hide();
+                $('.preview-post').hide();
+            } else {
+                $('.preview-full').hide();
+                $('.preview-pre').show();
+                $('.preview-post').show();
+            }
+        } else {
+            dynamicPreview($(info['pre']).text(), $(info['post']).text());
+
+            fullPreview(info['str']);
+        }
+    }
+
 </script>
 </body>
 </html>
