@@ -35,8 +35,7 @@
 
     var TextareaHelper = function (elem) {
         if (elem.nodeName.toLowerCase() !== 'textarea') return;
-        this._preText   = '';
-        this._postText  = '';
+
         this.$text      = $(elem);
         this.$mirror    = $('<div/>').css({
             'position': 'absolute',
@@ -63,11 +62,26 @@
                 , pre = document.createTextNode(str.substring(0, caretPos))
                 , post = document.createTextNode(str.substring(caretPos))
                 , $car = $('<span/>').addClass(caretClass).css('position', 'absolute').html('&nbsp;');
-            this.$mirror.append(pre, $car, post)
-                .scrollTop(this.$text.scrollTop());
 
-            this._preText = pre.length ? pre : '';
-            this._postText = post.length ? post : '';
+            this.$mirror.append(pre, $car, post).scrollTop(this.$text.scrollTop());
+
+            var $caret = this.$mirror.find('.' + caretClass);
+            var pos = $caret.position();
+
+            if (this.$text.css('direction') === 'rtl') {
+                pos.right = this.$mirror.innerWidth() - pos.left - $caret.width();
+                pos.left = 'auto';
+            }
+
+            this.$mirror.css('height', '');
+
+            return {
+                str: str,
+                pre: pre,
+                post: post,
+                caretPos: pos,
+                height: this.$mirror.height()
+            };
         };
 
         this.destroy = function () {
@@ -76,30 +90,8 @@
             return null;
         };
 
-        this.caretPos = function () {
-            this.update();
-            var $caret = this.$mirror.find('.' + caretClass)
-                , pos = $caret.position();
-            if (this.$text.css('direction') === 'rtl') {
-                pos.right = this.$mirror.innerWidth() - pos.left - $caret.width();
-                pos.left = 'auto';
-            }
-
-            return pos;
-        };
-
-        this.preText = function () {
-            return this._preText
-        };
-
-        this.postText = function () {
-            return this._postText
-        };
-
-        this.height = function () {
-            this.update();
-            this.$mirror.css('height', '');
-            return this.$mirror.height();
+        this.info = function () {
+            return this.update();
         };
 
         // XBrowser caret position
@@ -124,7 +116,7 @@
         };
     }).call(TextareaHelper.prototype);
 
-    $.fn.textareaHelper = function (method) {
+    $.fn.textareaHelper = function () {
         this.each(function () {
             var $this = $(this)
                 , instance = $this.data(dataKey);
@@ -133,12 +125,9 @@
                 $this.data(dataKey, instance);
             }
         });
-        if (method) {
-            var instance = this.first().data(dataKey);
-            return instance[method]();
-        } else {
-            return this;
-        }
-    };
 
+        var instance = this.first().data(dataKey);
+
+        return instance.info();
+    };
 }));

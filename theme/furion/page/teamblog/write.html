@@ -21,16 +21,32 @@
                             <label for="title">Title</label>
                             <input type="text" name="title" class="pure-u-1" id="title" placeholder="Title">
                         </fieldset>
+
+                        <div class="preview-pre"></div>
+
                         <fieldset class="form-group textarea-holder">
                             <textarea name="content" class="pure-input-1 web-editor" id="content"></textarea>
-                            <!--<div class="tail" id="textarea_caret"></div>-->
+                            <div class="tail" id="textarea_caret"></div>
                         </fieldset>
+
                         <fieldset class="form-group">
-                            <label for="markdown" class="pure-checkbox">
-                                <input id="markdown" type="checkbox" name="render" value="M" checked> 마크다운 문법을 사용합니다
-                                <a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="label label-help">Help</a>
-                            </label>
+                            <div class="pure-g">
+                                <div class="pure-u-1-2">
+                                    <label for="markdown" class="pure-checkbox">
+                                        <input id="markdown" type="checkbox" name="render" value="M" checked> 마크다운 문법을 사용합니다
+                                        <a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="label label-help">Help</a>
+                                    </label>
+                                </div>
+                                <div class="pure-u-1-2 dynamic-preview">
+                                    <label for="dynamic_preview" class="pure-checkbox">
+                                        <input id="dynamic_preview" type="checkbox" name="dynamic_preview" value="1" checked> 다이나믹 프리뷰
+                                    </label>
+                                </div>
+                            </div>
                         </fieldset>
+
+                        <div class="preview-post"></div>
+
                         <fieldset class="form-group">
                             <label for="tags">Tags</label>
                             <input type="text" name="tags" class="pure-u-1" id="tags" placeholder="Separated by comma(,)">
@@ -51,7 +67,7 @@
                 </section>
             </div>
 
-            <div class="posts">
+            <div class="posts preview-full">
                 <h1 class="content-subhead">Preview Post</h1>
 
                 <section class="post">
@@ -80,26 +96,45 @@
 <script src="/lib/jquery/dist/jquery.min.js"></script>
 <script src="{{site.theme}}/common/textarea-helper.js"></script>
 <script>
-    $('#content').on('keyup paste cut mouseup', function () {
-        // Get the textarea's content height.
-        var contentHeight = $(this).textareaHelper('height');
-        // Set the textarea to the content height. i.e. expand as we type.
-        $(this).height(contentHeight);
+    var dynamic_preview = true;
 
-        // Follow the caret arounbd.
-        /*
-        $('#textarea_caret').css(
-            $(this).textareaHelper('caretPos')
-        );
-        */
+    $(document).ready(function () {
+        var $content = $('#content');
+        var $caret = $('#textarea_caret');
 
-        console.log($(this).textareaHelper('caretPos'));
-        console.log($(this).textareaHelper('preText'));
-        console.log($(this).textareaHelper('postText'));
+        $content.on('focusin', function () {
+            $caret.show();
+        });
+
+        $content.on('focusout', function () {
+            $caret.hide();
+        });
+
+        $content.on('keyup paste cut mouseup', function () {
+            var info = $(this).textareaHelper();
+
+            if (dynamic_preview) {
+                dynamicPreview($(info['pre']).text(), $(info['post']).text());
+            } else {
+                fullPreview(info['str']);
+            }
+
+            $caret.css(info['caretPos']);
+        });
     });
 
     // Call it manually at first.
-//    $('textarea').keyup();
+    $('textarea').keyup();
+
+    function dynamicPreview(preText, postText) {
+        $('.preview-pre').text(preText);
+        $('.preview-post').text(postText);
+    }
+
+    function fullPreview(text) {
+        console.log(text);
+        $('.preview-full .post-description p').text(text);
+    }
 </script>
 </body>
 </html>
