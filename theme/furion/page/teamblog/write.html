@@ -85,9 +85,7 @@
                     </header>
 
                     <div class="post-description">
-                        <p>
-                            Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the <a href="https://speakerdeck.com/tilomitra/pure-bliss">slides from the presentation</a>. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
-                        </p>
+
                     </div>
                 </section>
             </div>
@@ -97,9 +95,11 @@
     </div>
 </div>
 <script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/markdown-it/dist/markdown-it.min.js"></script>
 <script src="{{site.theme}}/common/textarea-helper.js"></script>
 <script>
     var dynamic_preview = true;
+    var markdown = window.markdownit();
 
     $(document).ready(function () {
         var $content = $('#content');
@@ -131,12 +131,16 @@
     $('textarea').keyup();
 
     function dynamicPreview(preText, postText) {
-        $('.preview-pre').text(preText);
-        $('.preview-post').text(postText);
+        var resultPre = markdown.render(preText);
+        var resultPost = markdown.render(postText);
+
+        $('.preview-pre').html(resultPre).addClass('markdown-body');
+        $('.preview-post').html(resultPost).addClass('markdown-body');
     }
 
     function fullPreview(text) {
-        $('.preview-full .post-description p').text(text);
+        var result = markdown.render(text);
+        $('.preview-full .post-description').html(result).addClass('markdown-body');
     }
 
     function updatePreview(dynamic_preview, info) {

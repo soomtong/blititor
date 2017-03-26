@@ -13,7 +13,8 @@
     "blueimp-file-upload": "^9.12.5",
     "dragula.js": "dragula#^3.7.2",
     "bootstrap": "^3.3.7",
-    "jquery.typist": "^0.0.7"
+    "jquery.typist": "^0.0.7",
+    "markdown-it": "^8.3.1"
   },
   "devDependencies": {}
 }
