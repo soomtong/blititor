@@ -1,0 +1,15 @@
+{
+  "account_root": "/account",
+  "account": {
+    "signIn": "/sign-in",
+    "signUp": "/sign-up",
+    "signOut": "/sign-out",
+    "checkToken": "/check-token",
+    "login": "/login",
+    "register": "/register",
+    "registerSimple": "/register-simple",
+    "add": "/add",
+    "info": "/info",
+    "updateInfo": "/update"
+  }
+}

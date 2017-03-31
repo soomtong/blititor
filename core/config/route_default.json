@@ -31,49 +31,5 @@
     "pageView": "/page",
     "pageCounter": "/counter/page",
     "accountCounter": "/counter/account"
-  },
-  "account_root": "/account",
-  "account": {
-    "signIn": "/sign-in",
-    "signUp": "/sign-up",
-    "signOut": "/sign-out",
-    "checkToken": "/check-token",
-    "login": "/login",
-    "register": "/register",
-    "registerSimple": "/register-simple",
-    "add": "/add",
-    "info": "/info",
-    "updateInfo": "/update"
-  },
-  "reservation_root": "/reservation",
-  "reservation": {
-    "form": "/",
-    "status": "/status",
-    "phoneSecret": "/secret"
-  },
-  "guestbook_root": "/guestbook",
-  "guestbook": {
-    "form": "/",
-    "message": "/register",
-    "reply": "/register/reply"
-  },
-  "chatting_root": "/chat",
-  "chat": {
-    "form": ""
-  },
-  "gallery_root": "/gallery",
-  "gallery": {
-    "list": "/",
-    "image": "/image",
-    "upload": "/upload"
-  },
-  "teamblog_root": "/blog",
-  "teamblog": {
-    "list": "/",
-    "write": "/write"
-  },
-  "teamblog_post": "/post",
-  "teamblog_tag": {
-    "list": "/tag"
   }
 }

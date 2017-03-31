@@ -1,12 +1,26 @@
 # Release History
 
-## Go further
+## Go Forum
 
-> 0.5.0
+> 0.7.0
 
 ## A Team
 
+> 0.6.0
+
+두 세가지 테마를 포함한 바로 사용 가능한 팀블로그 모듈을 릴리즈 합니다. 
+
+## Custom Middleware
+
+> 0.5.0
+
+서버에 설치된 네이티브 애플리케이션과 상호 통신하는 기능을 실험합니다.
+
+## App Store
+
 > 0.4.0
+
+앱 스토어 기능을 실험합니다.
 
 ## Exhibition 2
 

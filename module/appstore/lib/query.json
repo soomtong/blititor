@@ -1,0 +1,19 @@
+{
+  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ? LIMIT 1",
+  "selectByURL": "SELECT ?? FROM ?? WHERE `custom_url` = ? ORDER BY `id` DESC LIMIT 1 ",
+  "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
+  "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
+  "countAll": "SELECT count(id) as `count` FROM ??",
+  "countAllGroupByMonth": "SELECT month(??) as `month`, year(??) as `year`, count(`id`) as `count` FROM ?? GROUP BY month(??), year(??) ORDER BY ?? DESC",
+  "readTeamblogByTagAll": "SELECT a.* FROM ?? as b, ?? as c LEFT JOIN ?? as a ON a.`id` = c.`tag_related_post_id` WHERE b.`tag` = ? and b.`id` = c.`tag_id` ORDER BY a.`id` DESC",
+  "readTeamblogByPage": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
+  "readTeamblogMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
+  "readTeamblogRecently": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?",
+  "readTeamblogPinned": "SELECT ?? FROM ?? WHERE `pinned` = ? ORDER BY `id` DESC LIMIT ?",
+  "selectTagByPost": "select ??, ?? from ?? as a, ?? as b, ?? as c where a.`id` = ? and a.`id` = b.`tag_related_post_id` and b.`tag_id` = c.`id`",
+  "updateCounterByTag": "UPDATE ?? SET ?? = ?? + 1 WHERE `tag` = ?",
+  "selectByTag": "SELECT `id`, `tag` FROM ?? WHERE `tag` = ? FOR UPDATE",
+  "insertInto": "INSERT INTO ?? SET ?",
+  "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
+}

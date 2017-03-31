@@ -1,0 +1,8 @@
+{
+  "guestbook_root": "/guestbook",
+  "guestbook": {
+    "form": "/",
+    "message": "/register",
+    "reply": "/register/reply"
+  }
+}

@@ -11,7 +11,8 @@ var middleware = require('./lib/middleware');
 var passport = require('./lib/passport');
 
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeData = require('./route.json')
+var routeTable = misc.getRouteTable(routeData);
 
 // Passport Stuffs
 Passport.serializeUser(passport.serialize);

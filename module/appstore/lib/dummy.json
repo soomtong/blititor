@@ -1,0 +1,53 @@
+[
+  {
+    "custom_url": "custom-url",
+    "title": "소비자보호운동",
+    "content": "국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다.\n헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다. 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.\n대통령은 헌법과 법률이 정하는 바에 의하여 국군을 통수한다. 타인의 범죄행위로 인하여 생명·신체에 대한 피해를 받은 국민은 법률이 정하는 바에 의하여 국가로부터 구조를 받을 수 있다.\n근로자는 근로조건의 향상을 위하여 자주적인 단결권·단체교섭권 및 단체행동권을 가진다. 교육의 자주성·전문성·정치적 중립성 및 대학의 자율성은 법률이 정하는 바에 의하여 보장된다.\n법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 모든 국민은 신속한 재판을 받을 권리를 가진다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다.\n대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다. 비상계엄이 선포된 때에는 법률이 정하는 바에 의하여 영장제도, 언론·출판·집회·결사의 자유, 정부나 법원의 권한에 관하여 특별한 조치를 할 수 있다.\n전직대통령의 신분과 예우에 관하여는 법률로 정한다. 저작자·발명가·과학기술자와 예술가의 권리는 법률로써 보호한다. 국민의 모든 자유와 권리는 국가안전보장·질서유지 또는 공공복리를 위하여 필요한 경우에 한하여 법률로써 제한할 수 있으며, 제한하는 경우에도 자유와 권리의 본질적인 내용을 침해할 수 없다.\n비상계엄하의 군사재판은 군인·군무원의 범죄나 군사에 관한 간첩죄의 경우와 초병·초소·유독음식물공급·포로에 관한 죄중 법률이 정한 경우에 한하여 단심으로 할 수 있다. 다만, 사형을 선고한 경우에는 그러하지 아니하다.\n",
+    "render": "M",
+    "tags": "한글입숨, 포스팅"
+  },
+  {
+    "title": "ES6 In Depth 시리즈",
+    "content": "<div><a href=\"http://hacks.mozilla.or.kr/category/es6-in-depth/\"><em><br>ES6 In Depth</em></a><em> 시리즈는 ECMAScript 표준의 6번째 에디션(줄여서 ES6)을 통해 JavaScript 에 새로 추가된 기능들을 살펴보는 시리즈입니다.<br></em><br></div><div><a href=\"http://hacks.mozilla.or.kr/2016/05/es6-in-depth-modules/\"><br>지난번 ES6 모듈에 관한 글</a>까지 우리는 ES6 에 새로 도입된 주요 기능들을 살펴보았습니다.<br><br></div><div><br>이번 글에서는 새로운 기능을 십여 개 <em>더</em> 살펴보려고 합니다. 우리가 지금까지 깊게 살펴보지 않은 기능들입니다. JavaScript 라는 건축물의 벽장과 구석방들을 들여다보는 재미있는 여행이라고 생각하세요. 거대한 동굴도 한두 개 나올 겁니다. 아직 읽지 않은 ES6 in depth 시리즈가 있는지 <a href=\"http://hacks.mozilla.or.kr/category/es6-in-depth/\">확인해 보세요</a>. 다른 글들을 읽기 전에 이번 글을 먼저 읽는 것은 별로 좋지 않습니다!<br><br></div><div><br><a href=\"https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2015/08/typedarrays.png\"><figure class=\"attachment attachment-preview\" data-trix-attachment=\"{&quot;contentType&quot;:&quot;image&quot;,&quot;height&quot;:221,&quot;url&quot;:&quot;https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2015/08/typedarrays-500x221.png&quot;,&quot;width&quot;:500}\" data-trix-content-type=\"image\"><img src=\"https://2r4s9p1yi1fa2jd7j43zph8r-wpengine.netdna-ssl.com/files/2015/08/typedarrays-500x221.png\" width=\"500\" height=\"221\"><figcaption class=\"caption\"></figcaption></figure></a><em>“당신 왼쪽에 TypedArray 가 보일 겁니다…”<br></em><br></div><div><br>주의할 점을 하나만 말씀드리겠습니다. 이번 글에서 소개하는 기능들은 아직 널리 구현되어 있지 않습니다.<br><br></div><div><br>좋습니다. 이제 시작하죠.<br><br></div><div><strong><br>벌써 쓰고 있을지도 모르는 기능들<br></strong><br></div><div><br>ES6 는 지금까지 다른 표준에 있었거나, 비표준이었지만 널리 사용되던 기능들을 표준화했습니다.<br><br></div><ul><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray\"><strong><br>TypedArray</strong></a><strong>, </strong><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer\"><strong>ArrayBuffer</strong></a><strong>, </strong><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView\"><strong>DataView</strong></a><strong>.</strong> 이 타입들은 모두 WebGL 표준의 것들입니다. 이 타입들은 Canvas, Web Audio API, WebRTC 등 많은 API 들에서 사용되어왔습니다. 이 타입들은 많은 양의 바이너리 데이터나 숫자 데이터를 처리할 때 편리합니다.<br><br></li><li><br>예를 들어 만약 Canvas 의 랜더링 컨텍스트에 당신이 원하는 기능이 없을 경우, 그리고 만약 당신이 그것을 직접 구현할만큼 열정이 넘칠 경우, 당신은 다음처럼 구현할 수 있습니다.<br><br></li><li><pre><strong>var</strong> context = canvas.getContext(\"2d\");<strong>var</strong> image = context.getImageData(0, 0, canvas.width, canvas.height);<strong>var</strong> pixels = image.data;  // Uint8ClampedArray 객체// ... 여기에 코드를 작성하세요!// ... `pixels` 안의 비트를 직접 조작하세요// ... 그리고 조작한 픽셀을 canvas에 출력하세요context.putImageData(image, 0, 0);<br></pre></li><li><br>표준화 과정에서 TypedArray 에 .slice(), .map(), .filter() 같은 <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray\">메소드들</a>이 추가됐습니다.<br><br></li><li><strong><br>Promise.</strong> Promise 를 한 문단으로 설명하는 것은 감자칩을 하나만 먹는 것처럼 불가능합니다. 얼마나 <em>어려운지</em> 말도 하지 마세요. 엄두도 못 낼 일입니다. 무엇을 말해야 할까요? Promise 는 비동기 JS 프로그래밍을 위한 구성요소입니다. Promise 는 나중에 비로소 유효해지는 값을 나타냅니다. 그래서, 예를 들어 당신이 <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch\">fetch()</a> 함수를 호출하면,fetch() 함수가 완료될 때까지 실행이 블락킹되지 않고, 즉시 <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise\">Promise</a> 객체를 리턴합니다. fetch() 작업은 백그라운드에서 수행됩니다. 그리고 fetch() 응답이 도착하면 당신을 되부를 것입니다(callback). Promise 는 callback 만 쓰는 것보다 좋은 방법입니다. 왜냐하면 Promise 는 정말 깔끔하게 체인(chain)으로 엮을 수 있기 때문입니다. Promise 는 일급(first-class) 객체이며 <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all\">재미있는</a> <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race\">메소드들</a>을 갖고 있습니다. 또 에러 핸들링 코드도 간결하게 작성할 수 있습니다. 폴리필을 이용하면 지금 당장 브라우저에서 Promise 를 사용할 수 있습니다. 만약 Promise 에 대해 아직 잘 모르겠다면, <a href=\"http://www.html5rocks.com/en/tutorials/es6/promises/\">Jake Archibald 의 상세한 설명</a>을 보세요.<br><br></li><li><strong><br>블록 스코프(block scope) 함수.</strong> 원래 이것은 쓰면 <em>안되는 거였습니다</em>. 하지만 아마 써 본 적이 있을 겁니다. 의도하지 않게요.<br><br></li><li><br>ES1 부터 ES5 까지, 아래 코드는 문법적으로 허용되지 않는 것이었습니다.<br><br></li><li><pre><strong>if</strong> (temperature &gt; 100) {  <strong>function</strong> <strong>chill</strong>() {    <strong>return</strong> fan.switchOn().then(obtainLemonade);  }  chill();}<br></pre></li><li><br>if 블록 안에 함수를 선언하는 것은 원칙적으로 금지였습니다. 함수 선언은 톱레벨(toplevel)에서만 가능했습니다. 또는 어떤 함수 블록의 제일 바깥쪽 블럭 안에서만 가능했습니다.<br><br></li><li><br>하지만 실제로는 이 코드가 거의 모든 주요 브라우저들에서 동작했습니다. 뭐 그런거죠.<br><br></li><li><br>하지만 브라우저들 사이에 호환성이 없었습니다. 브라우저들마다 상세 규정이 조금씩 달랐습니다. 어쨌든 동작했습니다. 그리고 많은 웹 페이지들이 아직도 이 기능을 사용하고 있습니다.<br><br></li><li><br>ES6 가 이 기능을 표준화했습니다. 감사합니다. 이제 함수는 블럭의 최상단으로 호이스팅(hoisting) 됩니다.<br><br></li><li><br>불행히도, Firefox 와 Safari 는 새로운 표준을 아직 구현하지 않고 있습니다. 그래서 지금은, 함수 표현식을 대신 쓰는 것이 좋습니다.<br><br></li><li><pre><strong>if</strong> (temperature &gt; 100) {  <strong>var</strong> chill = <strong>function</strong> () {        <strong>return</strong> fan.switchOn().then(obtainLemonade);  };  chill();}<br></pre></li><li><br>블록 스코프 함수가 지금까지 표준화되지 않았던 이유는 하위 호환성 조건이 무척 까다로왔기 때문입니다. 누구도 이 문제를 해결할 수 있다고 생각하지 않았습니다. ES6 는 <a href=\"http://www.ecma-international.org/ecma-262/6.0/index.html#sec-block-level-function-declarations-web-legacy-compatibility-semantics\"><em>아주</em>이상한 규칙</a>을 도입해서 이 문제를 해결했습니다. 즉, non-strict 코드에만 적용되는 규칙입니다. 저는 이 규칙을 설명할 수 없습니다. 그냥 저를 믿으세요. strict 모드만 사용하세요.<br><br></li></ul>",
+    "render": "",
+    "headerPic": "[{\"title\": \"이미지를 리스트에 활용할 수 있습니다.\", \"file\": \"http://farm8.staticflickr.com/7448/8915936174_8d54ec76c6.jpg\"}, {\"title\": \"Normal Title 여기에 있습니다\", \"file\": \"http://farm8.staticflickr.com/7382/8907351301_bd7460cffb.jpg\"}]",
+    "tags": "에디터, 포스팅"
+  },
+  {
+    "title": "계엄을 선포한 때에는 대통령은 지체없이 국회에 통고하여야 한다",
+    "content": "계엄을 선포한 때에는 대통령은 지체없이 국회에 통고하여야 한다. 공무원인 근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권 및 단체행동권을 가진다. 위원은 정당에 가입하거나 정치에 관여할 수 없다. 농업생산성의 제고와 농지의 합리적인 이용을 위하거나 불가피한 사정으로 발생하는 농지의 임대차와 위탁경영은 법률이 정하는 바에 의하여 인정된다.\n대통령의 임기는 5년으로 하며, 중임할 수 없다. 대통령은 국회에 출석하여 발언하거나 서한으로 의견을 표시할 수 있다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 대통령은 제3항과 제4항의 사유를 지체없이 공포하여야 한다. 국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.\n언론·출판에 대한 허가나 검열과 집회·결사에 대한 허가는 인정되지 아니한다. 국회는 국정을 감사하거나 특정한 국정사안에 대하여 조사할 수 있으며, 이에 필요한 서류의 제출 또는 증인의 출석과 증언이나 의견의 진술을 요구할 수 있다. 행정권은 대통령을 수반으로 하는 정부에 속한다. 모든 국민은 그 보호하는 자녀에게 적어도 초등교육과 법률이 정하는 교육을 받게 할 의무를 진다.\n비상계엄하의 군사재판은 군인·군무원의 범죄나 군사에 관한 간첩죄의 경우와 초병·초소·유독음식물공급·포로에 관한 죄중 법률이 정한 경우에 한하여 단심으로 할 수 있다. 다만, 사형을 선고한 경우에는 그러하지 아니하다. 공무원은 국민전체에 대한 봉사자이며, 국민에 대하여 책임을 진다. 국가는 법률이 정하는 바에 의하여 재외국민을 보호할 의무를 진다.\n대통령의 선거에 관한 사항은 법률로 정한다. 선거운동은 각급 선거관리위원회의 관리하에 법률이 정하는 범위안에서 하되, 균등한 기회가 보장되어야 한다. 한 회계연도를 넘어 계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서 국회의 의결을 얻어야 한다. 국가유공자·상이군경 및 전몰군경의 유가족은 법률이 정하는 바에 의하여 우선적으로 근로의 기회를 부여받는다.\n",
+    "render": "M",
+    "tags": "한글입숨, 포스팅"
+  },
+  {
+    "title": "한국형 웹 사이트 템플릿",
+    "content": "블리티터는 다분히 한국적인 웹 사이트 템플릿입니다.\n 기존의 PHP 개발자들이 쉽게 Node.JS 를 접할 수 있도록 또는 그 어떤 개발자도 쉽게 홈페이지나 개인 블로그 또는 커뮤니티 사이트를 만들 수 있도록 도와드립니다.\n 저 역시 기존에 공개되어 있는 많은 솔루션들을 접했지만 제 맘에 드는게 없었습니다. 노드 빠돌이인 저는 가능한 쉽게 고쳐쓸 수 있는 노드 코드 기반의 웹 사이트 템플릿을 만들기 시작했습니다. 개인적인 이유로 Project B 라는 이름으로 구상을 시작했는데 기존에 가지고 있던 비슷한 웹 사이트 프로젝트의 이름을 그대로 사용하게 되었습니다. 그 프로젝트가 깃헙에서 별을 조금 받았거든요.\n 워드프레스가 싫고 PHP 말고 다른 게시판 솔루션을 찾고 계신 분들도 이 프로젝트에 기대해 주세요...\n 감사합니다.",
+    "render": "M",
+    "pinned": true,
+    "tags": "new blog, blititor"
+  },
+  {
+    "title": "설치형 블로그 서비스",
+    "content": "심플스트랩 테마는 아주 기초적인 팀 블로그 엔진과 방명록을 가지고 있습니다.\n 디자인은 심플하기 그지없고 부트스트랩4 테마를 사용하여 여러모로 수정하기 쉽게 만들어졌습니다. 현재는 블로그 쓰기를 위한 계정 생성과 개인 정보 수정 기능을 가지고 있지만 회원 관리 등과 같은 기능이 추가될 것이고 블로그 엔진 자체도 현재는 포스팅 기능 뿐이지만 RSS 또는 AtomFeed 를 위한 별도의 URL 서비스와 메타블로그에 노출되기 쉽도록 개선될 예정이며 포스팅 피드백을 받을 수 있는 기능과 관련 통계 기능도 추가될 것입니다.\n Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.\n Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
+    "render": "M",
+    "tags": "post 1"
+  },
+  {
+    "title": "추가될 기능 목록",
+    "content": "블리티터는 올해 안에 개발완료를 목표로 진행되고 있으며 각 테마에 추가될 기능은 다음과 같습니다.\n - Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\n - Donec id elit non mi porta gravida at eget metus.\n - Nulla vitae elit libero, a pharetra augue.\n Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.\n Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.",
+    "render": "M",
+    "tags": "기능"
+  },
+  {
+    "title": "에디터 콘텐츠 테스트",
+    "content": "<div>트릭스 에디터 사용으로 인해 나는 기분이 좋아졌다<br><br></div>",
+    "render": "",
+    "tags": "기능"
+  },
+  {
+    "title": "Wyswig Editor",
+    "content": "<div><strong>볼드체는 </strong>살려두고<br><em>이텔릭도</em> 살려두고<br><br>빈줄도 어떻게 안되겠니...<br><br><br><br><br>그래 이렇게!<br><br><br></div>",
+    "render": "",
+    "tags": "기능"
+  }
+]

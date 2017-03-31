@@ -1,5 +1,12 @@
 # Conventions
 
+## JavaScript Coding
+
+지금은 ES5 기반의 코드로 진행 중입니다. 
+부분 부분 ES2015 이후의 코드를 도입하고 있습니다만 당분간 이 형태의 코드베이스를 유지하고
+메이저 버전 릴리즈를 마치고 ES6 문법을 도입하도록 하겠습니다. 
+
+
 ## Indents
 
 __could you do me a favor?__
@@ -17,7 +24,7 @@ but *.html, *.css depends on each css frameworks.
 
 ## File name Convention
 
-파일명은 snake_case 를 사용합니다. 물론 소문자입니다.
+파일명 또는 폴더명은 snake_case 를 사용합니다. 물론 소문자입니다.
 
 incorrect
 
@@ -31,6 +38,12 @@ correct
 ```
 file_name.html  ( more preferred )
 filename.html
+```
+
+폴더명의 경우 특정 버전을 지칭할 때는 예외적으로 '-' 를 사용합니다.
+
+```
+newlib-1.0.1
 ```
 
 ## Branch Convention

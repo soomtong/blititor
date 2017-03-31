@@ -19,7 +19,7 @@ function loadServiceToken() {
     try {
         tokens = require('../../config.json').service.token;
     } catch (e) {
-        winston.error("Can't Get Service Provider Token in `config.json`");
+        winston.warn("Can't Get Service Token in `config.json`");
     }
 
     return tokens || {};
@@ -31,7 +31,7 @@ function loadServiceProvider() {
     try {
         providers = require('../../config.json').service.provider;
     } catch (e) {
-        winston.error("Can't Get Service Provider Token in `config.json`");
+        winston.warn("Can't Get Service Provider in `config.json`");
     }
 
     return providers || {};
@@ -62,88 +62,12 @@ function setUserPrivilege() {
     return BLITITOR.userPrivilege;
 }
 
-function getRouteTable() {
-    // return defaultRoute;
-    // for code assist
-    return {
-        "root": "/",
-        "about": "/about",
-        "admin_root": "/admin",
-        "admin": {
-            "login": "/login",
-            "install": "/install",
-            "database_setup": "/make-db-config",
-            "database_init": "/make-db-init",
-            "theme_setup": "/theme-config",
-            "account": "/account",
-            "accountEdit": "/account/edit",
-            "accountNew": "/account/register",
-            "accountAdd": "/account/add",
-            "counter": "/counter"
-        },
-        "manage_root": "/manage",
-        "manage": {
-            "login": "/login",
-            "account": "/account",
-            "reservation": "/reservation",
-            "reservationClean": "/reservation/clean",
-            "tutorial": "/reservation/tutorial",
-            "tutorialStatus": "/reservation/tutorial/status",
-            "gallery": "/gallery",
-            "galleryCategory": "/gallery/category",
-            "galleryImage": "/gallery/image",
-            "galleryImageSort": "/gallery/image/sort",
-            "galleryImageRemove": "/gallery/image/remove",
-            "pageLog": "/page/log",
-            "pageView": "/page",
-            "pageCounter": "/counter/page",
-            "accountCounter": "/counter/account"
-        },
-        "account_root": "/account",
-        "account": {
-            "signIn": "/sign-in",
-            "signUp": "/sign-up",
-            "signOut": "/sign-out",
-            "checkToken": "/check-token",
-            "login": "/login",
-            "register": "/register",
-            "registerSimple": "/register-simple",
-            "add": "/add",
-            "info": "/info",
-            "updateInfo": "/update"
-        },
-        "reservation_root": "/reservation",
-        "reservation": {
-            "form": "/",
-            "status": "/status",
-            "phoneSecret": "/secret"
-        },
-        "guestbook_root": "/guestbook",
-        "guestbook": {
-            "form": "/",
-            "message": "/register",
-            "reply": "/register/reply"
-        },
-        "chatting_root": "/chat",
-        "chat": {
-            "form": ""
-        },
-        "gallery_root": "/gallery",
-        "gallery": {
-            "list": "/",
-            "image": "/image",
-            "upload": "/upload"
-        },
-        "teamblog_root": "/blog",
-        "teamblog": {
-            "list": "/",
-            "write": "/write"
-        },
-        "teamblog_post": "/post",
-        "teamblog_tag": {
-            "list": "/tag"
-        }
-    };
+function getRouteTable(customRouteData) {
+    if (customRouteData && !Array.isArray(customRouteData)) {
+        Object.assign(defaultRoute, customRouteData);
+    }
+
+    return defaultRoute;
 }
 
 function setRouteTable() {

@@ -23,6 +23,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 check out the samples! based awesome css frameworks
 
 - pure
+- bulma
 - bootstrap
 - foundation
 - materialize
@@ -100,3 +101,9 @@ or run dev mode using nodemon
 ```
 npm run dev
 ```
+
+## License
+
+Blititor has MIT License basically. but each theme design license depends on each maker's opinions.
+
+it will be described each `app` and `theme`'s readme file or description file.
