@@ -43,11 +43,14 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_auth = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_id` varchar(64) not null, ' +
         '`user_password` varchar(512) not null, ' +
-        'UNIQUE auth_user_id_unique(`user_id`))';
+        'UNIQUE auth_user_id_unique(`user_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_user = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`uuid` char(36) not null, `auth_id` int unsigned not null, ' +
@@ -59,19 +62,23 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'UNIQUE user_uuid_unique(`uuid`), ' +
-        'INDEX auth_id(`auth_id`))';
+        'INDEX auth_id(`auth_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_point = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_id` int unsigned not null, `amount` int, `reason` varchar(255), ' +
         '`created_at` datetime, ' +
-        'INDEX user_id(`user_id`))';
+        'INDEX user_id(`user_id`))' +
+        'DEFAULT CHARSET=' + charSet;
 
     var sql_fkey_user_auth = 'alter table ?? ' +
         'add constraint user_auth_id_foreign foreign key (`auth_id`) ' +
-        'references ?? (`id`)';
+        'references ?? (`id`)' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_fkey_point_user = 'alter table ?? ' +
         'add constraint point_user_id_foreign foreign key (`user_id`) ' +
-        'references ?? (`id`)';
+        'references ?? (`id`)' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_auth, tables.auth, function (error, result) {
         connection.query(sql_user, tables.user, function (error, result) {
@@ -110,7 +117,7 @@ function insertDummy(databaseConfiguration, done) {
                 var userData = {
                     uuid: common.UUID4(),
                     auth_id: null,
-                    nickname: item.nickname,
+                    nickname: item.nickname.toString(),
                     level: 1,
                     grant: '',
                     login_counter: 0,

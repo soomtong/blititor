@@ -448,7 +448,7 @@ function makeAdminAccount() {
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
                         console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
-                        console.log(' = ' + authData.user_id + '가 이미 존재합니다.');
+                        console.log(' = ' + authData.user_id + ' 은 이미 존재합니다.');
                         
                         connection.destroy();
 
