@@ -128,6 +128,10 @@ function commonFlag() {
             markdown: {id: 'markdown_post', value: 'M'},
             asciidoc: {id: 'asciidoc_post', value: 'A'},
             headedPicture: {id: 'picture_headed_post', value: 'H'}
+        },
+        app: {
+            pinned: {id: 'pinned_netapp', value: 1},
+            headedPicture: {id: 'picture_headed_netapp', value: 'H'}
         }
     }
 }
@@ -166,7 +170,7 @@ function showGlobalVar(g) {
 
 function showRoutes(app) {
     printRoutes(app, path.join(__dirname, '..', 'log/site-routes.log'));
-    displayRoutes(app);
+    displayRoutes(app, path.join(__dirname, '..', 'log/site-route-table.log'));
 }
 
 function checkDatabaseConfigFile(configFile) {

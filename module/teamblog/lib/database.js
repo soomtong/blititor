@@ -72,7 +72,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`post_id` int unsigned not null, ' +
         '`title` varchar(256), ' +
         '`content` text, ' +
-        '`tags` text, ' +
+        '`tags` varchar(256), ' +
         '`created_at` datetime, ' +
         'INDEX created_at(`created_at`), ' +
         'INDEX post_id(`post_id`))';
