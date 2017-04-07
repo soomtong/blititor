@@ -10,7 +10,7 @@
 
 두 세가지 테마를 포함한 바로 사용 가능한 팀블로그 모듈을 릴리즈 합니다. 
 
-## Custom Middleware
+## Native Bridge Example
 
 > 0.5.0
 
