@@ -50,6 +50,8 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_teamblog = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
@@ -66,7 +68,8 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX pinned(`pinned`), ' +
         'INDEX custom_url(`custom_url`), ' +
         'INDEX created_at(`created_at`), ' +
-        'INDEX user_id(`user_id`))';
+        'INDEX user_id(`user_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_teamblog_history = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`post_id` int unsigned not null, ' +
@@ -75,31 +78,36 @@ function createScheme(databaseConfiguration, callback, done) {
         '`tags` varchar(256), ' +
         '`created_at` datetime, ' +
         'INDEX created_at(`created_at`), ' +
-        'INDEX post_id(`post_id`))';
+        'INDEX post_id(`post_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_teamblog_related = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`post_id` int unsigned not null, ' +
         '`related_post_id` int unsigned not null, ' +
         '`created_at` datetime, ' +
         'INDEX related_post_id(`related_post_id`), ' +
-        'INDEX post_id(`post_id`))';
+        'INDEX post_id(`post_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_teamblog_tag = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`tag` varchar(128), ' +
         '`tag_count` int unsigned not null DEFAULT 1, ' +
         '`created_at` datetime, ' +
         'INDEX tag(`tag`), ' +
-        'INDEX tag_count(`tag_count`))';
+        'INDEX tag_count(`tag_count`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_teamblog_tag_related = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`tag_id` int unsigned not null, ' +
         '`tag_related_post_id` int unsigned not null, ' +
         '`created_at` datetime, ' +
         'INDEX tag_related_post_id(`tag_related_post_id`), ' +
-        'INDEX tag_id(`tag_id`))';
+        'INDEX tag_id(`tag_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_fkey_user_id = 'alter table ?? ' +
         'add constraint teamblog_user_id_foreign foreign key (`user_id`) ' +
-        'references ?? (`id`)';
+        'references ?? (`id`)' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_teamblog, tables.teamblog, function (error, result) {
         connection.query(sql_teamblog_history, tables.teamblogHistory, function (error, result) {

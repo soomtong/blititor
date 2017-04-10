@@ -44,6 +44,8 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_gallery_image = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`category` tinyint default 0, ' +
@@ -58,14 +60,16 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         'INDEX hide(`hide`), ' +
         'INDEX sort(`sort`), ' +
-        'INDEX category(`category`))';
+        'INDEX category(`category`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_gallery_category = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` tinyint unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`sort` tinyint unsigned not null default 0, ' +
         '`title` varchar(64), ' +
         '`sub_title` varchar(256), ' +
         '`created_at` datetime, ' +
-        'INDEX sort(`sort`))';
+        'INDEX sort(`sort`))' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_gallery_category, tables.galleryCategory, function (error, result) {
         connection.query(sql_gallery_image, tables.galleryImage, function (error, result) {

@@ -27,6 +27,19 @@
         "core": false
     },
     {
+        "folder": "appstore",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "netapp": "b_netapp",
+            "netappHistory": "b_netapp_history",
+            "netappCategory": "b_netapp_category",
+            "netappCategoryRelated": "b_netapp_category_related",
+            "user": "b_user"
+        },
+        "core": false
+    },
+    {
         "folder": "chatting",
         "useDatabase": true,
         "ignore": false,

@@ -43,6 +43,8 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_reservation_list = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`category` tinyint default 0, ' +
@@ -59,7 +61,8 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX email(`email`), ' +
         'INDEX phone(`phone`), ' +
         'INDEX updated_at(`updated_at`), ' +
-        'INDEX category(`category`))';
+        'INDEX category(`category`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_reservation_status = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`sort` int unsigned not null default 0, ' +
@@ -74,7 +77,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`updated_at` datetime, ' +
         'INDEX sort(`sort`), ' +
         'INDEX updated_at(`updated_at`), ' +
-        'INDEX category(`category`))';
+        'INDEX category(`category`))' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_reservation_status, tables.reservationStatus, function (error, result) {
         connection.query(sql_reservation_list, tables.reservationList, function (error, result) {

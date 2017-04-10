@@ -3,7 +3,7 @@ var moment = require('moment');
 var winston = require('winston');
 var markdownIt = require('markdown-it');
 var quillRender = require('quilljs-renderer');
-var striptags = require('striptags');
+var stripTags = require('striptags');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -280,7 +280,7 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         } else if (item.flag && (item.flag.toString().includes(postFlag.delta.value))) {
             item.preview = common.getHeaderTextFromDelta(item['content'], previewLen, '<br>');
         } else {
-            item.preview = common.getHeaderTextFromMarkdown(striptags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
+            item.preview = common.getHeaderTextFromMarkdown(stripTags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
         }
     }
 }

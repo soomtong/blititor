@@ -35,10 +35,13 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_site = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`title` varchar(64), `value` varchar(256), ' +
-        '`created_at` datetime)';
+        '`created_at` datetime)' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_site, tables.site, function (error, result) {
         callback && callback(databaseConfiguration, done);

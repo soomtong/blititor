@@ -41,6 +41,8 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_guestbook = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`email` varchar(64) not null, `password` varchar(255) not null, ' +
@@ -49,7 +51,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`message` text, ' +
         '`reply` text, ' +
         '`created_at` datetime, ' +
-        '`replied_at` datetime)';
+        '`replied_at` datetime)' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_guestbook, tables.guestbook, function (error, result) {
         // check dummy json

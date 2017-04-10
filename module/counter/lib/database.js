@@ -51,20 +51,24 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_account_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`uuid` char(36) not null, `type` int(4) unsigned not null, ' +
         '`client` varchar(96), ' +
         '`device` varchar(64), ' +
         '`created_at` datetime, ' +
-        'INDEX account_log_uuid(`uuid`))';
+        'INDEX account_log_uuid(`uuid`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_account_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`session_init` int unsigned default 0, `sign_up` int unsigned default 0, ' +
         '`sign_in` int unsigned default 0, `sign_out` int unsigned default 0, ' +
         '`deactivated` int unsigned default 0, `reactivated` int unsigned default 0, ' +
         '`date` char(8), ' +
-        'UNIQUE account_counter_date_unique(`date`))';
+        'UNIQUE account_counter_date_unique(`date`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_visit_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`path` varchar(96) not null,' +
@@ -74,19 +78,22 @@ function createScheme(databaseConfiguration, callback, done) {
         '`client` varchar(96), ' +
         '`device` varchar(64), ' +
         '`created_at` datetime, ' +
-        'INDEX visit_log_path(`path`))';
+        'INDEX visit_log_path(`path`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_visit_counter = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`path` varchar(96) not null,' +
         '`date` char(8) not null, ' +
         '`view` int unsigned default 0, ' +
-        'INDEX visit_counter_path(`path`))';
+        'INDEX visit_counter_path(`path`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_session_log = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`session` varchar(96) not null,' +
         '`uuid` char(36), ' +
         '`created_at` datetime, ' +
-        'INDEX session_log_session(`session`))';
+        'INDEX session_log_session(`session`))' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_account_log, tables.accountLog, function (error, result) {
         connection.query(sql_account_counter, tables.accountCounter, function (error, result) {

@@ -43,6 +43,8 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
+    var charSet = 'utf8mb4';
+
     var sql_chatting = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`from_uuid` char(36) not null, ' +
@@ -50,7 +52,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`message` text, ' +
         '`created_at` datetime ,' +
         'INDEX from_uuid(`from_uuid`) ,' +
-		'INDEX to_uuid(`to_uuid`))';
+		'INDEX to_uuid(`to_uuid`))' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_chatting, tables.chattingLog, function (error, result) {
         // check dummy json
