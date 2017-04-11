@@ -13,7 +13,7 @@ var db = require('./database');
 var query = require('./query');
 
 var routeTable = misc.getRouteTable();
-var postFlag = misc.commonFlag().post;
+var appstoreFlag = misc.commonFlag().appStore;
 
 function indexPage(req, res) {
     var params = {
@@ -240,77 +240,15 @@ function viewNetApp(req, res) {
 function categoryList(params, callback) {
     var mysql = connection.get();
 
-    return callback(null, [
-        {
-            id: 'monitor',
-            link_url: '/store/category/monitor',
-            title: '모니터링',
-            subject: '네트워크 모니터, 퍼포먼스 모니터'
-        },
-        {
-            id: 'balance',
-            link_url: '/store/category/balance',
-            title: '로드밸런싱',
-            subject: '트래픽 분산, 리버스 프록시'
-        },
-        {
-            id: 'security',
-            link_url: '/store/category/security',
-            title: '시큐리티',
-            subject: 'IPSec, 파이어월'
-        },
-        {
-            id: 'switch',
-            link_url: '/store/category/switch',
-            title: '스위치',
-            subject: '허브, 브릿지, 릴레이'
-        },
-        {
-            id: 'library',
-            link_url: '/store/category/library',
-            title: '라이브러리',
-            subject: '패킷엔진, 리눅스 라이브러리'
-        },
-        {
-            id: 'driver',
-            link_url: '/store/category/driver',
-            title: '드라이버',
-            subject: '디바이스 드라이버'
-        }
-    ]);
+    db.readCategories(mysql, function (err, result) {
+        callback(err, result);
+    });
 }
 
 function pinnedNetApp(params, callback) {
     var mysql = connection.get();
 
-    return callback(null, [
-        {
-            app_id: '1',
-            title: '로드밸런서',
-            img_url: 'http://placeimg.com/320/240/tech/1',
-            app_link_url: ''
-        },
-        {
-            app_id: '2',
-            title: 'CK Net Emul Master',
-            img_url: 'http://placeimg.com/320/240/tech/2',
-            app_link_url: ''
-        },
-        {
-            app_id: '3',
-            title: '인비전 모니터',
-            img_url: 'http://placeimg.com/320/240/tech/3',
-            app_link_url: ''
-        },
-        {
-            app_id: '4',
-            title: 'IPSec 테이블 매니저',
-            img_url: 'http://placeimg.com/320/240/tech/4',
-            app_link_url: ''
-        }
-    ]);
-
-    db.readTeamblogPinned(mysql, params.pinnedPostCount, function (err, result) {
+    db.readStoreAppPinned(mysql, params.pinnedNetAppCount, function (err, result) {
         callback(err, result);
     });
 }
@@ -318,90 +256,7 @@ function pinnedNetApp(params, callback) {
 function recentNetApp(params, callback) {
     var mysql = connection.get();
 
-    return callback(null, [
-        {
-            app_id: '1',
-            title: '로드밸런서',
-            img_url: 'http://placeimg.com/360/320/tech/1',
-            price: '',
-            discounted: '120,000',
-            app_flag: 'N',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '2',
-            title: 'CK Net Emul Master',
-            img_url: 'http://placeimg.com/360/320/tech/2',
-            price: '',
-            discounted: '500,000',
-            app_flag: 'N',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '3',
-            title: '인비전 모니터',
-            img_url: 'http://placeimg.com/360/320/tech/3',
-            price: '',
-            discounted: '300,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '4',
-            title: 'IPSec 테이블 매니저',
-            img_url: 'http://placeimg.com/360/320/tech/4',
-            price: '',
-            discounted: '900,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '11',
-            title: '로드밸런서',
-            img_url: 'http://placeimg.com/360/320/tech/1',
-            price: '',
-            discounted: '300,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '12',
-            title: 'CK Net Emul Master',
-            img_url: 'http://placeimg.com/360/320/tech/2',
-            price: '',
-            discounted: '300,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '13',
-            title: '인비전 모니터',
-            img_url: 'http://placeimg.com/360/320/tech/3',
-            price: '',
-            discounted: '300,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        },
-        {
-            app_id: '14',
-            title: 'IPSec 테이블 매니저',
-            img_url: 'http://placeimg.com/360/320/tech/4',
-            price: '',
-            discounted: '300,000',
-            app_flag: '',
-            category: ['로드밸런싱'],
-            app_desc: '하이 퍼포먼스 로드밸런서 64비트 전용'
-        }
-    ]);
-
-    db.readTeamblogRecently(mysql, params.recentPostCount, function (err, result) {
+    db.readStoreAppRecently(mysql, params.recentNetAppCount, function (err, result) {
         callback(err, result);
     });
 }
@@ -430,13 +285,13 @@ function makePreviewContent (item) {   // this is sync process, it can be delaye
         });
     }
 
-    if (item.flag && (item.flag.toString().includes(postFlag.headedPicture.value))) {
+    if (item.flag && (item.flag.toString().includes(appstoreFlag.headedPicture.value))) {
         item.headedPicture = true;
         item.images = JSON.parse(item['header_imgs']);
     } else {
-        if (item.flag && (item.flag.toString().includes(postFlag.markdown.value))) {
+        if (item.flag && (item.flag.toString().includes(appstoreFlag.markdown.value))) {
             item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
-        } else if (item.flag && (item.flag.toString().includes(postFlag.delta.value))) {
+        } else if (item.flag && (item.flag.toString().includes(appstoreFlag.delta.value))) {
             item.preview = common.getHeaderTextFromDelta(item['content'], previewLen, '<br>');
         } else {
             item.preview = common.getHeaderTextFromMarkdown(stripTags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
@@ -451,8 +306,8 @@ function renderPost(post) {
     p.tagList = post.tags.split(',').filter(function (item) {
         return item;
     });
-    p.renderMarkdown = post.flag.includes(postFlag.markdown.value);
-    p.renderDelta = post.flag.includes(postFlag.delta.value);
+    p.renderMarkdown = post.flag.includes(appstoreFlag.markdown.value);
+    p.renderDelta = post.flag.includes(appstoreFlag.delta.value);
 
     if (p.renderMarkdown) {
         p.rendered = md.render(post.content);

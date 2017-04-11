@@ -129,7 +129,7 @@ function commonFlag() {
             asciidoc: {id: 'asciidoc_post', value: 'A'},
             headedPicture: {id: 'picture_headed_post', value: 'H'}
         },
-        app: {
+        appStore: {
             pinned: {id: 'pinned_netapp', value: 1},
             headedPicture: {id: 'picture_headed_netapp', value: 'H'}
         }
