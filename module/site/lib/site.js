@@ -8,7 +8,7 @@ function plainPage(req, res) {
     var params = {
         title: "Plain",
         path: req.path,
-        page: req.path == '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
+        page: req.path === '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
 
     //500 Error
@@ -24,7 +24,7 @@ function plainPageWithSubPath(req, res) {
     var params = {
         title: "Plain",
         path: req.path,
-        page: req.path.lastIndexOf('/') == req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
+        page: req.path.lastIndexOf('/') === req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
     };
 
     // winston.info(req.path, params, req.path.match(filter.page));

@@ -2,6 +2,8 @@ var express = require('express');
 
 var misc = require('../../core/lib/misc');
 
+var site = require('../site');
+
 var appstore = require('./lib/appstore');
 var middleware = require('./lib/middleware');
 
@@ -14,7 +16,8 @@ var routeTable = misc.getRouteTable(routeData);
 router.use(middleware.exposeLocals);
 
 // bind module router
-router.all(routeTable.root, appstore.index);
+router.all(routeTable.root, site.redirect(routeTable.appstore_root));
+router.get(routeTable.appstore_root, appstore.index);
 
 router.get(routeTable.appstore_post + '/:postNumber([0-9]+)', appstore.view);
 router.get(routeTable.appstore_post + '/:postTitle', appstore.view);
