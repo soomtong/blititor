@@ -10,6 +10,7 @@
   "readStoreAppByPage": "SELECT ?? FROM ?? ORDER BY `id` DESC LIMIT ?, ?",
   "readStoreAppMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
   "readStoreAppRecently": "SELECT ??, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title` FROM ?? AS A ORDER BY `id` DESC LIMIT ?",
+  "readStoreAppListByCategory": "SELECT A.*, B.`category_title` AS `category_title` FROM ?? AS A, ?? AS B WHERE B.`category_id` = ? and B.`id` = A.`category_id` ORDER BY A.`id` DESC LIMIT ?, ?",
   "readStoreAppPinned": "SELECT ?? FROM ?? WHERE `pinned` = ? ORDER BY `id` DESC LIMIT ?",
   "selectCategoryByApp": "select ??, ?? from ?? as a, ?? as b, ?? as c where a.`id` = ? and a.`id` = b.`store_category_related_app_id` and b.`store_app_id` = c.`id`",
   "updateCounterByCategory": "UPDATE ?? SET ?? = ?? + 1 WHERE `tag` = ?",

@@ -19,15 +19,13 @@ router.use(middleware.exposeLocals);
 router.all(routeTable.root, site.redirect(routeTable.appstore_root));
 router.get(routeTable.appstore_root, appstore.index);
 
-router.get(routeTable.appstore_post + '/:postNumber([0-9]+)', appstore.view);
-router.get(routeTable.appstore_post + '/:postTitle', appstore.view);
+router.get(routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);
 
 router.get(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.write); // in order to avoid conflict with `:page` params
 router.post(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.save);
 
 router.get(routeTable.appstore_root + routeTable.appstore.list, appstore.list);
 router.get(routeTable.appstore_root + routeTable.appstore.list + ':page([0-9]+)', appstore.list);
-router.get(routeTable.appstore_root + routeTable.appstore.list + ':year([0-9]+)/:month([0-9]+)', appstore.list);
-router.get(routeTable.appstore_root + routeTable.appstore_tag.list + '/:tag' , appstore.list);
+router.get(routeTable.appstore_root + routeTable.appstore.category + '/:category' , appstore.listByCategory);
 
 module.exports = router;

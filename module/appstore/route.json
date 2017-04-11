@@ -1,11 +1,9 @@
 {
   "appstore_root": "/store",
   "appstore": {
-    "list": "/",
+    "list": "/apps",
+    "category": "/category",
     "write": "/write"
   },
-  "appstore_post": "/post",
-  "appstore_tag": {
-    "list": "/tag"
-  }
+  "appstore_app": "/app"
 }

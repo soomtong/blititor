@@ -12,7 +12,8 @@ var connection = require('../../../core/lib/connection');   // todo: can load fr
 var db = require('./database');
 var query = require('./query');
 
-var routeTable = misc.getRouteTable();
+var routeData = require('../route.json');
+var routeTable = misc.getRouteTable(routeData);
 var appstoreFlag = misc.commonFlag().appStore;
 
 function indexPage(req, res) {
@@ -50,82 +51,74 @@ function indexPage(req, res) {
 
 function listNetApp(req, res) {
     var params = {
-        title: '넷 앱스토어',
-        useMarkdown: true,
-        tag: req.params['tag'],
-        page: Number(req.params['page'] || Number(req.query['p'] || 1)),
-        month: req.params['month'],
-        year: req.params['month'] ? req.params['year'] : undefined
+        title: '넷앱 리스트',
+        categoryList: [],
+        page: Number(req.params['page'] || Number(req.query['p'] || 1))
     };
 
     var mysql = connection.get();
 
-    var defaultYear = moment().format('YYYY');
-    var defaultMonth = moment().format('MM');
+    db.readStoreAppByPage(mysql, params.page - 1, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '애플리케이션 목록 읽기에 실패했습니다.'});
 
-    if (Number(params.year) < 1000 || Number(params.year) > 3000) params.year = defaultYear;
-    if (Number(params.month) < 0 || Number(params.month) > 12) params.month = defaultMonth;
+            winston.error(err);
 
-    if (params.month) {
-        db.readTeamblogAllByMonth(mysql, params.year, params.month, function (err, result) {
-            if (err) {
-                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
+            res.redirect('back');
+        }
 
-                winston.error(err);
+        params.pagination = true;
+        params.totalCount = result.total;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.list = result.teamblogList;  // todo: convert markdown to html
+        params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
-                res.redirect('back');
+        res.render(BLITITOR.config.site.theme + '/page/app_list', params);
+    });
+}
+
+function listNetAppByCategory(req, res) {
+    var params = {
+        title: '넷앱 리스트',
+        categoryList: [],
+        category: req.params['category'] || req.query['q'] || '',
+        page: Number(req.params['page'] || Number(req.query['p'] || 1))
+    };
+
+    var mysql = connection.get();
+
+    if (params.category) {
+        categoryList(params, function (error, results) {
+            if (!error) {
+                params.categoryList = results;
             }
 
-            result.teamblogList.map(makePreviewContent);
+            db.readStoreAppListByCategory(mysql, params.category, params.page - 1, function (err, result) {
+                if (err) {
+                    req.flash('error', { msg: '애플리케이션 목록 읽기에 실패했습니다.' });
 
-            params.count = result.teamblogList.length;
-            params.list = result.teamblogList;  // todo: convert markdown to html
-            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+                    winston.error(err);
 
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
-        });
-    } else if (params.tag) {
-        db.readTeamblogAllByTag(mysql, params.tag.trim(), function (err, result) {
-            if (err) {
-                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
+                    res.redirect('back');
+                }
 
-                winston.error(err);
+                params.pagination = true;
+                params.totalCount = result.total;
+                params.hasNext = result.total > (result.page + 1) * result.pageSize;
+                params.hasPrev = result.page > 0;
+                params.maxPage = result.maxPage + 1;
+                params.page = result.page + 1;  // prevent when wrong page number assigned
+                params.list = result.storeAppList;  // todo: convert markdown to html
 
-                res.redirect('back');
-            }
-
-            result.teamblogList.map(makePreviewContent);
-
-            params.count = result.teamblogList.length;
-            params.list = result.teamblogList;  // todo: convert markdown to html
-            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
-
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+                console.log(params);
+                res.render(BLITITOR.config.site.theme + '/page/app_list', params);
+            });
         });
     } else {
-        db.readTeamblogByPage(mysql, params.page - 1, function (err, result) {
-            if (err) {
-                req.flash('error', {msg: '블로그 정보 읽기에 실패했습니다.'});
-
-                winston.error(err);
-
-                res.redirect('back');
-            }
-
-            // render content and this is sync process, it can be delayed
-            result.teamblogList.map(makePreviewContent);
-
-            params.pagination = true;
-            params.totalCount = result.total;
-            params.hasNext = result.total > (result.page + 1) * result.pageSize;
-            params.hasPrev = result.page > 0;
-            params.maxPage = result.maxPage + 1;
-            params.page = result.page + 1;  // prevent when wrong page number assigned
-            params.list = result.teamblogList;  // todo: convert markdown to html
-            params.monthlyList = result.postGroupList;  // todo: convert markdown to html
-
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
-        });
+        res.redirect(routeTable.appstore_root + routeTable.appstore.list)
     }
 }
 
@@ -264,6 +257,7 @@ function recentNetApp(params, callback) {
 module.exports = {
     index: indexPage,
     list: listNetApp,
+    listByCategory: listNetAppByCategory,
     write: writeForm,
     save: saveNetApp,
     view: viewNetApp,

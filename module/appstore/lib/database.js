@@ -241,7 +241,7 @@ function getAnyAuthor(connection, callback) {
     });
 }
 
-function selectByPage(connection, page, callback) {
+function selectAppListByPage(connection, page, callback) {
     var pageSize = 10;
 
     var result = {
@@ -272,37 +272,44 @@ function selectByPage(connection, page, callback) {
     });
 }
 
-function selectAllByMonth(connection, year, month, callback) {
+function selectAppListByPageWithCategory(connection, category, page, callback) {
+    var pageSize = 10;
+
     var result = {
         total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
         storeAppList: []
     };
 
-    connection.query(query.readStoreAppMonthlyAll, [fields_storeApp, tables.storeApp, 'created_at', year, 'created_at', month], function (err, rows) {
-        result.storeAppList = rows;
-        callback(err, result);
+    connection.query(query.countAll, [tables.storeApp], function (err, rows) {
+        result.total = rows[0]['count'] || 0;
+
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.maxPage = maxPage;
+        result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
+
+        connection.query(query.readStoreAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, result.index, pageSize], function (err, rows) {
+            if (!err) result.storeAppList = rows;
+            callback(err, result);
+        });
     });
 }
 
-function selectAllByCategory(connection, tag, callback) {
-    var result = {
-        total: 0,
-        storeAppList: []
-    };
-
-    connection.query(query.readStoreAppByCategoryAll, [tables.storeAppCategory, tables.storeAppCategoryRelated, tables.storeApp, tag], function (err, rows) {
-        result.storeAppList = rows;
-        callback(err, result);
-    });
-}
-
-function selectAppRecently(connection, limit, callback) {
+function selectAppListRecently(connection, limit, callback) {
     connection.query(query.readStoreAppRecently, [fields_storeApp, tables.storeAppCategory, tables.storeApp, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
 
-function selectAppPinned(connection, limit, callback) {
+function selectAppListPinned(connection, limit, callback) {
     connection.query(query.readStoreAppPinned, [fields_storeApp, tables.storeApp, appstoreFlag.pinned.value, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
@@ -342,16 +349,7 @@ function selectAppByID (connection, storeAppID, callback) {
     });
 }
 
-function selectAppByURL(connection, storeAppURL, callback) {
-    connection.query(query.selectByURL, [fields_storeApp, tables.storeApp, storeAppURL], function (err, result) {
-        if (err || !result) {
-            return callback(err, {});
-        }
-        callback(err, result);
-    })
-}
-
-function selectCategories(connection, callback) {
+function selectCategoryList(connection, callback) {
     connection.query(query.selectAll, [['category_id', 'category_title', 'category_subject'], tables.storeAppCategory], function (error, rows) {
         callback(error, rows);
     });
@@ -361,16 +359,14 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    readStoreAppByPage: selectByPage,
-    readStoreAppAllByCategory: selectAllByCategory,
-    readStoreAppAllByMonth: selectAllByMonth,
-    readStoreAppRecently: selectAppRecently,
-    readStoreAppPinned: selectAppPinned,
+    readStoreAppByPage: selectAppListByPage,
+    readStoreAppListByCategory: selectAppListByPageWithCategory,
+    readStoreAppRecently: selectAppListRecently,
+    readStoreAppPinned: selectAppListPinned,
     readAppByID: selectAppByID,
-    readAppByURL: selectAppByURL,
     writeApp: insertApp,
     updateApp: updateApp,
-    readCategories: selectCategories,
+    readCategories: selectCategoryList,
     option: {
         tables: tables
     }
