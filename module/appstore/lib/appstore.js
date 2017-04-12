@@ -2,8 +2,6 @@ var fs = require('fs');
 var moment = require('moment');
 var winston = require('winston');
 var markdownIt = require('markdown-it');
-var quillRender = require('quilljs-renderer');
-var stripTags = require('striptags');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -34,13 +32,11 @@ function indexPage(req, res) {
         pinnedNetApp(params, function (error, results) {
             if (!error) {
                 params.pinnedNetAppList = results;
-                // params.pinnedNetAppList.map(makePreviewContent);
             }
 
             recentNetApp(params, function (error, results) {
                 if (!error) {
                     params.recentNetAppList = results;
-                    // params.recentNetAppList.map(makePreviewContent);
                 }
 
                 res.render(BLITITOR.config.site.theme + '/page/index', params);
@@ -177,45 +173,45 @@ function saveNetApp(req, res) {
 function viewNetApp(req, res) {
     var params = {
         title: '넷 앱스토어',
-        postID: req.params['postNumber'],
-        postURL: req.params['postTitle'],
+        appID: req.params['appNumber'],
+        appURL: req.params['packageName']
     };
 
-    if (!params.postID && !params.postURL) {
+    if (!params.appID && !params.appURL) {
         return res.status(404).send('Not found');   // replace with html template
     }
 
     var mysql = connection.get();
 
-    if (params.postID) {
-        db.readPostByID(mysql, params.postID, function (err, result) {
+    if (params.appID) {
+        db.readAppByID(mysql, params.appID, function (err, result) {
             if (err || !result[0]) {
-                req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
+                req.flash('error', {msg: '넷 앱 정보 읽기에 실패했습니다.'});
 
-                winston.error('can not read this post', err);
+                winston.error('can not read this app', err);
 
                 return res.redirect('back');
             }
 
-            params.post = renderPost(result[0]);
+            params.app = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+            return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
         });
     }
 
-    if (params.postURL) {
-        db.readPostByURL(mysql, params.postURL, function (err, result) {
+    if (params.appURL) {
+        db.readAppByPackageID(mysql, params.appURL, function (err, result) {
             if (err || !result[0]) {
-                req.flash('error', {msg: '포스트 읽기에 실패했습니다.'});
+                req.flash('error', {msg: '넷 앱 정보 읽기에 실패했습니다.'});
 
-                winston.error('can not read this post', err);
+                winston.error('can not read this app', err);
 
                 return res.redirect('back');
             }
 
-            params.post = renderPost(result[0]);
+            params.app = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+            return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
         });
     }
 }
@@ -255,52 +251,19 @@ module.exports = {
     recentNetApp: recentNetApp
 };
 
-function makePreviewContent (item) {   // this is sync process, it can be delayed
-    var previewLen = 200;
-    if (item.created_at) {
-        item.created_at = moment(item.created_at).fromNow()
-    }
-    if (item.updated_at) {
-        item.updated_at = moment(item.updated_at).fromNow()
-    }
-    if (item.tags) {
-        item.tags = item.tags.split(',').map(function (tag) {
-            return tag.trim();
-        });
-    }
-
-    if (item.flag && (item.flag.toString().includes(appstoreFlag.headedPicture.value))) {
-        item.headedPicture = true;
-        item.images = JSON.parse(item['header_imgs']);
-    } else {
-        if (item.flag && (item.flag.toString().includes(appstoreFlag.markdown.value))) {
-            item.preview = common.getHeaderTextFromMarkdown(item['content'], previewLen, '<br>');
-        } else if (item.flag && (item.flag.toString().includes(appstoreFlag.delta.value))) {
-            item.preview = common.getHeaderTextFromDelta(item['content'], previewLen, '<br>');
-        } else {
-            item.preview = common.getHeaderTextFromMarkdown(stripTags(item['content'],['br']).replace(/<br>/gm, '\n'), previewLen, '<br>');
-        }
-    }
-}
-
-function renderPost(post) {
-    var p = post;
+function renderPost(appInfo) {
+    var p = appInfo;
     var md = new markdownIt();
 
-    p.tagList = post.tags.split(',').filter(function (item) {
-        return item;
+    p.rendered = md.render(appInfo.content);
+
+    var tagList = appInfo.tags.split(',').map(function (tag) {
+        return tag.trim();
+    }).filter(function (tag) {
+        return !!tag;
     });
-    p.renderMarkdown = post.flag.includes(appstoreFlag.markdown.value);
-    p.renderDelta = post.flag.includes(appstoreFlag.delta.value);
 
-    if (p.renderMarkdown) {
-        p.rendered = md.render(post.content);
-    }
-
-    if (p.renderDelta) {
-        quillRender.loadFormat('html');
-        p.rendered = new quillRender.Document(JSON.parse(post.content)).convertTo('html');
-    }
+    p.tagList = tagList;
 
     return p;
 }

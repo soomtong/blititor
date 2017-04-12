@@ -21,7 +21,7 @@ var tables = {
 var Queries = require('./query');
 
 var fields_storeApp = ['id', 'user_uuid', 'user_id', 'nickname', 'download_url', 'title', 'description', 'category_id', 'tags',
-                     'price', 'price_for_sale', 'image', 'flag', 'pinned', 'created_at', 'updated_at'];
+                       'package_id', 'price', 'price_for_sale', 'image', 'flag', 'pinned', 'created_at', 'updated_at'];
 
 var PAGE_SIZE = 12;
 var GUTTER_SIZE = 10;
@@ -73,6 +73,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
         '`nickname` varchar(64), ' +
         '`download_url` varchar(256), ' +
+        '`package_id` varchar(256), ' +
+        '`version` varchar(32), ' +
         '`title` varchar(256), ' +
         '`price` varchar(16), ' +
         '`price_for_sale` varchar(16), ' +
@@ -86,6 +88,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX pinned(`pinned`), ' +
+        'INDEX package_id(`package_id`), ' +
         'INDEX category_id(`category_id`), ' +
         'INDEX created_at(`created_at`), ' +
         'INDEX user_id(`user_id`))' +
@@ -335,7 +338,17 @@ function updateApp (connection, storeAppID, replyData, callback) {
 }
 
 function selectAppByID (connection, storeAppID, callback) {
-    connection.query(Queries.selectByID, [fields_storeApp, tables.storeApp, storeAppID], function (err, result) {
+    connection.query(Queries.selectByID, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppID], function (err, result) {
+        if (err || !result) {
+            return callback(err, {});
+        }
+
+        callback(err, result);
+    });
+}
+
+function selectAppByPackageID (connection, storeAppPackageID, callback) {
+    connection.query(Queries.selectByURL, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppPackageID], function (err, result) {
         if (err || !result) {
             return callback(err, {});
         }
@@ -359,6 +372,7 @@ module.exports = {
     readStoreAppRecently: selectAppListRecently,
     readStoreAppPinned: selectAppListPinned,
     readAppByID: selectAppByID,
+    readAppByPackageID: selectAppByPackageID,
     writeApp: insertApp,
     updateApp: updateApp,
     readCategories: selectCategoryList,

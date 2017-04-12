@@ -19,7 +19,8 @@ router.use(middleware.exposeLocals);
 router.all(routeTable.root, site.redirect(routeTable.appstore_root));
 router.get(routeTable.appstore_root, appstore.index);
 
-router.get(routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);
+router.get(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);
+router.get(routeTable.appstore_root + routeTable.appstore_app + '/:packageName', appstore.view);
 
 router.get(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.write); // in order to avoid conflict with `:page` params
 router.post(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.save);

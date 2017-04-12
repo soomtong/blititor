@@ -44,5 +44,5 @@ Site.bindMenu(menu, router);
 
 module.exports = {
     exposeLocals: appLocals,
-    router: router,
+    router: router
 };
