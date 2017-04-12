@@ -38,15 +38,30 @@ var mkdirp = require('mkdirp');
 var args = require('minimist');
 
 // set log level
-winston.remove(winston.transports.Console);
-winston.add(winston.transports.Console, {
-    colorize: true,
-    timestamp: function() {
-        var date = new Date();
-        return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0,5);// + ' [' + global.process.pid + ']';
-    },
-    level: BLITITOR.config.logLevel || (BLITITOR.env === 'production' ? 'info' : 'verbose')
-});
+if (BLITITOR.env === 'production') {
+    winston.remove(winston.transports.Console);
+    winston.add(winston.transports.File, {
+        filename: path.join(__dirname, 'log', 'winston.log'),
+        timestamp: function () {
+            var date = new Date();
+            return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0, 5);// + ' [' + global.process.pid + ']';
+        },
+        level: BLITITOR.config.logLevel || 'verbose'
+    });
+} else {
+    winston.configure({
+        transports: [
+            new (winston.transports.Console)({
+                colorize: true,
+                timestamp: function () {
+                    var date = new Date();
+                    return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0, 5);// + ' [' + global.process.pid + ']';
+                },
+                level: BLITITOR.config.logLevel || 'debug'
+            })
+        ]
+    });
+}
 
 // load custom library
 var socket = require('./lib/socket');

@@ -18,7 +18,7 @@ var tables = {
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
-var query = require('./query');
+var Queries = require('./query');
 
 var fields_storeApp = ['id', 'user_uuid', 'user_id', 'nickname', 'download_url', 'title', 'description', 'category_id', 'tags',
                      'price', 'price_discounted', 'image', 'flag', 'pinned', 'created_at', 'updated_at'];
@@ -236,7 +236,7 @@ function insertDummy(databaseConfiguration, done) {
 function getAnyAuthor(connection, callback) {
     var fields = ['id', 'uuid', 'auth_id', 'nickname'];
 
-    connection.query(query.anyAuthor, [fields, tables.user], function (error, results) {
+    connection.query(Queries.anyAuthor, [fields, tables.user], function (error, results) {
         callback(error, results[0]);
     });
 }
@@ -253,7 +253,7 @@ function selectAppListByPage(connection, page, callback) {
         storeAppList: []
     };
 
-    connection.query(query.countAll, [tables.storeApp], function (err, rows) {
+    connection.query(Queries.countAll, [tables.storeApp], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
         var maxPage = Math.floor(result.total / pageSize);
@@ -265,7 +265,7 @@ function selectAppListByPage(connection, page, callback) {
         result.index = Number(result.page) * pageSize;
         if (result.index < 0) result.index = 0;
 
-        connection.query(query.readStoreAppByPage, [fields_storeApp, tables.storeApp, result.index, pageSize], function (err, rows) {
+        connection.query(Queries.readStoreAppByPage, [fields_storeApp, tables.storeApp, result.index, pageSize], function (err, rows) {
             if (!err) result.storeAppList = rows;
             callback(err, result);
         });
@@ -273,7 +273,7 @@ function selectAppListByPage(connection, page, callback) {
 }
 
 function selectAppListByPageWithCategory(connection, category, page, callback) {
-    var pageSize = 10;
+    var pageSize = 4;
 
     var result = {
         total: 0,
@@ -284,63 +284,60 @@ function selectAppListByPageWithCategory(connection, category, page, callback) {
         storeAppList: []
     };
 
-    connection.query(query.countAll, [tables.storeApp], function (err, rows) {
+    connection.query(Queries.countAllByCategory, [tables.storeApp, tables.storeAppCategory, category], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var maxPage = Math.floor(result.total / pageSize);
-        if (maxPage < result.page) {
-            result.page = maxPage;
-        }
+        var pagination = common.pagination(result.page, result.total, result.pageSize, 10, 4);
 
-        result.maxPage = maxPage;
-        result.index = Number(result.page) * pageSize;
-        if (result.index < 0) result.index = 0;
-
-        connection.query(query.readStoreAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, result.index, pageSize], function (err, rows) {
+        connection.query(Queries.readStoreAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.storeAppList = rows;
+
+            result.pagination = pagination;
+
             callback(err, result);
         });
     });
 }
 
 function selectAppListRecently(connection, limit, callback) {
-    connection.query(query.readStoreAppRecently, [fields_storeApp, tables.storeAppCategory, tables.storeApp, Number(limit)], function (err, rows) {
+    connection.query(Queries.readStoreAppRecently, [fields_storeApp, tables.storeAppCategory, tables.storeApp, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
 
 function selectAppListPinned(connection, limit, callback) {
-    connection.query(query.readStoreAppPinned, [fields_storeApp, tables.storeApp, appstoreFlag.pinned.value, Number(limit)], function (err, rows) {
+    connection.query(Queries.readStoreAppPinned, [fields_storeApp, tables.storeApp, appstoreFlag.pinned.value, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
 
 function insertCategory(connection, storeAppCategoryData, callback) {
     var existingAppCategory = {
-        category_title: storeAppCategoryData.title,
-        category_subject: storeAppCategoryData.subject,
+        category_title: storeAppCategoryData.category_title,
+        category_subject: storeAppCategoryData.category_subject,
         created_at: new Date()
     };
 
-    connection.query(query.insertCategoryInto, [tables.storeAppCategory, storeAppCategoryData, existingAppCategory], function (err, insertAppResult) {
+    var q = connection.query(Queries.insertCategoryInto, [tables.storeAppCategory, storeAppCategoryData, existingAppCategory], function (err, insertAppResult) {
+        winston.debug(q.sql);
         callback(err, insertAppResult);
     });
 }
 
 function insertApp(connection, storeAppData, callback) {
-    connection.query(query.insertInto, [tables.storeApp, storeAppData], function (err, insertAppResult) {
+    connection.query(Queries.insertInto, [tables.storeApp, storeAppData], function (err, insertAppResult) {
         callback(err, insertAppResult);
     });
 }
 
 function updateApp (connection, storeAppID, replyData, callback) {
-    connection.query(query.updateByID, [tables.storeApp, replyData, storeAppID], function (err, result) {
+    connection.query(Queries.updateByID, [tables.storeApp, replyData, storeAppID], function (err, result) {
         callback(err, result);
     });
 }
 
 function selectAppByID (connection, storeAppID, callback) {
-    connection.query(query.selectByID, [fields_storeApp, tables.storeApp, storeAppID], function (err, result) {
+    connection.query(Queries.selectByID, [fields_storeApp, tables.storeApp, storeAppID], function (err, result) {
         if (err || !result) {
             return callback(err, {});
         }
@@ -350,7 +347,7 @@ function selectAppByID (connection, storeAppID, callback) {
 }
 
 function selectCategoryList(connection, callback) {
-    connection.query(query.selectAll, [['category_id', 'category_title', 'category_subject'], tables.storeAppCategory], function (error, rows) {
+    connection.query(Queries.selectAll, [['category_id', 'category_title', 'category_subject'], tables.storeAppCategory], function (error, rows) {
         callback(error, rows);
     });
 }

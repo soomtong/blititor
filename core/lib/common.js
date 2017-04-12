@@ -161,7 +161,54 @@ function pageFormatter(url) {
     return url;
 }
 
+function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGIN) {
+    var params = {
+        page: Math.abs(Number(pageIndex)),
+        index: 0,
+        maxPage: 0,
+        pageSize: PAGE_SIZE
+    };
+
+    var maxPage = Math.floor(totalCount / PAGE_SIZE);
+
+    if (maxPage < params.page) params.page = maxPage;
+
+    params.maxPage = maxPage;
+    params.index = Number(params.page) * PAGE_SIZE;
+
+    if (params.index < 0) params.index = 0;
+
+    params.hasNext = totalCount > ((params.page + 1) * PAGE_SIZE);
+    params.hasPrev = params.index > 0;
+
+    if (params.maxPage > GUTTER_SIZE) {
+        params.preIndex = getPreIndex(params.page, params.maxPage, GUTTER_MARGIN);
+        params.postIndex = getPostIndex(params.page, params.maxPage, GUTTER_MARGIN);
+    }
+
+    return params;
+
+    function getPreIndex(page, maxPage, gutterMargin) {
+        if (page < gutterMargin * 2 + 1) {
+            return 0
+        } else {
+            return (page - gutterMargin) + (gutterMargin * 2) > maxPage
+                ? maxPage - (gutterMargin * 2) : page - gutterMargin + 1
+        }
+    }
+
+    function getPostIndex(page, maxPage, gutterMargin) {
+        if (page > maxPage - gutterMargin) {
+            return maxPage
+        } else {
+            return (page + gutterMargin) < (gutterMargin * 2)
+                ? gutterMargin * 2 : page + gutterMargin + 1
+        }
+    }
+}
+
 module.exports = {
+    pagination: pagination,
     pageFormatter: pageFormatter,
     dateFormatter: dateFormatter,
     errorFormatter: errorFormatter,
