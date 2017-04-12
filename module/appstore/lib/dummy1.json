@@ -2,7 +2,7 @@
   {
     "title": "IPSec 테이블 매니저",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "500,000",
+    "price": "500,000",
     "flag": "N",
     "content": "마크다운 문서",
     "category": 2,
@@ -12,7 +12,7 @@
   {
     "title": "로드밸런서",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "120,000",
+    "price": "120,000",
     "content": "마크다운 문서",
     "category": 1,
     "image": "http://farm8.staticflickr.com/7448/8915936174_8d54ec76c6.jpg",
@@ -21,7 +21,7 @@
   {
     "title": "역적 네트워크 에뮬레이터",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "320,000",
+    "price": "320,000",
     "category": 3,
     "content": "마크다운 문서",
     "image": "http://placeimg.com/320/240/tech/2",
@@ -30,7 +30,7 @@
   {
     "title": "트래픽 모니터",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "230,000",
+    "price": "230,000",
     "content": "마크다운 문서",
     "category": 1,
     "pinned": true,
@@ -41,7 +41,7 @@
   {
     "title": "패킷컨버터",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "100,000",
+    "price": "100,000",
     "content": "마크다운문서",
     "pinned": true,
     "category": 4,
@@ -51,7 +51,7 @@
   {
     "title": "ARP Shooter",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "120,000",
+    "price": "120,000",
     "content": "마크다운 문서",
     "pinned": true,
     "category": 5,
@@ -61,7 +61,7 @@
   {
     "title": "패킷보여",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "120,000",
+    "price": "120,000",
     "content": "패킷 다보임",
     "pinned": true,
     "image": "http://placeimg.com/320/240/tech/6",
@@ -71,7 +71,7 @@
   {
     "title": "넷 애뮬",
     "description": "하이 퍼포먼스 로드밸런서 64비트 전용",
-    "price_discounted": "1,000,000",
+    "price": "1,000,000",
     "content": "마크다운문서",
     "category": 4,
     "image": "http://placeimg.com/320/240/tech/7",

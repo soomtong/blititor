@@ -21,7 +21,11 @@ var tables = {
 var Queries = require('./query');
 
 var fields_storeApp = ['id', 'user_uuid', 'user_id', 'nickname', 'download_url', 'title', 'description', 'category_id', 'tags',
-                     'price', 'price_discounted', 'image', 'flag', 'pinned', 'created_at', 'updated_at'];
+                     'price', 'price_for_sale', 'image', 'flag', 'pinned', 'created_at', 'updated_at'];
+
+var PAGE_SIZE = 12;
+var GUTTER_SIZE = 10;
+var GUTTER_MARGIN = 3;
 
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
@@ -71,7 +75,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '`download_url` varchar(256), ' +
         '`title` varchar(256), ' +
         '`price` varchar(16), ' +
-        '`price_discounted` varchar(16), ' +
+        '`price_for_sale` varchar(16), ' +
         '`category_id` int unsigned not null DEFAULT 0, ' +
         '`description` varchar(256), ' +
         '`content` text, ' +
@@ -160,6 +164,8 @@ function insertDummy(databaseConfiguration, done) {
                         title: item.title,
                         category_id: item.category || 0,
                         description: item.description,
+                        price: item.price || '',
+                        price_for_sale: item.price_for_sale || '',
                         content: item.content,
                         tags: tagList && tagList.join(','),
                         image: item.image ? item.image.toString() : '',
@@ -242,52 +248,44 @@ function getAnyAuthor(connection, callback) {
 }
 
 function selectAppListByPage(connection, page, callback) {
-    var pageSize = 10;
-
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
         index: 0,
         maxPage: 0,
-        pageSize: pageSize,
+        pageSize: PAGE_SIZE,
         storeAppList: []
     };
 
-    connection.query(Queries.countAll, [tables.storeApp], function (err, rows) {
+    connection.query(Queries.countAll, [tables.storeApp, tables.storeAppCategory], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var maxPage = Math.floor(result.total / pageSize);
-        if (maxPage < result.page) {
-            result.page = maxPage;
-        }
+        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
 
-        result.maxPage = maxPage;
-        result.index = Number(result.page) * pageSize;
-        if (result.index < 0) result.index = 0;
-
-        connection.query(Queries.readStoreAppByPage, [fields_storeApp, tables.storeApp, result.index, pageSize], function (err, rows) {
+        connection.query(Queries.readStoreAppList, [tables.storeAppCategory, tables.storeApp, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.storeAppList = rows;
+
+            result.pagination = pagination;
+
             callback(err, result);
         });
     });
 }
 
 function selectAppListByPageWithCategory(connection, category, page, callback) {
-    var pageSize = 4;
-
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
         index: 0,
         maxPage: 0,
-        pageSize: pageSize,
+        pageSize: PAGE_SIZE,
         storeAppList: []
     };
 
     connection.query(Queries.countAllByCategory, [tables.storeApp, tables.storeAppCategory, category], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var pagination = common.pagination(result.page, result.total, result.pageSize, 10, 4);
+        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
 
         connection.query(Queries.readStoreAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.storeAppList = rows;

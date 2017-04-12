@@ -25,7 +25,7 @@ router.get(routeTable.appstore_root + routeTable.appstore.write, AccountMiddlewa
 router.post(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.save);
 
 router.get(routeTable.appstore_root + routeTable.appstore.list, appstore.list);
-router.get(routeTable.appstore_root + routeTable.appstore.list + ':page([0-9]+)', appstore.list);
+router.get(routeTable.appstore_root + routeTable.appstore.list + '/:page([0-9]+)', site.redirect(routeTable.appstore_root + routeTable.appstore.list));
 router.get(routeTable.appstore_root + routeTable.appstore.category + '/:category' , appstore.listByCategory);
 
 module.exports = router;

@@ -67,14 +67,9 @@ function listNetApp(req, res) {
             res.redirect('back');
         }
 
-        params.pagination = true;
+        params.pagination = result.pagination;
         params.totalCount = result.total;
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
-        params.list = result.teamblogList;  // todo: convert markdown to html
-        params.monthlyList = result.postGroupList;  // todo: convert markdown to html
+        params.list = result.storeAppList;
 
         res.render(BLITITOR.config.site.theme + '/page/app_list', params);
     });
