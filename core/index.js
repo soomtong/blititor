@@ -180,6 +180,7 @@ app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
 // bind route
+misc.setRouteTable();
 app.use(require('./route'));
 
 // start server
@@ -198,8 +199,10 @@ if (!process.send) {
     winston.info('and you are welcome to redistribute it under certain conditions.');
     winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
 
-    if (BLITITOR.env == 'development') { // Only in dev environment
-        misc.showGlobalVar(BLITITOR);
-        misc.showRoutes(app);
+    if (BLITITOR.env === 'development') { // Only in dev environment
+        setTimeout(function () {
+            misc.showGlobalVar(BLITITOR);
+            misc.showRoutes(app);
+        }, 1000);
     }
 }

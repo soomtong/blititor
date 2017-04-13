@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var async = require('neo-async');
 var winston = require('winston');
 var colors = require('colors');
 
@@ -64,39 +65,22 @@ function setUserPrivilege() {
 
 function getRouteTable(customRouteData) {
     if (customRouteData && !Array.isArray(customRouteData)) {
-        Object.assign(defaultRoute, customRouteData);
+        if (Array.isArray(customRouteData)) {
+            customRouteData.map(function (item) {
+                Object.assign(defaultRoute, item);
+            })
+        } else {
+            Object.assign(defaultRoute, customRouteData);
+        }
     }
 
     return defaultRoute;
 }
 
 function setRouteTable() {
-    BLITITOR.route = defaultRoute;
-
-    return BLITITOR.route;
-}
-
-// deprecated
-function setRoutePage() {
-    var theme = BLITITOR.config.site.theme;
-    BLITITOR.route = defaultRoute;
-
-    //read theme page folder and merge default route
-    //todo: this method will be removed
-    try {
-        var files = fs.readdirSync('./theme/' + theme + '/page');
-
-        winston.verbose('pages in page folder', files);
-
-        BLITITOR.route.pages = files.filter(function (file) {
-            return file.indexOf('.html') && file.indexOf('_') !== 0 && file.indexOf('include') == -1
-        }).map(function (file) {
-            return file.replace('.html', '');
-        });
-
-    } catch (e) {
-        winston.error('Default theme is not exist');
-    }
+    initRouteTable(function (error, result) {
+        BLITITOR.route = result;
+    });
 }
 
 function siteThemeType() {
@@ -277,7 +261,6 @@ module.exports = {
     setUserPrivilege: setUserPrivilege,
     getRouteTable: getRouteTable,
     setRouteTable: setRouteTable,
-    setRoutePage: setRoutePage,
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,
     setFlag: setFlag,
@@ -290,3 +273,25 @@ module.exports = {
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
 };
+
+function initRouteTable(callback) {
+    var routeData = BLITITOR.moduleList;
+
+    var iteratorAsync = function (item, callback) {
+        var routeFile = '/route.json';
+
+        fs.readFile(BLITITOR.root + '/module/' + item.folder + routeFile, function (err, data) {
+            if (err) {
+                winston.verbose('there is no route data:', "'" + item.folder + "'");
+            } else {
+                winston.info('bound module route data:', "'" + item.folder + "'");
+            }
+            callback(null, data)
+        });
+    };
+    var resultAsync = function (error, result) {
+        callback(error, result);
+    };
+
+    async.mapSeries(routeData, iteratorAsync, resultAsync);
+}
