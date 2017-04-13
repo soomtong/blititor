@@ -9,6 +9,7 @@ BLITITOR.root = path.join(__dirname, '..');
 BLITITOR.tweak = {passDBCheckMiddleware: false}; // for speed
 BLITITOR.config = require('./config/app_default.json');
 BLITITOR.moduleList = require('./config/module_list.json');
+BLITITOR.route = require('./config/route_default.json');
 
 // bind global
 global.BLITITOR = BLITITOR;
@@ -77,6 +78,10 @@ misc.checkDatabaseConfiguration(BLITITOR.config.configFile || 'config.json');
 // be going to sync mode
 misc.checkThemeConfiguration(BLITITOR.config.configFile || 'config.json');
 
+// load Route data configuration
+// be going to sync mode
+misc.setRouteTable(BLITITOR.moduleList || []);
+
 // constants
 var HOUR = 3600000;
 var DAY = HOUR * 24;
@@ -104,7 +109,7 @@ nunjucks.configure(app.get('views'), {
 });
 
 // using Express behind nginx
-if (BLITITOR.env == 'production') {
+if (BLITITOR.env === 'production') {
     app.enable('trust proxy');
 }
 
@@ -180,7 +185,6 @@ app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 
 // bind route
-misc.setRouteTable();
 app.use(require('./route'));
 
 // start server

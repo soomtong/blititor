@@ -9,7 +9,6 @@ var printRoutes = require('express-print-routes');
 
 var siteDefault = require('../config/site_default.json');
 var userPrivilege = require('../config/user_level.json');
-var defaultRoute = require('../config/route_default.json');
 
 var serviceTokens = loadServiceToken();
 var serviceProviders = loadServiceProvider();
@@ -67,19 +66,29 @@ function getRouteTable(customRouteData) {
     if (customRouteData && !Array.isArray(customRouteData)) {
         if (Array.isArray(customRouteData)) {
             customRouteData.map(function (item) {
-                Object.assign(defaultRoute, item);
+                Object.assign(BLITITOR.route, item);
             })
         } else {
-            Object.assign(defaultRoute, customRouteData);
+            Object.assign(BLITITOR.route, customRouteData);
         }
     }
 
-    return defaultRoute;
+    return BLITITOR.route;
 }
 
-function setRouteTable() {
-    initRouteTable(function (error, result) {
-        BLITITOR.route = result;
+function setRouteTable(configData) {
+    configData.map(function (item) {
+        var routeFile = '/route.json';
+        var routeData;
+
+        try {
+            routeData = fs.readFileSync(BLITITOR.root + '/module/' + item.folder + routeFile);
+
+            winston.info('bound module route data:', "'" + item.folder + "'");
+            Object.assign(BLITITOR.route, JSON.parse(routeData.toString()));
+        } catch (e) {
+            winston.verbose('there is no route data:', "'" + item.folder + "'");
+        }
     });
 }
 
@@ -138,7 +147,7 @@ function setFlag(flag) {
 function showRouteTable() {
     winston.info("\x1B[32mload default route table \033[0m");
 
-    winston.verbose(JSON.stringify(defaultRoute, null, 4));
+    winston.verbose(JSON.stringify(BLITITOR.route, null, 4));
 }
 
 function showGlobalVar(g) {
@@ -273,25 +282,3 @@ module.exports = {
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
 };
-
-function initRouteTable(callback) {
-    var routeData = BLITITOR.moduleList;
-
-    var iteratorAsync = function (item, callback) {
-        var routeFile = '/route.json';
-
-        fs.readFile(BLITITOR.root + '/module/' + item.folder + routeFile, function (err, data) {
-            if (err) {
-                winston.verbose('there is no route data:', "'" + item.folder + "'");
-            } else {
-                winston.info('bound module route data:', "'" + item.folder + "'");
-            }
-            callback(null, data)
-        });
-    };
-    var resultAsync = function (error, result) {
-        callback(error, result);
-    };
-
-    async.mapSeries(routeData, iteratorAsync, resultAsync);
-}
