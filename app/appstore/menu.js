@@ -4,11 +4,6 @@ var winston = require('winston');
 var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteTable();
-// or sometime need to make your own routeTable
-// and update own route table
-// like below
-// var routeData = require('./route.json');
-// var routeTable = misc.getRouteTable(routeData);
 
 var Menu = [
     {

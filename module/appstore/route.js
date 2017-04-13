@@ -1,4 +1,5 @@
 var express = require('express');
+var winston = require('winston');
 
 var misc = require('../../core/lib/misc');
 
@@ -10,13 +11,13 @@ var middleware = require('./lib/middleware');
 var AccountMiddleware = require('../account/lib/middleware');
 
 var router = express.Router();
-var routeData = require('./route.json');
-var routeTable = misc.getRouteTable(routeData);
+var routeTable = misc.getRouteTable();
 
 router.use(middleware.exposeLocals);
 
 // bind module router
 router.all(routeTable.root, site.redirect(routeTable.appstore_root));
+router.all('/login', site.redirect(routeTable.account_root + routeTable.account.signIn));
 router.get(routeTable.appstore_root, appstore.index);
 
 router.get(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);

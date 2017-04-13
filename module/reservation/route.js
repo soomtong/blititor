@@ -9,8 +9,7 @@ var AccountMiddleware = require('../account/lib/middleware');
 var CounterMiddleware = require('../counter/lib/middleware');
 
 var router = express.Router();
-var routeData = require('./route.json');
-var routeTable = misc.getRouteTable(routeData);
+var routeTable = misc.getRouteTable();
 
 router.use(middleware.exposeLocals);
 
