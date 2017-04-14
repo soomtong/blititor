@@ -37,7 +37,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // bind module
-router.use(Account.route);
+router.use(routeTable.account_root, Account.route);
 router.use(AppStore.route);
 
 // bind static page

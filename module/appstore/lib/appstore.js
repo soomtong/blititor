@@ -257,13 +257,11 @@ function renderPost(appInfo) {
 
     p.rendered = md.render(appInfo.content);
 
-    var tagList = appInfo.tags.split(',').map(function (tag) {
+    p.tagList = appInfo.tags.split(',').map(function (tag) {
         return tag.trim();
     }).filter(function (tag) {
         return !!tag;
     });
-
-    p.tagList = tagList;
 
     return p;
 }

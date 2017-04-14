@@ -17,7 +17,7 @@ router.use(middleware.exposeLocals);
 
 // bind module router
 router.all(routeTable.root, site.redirect(routeTable.appstore_root));
-router.all('/login', site.redirect(routeTable.account_root + routeTable.account.signIn));
+router.get(routeTable.account.login, site.redirect(routeTable.account_root + routeTable.account.signIn));
 router.get(routeTable.appstore_root, appstore.index);
 
 router.get(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);
