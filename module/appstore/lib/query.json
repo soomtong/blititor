@@ -1,7 +1,7 @@
 {
   "selectAll": "SELECT ?? FROM ??",
-  "selectByID": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `id` = ? LIMIT 1",
-  "selectByURL": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `package_id` = ? LIMIT 1 ",
+  "selectAppByID": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `id` = ? LIMIT 1",
+  "selectAppByURL": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `package_id` = ? LIMIT 1 ",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",
   "selectByUserID": "SELECT ?? FROM ?? WHERE `user_id` = ?",
   "selectByCategoryID": "SELECT ?? FROM ?? WHERE `category_id` = ?",
@@ -9,14 +9,15 @@
   "countAllByCategory": "SELECT count(A.`id`) as `count` FROM ?? as A, ?? as B WHERE B.`category_id` = ? and A.`category_id` = B.`id`",
   "readStoreAppList": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title` FROM ?? AS A ORDER BY `id` DESC LIMIT ?, ?",
   "readStoreAppMonthlyAll": "SELECT ?? FROM ?? WHERE YEAR(??) = ? AND MONTH(??) = ? ORDER BY `id` DESC",
-  "readStoreAppRecently": "SELECT ??, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title` FROM ?? AS A ORDER BY `id` DESC LIMIT ?",
-  "readStoreAppListByCategory": "SELECT A.*, B.`category_title` AS `category_title` FROM ?? AS A, ?? AS B WHERE B.`category_id` = ? and B.`id` = A.`category_id` ORDER BY A.`id` DESC LIMIT ?, ?",
-  "readStoreAppPinned": "SELECT ?? FROM ?? WHERE `pinned` = ? ORDER BY `id` DESC LIMIT ?",
+  "readAppRecently": "SELECT ??, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title` FROM ?? AS A ORDER BY `id` DESC LIMIT ?",
+  "readAppListByCategory": "SELECT A.*, B.`category_title` AS `category_title` FROM ?? AS A, ?? AS B WHERE B.`category_id` = ? and B.`id` = A.`category_id` ORDER BY A.`id` DESC LIMIT ?, ?",
+  "readAppPinned": "SELECT ?? FROM ?? WHERE `pinned` = ? ORDER BY `id` DESC LIMIT ?",
   "selectCategoryByApp": "select ??, ?? from ?? as a, ?? as b, ?? as c where a.`id` = ? and a.`id` = b.`store_category_related_app_id` and b.`store_app_id` = c.`id`",
   "updateCounterByCategory": "UPDATE ?? SET ?? = ?? + 1 WHERE `tag` = ?",
   "selectByCategory": "SELECT `id`, `tag` FROM ?? WHERE `tag` = ? FOR UPDATE",
   "insertInto": "INSERT INTO ?? SET ?",
   "insertCategoryInto": "INSERT INTO ?? SET ? ON DUPLICATE KEY UPDATE ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "selectOrderByIDWithUUID": "SELECT * FROM ?? WHERE `store_app_id` = ? and `user_uuid` = ? order by id desc",
   "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
 }

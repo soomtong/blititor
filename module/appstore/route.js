@@ -23,6 +23,8 @@ router.get(routeTable.appstore_root, appstore.index);
 router.get(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0-9]+)', appstore.view);
 router.get(routeTable.appstore_root + routeTable.appstore_app + '/:packageName', appstore.view);
 
+router.post(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0-9]+)/order', AccountMiddleware.checkSignedIn, appstore.order);
+
 router.get(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.write); // in order to avoid conflict with `:page` params
 router.post(routeTable.appstore_root + routeTable.appstore.write, AccountMiddleware.checkSignedIn, appstore.save);
 

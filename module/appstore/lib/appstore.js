@@ -29,12 +29,12 @@ function indexPage(req, res) {
             params.categoryList = results;
         }
 
-        pinnedNetApp(params, function (error, results) {
+        pinnedApp(params, function (error, results) {
             if (!error) {
                 params.pinnedNetAppList = results;
             }
 
-            recentNetApp(params, function (error, results) {
+            recentApp(params, function (error, results) {
                 if (!error) {
                     params.recentNetAppList = results;
                 }
@@ -45,7 +45,7 @@ function indexPage(req, res) {
     });
 }
 
-function listNetApp(req, res) {
+function listApps(req, res) {
     var params = {
         title: '넷앱 리스트',
         categoryList: [],
@@ -54,7 +54,7 @@ function listNetApp(req, res) {
 
     var mysql = connection.get();
 
-    db.readStoreAppByPage(mysql, params.page - 1, function (err, result) {
+    db.readAppByPage(mysql, params.page - 1, function (err, result) {
         if (err) {
             req.flash('error', {msg: '애플리케이션 목록 읽기에 실패했습니다.'});
 
@@ -71,7 +71,7 @@ function listNetApp(req, res) {
     });
 }
 
-function listNetAppByCategory(req, res) {
+function listAppByCategory(req, res) {
     var params = {
         title: '넷앱 리스트',
         categoryList: [],
@@ -87,7 +87,7 @@ function listNetAppByCategory(req, res) {
                 params.categoryList = results;
             }
 
-            db.readStoreAppListByCategory(mysql, params.category, params.page - 1, function (err, result) {
+            db.readAppListByCategory(mysql, params.category, params.page - 1, function (err, result) {
                 if (err) {
                     req.flash('error', { msg: '애플리케이션 목록 읽기에 실패했습니다.' });
 
@@ -116,7 +116,7 @@ function writeForm(req, res) {
     res.render(BLITITOR.config.site.theme + '/page/teamblog/write', params);
 }
 
-function saveNetApp(req, res) {
+function saveApp(req, res) {
     req.assert('content', 'content is required').len(10).withMessage('Must be 10 chars over').notEmpty();
     req.assert('title', 'title is required').notEmpty(10);
 
@@ -170,7 +170,7 @@ function saveNetApp(req, res) {
     });
 }
 
-function viewNetApp(req, res) {
+function viewApp(req, res) {
     var params = {
         title: '넷 앱스토어',
         appID: req.params['appNumber'],
@@ -195,7 +195,19 @@ function viewNetApp(req, res) {
 
             params.app = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
+            if (req.user && req.user.uuid) {
+                db.readOrderByID(mysql, params.appID, req.user.uuid, function (error, results) {
+                    if (results && results.length && results[0].user_uuid === req.user.uuid) {
+                        params.orderInfo = results[0];
+
+                        return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
+                    } else {
+                        return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
+                    }
+                });
+            } else {
+                return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
+            }
         });
     }
 
@@ -216,6 +228,66 @@ function viewNetApp(req, res) {
     }
 }
 
+function orderApp(req, res) {
+    var params = {
+        title: '넷 앱스토어',
+        appID: req.params['appNumber'],
+        appURL: req.params['packageName']
+    };
+
+    if (!params.appID && !params.appURL) {
+        return res.status(404).send('Not found');   // replace with html template
+    }
+
+    var mysql = connection.get();
+
+    var orderData = {
+        store_app_id: params.appID,
+        user_uuid: req.user.uuid,
+        user_id: req.user.id,
+        status: appstoreFlag.ordered,
+        created_at: new Date()
+    };
+
+    db.orderAppByID(mysql, orderData, function (err, result) {
+        if (!err) {
+            res.send({ status: 'success', data: {
+                    insertId: result.insertId }
+            });
+        } else {
+            res.send({ status: 'error', data: {
+                error: err }
+            });
+        }
+    });
+}
+
+module.exports = {
+    index: indexPage,
+    list: listApps,
+    listByCategory: listAppByCategory,
+    write: writeForm,
+    save: saveApp,
+    view: viewApp,
+    order: orderApp,
+};
+
+function recentApp(params, callback) {
+    var mysql = connection.get();
+
+    db.readAppRecently(mysql, params.recentNetAppCount, function (err, result) {
+        callback(err, result);
+    });
+}
+
+function pinnedApp(params, callback) {
+    var mysql = connection.get();
+
+    db.readAppPinned(mysql, params.pinnedNetAppCount, function (err, result) {
+        callback(err, result);
+    });
+}
+
 function categoryList(params, callback) {
     var mysql = connection.get();
 
@@ -223,33 +295,6 @@ function categoryList(params, callback) {
         callback(err, result);
     });
 }
-
-function pinnedNetApp(params, callback) {
-    var mysql = connection.get();
-
-    db.readStoreAppPinned(mysql, params.pinnedNetAppCount, function (err, result) {
-        callback(err, result);
-    });
-}
-
-function recentNetApp(params, callback) {
-    var mysql = connection.get();
-
-    db.readStoreAppRecently(mysql, params.recentNetAppCount, function (err, result) {
-        callback(err, result);
-    });
-}
-
-module.exports = {
-    index: indexPage,
-    list: listNetApp,
-    listByCategory: listNetAppByCategory,
-    write: writeForm,
-    save: saveNetApp,
-    view: viewNetApp,
-    pinnedNetApp: pinnedNetApp,
-    recentNetApp: recentNetApp
-};
 
 function renderPost(appInfo) {
     var p = appInfo;

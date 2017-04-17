@@ -124,7 +124,11 @@ function commonFlag() {
         },
         appStore: {
             pinned: {id: 'pinned_netapp', value: 1},
-            headedPicture: {id: 'picture_headed_netapp', value: 'H'}
+            headedPicture: {id: 'picture_headed_netapp', value: 'H'},
+            ordered: 0,
+            installed: 1,
+            removed: 2,
+            canceled: 3
         }
     }
 }

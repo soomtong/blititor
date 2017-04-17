@@ -15,6 +15,8 @@ var tables = {
     storeAppHistory: common.databaseDefault.prefix + 'store_app_history',
     storeAppCategory: common.databaseDefault.prefix + 'store_app_category',
     storeAppRelated: common.databaseDefault.prefix + 'store_app_related',
+    storeOrder: common.databaseDefault.prefix + 'store_order',
+    storeOrderDetail: common.databaseDefault.prefix + 'store_order_detail',
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
@@ -37,7 +39,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.storeApp, tables.storeAppHistory, tables.storeAppCategory, tables.storeAppRelated];
+    var tableList = [tables.storeApp, tables.storeAppHistory, tables.storeAppCategory, tables.storeAppRelated, tables.storeOrder, tables.storeOrderDetail];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -113,6 +115,21 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX related_store_app_id(`related_store_app_id`), ' +
         'INDEX store_app_id(`store_app_id`))' +
         'DEFAULT CHARSET=' + charSet;
+    var sql_storeOrder = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`store_app_id` int unsigned not null, ' +
+        '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
+        '`target_controller_id` int unsigned not null DEFAULT 0, ' +
+        '`target_controller_ip` varchar(16), ' +
+        '`status` tinyint unsigned default 0, ' +   // 0: ordered, 1: installed, 2: removed, 3: canceled
+        '`created_at` datetime, ' +
+        '`installed_at` datetime, ' +
+        '`removed_at` datetime, ' +
+        '`canceled_at` datetime, ' +
+        'INDEX status(`status`), ' +
+        'INDEX user_uuid(`user_uuid`), ' +
+        'INDEX store_app_id(`store_app_id`))' +
+        'DEFAULT CHARSET=' + charSet;
     var sql_fkey_user_id = 'alter table ?? ' +
         'add constraint storeApp_user_id_foreign foreign key (`user_id`) ' +
         'references ?? (`id`)' +
@@ -122,13 +139,15 @@ function createScheme(databaseConfiguration, callback, done) {
         connection.query(sql_storeApp, tables.storeApp, function (error, result) {
             connection.query(sql_storeApp_history, tables.storeAppHistory, function (error, result) {
                 connection.query(sql_storeApp_related, tables.storeAppCategory, function (error, result) {
-                    // bind foreign key
-                    connection.query(sql_fkey_user_id, [tables.storeApp, tables.user], function (error, result) {
-                        // check dummy json
-                        callback && callback(databaseConfiguration, done);
+                    connection.query(sql_storeOrder, tables.storeOrder, function (error, result) {
+                        // bind foreign key
+                        connection.query(sql_fkey_user_id, [tables.storeApp, tables.user], function (error, result) {
+                            // check dummy json
+                            callback && callback(databaseConfiguration, done);
 
-                        // close connection
-                        connection.destroy();
+                            // close connection
+                            connection.destroy();
+                        });
                     });
                 });
             });
@@ -290,7 +309,7 @@ function selectAppListByPageWithCategory(connection, category, page, callback) {
 
         var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
 
-        connection.query(Queries.readStoreAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, pagination.index, pagination.pageSize], function (err, rows) {
+        connection.query(Queries.readAppListByCategory, [tables.storeApp, tables.storeAppCategory, category, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.storeAppList = rows;
 
             result.pagination = pagination;
@@ -301,13 +320,13 @@ function selectAppListByPageWithCategory(connection, category, page, callback) {
 }
 
 function selectAppListRecently(connection, limit, callback) {
-    connection.query(Queries.readStoreAppRecently, [fields_storeApp, tables.storeAppCategory, tables.storeApp, Number(limit)], function (err, rows) {
+    connection.query(Queries.readAppRecently, [fields_storeApp, tables.storeAppCategory, tables.storeApp, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
 
 function selectAppListPinned(connection, limit, callback) {
-    connection.query(Queries.readStoreAppPinned, [fields_storeApp, tables.storeApp, appstoreFlag.pinned.value, Number(limit)], function (err, rows) {
+    connection.query(Queries.readAppPinned, [fields_storeApp, tables.storeApp, appstoreFlag.pinned.value, Number(limit)], function (err, rows) {
         callback(err, rows);
     });
 }
@@ -319,8 +338,7 @@ function insertCategory(connection, storeAppCategoryData, callback) {
         created_at: new Date()
     };
 
-    var q = connection.query(Queries.insertCategoryInto, [tables.storeAppCategory, storeAppCategoryData, existingAppCategory], function (err, insertAppResult) {
-        winston.debug(q.sql);
+    connection.query(Queries.insertCategoryInto, [tables.storeAppCategory, storeAppCategoryData, existingAppCategory], function (err, insertAppResult) {
         callback(err, insertAppResult);
     });
 }
@@ -338,7 +356,7 @@ function updateApp (connection, storeAppID, replyData, callback) {
 }
 
 function selectAppByID (connection, storeAppID, callback) {
-    connection.query(Queries.selectByID, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppID], function (err, result) {
+    connection.query(Queries.selectAppByID, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppID], function (err, result) {
         if (err || !result) {
             return callback(err, {});
         }
@@ -348,7 +366,7 @@ function selectAppByID (connection, storeAppID, callback) {
 }
 
 function selectAppByPackageID (connection, storeAppPackageID, callback) {
-    connection.query(Queries.selectByURL, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppPackageID], function (err, result) {
+    connection.query(Queries.selectAppByURL, [tables.storeAppCategory, tables.storeAppCategory, tables.storeApp, storeAppPackageID], function (err, result) {
         if (err || !result) {
             return callback(err, {});
         }
@@ -363,16 +381,30 @@ function selectCategoryList(connection, callback) {
     });
 }
 
+function insertOrderByID(connection, orderData, callback) {
+    connection.query(Queries.insertInto, [tables.storeOrder, orderData], function (error, result) {
+        callback(error, result);
+    });
+}
+
+function selectOrderByID(connection, appID, userUUID, callback) {
+    connection.query(Queries.selectOrderByIDWithUUID, [tables.storeOrder, appID, userUUID], function (error, results) {
+        callback(error, results);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    readStoreAppByPage: selectAppListByPage,
-    readStoreAppListByCategory: selectAppListByPageWithCategory,
-    readStoreAppRecently: selectAppListRecently,
-    readStoreAppPinned: selectAppListPinned,
+    readAppByPage: selectAppListByPage,
+    readAppListByCategory: selectAppListByPageWithCategory,
+    readAppRecently: selectAppListRecently,
+    readAppPinned: selectAppListPinned,
     readAppByID: selectAppByID,
     readAppByPackageID: selectAppByPackageID,
+    orderAppByID: insertOrderByID,
+    readOrderByID: selectOrderByID,
     writeApp: insertApp,
     updateApp: updateApp,
     readCategories: selectCategoryList,

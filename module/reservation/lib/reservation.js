@@ -142,7 +142,7 @@ function createReservation(req, res) {
 
                 params.name = reservationData.name;
                 params.mode = '갱신 완료';
-                params.message = `${params.name} (${reservationData.phone}) 님의 사전 예약이 ${params.mode}  되었습니다.`;
+                params.message = params.name + '(' + reservationData.phone + ') 님의 사전 예약이 ' + params.mode + '되었습니다.';
 
                 // send notifications
                 slack.sendMessage(params.message, slackChannel);
@@ -184,7 +184,7 @@ function createReservation(req, res) {
 
                 params.name = reservationData.name;
                 params.mode = '입력 완료';
-                params.message = `${params.name} (${reservationData.phone}) 님의 사전 예약이 ${params.mode}  되었습니다.`;
+                params.message = params.name + '(' + reservationData.phone + ') 님의 사전 예약이 ' + params.mode + '되었습니다.';
 
                 // send notifications
                 slack.sendMessage(params.message, slackChannel);
