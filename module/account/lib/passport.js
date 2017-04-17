@@ -98,7 +98,14 @@ function loginSuccess(req, res, next) {
 }
 
 function loginDone(req, res) {
-    res.redirect('/');
+    var q = req.session.previousURL;
+
+    if (q !== undefined) {
+        req.session.previousURL = undefined;
+        return res.redirect(q.toString());
+    } else {
+        res.redirect('/');
+    }
 }
 
 // for internal use

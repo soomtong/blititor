@@ -449,13 +449,17 @@ function updateInfo(req, res) {
 
 function signIn(req, res) {
     // sign in and grant user access level
-    var prevLocation = '/';
-
+    // var prevLocation = '/';
     // res.redirect(prevLocation);
 
     var params = {
         title: "Home",
+        q: req.query.q
     };
+
+    if (params.q !== undefined && params.q !== '') {
+        req.session.previousURL = params.q.toString();
+    }
 
     // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
 
