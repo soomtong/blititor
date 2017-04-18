@@ -3,7 +3,7 @@
   "appstore": {
     "list": "/apps",
     "category": "/category",
-    "write": "/write"
+    "upload": "/upload/app"
   },
   "appstore_app": "/app"
 }

@@ -376,7 +376,13 @@ function selectAppByPackageID (connection, storeAppPackageID, callback) {
 }
 
 function selectCategoryList(connection, callback) {
-    connection.query(Queries.selectAll, [['category_id', 'category_title', 'category_subject'], tables.storeAppCategory], function (error, rows) {
+    connection.query(Queries.selectAll, [['id', 'category_id', 'category_title', 'category_subject'], tables.storeAppCategory], function (error, rows) {
+        callback(error, rows);
+    });
+}
+
+function selectTagList(connection, callback) {
+    connection.query(Queries.selectAllTags, [tables.storeApp], function (error, rows) {
         callback(error, rows);
     });
 }
@@ -405,9 +411,10 @@ module.exports = {
     readAppByPackageID: selectAppByPackageID,
     orderAppByID: insertOrderByID,
     readOrderByID: selectOrderByID,
-    writeApp: insertApp,
+    uploadApp: insertApp,
     updateApp: updateApp,
     readCategories: selectCategoryList,
+    readTags: selectTagList,
     option: {
         tables: tables
     }

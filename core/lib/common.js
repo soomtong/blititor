@@ -207,6 +207,15 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
     }
 }
 
+function splitString2Array(str, delimiter) {
+    if (!str) return [];
+    else return str.split(delimiter).map(function (tag) {
+        return tag.trim();
+    }).filter(function (tag) {
+        return !!tag;
+    });
+}
+
 module.exports = {
     pagination: pagination,
     pageFormatter: pageFormatter,
@@ -221,5 +230,6 @@ module.exports = {
     hash: getHash,
     getHeaderTextFromMarkdown: getHeaderTextFromMarkdown,
     getHeaderTextFromDelta: getHeaderTextFromDelta,
+    splitString2Array: splitString2Array,
     databaseDefault: getDatabaseDefault()
 };

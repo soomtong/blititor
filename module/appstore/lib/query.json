@@ -1,5 +1,6 @@
 {
   "selectAll": "SELECT ?? FROM ??",
+  "selectAllTags": "SELECT `tags` FROM ?? ORDER BY `tags` ASC",
   "selectAppByID": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `id` = ? LIMIT 1",
   "selectAppByURL": "SELECT A.*, (SELECT `category_title` FROM ?? WHERE `id` = A.`category_id`) AS `category_title`, (SELECT `category_id` FROM ?? WHERE `id` = A.`category_id`) AS `category_name` FROM ?? AS A WHERE `package_id` = ? LIMIT 1 ",
   "selectByUUID": "SELECT ?? FROM ?? WHERE `user_uuid` = ?",

@@ -108,17 +108,40 @@ function listAppByCategory(req, res) {
     }
 }
 
-function writeForm(req, res) {
+function uploadForm(req, res) {
     var params = {
         title: '넷 앱스토어',
+        categoryList: [],
+        tagList: [],
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/teamblog/write', params);
+    categoryList(params, function (error, results) {
+        if (!error) {
+            params.categoryList = results;
+        }
+
+        tagList(params, function (error, results) {
+            var tags = [];
+            if (!error) {
+                results.map(function (item) {
+                    tags = tags.concat(item.tags.split(',').map(function (tag) {
+                        return tag.trim();
+                    }).filter(function (item) {
+                        return item;
+                    }));
+                });
+
+                params.tagList = tags;
+            }
+
+            res.render(BLITITOR.config.site.theme + '/page/app_upload', params);
+        });
+    });
 }
 
 function saveApp(req, res) {
-    req.assert('content', 'content is required').len(10).withMessage('Must be 10 chars over').notEmpty();
-    req.assert('title', 'title is required').notEmpty(10);
+    req.assert('app_title', 'title is required').notEmpty();
+    req.assert('app_content', 'content is required').notEmpty();
 
     var errors = req.validationErrors();
 
@@ -128,32 +151,36 @@ function saveApp(req, res) {
         return res.redirect('back');
     }
 
-    req.sanitize('title').escape();
-    req.sanitize('tags').escape();
+    req.sanitize('app_title').escape();
+    req.sanitize('app_tags').escape();
 
-    var tagList = req.body.tags.split(',').map(function (tag) {
-        return tag.trim();
-    }).filter(function (tag) {
-        return !!tag;
-    });
+    var tagList = common.splitString2Array(req.body.tags, ',');
 
-    var postData = {
+    var appData = {
         user_uuid: req.user.uuid,
         user_id: req.user.id,
         nickname: req.user.nickname,
-        flag: misc.setFlag(req.body.render),
-        title: req.body.title,
+        download_url: req.body.download_url,
+        package_id: req.body.package_id,
+        version: '1.0',
+        title: req.body.app_title,
+        description: req.body.app_description,
+        price: req.body.app_price,
+        price_for_sale: req.body.app_price_for_sale,
+        category_id: req.body.app_category || 0,
         content: req.body.content,
         tags: tagList.join(','),
         created_at: new Date()
     };
 
+    console.log(appData, req.body);
+
     var mysql = connection.get();
 
     // save to guestbook table
-    db.writePost(mysql, postData, function (err, result) {
+    db.uploadApp(mysql, appData, function (err, result) {
         if (err) {
-            req.flash('error', {msg: '포스트 저장에 실패했습니다.'});
+            req.flash('error', {msg: '새로운 넷 앱 저장에 실패했습니다.'});
 
             winston.error(err);
 
@@ -162,11 +189,11 @@ function saveApp(req, res) {
 
         var post_id = result['insertId'];
 
-        winston.info('Saved post id', post_id);
+        winston.info('Saved app id', post_id);
 
-        req.flash('info', 'Saved Post by ' + (postData.nickname || postData.user_id));
+        req.flash('info', 'Saved app by ' + (appData.nickname || appData.user_id));
 
-        res.redirect(routeTable.teamblog_root + routeTable.teamblog.list);
+        res.redirect(routeTable.account_root + routeTable.appstore.list);
     });
 }
 
@@ -266,7 +293,7 @@ module.exports = {
     index: indexPage,
     list: listApps,
     listByCategory: listAppByCategory,
-    write: writeForm,
+    upload: uploadForm,
     save: saveApp,
     view: viewApp,
     order: orderApp,
@@ -292,6 +319,14 @@ function categoryList(params, callback) {
     var mysql = connection.get();
 
     db.readCategories(mysql, function (err, result) {
+        callback(err, result);
+    });
+}
+
+function tagList(params, callback) {
+    var mysql = connection.get();
+
+    db.readTags(mysql, function (err, result) {
         callback(err, result);
     });
 }

@@ -145,11 +145,7 @@ function savePost(req, res) {
     req.sanitize('title').escape();
     req.sanitize('tags').escape();
 
-    var tagList = req.body.tags.split(',').map(function (tag) {
-        return tag.trim();
-    }).filter(function (tag) {
-        return !!tag;
-    });
+    var tagList = common.splitString2Array(req.body.tags, ',');
 
     var postData = {
         user_uuid: req.user.uuid,
