@@ -289,6 +289,33 @@ function orderApp(req, res) {
     });
 }
 
+function purchasedAppList(req, res) {
+    var params = {
+        title: '구입 목록',
+        appList: []
+    };
+
+    var mysql = connection.get();
+
+    var userData = {
+        uuid: req.user.uuid,
+        id: req.user.id
+    };
+
+    db.orderedAppList(mysql, userData.uuid, function (error, results) {
+        if (!error && results.length) {
+            results.map(function (item) {
+                item.purchased_at = common.dateFormatter(item.purchased_at, "YYYY-MM-DD HH:mm");
+                item.installed_at = common.dateFormatter(item.installed_at, "YYYY-MM-DD HH:mm");
+            });
+
+            params.appList = results;
+        }
+
+        res.render(BLITITOR.config.site.theme + '/page/account/purchased_list', params);
+    })
+}
+
 module.exports = {
     index: indexPage,
     list: listApps,
@@ -297,6 +324,7 @@ module.exports = {
     save: saveApp,
     view: viewApp,
     order: orderApp,
+    purchasedAppList: purchasedAppList
 };
 
 function recentApp(params, callback) {

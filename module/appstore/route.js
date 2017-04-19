@@ -28,6 +28,8 @@ router.post(routeTable.appstore_root + routeTable.appstore_app + '/:appNumber([0
 router.get(routeTable.appstore_root + routeTable.appstore.upload, AccountMiddleware.checkSignedIn, appstore.upload); // in order to avoid conflict with `:page` params
 router.post(routeTable.appstore_root + routeTable.appstore.upload, AccountMiddleware.checkSignedIn, appstore.save);
 
+router.get(routeTable.account_root + routeTable.appstore.list, AccountMiddleware.checkSignedIn, appstore.purchasedAppList);
+
 router.get(routeTable.appstore_root + routeTable.appstore.list, appstore.list);
 router.get(routeTable.appstore_root + routeTable.appstore.list + '/:page([0-9]+)', site.redirect(routeTable.appstore_root + routeTable.appstore.list));
 router.get(routeTable.appstore_root + routeTable.appstore.category + '/:category' , appstore.listByCategory);

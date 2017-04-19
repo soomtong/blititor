@@ -19,6 +19,7 @@
   "insertInto": "INSERT INTO ?? SET ?",
   "insertCategoryInto": "INSERT INTO ?? SET ? ON DUPLICATE KEY UPDATE ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
-  "selectOrderByIDWithUUID": "SELECT * FROM ?? WHERE `store_app_id` = ? and `user_uuid` = ? order by id desc",
+  "selectOrderedAppByUser": "SELECT A.*, B.id as `ordered_id`, B.`created_at` as `purchased_at`, B.`installed_at`, B.`canceled_at` FROM ?? A, ?? B WHERE B.`user_uuid` = ? and A.`id` = B.`store_app_id` ORDER BY B.`id` DESC",
+  "selectOrderByIDWithUUID": "SELECT * FROM ?? WHERE `store_app_id` = ? and `user_uuid` = ? ORDER BY `id` DESC",
   "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
 }

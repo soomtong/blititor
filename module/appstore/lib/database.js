@@ -399,6 +399,12 @@ function selectOrderByID(connection, appID, userUUID, callback) {
     });
 }
 
+function orderedAppList(connection, userUUID, callback) {
+    connection.query(Queries.selectOrderedAppByUser, [tables.storeApp, tables.storeOrder, userUUID], function (error, results) {
+        callback(error, results);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
@@ -413,6 +419,7 @@ module.exports = {
     readOrderByID: selectOrderByID,
     uploadApp: insertApp,
     updateApp: updateApp,
+    orderedAppList: orderedAppList,
     readCategories: selectCategoryList,
     readTags: selectTagList,
     option: {
