@@ -31,10 +31,12 @@
         "useDatabase": true,
         "ignore": false,
         "tables": {
-            "netapp": "b_netapp",
-            "netappHistory": "b_netapp_history",
-            "netappCategory": "b_netapp_category",
-            "netappCategoryRelated": "b_netapp_category_related",
+            "storeApp": "b_store_app",
+            "storeAppHistory": "b_store_app_history",
+            "storeAppCategory": "b_store_app_category",
+            "storeAppRelated": "b_store_app_related",
+            "storeOrder": "b_store_order",
+            "storeOrderDetail": "b_store_order_detail",
             "user": "b_user"
         },
         "core": false
@@ -45,6 +47,16 @@
         "ignore": false,
         "tables": {
             "chattingLog": "b_chatting_log",
+            "user": "b_user"
+        },
+        "core": false
+    },
+    {
+        "folder": "controller_hub",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "controller": "b_controller",
             "user": "b_user"
         },
         "core": false

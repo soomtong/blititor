@@ -129,6 +129,9 @@ function commonFlag() {
             installed: 1,
             removed: 2,
             canceled: 3
+        },
+        controllerHub: {
+
         }
     }
 }

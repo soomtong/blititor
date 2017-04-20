@@ -20,7 +20,8 @@ database.json
 database.json.*
 theme.json
 theme.json.*
-config.json
-config.json.*
+config*.json
+config*.json.*
 
 theme/net_appstore
+theme/controller_hub

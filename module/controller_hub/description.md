@@ -1,6 +1,6 @@
-## AppStore
+## NativeBridge
 
-> Simple AppStore Module
+> Simple NativeBridge Module
 
 some description
 
