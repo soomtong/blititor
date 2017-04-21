@@ -11,13 +11,14 @@ var misc = require('../../../core/lib/misc');
 var controllerHubFlag = misc.commonFlag().controllerHub;
 
 var tables = {
-    controller: common.databaseDefault.prefix + 'controller',
+    controller: common.databaseDefault.prefix + 'controller',  // hub info and main controller info
+    gateway: common.databaseDefault.prefix + 'gateway',
+    gatewayGroup: common.databaseDefault.prefix + 'gateway_group',
+
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var Queries = require('./query');
-
-var fields_storeApp = ['id', 'controller_name', 'created_at', 'updated_at'];
 
 var PAGE_SIZE = 12;
 var GUTTER_SIZE = 10;
@@ -33,7 +34,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.controller];
+    var tableList = [tables.controller, tables.gateway, tables.gatewayGroup];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -60,13 +61,53 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         'UNIQUE controller_id_unique(`controller_id`)) ' +
         'DEFAULT CHARSET=' + charSet;
+    var sql_gatewayGroup = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`flag` varchar(8), ' +             // for real-time feedback
+        '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
+        '`group_title` varchar(128), ' +
+        '`group_subject` varchar(256), ' +
+        '`group_tag` varchar(64), ' +
+        '`group_count` int unsigned not null DEFAULT 0, ' +
+        '`group_order` tinyint unsigned not null DEFAULT 1, ' +
+        '`created_at` datetime, ' +
+        'INDEX pinned(`pinned`), ' +
+        'INDEX group_order(`group_order`)) ' +
+        'DEFAULT CHARSET=' + charSet;
+    var sql_gateway = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`gateway_uuid` char(36) not null, ' +
+        '`gateway_ip` varchar(16), ' +
+        '`version` varchar(32), ' +
+        '`title` varchar(256), ' +
+        '`group_id` int unsigned not null DEFAULT 0, ' +
+        '`content` text, ' +
+        '`tags` varchar(256), ' +
+        '`image` varchar(256), ' +    // just 1 image now
+        '`flag` varchar(8), ' +             // render type or some special mark for this storeApp
+        '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
+        '`created_at` datetime, ' +
+        '`updated_at` datetime, ' +
+        'INDEX pinned(`pinned`), ' +
+        'INDEX group_id(`group_id`), ' +
+        'INDEX gateway_uuid(`gateway_uuid`),' +
+        'INDEX created_at(`created_at`)) ' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_controller, tables.controller, function (error, result) {
-        // check dummy json
-        callback && callback(databaseConfiguration, done);
+        console.log(error, result);
+        connection.query(sql_gatewayGroup, tables.controller, function (error, result) {
+            console.log(error, result);
+            connection.query(sql_gateway, tables.controller, function (error, result) {
+                console.log(error, result);
 
-        // close connection
-        connection.destroy();
+                // check dummy json
+                callback && callback(databaseConfiguration, done);
+
+                // close connection
+                connection.destroy();
+            });
+        });
     });
 }
 

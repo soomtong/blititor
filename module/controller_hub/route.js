@@ -16,22 +16,22 @@ var routeTable = misc.getRouteTable();
 router.use(middleware.exposeLocals);
 
 // bind module router
-router.all(routeTable.root, site.redirect(routeTable.nativeBridge_root));
-router.get(routeTable.nativeBridge_root, controllerHub.index);
+router.all(routeTable.root, site.redirect(routeTable.controller_hub_root));
+router.get(routeTable.controller_hub_root, controllerHub.index);
 router.get(routeTable.account.login, site.redirect(routeTable.account_root + routeTable.account.signIn));
 
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge_app + '/:appNumber([0-9]+)', nativeBridge.view);
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge_app + '/:packageName', nativeBridge.view);
+router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID', controllerHub.view);
+// router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)' + '/edit', controllerHub.edit);
 //
-// router.post(routeTable.nativeBridge_root + routeTable.nativeBridge_app + '/:appNumber([0-9]+)/order', AccountMiddleware.checkSignedIn, nativeBridge.order);
+// router.post(routeTable.controller_hub_root + routeTable.controllerHub_app + '/:appNumber([0-9]+)/order', AccountMiddleware.checkSignedIn, controllerHub.order);
 //
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge.upload, AccountMiddleware.checkSignedIn, nativeBridge.upload); // in order to avoid conflict with `:page` params
-// router.post(routeTable.nativeBridge_root + routeTable.nativeBridge.upload, AccountMiddleware.checkSignedIn, nativeBridge.save);
+// router.get(routeTable.controller_hub_root + routeTable.controllerHub.upload, AccountMiddleware.checkSignedIn, controllerHub.upload); // in order to avoid conflict with `:page` params
+// router.post(routeTable.controller_hub_root + routeTable.controllerHub.upload, AccountMiddleware.checkSignedIn, controllerHub.save);
 //
-// router.get(routeTable.account_root + routeTable.nativeBridge.list, AccountMiddleware.checkSignedIn, nativeBridge.purchasedAppList);
+// router.get(routeTable.account_root + routeTable.controllerHub.list, AccountMiddleware.checkSignedIn, controllerHub.purchasedAppList);
 //
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge.list, nativeBridge.list);
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge.list + '/:page([0-9]+)', site.redirect(routeTable.nativeBridge_root + routeTable.nativeBridge.list));
-// router.get(routeTable.nativeBridge_root + routeTable.nativeBridge.category + '/:category' , nativeBridge.listByCategory);
+// router.get(routeTable.controller_hub_root + routeTable.controllerHub.list, controllerHub.list);
+// router.get(routeTable.controller_hub_root + routeTable.controllerHub.list + '/:page([0-9]+)', site.redirect(routeTable.controller_hub_root + routeTable.controllerHub.list));
+// router.get(routeTable.controller_hub_root + routeTable.controllerHub.category + '/:category' , controllerHub.listByCategory);
 
 module.exports = router;

@@ -24,57 +24,20 @@ function indexPage(req, res) {
     };
 
     return res.render(BLITITOR.config.site.theme + '/page/index', params);
-
-    categoryList(params, function (error, results) {
-        if (!error) {
-            params.categoryList = results;
-        }
-
-        pinnedApp(params, function (error, results) {
-            if (!error) {
-                params.pinnedNetAppList = results;
-            }
-
-            recentApp(params, function (error, results) {
-                if (!error) {
-                    params.recentNetAppList = results;
-                }
-
-
-            });
-        });
-    });
 }
 
-function listApps(req, res) {
+function viewGateway(req, res) {
     var params = {
-        title: '넷앱 리스트',
-        categoryList: [],
-        page: Number(req.params['page'] || Number(req.query['p'] || 1))
+        title: '넷 앱 컨트롤러 허브',
+        gateway: {}
     };
 
-    var mysql = connection.get();
-
-    db.readAppByPage(mysql, params.page - 1, function (err, result) {
-        if (err) {
-            req.flash('error', {msg: '애플리케이션 목록 읽기에 실패했습니다.'});
-
-            winston.error(err);
-
-            res.redirect('back');
-        }
-
-        params.pagination = result.pagination;
-        params.totalCount = result.total;
-        params.list = result.storeAppList;
-
-        res.render(BLITITOR.config.site.theme + '/page/app_list', params);
-    });
+    return res.render(BLITITOR.config.site.theme + '/page/gateway', params);
 }
 
 function listAppByCategory(req, res) {
     var params = {
-        title: '넷앱 리스트',
+        title: '넷 앱 컨트롤러 허브',
         categoryList: [],
         category: req.params['category'] || req.query['q'] || '',
         page: Number(req.params['page'] || Number(req.query['p'] || 1))
@@ -111,7 +74,7 @@ function listAppByCategory(req, res) {
 
 function uploadForm(req, res) {
     var params = {
-        title: '넷 앱스토어',
+        title: '넷 앱 컨트롤러 허브',
         categoryList: [],
         tagList: [],
     };
@@ -200,7 +163,7 @@ function saveApp(req, res) {
 
 function viewApp(req, res) {
     var params = {
-        title: '넷 앱스토어',
+        title: '넷 앱 컨트롤러 허브',
         appID: req.params['appNumber'],
         appURL: req.params['packageName']
     };
@@ -258,7 +221,7 @@ function viewApp(req, res) {
 
 function orderApp(req, res) {
     var params = {
-        title: '넷 앱스토어',
+        title: '넷 앱 컨트롤러 허브',
         appID: req.params['appNumber'],
         appURL: req.params['packageName']
     };
@@ -319,11 +282,10 @@ function purchasedAppList(req, res) {
 
 module.exports = {
     index: indexPage,
-    list: listApps,
+    view: viewGateway,
     listByCategory: listAppByCategory,
     upload: uploadForm,
     save: saveApp,
-    view: viewApp,
     order: orderApp,
     purchasedAppList: purchasedAppList
 };
