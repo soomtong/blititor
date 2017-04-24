@@ -63,11 +63,12 @@ function createScheme(databaseConfiguration, callback, done) {
         'DEFAULT CHARSET=' + charSet;
     var sql_gatewayGroup = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
-        '`flag` varchar(8), ' +             // for real-time feedback
+        '`flag` tinyint unsigned default 0, ' +             // for real-time feedback
         '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
         '`group_title` varchar(128), ' +
         '`group_subject` varchar(256), ' +
         '`group_tag` varchar(64), ' +
+        '`group_image` varchar(256), ' +
         '`group_count` int unsigned not null DEFAULT 0, ' +
         '`group_order` tinyint unsigned not null DEFAULT 1, ' +
         '`created_at` datetime, ' +
@@ -81,11 +82,10 @@ function createScheme(databaseConfiguration, callback, done) {
         '`version` varchar(32), ' +
         '`title` varchar(256), ' +
         '`group_id` int unsigned not null DEFAULT 0, ' +
-        '`content` text, ' +
-        '`tags` varchar(256), ' +
-        '`image` varchar(256), ' +    // just 1 image now
-        '`flag` varchar(8), ' +             // render type or some special mark for this storeApp
-        '`pinned` tinyint unsigned default 0, ' +   // it can apply ordered pinned list not only recently
+        '`description` text, ' +
+        '`secret_string` text, ' +
+        '`installed_apps` varchar(256), ' +
+        '`pinned` tinyint unsigned default 0, ' +
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX pinned(`pinned`), ' +
@@ -95,12 +95,8 @@ function createScheme(databaseConfiguration, callback, done) {
         'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_controller, tables.controller, function (error, result) {
-        console.log(error, result);
-        connection.query(sql_gatewayGroup, tables.controller, function (error, result) {
-            console.log(error, result);
-            connection.query(sql_gateway, tables.controller, function (error, result) {
-                console.log(error, result);
-
+        connection.query(sql_gatewayGroup, tables.gatewayGroup, function (error, result) {
+            connection.query(sql_gateway, tables.gateway, function (error, result) {
                 // check dummy json
                 callback && callback(databaseConfiguration, done);
 
@@ -112,7 +108,7 @@ function createScheme(databaseConfiguration, callback, done) {
 }
 
 function insertDummy(databaseConfiguration, done) {
-    fs.stat(__dirname + '/dummy.json', function (error, result) {
+    fs.stat(__dirname + '/dummy1.json', function (error, result) {
         if (!error && result.size > 2) {
             var connection = mysql.createConnection({
                 host: databaseConfiguration.dbHost,
@@ -122,18 +118,20 @@ function insertDummy(databaseConfiguration, done) {
                 password: databaseConfiguration.dbUserPassword
             });
 
-            var dummy = require('./dummy.json');
+            var dummy = require('./dummy1.json');
 
             var iteratorAsync = function (item, callback) {
-                var storeAppCategoryData = {
-                    controller_id: item.id,
-                    controller_title: item.title,
-                    controller_subject: item.subject,
+                var groupData = {
+                    flag: controllerHubFlag.gatewayGroup.normal,
+                    group_title: item.group_title,
+                    group_subject: item.group_subject,
+                    group_tag: item.group_tag,
+                    group_image: item.group_image || '//placeimg.com/50/50/' + common.randomNumber(1),
                     created_at: new Date()
                 };
 
-                insertCategory(connection, storeAppCategoryData, function (err, result) {
-                    console.log('   inserted storeAppCategory records...'.white, result['insertId']);
+                createGatewayGroup(connection, groupData, function (err, result) {
+                    console.log('   inserted controllerGatewayGroup records...'.white, result['insertId']);
 
                     callback(null, result);
                 });
@@ -152,12 +150,85 @@ function insertDummy(databaseConfiguration, done) {
             async.mapSeries(dummy, iteratorAsync, resultAsync);
         }
     });
+
+    fs.stat(__dirname + '/dummy2.json', function (error, result) {
+        if (!error && result.size > 2) {
+            var connection = mysql.createConnection({
+                host: databaseConfiguration.dbHost,
+                port: databaseConfiguration.dbPort || common.databaseDefault.port,
+                database: databaseConfiguration.dbName || common.databaseDefault.database,
+                user: databaseConfiguration.dbUserID,
+                password: databaseConfiguration.dbUserPassword
+            });
+
+            var dummy = require('./dummy2.json');
+
+            var iteratorAsync = function (item, callback) {
+                var gatewayData = {
+                    gateway_uuid: common.UUID1(),
+                    gateway_ip: item.gateway_ip,
+                    title: item.title,
+                    version: item.version,
+                    installed_apps: item.installed_apps,
+                    description: item.description,
+                    group_id: Number(item.group_id) || 1,
+                    created_at: new Date()
+                };
+
+                createGateway(connection, gatewayData, function (err, result) {
+                    console.log('   inserted controllerGateway records...'.white, result['insertId']);
+
+                    callback(null, result);
+                });
+            };
+
+            var resultAsync = function (err, result) {
+                console.log(' = Inserted gateway records...'.blue);
+
+                // for async
+                done && done(err, result);
+
+                // close connection
+                connection.destroy();
+            };
+
+            async.mapSeries(dummy, iteratorAsync, resultAsync);
+        }
+    });
+}
+
+function createGateway(connection, gatewayData, callback) {
+    connection.query(Queries.insertInto, [tables.gateway, gatewayData], function (error, result) {
+        callback(error, result);
+    });
+}
+
+function createGatewayGroup(connection, groupData, callback) {
+    connection.query(Queries.insertInto, [tables.gatewayGroup, groupData], function (error, result) {
+        callback(error, result);
+    });
+}
+
+function selectGatewayGroupList(connection, callback) {
+    connection.query(Queries.selectAll, [tables.gatewayGroup], function (error, rows) {
+        callback(error, rows);
+    });
+}
+
+function selectGatewayList(connection, callback) {
+    connection.query(Queries.selectAll, [tables.gateway], function (error, rows) {
+        callback(error, rows);
+    });
 }
 
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
+    createGateway: createGateway,
+    createGroup: createGatewayGroup,
+    getGatewayGroupList: selectGatewayGroupList,
+    getGatewayList: selectGatewayList,
     option: {
         tables: tables
     }

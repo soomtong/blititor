@@ -1,3 +1,4 @@
 {
-  "selectAll": "SELECT ?? FROM ??"
+  "selectAll": "SELECT * FROM ??",
+  "insertInto": "INSERT INTO ?? SET ?"
 }

@@ -1,0 +1,17 @@
+[
+  {
+    "group_title": "그룹 1",
+    "group_subject": "구름네트웍스 경영지원팀",
+    "group_tag": ""
+  },
+  {
+    "group_title": "IT 관리부",
+    "group_subject": "해외망 연동 전문 부서",
+    "group_tag": ""
+  },
+  {
+    "group_title": "테스트",
+    "group_subject": "패킷엔진 토플로지 구성용 테스트베드",
+    "group_tag": "192.168.x.x"
+  }
+]

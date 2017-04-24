@@ -11,9 +11,9 @@ var query = require('./query');
 
 var routeData = require('../route.json');
 var routeTable = misc.getRouteTable(routeData);
-var appstoreFlag = misc.commonFlag().appStore;
+var controllerHubFlag = misc.commonFlag().controllerHub;
 
-function indexPage(req, res) {
+function gatewayList(req, res) {
     var params = {
         title: "넷 앱 컨트롤러 허브",
         pinnedNetAppCount: 4,
@@ -23,7 +23,24 @@ function indexPage(req, res) {
         categoryList: []
     };
 
-    return res.render(BLITITOR.config.site.theme + '/page/index', params);
+    var mysql = connection.get();
+
+    db.getGatewayGroupList(mysql, function (error, results) {
+        params.groupList = results;
+        db.getGatewayList(mysql, function (error, results) {
+            results.map(function (item) {
+                item.vmList = item.installed_apps && item.installed_apps.split(',').map(function (app) {
+                        return app.trim();
+                    }).filter(function (app) {
+                        return !!app;
+                    });
+            });
+
+            params.gatewayList = results;
+
+            res.render(BLITITOR.config.site.theme + '/page/index', params);
+        });
+    });
 }
 
 function viewGateway(req, res) {
@@ -32,80 +49,87 @@ function viewGateway(req, res) {
         gateway: {}
     };
 
-    return res.render(BLITITOR.config.site.theme + '/page/gateway', params);
+    res.render(BLITITOR.config.site.theme + '/page/gateway', params);
 }
 
-function listAppByCategory(req, res) {
+function gatewayForm(req, res) {
     var params = {
-        title: '넷 앱 컨트롤러 허브',
-        categoryList: [],
-        category: req.params['category'] || req.query['q'] || '',
-        page: Number(req.params['page'] || Number(req.query['p'] || 1))
+        title: '신규 게이트웨이 생성',
+        groupList: []
     };
 
     var mysql = connection.get();
 
-    if (params.category) {
-        categoryList(params, function (error, results) {
-            if (!error) {
-                params.categoryList = results;
-            }
+    db.getGatewayGroupList(mysql, function (error, results) {
+        params.groupList = results;
 
-            db.readAppListByCategory(mysql, params.category, params.page - 1, function (err, result) {
-                if (err) {
-                    req.flash('error', { msg: '애플리케이션 목록 읽기에 실패했습니다.' });
-
-                    winston.error(err);
-
-                    res.redirect('back');
-                }
-
-                params.pagination = result.pagination;
-                params.totalCount = result.total;
-                params.list = result.storeAppList;
-
-                res.render(BLITITOR.config.site.theme + '/page/app_list', params);
-            });
-        });
-    } else {
-        res.redirect(routeTable.appstore_root + routeTable.appstore.list)
-    }
-}
-
-function uploadForm(req, res) {
-    var params = {
-        title: '넷 앱 컨트롤러 허브',
-        categoryList: [],
-        tagList: [],
-    };
-
-    categoryList(params, function (error, results) {
-        if (!error) {
-            params.categoryList = results;
-        }
-
-        tagList(params, function (error, results) {
-            var tags = [];
-            if (!error) {
-                results.map(function (item) {
-                    tags = tags.concat(item.tags.split(',').map(function (tag) {
-                        return tag.trim();
-                    }).filter(function (item) {
-                        return item;
-                    }));
-                });
-
-                params.tagList = tags;
-            }
-
-            res.render(BLITITOR.config.site.theme + '/page/app_upload', params);
-        });
+        res.render(BLITITOR.config.site.theme + '/page/gateway_form', params);
     });
 }
 
-function saveApp(req, res) {
-    req.assert('app_title', 'title is required').notEmpty();
-    req.assert('app_content', 'content is required').notEmpty();
+function newGateway(req, res) {
+    req.assert('gateway_ip', 'gateway ip is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('group_id').escape();
+    req.sanitize('description').escape();
+
+    var gatewayData = {
+        gateway_uuid: common.UUID1(),
+        gateway_ip: req.body.gateway_ip,
+        group_id: Number(req.body.group_id) || 0,
+        secret_string: req.body.secret_string,
+        created_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    db.createGateway(mysql, gatewayData, function (error, result) {
+        res.redirect(routeTable.controller_hub_root);
+    });
+}
+
+function newGatewayGroup(req, res) {
+    req.assert('group_title', 'title is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('group_title').escape();
+    req.sanitize('group_subject').escape();
+    req.sanitize('group_tag').escape();
+
+    var gatewayGroupData = {
+        flag: controllerHubFlag.gatewayGroup.normal,
+        group_title: req.body.group_title,
+        group_subject: req.body.group_subject,
+        group_tag: req.body.group_tag,
+        group_image: req.body.group_image || '//placeimg.com/50/50/' + common.randomNumber(1),
+        created_at: new Date()
+    };
+    
+    var mysql = connection.get();
+
+    db.createGroup(mysql, gatewayGroupData, function (error, result) {
+        res.redirect(routeTable.controller_hub_root);
+    });
+}
+
+function saveGateway(req, res) {
+    req.assert('group_title', 'title is required').notEmpty();
+    req.assert('group_content', 'content is required').notEmpty();
 
     var errors = req.validationErrors();
 
@@ -119,7 +143,7 @@ function saveApp(req, res) {
     req.sanitize('app_tags').escape();
 
     var tagList = common.splitString2Array(req.body.tags, ',');
-
+    
     var appData = {
         user_uuid: req.user.uuid,
         user_id: req.user.id,
@@ -137,11 +161,10 @@ function saveApp(req, res) {
         created_at: new Date()
     };
 
-    console.log(appData, req.body);
-
     var mysql = connection.get();
 
     // save to guestbook table
+/*
     db.uploadApp(mysql, appData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '새로운 넷 앱 저장에 실패했습니다.'});
@@ -159,166 +182,13 @@ function saveApp(req, res) {
 
         res.redirect(routeTable.account_root + routeTable.appstore.list);
     });
-}
-
-function viewApp(req, res) {
-    var params = {
-        title: '넷 앱 컨트롤러 허브',
-        appID: req.params['appNumber'],
-        appURL: req.params['packageName']
-    };
-
-    if (!params.appID && !params.appURL) {
-        return res.status(404).send('Not found');   // replace with html template
-    }
-
-    var mysql = connection.get();
-
-    if (params.appID) {
-        db.readAppByID(mysql, params.appID, function (err, result) {
-            if (err || !result[0]) {
-                req.flash('error', {msg: '넷 앱 정보 읽기에 실패했습니다.'});
-
-                winston.error('can not read this app', err);
-
-                return res.redirect('back');
-            }
-
-            params.app = renderPost(result[0]);
-
-            if (req.user && req.user.uuid) {
-                db.readOrderByID(mysql, params.appID, req.user.uuid, function (error, results) {
-                    if (results && results.length && results[0].user_uuid === req.user.uuid) {
-                        params.orderInfo = results[0];
-
-                        return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
-                    } else {
-                        return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
-                    }
-                });
-            } else {
-                return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
-            }
-        });
-    }
-
-    if (params.appURL) {
-        db.readAppByPackageID(mysql, params.appURL, function (err, result) {
-            if (err || !result[0]) {
-                req.flash('error', {msg: '넷 앱 정보 읽기에 실패했습니다.'});
-
-                winston.error('can not read this app', err);
-
-                return res.redirect('back');
-            }
-
-            params.app = renderPost(result[0]);
-
-            return res.render(BLITITOR.config.site.theme + '/page/app_view', params);
-        });
-    }
-}
-
-function orderApp(req, res) {
-    var params = {
-        title: '넷 앱 컨트롤러 허브',
-        appID: req.params['appNumber'],
-        appURL: req.params['packageName']
-    };
-
-    if (!params.appID && !params.appURL) {
-        return res.status(404).send('Not found');   // replace with html template
-    }
-
-    var mysql = connection.get();
-
-    var orderData = {
-        store_app_id: params.appID,
-        user_uuid: req.user.uuid,
-        user_id: req.user.id,
-        status: appstoreFlag.ordered,
-        created_at: new Date()
-    };
-
-    db.orderAppByID(mysql, orderData, function (err, result) {
-        if (!err) {
-            res.send({ status: 'success', data: {
-                    insertId: result.insertId }
-            });
-        } else {
-            res.send({ status: 'error', data: {
-                error: err }
-            });
-        }
-    });
-}
-
-function purchasedAppList(req, res) {
-    var params = {
-        title: '구입 목록',
-        appList: []
-    };
-
-    var mysql = connection.get();
-
-    var userData = {
-        uuid: req.user.uuid,
-        id: req.user.id
-    };
-
-    db.orderedAppList(mysql, userData.uuid, function (error, results) {
-        if (!error && results.length) {
-            results.map(function (item) {
-                item.purchased_at = common.dateFormatter(item.purchased_at, "YYYY-MM-DD HH:mm");
-                item.installed_at = common.dateFormatter(item.installed_at, "YYYY-MM-DD HH:mm");
-            });
-
-            params.appList = results;
-        }
-
-        res.render(BLITITOR.config.site.theme + '/page/account/purchased_list', params);
-    })
+*/
 }
 
 module.exports = {
-    index: indexPage,
+    index: gatewayList,
+    gatewayForm: gatewayForm,
     view: viewGateway,
-    listByCategory: listAppByCategory,
-    upload: uploadForm,
-    save: saveApp,
-    order: orderApp,
-    purchasedAppList: purchasedAppList
+    newGateway: newGateway,
+    newGatewayGroup: newGatewayGroup,
 };
-
-function recentApp(params, callback) {
-    var mysql = connection.get();
-
-    db.readAppRecently(mysql, params.recentNetAppCount, function (err, result) {
-        callback(err, result);
-    });
-}
-
-function pinnedApp(params, callback) {
-    var mysql = connection.get();
-
-    db.readAppPinned(mysql, params.pinnedNetAppCount, function (err, result) {
-        callback(err, result);
-    });
-}
-
-function categoryList(params, callback) {
-    var mysql = connection.get();
-
-    db.readCategories(mysql, function (err, result) {
-        callback(err, result);
-    });
-}
-
-function tagList(params, callback) {
-    var mysql = connection.get();
-
-    db.readTags(mysql, function (err, result) {
-        callback(err, result);
-    });
-}
-

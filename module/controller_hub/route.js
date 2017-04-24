@@ -14,13 +14,18 @@ var router = express.Router();
 var routeTable = misc.getRouteTable();
 
 router.use(middleware.exposeLocals);
+router.use(AccountMiddleware.checkSignedIn);
 
 // bind module router
 router.all(routeTable.root, site.redirect(routeTable.controller_hub_root));
 router.get(routeTable.controller_hub_root, controllerHub.index);
 router.get(routeTable.account.login, site.redirect(routeTable.account_root + routeTable.account.signIn));
 
-router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID', controllerHub.view);
+router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/form', controllerHub.gatewayForm);
+router.post(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/new', controllerHub.newGateway);
+router.post(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/new-group', controllerHub.newGatewayGroup);
+
+router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)', controllerHub.view);
 // router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)' + '/edit', controllerHub.edit);
 //
 // router.post(routeTable.controller_hub_root + routeTable.controllerHub_app + '/:appNumber([0-9]+)/order', AccountMiddleware.checkSignedIn, controllerHub.order);

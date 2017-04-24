@@ -3,6 +3,7 @@
   "controller_hub": {
     "gateway": "/gateway",
     "rtvm": "/rtvm",
+    "form": "/form",
     "new": "/new"
   }
 }

@@ -131,7 +131,12 @@ function commonFlag() {
             canceled: 3
         },
         controllerHub: {
-
+            gatewayGroup: {
+                normal: 0,
+                noticed: 1,
+                urgent: 2,
+                critical: 3
+            }
         }
     }
 }
