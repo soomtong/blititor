@@ -1,0 +1,27 @@
+[
+  {
+    "title": "모니터링 1",
+    "description": "네트워크 모니터, 퍼포먼스 모니터",
+    "installed_app_id": 1
+  },
+  {
+    "title": "로드밸런싱 1",
+    "description": "트래픽 분산, 리버스 프록시"
+  },
+  {
+    "title": "시큐리티 2",
+    "description": "IPSec, 파이어월"
+  },
+  {
+    "title": "스위치 #1",
+    "description": "허브, 브릿지, 릴레이"
+  },
+  {
+    "title": "라이브러리",
+    "description": "패킷엔진, 리눅스 라이브러리"
+  },
+  {
+    "title": "드라이버",
+    "description": "디바이스 드라이버"
+  }
+]

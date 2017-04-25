@@ -46,10 +46,30 @@ function gatewayList(req, res) {
 function viewGateway(req, res) {
     var params = {
         title: '넷 앱 컨트롤러 허브',
-        gateway: {}
+        gateway_id: req.params.gatewayID,
+        gatewayInfo: {},
+        rtvmList: []
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/gateway', params);
+    if (!params.gateway_id) {
+        return res.redirect('back');
+    }
+
+    var mysql = connection.get();
+
+    db.getGatewayInfo(mysql, Number(params.gateway_id), function (error, result) {
+        if (result && result[0]) {
+            params.gatewayInfo = result[0];
+        }
+
+        db.getRtvmList(mysql, Number(params.gateway_id), function (error, results) {
+            if (!error && results) {
+                params.rtvmList = results;
+            }
+
+            res.render(BLITITOR.config.site.theme + '/page/gateway', params);
+        });
+    });
 }
 
 function gatewayForm(req, res) {
@@ -130,15 +150,63 @@ function newGatewayGroup(req, res) {
 function rtvmForm(req, res) {
     var params = {
         title: '신규 가상머신 생성',
-        groupList: []
+        gateway_id: req.query.q,
+        groupInfo: {}
     };
 
+    if (!params.gateway_id) {
+        return res.redirect('back');
+    }
 
-    res.render(BLITITOR.config.site.theme + '/page/rtvm_form', params);
+    var mysql = connection.get();
+
+    db.getGatewayInfo(mysql, Number(params.gateway_id), function (error, result) {
+        if (result && result[0]) {
+            params.gatewayInfo = result[0];
+        }
+
+        res.render(BLITITOR.config.site.theme + '/page/rtvm_form', params);
+    });
 }
 
 function newRtvm(req, res) {
-    res.send('hi')
+    req.assert('rtvm_title', 'vm title is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitizeBody('rtvm_description').escape();
+
+    var rtvmData = {
+        gateway_id: req.body.gateway_id,
+        rtvm_uuid: common.UUID1(),
+        title: req.body.rtvm_title,
+        core_count: req.body.rtvm_core_count,
+        vm_memory_size: req.body.rtvm_memory_size,
+        vm_storage_size: req.body.rtvm_storage_size,
+        nic_dev: req.body.rtvm_nic_dev,
+        nic_mac: req.body.rtvm_nic_mac,
+        nic_input_buffer_size: req.body.rtvm_nic_input_buffer,
+        nic_output_buffer_size: req.body.rtvm_nic_output_buffer,
+        nic_input_bandwidth_size: req.body.rtvm_nic_input_bandwidth,
+        nic_output_bandwidth_size: req.body.rtvm_nic_output_bandwidth,
+        nic_head_padding_size: req.body.rtvm_nic_head_padding,
+        nic_tail_padding_size: req.body.rtvm_nic_tail_padding,
+        nic_pool_size: req.body.rtvm_nic_pool_size,
+        vm_description: req.body.rtvm_description,
+        created_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    db.createRtvm(mysql, rtvmData, function (error, result) {
+        res.redirect(routeTable.controller_hub_root);
+    })
 }
 
 module.exports = {

@@ -14,7 +14,7 @@ var tables = {
     controller: common.databaseDefault.prefix + 'controller',  // hub info and main controller info
     gateway: common.databaseDefault.prefix + 'gateway',
     gatewayGroup: common.databaseDefault.prefix + 'gateway_group',
-
+    rtvm: common.databaseDefault.prefix + 'rtvm',
     user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
 };
 
@@ -34,7 +34,7 @@ function deleteScheme(databaseConfiguration, callback) {
     });
 
     var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.controller, tables.gateway, tables.gatewayGroup];
+    var tableList = [tables.controller, tables.gateway, tables.gatewayGroup, tables.rtvm];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -95,15 +95,47 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX gateway_uuid(`gateway_uuid`),' +
         'INDEX created_at(`created_at`)) ' +
         'DEFAULT CHARSET=' + charSet;
+    var sql_rtvm = 'CREATE TABLE IF NOT EXISTS ?? ' +
+        '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
+        '`gateway_id` int unsigned not null DEFAULT 0, ' +
+        '`rtvm_uuid` char(36) not null, ' +
+        '`title` varchar(256), ' +
+        '`status` varchar(6) default 0, ' +   // for real-time feedback
+        '`core_count` varchar(2), ' +
+        '`vm_memory_size` varchar(3), ' +
+        '`vm_storage_size` varchar(3), ' +
+        '`nic_dev` varchar(256), ' +
+        '`nic_mac` varchar(256), ' +
+        '`nic_input_buffer_size` varchar(6), ' +
+        '`nic_output_buffer_size` varchar(6), ' +
+        '`nic_input_bandwidth_size` varchar(6), ' +
+        '`nic_output_bandwidth_size` varchar(6), ' +
+        '`nic_head_padding_size` varchar(6), ' +
+        '`nic_tail_padding_size` varchar(6), ' +
+        '`nic_pool_size` varchar(6), ' +
+        '`vm_description` text, ' +
+        '`installed_app_id` int unsigned not null DEFAULT 0, ' +
+        '`installed_app_title` varchar(256), ' +
+        '`has_monitor` tinyint unsigned default 0, ' +
+        '`has_dashboard` tinyint unsigned default 0, ' +
+        '`dashboard_link` varchar(256), ' +
+        '`pinned` tinyint unsigned default 0, ' +
+        '`created_at` datetime, ' +
+        '`updated_at` datetime, ' +
+        'INDEX pinned(`pinned`), ' +
+        'INDEX created_at(`created_at`)) ' +
+        'DEFAULT CHARSET=' + charSet;
 
     connection.query(sql_controller, tables.controller, function (error, result) {
         connection.query(sql_gatewayGroup, tables.gatewayGroup, function (error, result) {
             connection.query(sql_gateway, tables.gateway, function (error, result) {
-                // check dummy json
-                callback && callback(databaseConfiguration, done);
+                connection.query(sql_rtvm, tables.rtvm, function (error, result) {
+                    // check dummy json
+                    callback && callback(databaseConfiguration, done);
 
-                // close connection
-                connection.destroy();
+                    // close connection
+                    connection.destroy();
+                });
             });
         });
     });
@@ -197,6 +229,62 @@ function insertDummy(databaseConfiguration, done) {
             async.mapSeries(dummy, iteratorAsync, resultAsync);
         }
     });
+
+    fs.stat(__dirname + '/dummy3.json', function (error, result) {
+        if (!error && result.size > 2) {
+            var connection = mysql.createConnection({
+                host: databaseConfiguration.dbHost,
+                port: databaseConfiguration.dbPort || common.databaseDefault.port,
+                database: databaseConfiguration.dbName || common.databaseDefault.database,
+                user: databaseConfiguration.dbUserID,
+                password: databaseConfiguration.dbUserPassword
+            });
+
+            var dummy = require('./dummy3.json');
+
+            var iteratorAsync = function (item, callback) {
+                var rtvmData = {
+                    gateway_id: 1,
+                    rtvm_uuid: common.UUID1(),
+                    title: item.title,
+                    core_count: 1,
+                    vm_memory_size: 16,
+                    vm_storage_size: 16,
+                    nic_dev: '',
+                    nic_mac: '',
+                    nic_input_buffer_size: '1024',
+                    nic_output_buffer_size: '1024',
+                    nic_input_bandwidth_size: '1G',
+                    nic_output_bandwidth_size: '1G',
+                    nic_head_padding_size: '32',
+                    nic_tail_padding_size: '32',
+                    nic_pool_size: '4M',
+                    installed_app_id: item.installed_app_id || 0,
+                    vm_description: item.description,
+                    created_at: new Date()
+                };
+
+                createRtvm(connection, rtvmData, function (err, result) {
+                    console.log('   inserted Real-time VM records...'.white, result['insertId']);
+
+                    callback(null, result);
+                });
+            };
+
+            var resultAsync = function (err, result) {
+                console.log(' = Inserted rtvm records...'.blue);
+
+                // for async
+                done && done(err, result);
+
+                // close connection
+                connection.destroy();
+            };
+
+            async.mapSeries(dummy, iteratorAsync, resultAsync);
+        }
+    });
+
 }
 
 function createGateway(connection, gatewayData, callback) {
@@ -207,6 +295,12 @@ function createGateway(connection, gatewayData, callback) {
 
 function createGatewayGroup(connection, groupData, callback) {
     connection.query(Queries.insertInto, [tables.gatewayGroup, groupData], function (error, result) {
+        callback(error, result);
+    });
+}
+
+function createRtvm(connection, rtvmData, callback) {
+    connection.query(Queries.insertInto, [tables.rtvm, rtvmData], function (error, result) {
         callback(error, result);
     });
 }
@@ -223,6 +317,18 @@ function selectGatewayList(connection, callback) {
     });
 }
 
+function selectGateway(connection, gatewayID, callback) {
+    connection.query(Queries.selectGatewayByID, [tables.gateway, tables.gatewayGroup, gatewayID], function (error, rows) {
+        callback(error, rows)
+    });
+}
+
+function selectRtvmList(connection, gatewayID, callback) {
+    connection.query(Queries.selectRtvmByGatewayID, [tables.rtvm, gatewayID], function (error, rows) {
+        callback(error, rows)
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
@@ -231,6 +337,9 @@ module.exports = {
     createGroup: createGatewayGroup,
     getGatewayGroupList: selectGatewayGroupList,
     getGatewayList: selectGatewayList,
+    getGatewayInfo: selectGateway,
+    createRtvm: createRtvm,
+    getRtvmList: selectRtvmList,
     option: {
         tables: tables
     }
