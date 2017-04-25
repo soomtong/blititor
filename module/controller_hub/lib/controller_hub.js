@@ -127,62 +127,18 @@ function newGatewayGroup(req, res) {
     });
 }
 
-function saveGateway(req, res) {
-    req.assert('group_title', 'title is required').notEmpty();
-    req.assert('group_content', 'content is required').notEmpty();
-
-    var errors = req.validationErrors();
-
-    if (errors) {
-        req.flash('error', errors);
-
-        return res.redirect('back');
-    }
-
-    req.sanitize('app_title').escape();
-    req.sanitize('app_tags').escape();
-
-    var tagList = common.splitString2Array(req.body.tags, ',');
-    
-    var appData = {
-        user_uuid: req.user.uuid,
-        user_id: req.user.id,
-        nickname: req.user.nickname,
-        download_url: req.body.download_url,
-        package_id: req.body.package_id,
-        version: '1.0',
-        title: req.body.app_title,
-        description: req.body.app_description,
-        price: req.body.app_price,
-        price_for_sale: req.body.app_price_for_sale,
-        category_id: req.body.app_category || 0,
-        content: req.body.content,
-        tags: tagList.join(','),
-        created_at: new Date()
+function rtvmForm(req, res) {
+    var params = {
+        title: '신규 가상머신 생성',
+        groupList: []
     };
 
-    var mysql = connection.get();
 
-    // save to guestbook table
-/*
-    db.uploadApp(mysql, appData, function (err, result) {
-        if (err) {
-            req.flash('error', {msg: '새로운 넷 앱 저장에 실패했습니다.'});
+    res.render(BLITITOR.config.site.theme + '/page/rtvm_form', params);
+}
 
-            winston.error(err);
-
-            res.redirect('back');
-        }
-
-        var post_id = result['insertId'];
-
-        winston.info('Saved app id', post_id);
-
-        req.flash('info', 'Saved app by ' + (appData.nickname || appData.user_id));
-
-        res.redirect(routeTable.account_root + routeTable.appstore.list);
-    });
-*/
+function newRtvm(req, res) {
+    res.send('hi')
 }
 
 module.exports = {
@@ -191,4 +147,6 @@ module.exports = {
     view: viewGateway,
     newGateway: newGateway,
     newGatewayGroup: newGatewayGroup,
+    rtvmForm: rtvmForm,
+    newRtvm: newRtvm
 };

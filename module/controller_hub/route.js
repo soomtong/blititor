@@ -26,8 +26,11 @@ router.post(routeTable.controller_hub_root + routeTable.controller_hub.gateway +
 router.post(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/new-group', controllerHub.newGatewayGroup);
 
 router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)', controllerHub.view);
-// router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)' + '/edit', controllerHub.edit);
-//
+router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/:gatewayID([0-9]+)' + '/edit', controllerHub.view);
+
+router.get(routeTable.controller_hub_root + routeTable.controller_hub.rtvm + '/new', controllerHub.rtvmForm);
+router.post(routeTable.controller_hub_root + routeTable.controller_hub.rtvm + '/new', controllerHub.newRtvm);
+
 // router.post(routeTable.controller_hub_root + routeTable.controllerHub_app + '/:appNumber([0-9]+)/order', AccountMiddleware.checkSignedIn, controllerHub.order);
 //
 // router.get(routeTable.controller_hub_root + routeTable.controllerHub.upload, AccountMiddleware.checkSignedIn, controllerHub.upload); // in order to avoid conflict with `:page` params

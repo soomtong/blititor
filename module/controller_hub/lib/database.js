@@ -82,6 +82,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`version` varchar(32), ' +
         '`title` varchar(256), ' +
         '`group_id` int unsigned not null DEFAULT 0, ' +
+        '`vm_count` int unsigned not null DEFAULT 0, ' +
+        '`app_count` int unsigned not null DEFAULT 0, ' +
         '`description` text, ' +
         '`secret_string` text, ' +
         '`installed_apps` varchar(256), ' +
