@@ -70,12 +70,20 @@ function errorFormatter(param, msg, value) {
     };
 }
 
-function getUUID1() {
-    return uuid.v1();
+function getUUID1(mark) {
+    if (!mark) {
+        mark = '';
+    }
+
+    return uuid.v1().replace(/-/g, mark);
 }
 
-function getUUID4() {
-    return uuid.v4();
+function getUUID4(mark) {
+    if (!mark) {
+        mark = '';
+    }
+
+    return uuid.v4().replace(/-/g, mark);
 }
 
 function getHash(password, callback) {
