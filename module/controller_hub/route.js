@@ -28,4 +28,6 @@ router.get(routeTable.controller_hub_root + routeTable.controller_hub.gateway + 
 router.get(routeTable.controller_hub_root + routeTable.controller_hub.rtvm + '/new', AccountMiddleware.checkSignedIn, controllerHub.rtvmForm);
 router.post(routeTable.controller_hub_root + routeTable.controller_hub.rtvm + '/new', AccountMiddleware.checkSignedIn, controllerHub.newRtvm);
 
+router.post(routeTable.controller_hub_root + routeTable.controller_hub.rtvm + '/:rtvmID/:action', AccountMiddleware.checkSignedIn, controllerHub.rtvm);
+
 module.exports = router;

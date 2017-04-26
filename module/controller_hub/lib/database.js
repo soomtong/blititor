@@ -79,6 +79,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`gateway_uuid` char(36) not null, ' +
         '`gateway_ip` varchar(16), ' +
+        '`gateway_port` varchar(6), ' +
         '`version` varchar(32), ' +
         '`title` varchar(256), ' +
         '`group_id` int unsigned not null DEFAULT 0, ' +
