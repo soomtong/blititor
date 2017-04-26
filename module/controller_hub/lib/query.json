@@ -2,6 +2,6 @@
   "selectAll": "SELECT * FROM ??",
   "selectByID": "SELECT * FROM ?? WHERE `id` = ?",
   "selectGatewayByID": "SELECT A.*, B.`group_title` FROM ?? A, ?? B WHERE A.`id` = ? and A.`group_id` = B.`id`",
-  "selectRtvmByGatewayID": "SELECT A.* FROM ?? A WHERE A.`gateway_id` = ?",
+  "selectRtvmByGatewayID": "SELECT A.* FROM ?? A WHERE A.`gateway_id` = ? ORDER BY id DESC",
   "insertInto": "INSERT INTO ?? SET ?"
 }

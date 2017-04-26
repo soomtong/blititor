@@ -1,5 +1,6 @@
-## Application Store Sample 
+## Application Store and Native Bridge Sample 
 
+Network application controller hub for NetAppStore Service
 
 ### Tutorial
 

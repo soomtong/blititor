@@ -6,7 +6,8 @@ var misc = require('../../core/lib/misc');
 
 // load modules
 var Site = require('../../module/site');
-var AppStore = require('../../module/appstore');
+var AppStore = require('../../module/app_store');
+var ControllerHub = require('../../module/controller_hub');
 var Account = require('../../module/account');
 var Admin = require('../../module/administrator');
 var Manager = require('../../module/manager');
@@ -39,6 +40,7 @@ router.use(Counter.middleware.pageCounter);
 // bind module
 router.use(routeTable.account_root, Account.route);
 router.use(AppStore.route);
+router.use(ControllerHub.route);
 
 // bind static page
 Site.bindMenu(menu, router);

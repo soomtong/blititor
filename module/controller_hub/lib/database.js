@@ -123,6 +123,8 @@ function createScheme(databaseConfiguration, callback, done) {
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX pinned(`pinned`), ' +
+        'INDEX gateway_id(`gateway_id`),' +
+        'INDEX rtvm_uuid(`rtvm_uuid`),' +
         'INDEX created_at(`created_at`)) ' +
         'DEFAULT CHARSET=' + charSet;
 

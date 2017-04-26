@@ -38,7 +38,7 @@ function gatewayList(req, res) {
 
             params.gatewayList = results;
 
-            res.render(BLITITOR.config.site.theme + '/page/index', params);
+            res.render(BLITITOR.config.site.theme + '/page/controller_hub/controller_hub', params);
         });
     });
 }
@@ -67,7 +67,7 @@ function viewGateway(req, res) {
                 params.rtvmList = results;
             }
 
-            res.render(BLITITOR.config.site.theme + '/page/gateway', params);
+            res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway', params);
         });
     });
 }
@@ -83,7 +83,7 @@ function gatewayForm(req, res) {
     db.getGatewayGroupList(mysql, function (error, results) {
         params.groupList = results;
 
-        res.render(BLITITOR.config.site.theme + '/page/gateway_form', params);
+        res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway_form', params);
     });
 }
 
@@ -165,7 +165,7 @@ function rtvmForm(req, res) {
             params.gatewayInfo = result[0];
         }
 
-        res.render(BLITITOR.config.site.theme + '/page/rtvm_form', params);
+        res.render(BLITITOR.config.site.theme + '/page/controller_hub/rtvm_form', params);
     });
 }
 
@@ -184,7 +184,7 @@ function newRtvm(req, res) {
 
     var rtvmData = {
         gateway_id: req.body.gateway_id,
-        rtvm_uuid: common.UUID1(),
+        rtvm_uuid: common.UUID1(),  // for temporary, it will be replaced by gateway controller's return id
         title: req.body.rtvm_title,
         core_count: req.body.rtvm_core_count,
         vm_memory_size: req.body.rtvm_memory_size,
@@ -205,7 +205,8 @@ function newRtvm(req, res) {
     var mysql = connection.get();
 
     db.createRtvm(mysql, rtvmData, function (error, result) {
-        res.redirect(routeTable.controller_hub_root);
+        console.log(error, result);
+        res.redirect(routeTable.controller_hub_root + routeTable.controller_hub.gateway + '/' + rtvmData.gateway_id);
     })
 }
 
