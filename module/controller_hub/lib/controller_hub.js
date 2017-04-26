@@ -1,6 +1,9 @@
 var fs = require('fs');
+var path = require('path');
 var moment = require('moment');
 var winston = require('winston');
+
+var childProcess = require('child_process');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
@@ -55,19 +58,37 @@ function viewGateway(req, res) {
         return res.redirect('back');
     }
 
-    var mysql = connection.get();
+    var executePath = path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'bin')
+    var cmd = {
+        list: path.join(executePath, 'list'),
+        create: path.join(executePath, 'create'),
+        connect: path.join(executePath, 'connect')
+    };
 
-    db.getGatewayInfo(mysql, Number(params.gateway_id), function (error, result) {
-        if (result && result[0]) {
-            params.gatewayInfo = result[0];
-        }
+    var gatewayConnectionInfo = {
+        'MANAGER_IP': '192.168.100.254',
+        'MANAGER_PORT': '1111'
+    };
 
-        db.getRtvmList(mysql, Number(params.gateway_id), function (error, results) {
-            if (!error && results) {
-                params.rtvmList = results;
+    childProcess.execFile(cmd.list, { env: gatewayConnectionInfo }, function (error, stdout, stderr) {
+        var result = stdout.toString().replace(/\\n/g, '\n');
+
+        console.log(result);
+
+        var mysql = connection.get();
+
+        db.getGatewayInfo(mysql, Number(params.gateway_id), function (error, result) {
+            if (result && result[0]) {
+                params.gatewayInfo = result[0];
             }
 
-            res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway', params);
+            db.getRtvmList(mysql, Number(params.gateway_id), function (error, results) {
+                if (!error && results) {
+                    params.rtvmList = results;
+                }
+
+                res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway', params);
+            });
         });
     });
 }
