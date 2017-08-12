@@ -15,6 +15,7 @@ node_modules
 public/lib
 public/upload
 
+package-lock.json
 npm-debug.log
 database.json
 database.json.*
@@ -24,3 +25,4 @@ config*.json
 config*.json.*
 
 theme/smart_network_platform
+etc/
