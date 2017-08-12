@@ -11,11 +11,6 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2>문의사항</h2>
-                <p>
-                    공개SW 해카톤 운영 사무국 <br>
-                    kosshackathon@kosslab.kr <br>
-                    02-561-0552
-                </p>
             </div>
         </div>
     </div>
@@ -26,10 +21,10 @@
         <div class="row">
             <div class="col-md-8 to_animate" data-animation="scaleAppear">
                 <h3 class="module-header">궁금하신 사항을 남겨 주세요</h3>
-                <form class="contact-form columns_padding_5 row" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
+                <form class="columns_padding_5 row" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="name">Full Name
+                            <label for="nickname">이름
                                 <span class="required">*</span>
                             </label>
                             <input type="text" aria-required="true" size="30" value="" name="nickname" id="nickname" class="form-control" placeholder="이름">
@@ -37,7 +32,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="subject">Password
+                            <label for="password">패스워드
                                 <span class="required">*</span>
                             </label>
                             <input type="text" aria-required="true" size="30" value="" name="account_password" id="password" class="form-control" placeholder="패스워드">
@@ -45,7 +40,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="email">Email address
+                            <label for="email">이메일
                                 <span class="required">*</span>
                             </label>
                             <input type="email" aria-required="true" size="30" value="" name="account_id" id="email" class="form-control" placeholder="이메일">
@@ -53,7 +48,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="phone">Phone Number
+                            <label for="phone">전화번호
                                 <span class="required">*</span>
                             </label>
                             <input type="text" aria-required="true" size="30" value="" name="phone_number" id="phone" class="form-control" placeholder="전화번호">
@@ -61,7 +56,7 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="contact-form-message form-group">
-                            <label for="message">Message</label>
+                            <label for="message">남기실 말씀</label>
                             <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control" placeholder="Message..."></textarea>
                         </div>
                     </div>
@@ -73,11 +68,17 @@
                     </div>
 
                     {% if message.error %}
-                    {% for error in message.error %}
-                    <div class="alert alert-warning" role="alert">
-                        <strong>Warning!</strong> {{ error.msg }}
+                    <div class="col-sm-12 topmargin_10">
+                        {% for error in message.error %}
+                        <div class="alert alert-danger" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">×</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <strong>저장에 실패했습니다.</strong> {{ error.msg }}
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                     {% endif %}
                 </form>
             </div>

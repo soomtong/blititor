@@ -20,7 +20,7 @@
     "express-routemap": "latest",
     "express-session": "latest",
     "express-status-monitor": "0.0.9",
-    "express-validator": "latest",
+    "express-validator": "^3.2.1",
     "jimp": "^0.2.27",
     "knex": "^0.9.0",
     "lusca": "^1.3.0",

@@ -48,10 +48,12 @@ function guestbookForm(req, res) {
 
 // todo: experiment, bind ajax call and emit event
 function registerMessage(req, res) {
-    req.assert('account_id', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
-    req.assert('account_password', 'Password must be at least 4 characters long').len(4);
-    req.assert('message', 'message is required').len(10).withMessage('Must be 10 chars over').notEmpty();
-    
+    req.assert('account_id', '고유한 이메일 주소를 입력해주세요.').isEmail();
+    req.assert('account_password', '패스워드는 4 자 이상으로 입력해주세요').len(4);
+    // req.assert('phone_number', '정상적인 휴대폰 번호를 입력해주세요.').isMobilePhone('ko-KR');
+    req.assert('phone_number', '정상적인 휴대폰 번호를 입력해주세요.').matches(/^((\+?82)[ \-]?)?0?1([0|1|6|7|8|9]{1})[ \-]?\d{3,4}[ \-]?\d{4}$/);
+    req.assert('message', '남기실 말씀은 10 자 이상으로 적어주세요.').len(10);
+
     var errors = req.validationErrors();
 
     if (errors) {
