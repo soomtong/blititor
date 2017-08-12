@@ -67,6 +67,7 @@ function registerMessage(req, res) {
 
     var guestbookData = {
         nickname: req.body.nickname,
+        phone_number: req.body.phone_number,
         email: req.body.account_id,
         password: hash,
         message: req.body.message,

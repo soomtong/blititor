@@ -47,6 +47,7 @@ function createScheme(databaseConfiguration, callback, done) {
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`email` varchar(64) not null, `password` varchar(255) not null, ' +
         '`nickname` varchar(64), ' +
+        '`phone_number` varchar(16), ' +
         '`flag` varchar(1), ' +
         '`message` text, ' +
         '`reply` text, ' +

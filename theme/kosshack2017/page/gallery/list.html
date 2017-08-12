@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body>
+{% include '../include/nav.html' %}
+<section class="ls page_portfolio section_padding_top_100 section_padding_bottom_75">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="filters isotope_filters">
+                    <a href="#" class="selected" data-filter="*">전체</a>
+                    <a href="#" data-filter=".orientation">오리엔테이션</a>
+                    <a href="#" data-filter=".opening">개회식</a>
+                    <a href="#" data-filter=".operation">프로젝트 수행 기간</a>
+                    <a href="#" data-filter=".ceremony">시상식</a>
+                </div>
+            </div>
+            <div class="col-sm-8 col-sm-push-2" style="display: none">
+                <div class="isotope_container isotope row masonry-layout columns_margin_bottom_20" data-filters=".isotope_filters">
+
+                    {% for item in cateList %}
+                    <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                    {{ item.title }}
+
+                    <p class="mbr-reviews__text">
+                        {{ item.sub_title }}
+                    </p>
+
+                    <div class="image-list">
+                    </div>
+                    {% endfor %}
+
+                    <div class="isotope-item col-lg-12 col-md-12 col-sm-12 livingroom">
+                        <div class="vertical-item gallery-item content-absolute text-center ds">
+                            <div class="item-media">
+                                <img src="images/gallery/10.jpg" alt="">
+                                <div class="media-links">
+                                    <div class="links-wrap">
+                                        <a class="p-view prettyPhoto " title="" data-gal="prettyPhoto[gal]" href="images/gallery/10.jpg"></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-content darken_gradient">
+                                <h4 class="poppins">
+                                    <a href="gallery-single.html">Consetetur sadipscing elitr, sed diam nonumy</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="comingsoon1" class="ls section_padding_top_100 section_padding_bottom_75">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+
+                <h2 class="section_header">
+                    Coming Soon!
+                </h2>
+                <p>Stay Tuned!</p>
+
+                <div id="comingsoon-countdown"></div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include '../include/footer.html' %}
+{% include '../include/script.html' %}
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+{% include './include/nav.html' %}
+<section class="ls section_404 background_cover section_padding_top_130 section_padding_bottom_150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-7 text-center text-md-left">
+                <div class="inline-block text-center">
+                    <p class="not_found">
+                        <span class="highlight">500</span>
+                        <span class="oops grey">{{ error }}</span>
+                    </p>
+                    <h3 class="text-uppercase">알 수 없는 오류가 발생했습니다!</h3>
+                    <p>
+                        <a href="/" class="theme_button color1">홈으로 이동</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include './include/footer.html' %}
+</body>
+</html>

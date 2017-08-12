@@ -1,0 +1,60 @@
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.intro_section-overlay {
+    opacity: 0.6;
+    background: #0b3140;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+.intro_section {
+}
+
+.intro_section .slide_description {
+}
+
+.intro_section .slide_description h2 {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+.intro-layer p {
+    background: rgba(11, 49, 64, 0.8);
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.banner-item {
+    margin-bottom: 3em
+}
+
+.banner-item h6 {
+    padding-left: 1em;
+}
+
+.item-media {
+    margin: 2em auto 0;
+    text-align: center;
+}
+
+.item-media span.glyphicon {
+    font-size: 8em;
+}
+
+hr.more {
+    margin-bottom: 2.5em;
+}
+
+.page_volunteer.parallax {
+    background-image: url(../asset/main_bg_mid_low.jpg);
+}
+
+.comment-list ol {
+    border-left: 5px solid #f97352;
+    padding-left: 2em;
+}
