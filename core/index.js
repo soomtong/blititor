@@ -111,6 +111,7 @@ nunjucks.configure(app.get('views'), {
 // using Express behind nginx
 if (BLITITOR.env === 'production') {
     app.enable('trust proxy');
+    winston.info('Use trust proxy mode for Nginx');
 }
 
 // bind socket.io to global for convenience

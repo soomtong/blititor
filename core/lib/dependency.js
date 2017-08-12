@@ -2,6 +2,7 @@
 var packages = require('../../package.json');
 
 function moduleInstalled(env) {
+    console.info('=== received environment variable ...', env, 'mode');
     console.info('=== check module dependency ...', Object.keys(packages['dependencies']).length, 'packages');
 
     if (env !== 'production' && env !== 'development') return;
