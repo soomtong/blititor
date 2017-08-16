@@ -441,7 +441,7 @@ function windowLoadInit() {
 	//comingsoon counter
 	if (jQuery().countdown) {
 		//today date plus month for demo purpose
-		var demoDate = new Date('2017-08-24');
+		var demoDate = new Date('2017-09-25');
 		jQuery('#comingsoon-countdown').countdown({until: demoDate});
 	}
 

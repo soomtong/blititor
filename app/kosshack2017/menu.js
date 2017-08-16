@@ -11,7 +11,7 @@ var routeTable = misc.getRouteTable();
 var Menu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
     {
         id: 'index',
-        name: 'KossLab Hackathon 2017',
+        name: 'KossLab Contributhon 2017',
         url: routeTable.root
     },
     {

@@ -2,6 +2,35 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+span.strong {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.blur {
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);
+    -o-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.blur-less {
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -ms-filter: blur(4px);
+    -o-filter: blur(4px);
+    filter: blur(4px);
+}
+
+.blur-more {
+    -webkit-filter: blur(16px);
+    -moz-filter: blur(16px);
+    -ms-filter: blur(16px);
+    -o-filter: blur(16px);
+    filter: blur(16px);
+}
+
 .intro_section-overlay {
     opacity: 0.6;
     background: #0b3140;
