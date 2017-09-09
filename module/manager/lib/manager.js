@@ -118,6 +118,10 @@ function loginProcess(req, res) {
     });
 }
 
+function dashboard(req, res) {
+    res.render(BLITITOR.config.site.manageTheme + '/manage/dashboard');
+}
+
 function accountList(req, res) {
     var params = {
         title: "운영자 화면",
@@ -523,6 +527,7 @@ function reservationTutorialStatus(req, res) {
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
+    dashboard: dashboard,
     pageViewLog: pageLogList,
     pageViewCounter: visitCounter,
     accountList: accountList,

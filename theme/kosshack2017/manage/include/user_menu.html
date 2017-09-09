@@ -1,0 +1,37 @@
+<div class="user-menu">
+    <ul class="menu-click">
+        <li>
+            <a href="#">
+                <div class="media">
+                    <div class="media-body media-middle manager-info">
+                        {% if user %}
+                        <h4>{{user.nickname}}</h4>Manager Level
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            <ul>
+                {% if user %}
+                <li>
+                    <a href="{{site.root}}{{ route.account_root + route.account.signOut }}">
+                        <i class="fa fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="{{site.root}}{{ route.account_root + route.account.signOut }}">
+                        <i class="fa fa-edit"></i>
+                        Edit Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="{{site.root}}{{ route.account_root + route.account.signOut }}">
+                        <i class="fa fa-sign-out"></i>
+                        Log Out
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+</div>

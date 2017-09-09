@@ -1,0 +1,618 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body class="admin">
+<!--[if lt IE 9]>
+<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a
+        href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.
+</div>
+<![endif]-->
+<div class="preloader">
+    <div class="preloader_image"></div>
+</div>
+<div id="box_wrapper" class="application-wrapper">
+    <header class="page_header_side page_header_side_sticked active-slide-side-header ds">
+        <div class="side_header_logo ds ms">
+            <a href="/"><span class="logo_text margin_0">BLITITOR</span></a>
+        </div>
+
+        <span class="toggle_menu_side toggler_light header-slide"><span></span></span>
+
+        <div class="scrollbar-macosx">
+            <div class="side_header_inner">
+
+                {% include './include/user_menu.html' %}
+                {% include './include/side_menu.html' %}
+
+                <div class="with_padding grey text-center hidden">
+                    10GB of <strong>250GB</strong> Free
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <header class="page_header header_darkgrey">
+        <div class="widget widget_search">
+            <form method="get" class="searchform form-inline" action="./">
+                <div class="form-group">
+                    <label class="screen-reader-text" for="widget-search-header">Search for:</label>
+                    <input id="widget-search-header" type="text" value="" name="search" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="theme_button color1">Search</button>
+            </form>
+        </div>
+
+        <div class="pull-right big-header-buttons">
+            <ul class="inline-dropdown inline-block">
+
+                <li class="dropdown header-notes-dropdown">
+                    <a class="header-button" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                        <i class="fa fa-bell-o grey"></i>
+                        <span class="header-button-text">Messages</span>
+                        <span class="header-dropdown-number">
+									12
+								</span>
+                    </a>
+
+                    <div class="dropdown-menu ls">
+                        <div class="dropdwon-menu-title with_shadow">
+                            <strong>12 Pending</strong> Notifications
+
+                            <div class="pull-right darklinks">
+                                <a href="#">View All</a>
+                            </div>
+
+                        </div>
+                        <ul class="list-unstyled">
+
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-success">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													New user registered
+												</span>
+                                        <span class="pull-right">Just Now</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-info">
+                                            <i class="fa fa-bullhorn"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													New user registered
+												</span>
+                                        <span class="pull-right">20 minutes</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-danger">
+                                            <i class="fa fa-bolt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													Server overloaded
+												</span>
+                                        <span class="pull-right">1 hour</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-success">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													New order
+												</span>
+                                        <span class="pull-right">3 hours</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-warning">
+                                            <i class="fa fa-bell-o"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													Long database query
+												</span>
+                                        <span class="pull-right">4 hours</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="media with_shadow">
+                                    <div class="media-left media-middle">
+                                        <div class="teaser_icon label-success">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body media-middle">
+												<span class="grey">
+													New user registered
+												</span>
+                                        <span class="pull-right">4 hours</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropdown header-notes-dropdown">
+                    <a class="header-button" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                        <i class="fa fa-envelope-o grey"></i>
+                        <span class="header-button-text">Inbox</span>
+                        <span class="header-dropdown-number">
+									8
+								</span>
+                    </a>
+
+                    <div class="dropdown-menu ls">
+                        <div class="dropdwon-menu-title with_shadow">
+                            <strong>8 New</strong> Messages
+
+                            <div class="pull-right darklinks">
+                                <a href="#">View All</a>
+                            </div>
+
+                        </div>
+                        <ul class="list1 no-bullets no-top-border no-bottom-border">
+
+                            <li>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img src="images/team/01.jpg" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            <a href="#">
+                                                Alex Walker <span class="pull-right">23 feb at 11:36</span>
+                                            </a>
+                                        </h5>
+                                        <div>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, corporis.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img src="images/team/02.jpg" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            <a href="#">
+                                                Janet C. Donnalds <span class="pull-right">23 feb at 12:17</span>
+                                            </a>
+                                        </h5>
+                                        <div>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero itaque dolor.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img src="images/team/03.jpg" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            <a href="#">
+                                                Victoria Grow <span class="pull-right">23 feb at 16:44</span>
+                                            </a>
+                                        </h5>
+                                        <div>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropdown header-notes-dropdown">
+                    <a class="header-button" data-target="#" href="./" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                        <i class="fa fa-calendar-o grey"></i>
+                        <span class="header-button-text">User</span>
+                    </a>
+                    <div class="dropdown-menu ls">
+
+                        <div class="dropdwon-menu-title with_shadow">
+                            <strong>14 Pending</strong> Tasks
+
+                            <div class="pull-right darklinks">
+                                <a href="#">View All</a>
+                            </div>
+
+                        </div>
+
+                        <ul class="list-unstyled">
+
+                            <li>
+                                <p class="progress-bar-title grey">
+                                    <strong>Progress</strong>
+                                </p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="90">
+                                        <span>90%</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <p class="progress-bar-title grey">
+                                    <strong>Success</strong>
+                                </p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" data-transitiongoal="52">
+                                        <span>52%</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <p class="progress-bar-title grey">
+                                    <strong>Knowing</strong>
+                                </p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" data-transitiongoal="75">
+                                        <span>75%</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <p class="progress-bar-title grey">
+                                    <strong>Rating</strong>
+                                </p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="95">
+                                        <span>95%</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </li>
+
+                <li class="dropdown visible-xs-inline-block">
+                    <a href="#" class="search_modal_button header-button">
+                        <i class="fa fa-search grey"></i>
+                        <span class="header-button-text">Search</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- eof .header_right_buttons -->
+    </header>
+
+    <section class="ls with_bottom_border">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <ol class="breadcrumb darklinks">
+                        <li>
+                            <a href="#">Homepage</a>
+                        </li>
+                        <li class="active">Dashboard</li>
+                    </ol>
+                </div>
+                <!-- .col-* -->
+                <div class="col-md-6 text-md-right">
+							<span class="dashboard-daterangepicker">
+								<i class="fa fa-calendar"></i>
+								<span></span>
+								<i class="caret"></i>
+							</span>
+                </div>
+                <!-- .col-* -->
+            </div>
+            <!-- .row -->
+        </div>
+        <!-- .container -->
+    </section>
+
+    <section class="ls section_padding_top_50 section_padding_bottom_50 columns_padding_10">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="dashboard-page-title">Dashboard
+                        <small>main page</small>
+                    </h3>
+                </div>
+                <div class="col-md-8 text-md-right">
+                    <h3 class="sparklines-title">
+                        <sup>Today Earnings:</sup>
+
+                        $3,000
+
+                        <span class="sparklines" data-values="670,350,135,-170,-324,-386,-468,-200,55,375,520,270,790,-670,-350,135,170,324,386,468,10,55,375,520,270,790" data-type="bar" data-line-color="#eeb269" data-neg-color="#dc5753" data-height="30" data-bar-width="2">
+								</span>
+
+                    </h3>
+
+                    <h3 class="sparklines-title">
+                        <sup>Yesterday Earn: </sup>
+                        $4,000
+
+                        <span class="sparklines" data-values="670,350,135,-170,-324,386,-468,-10,55,375,520,-270,790,670,-350,135,170,324,386,468,10,-55,-375,-520,270,790" data-type="bar" data-line-color="#4db19e" data-neg-color="#007ebd" data-height="30" data-bar-width="2">
+								</span>
+                    </h3>
+
+                </div>
+
+            </div>
+            <!-- .row -->
+
+
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+
+                    <div class="teaser warning_bg_color counter-background-teaser text-center">
+                        <span class="counter counter-background" data-from="0" data-to="1257" data-speed="2100">0</span>
+                        <h3 class="counter highlight" data-from="0" data-to="1257" data-speed="2100">0</h3>
+                        <p>Reviews / Month</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+
+                    <div class="teaser danger_bg_color counter-background-teaser text-center">
+                        <span class="counter counter-background" data-from="0" data-to="346" data-speed="1500">0</span>
+                        <h3 class="counter highlight" data-from="0" data-to="346" data-speed="1500">0</h3>
+                        <p>Clients / Month</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+
+                    <div class="teaser success_bg_color counter-background-teaser text-center">
+                        <span class="counter counter-background" data-from="0" data-to="216" data-speed="1900">0</span>
+                        <h3 class="counter highlight" data-from="0" data-to="216" data-speed="1900">0</h3>
+                        <p>Orders / Month</p>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+
+                    <div class="teaser info_bg_color counter-background-teaser text-center">
+                        <span class="counter counter-background" data-from="0" data-to="15" data-speed="1800">0</span>
+                        <h3 class="counter-wrap highlight" data-from="0" data-to="346" data-speed="1800">
+                            <small>$</small>
+                            <span class="counter" data-from="0" data-to="346" data-speed="1500">0</span>
+                            <small class="counter-add">k</small>
+                        </h3>
+                        <p>Total Profit</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Yearly Visitors -->
+                <div class="col-xs-12 col-md-6">
+                    <div class="with_shadow with_padding">
+                        <h4>Visitor Statistics</h4>
+                        <div class="canvas-chart-wrapper">
+                            <canvas class="canvas-chart-line-yearly-visitors"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- .col-* -->
+
+                <!-- Yearly Visitors -->
+                <div class="col-xs-12 col-md-6">
+                    <div class="with_shadow with_padding">
+                        <h4>Visitor vs Sells</h4>
+                        <div class="canvas-chart-wrapper">
+                            <canvas class="canvas-chart-line-visitors-sels"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="with_shadow with_padding">
+                        <h4>DataBase Statistics</h4>
+                        <div class="admin-scroll-panel scrollbar-macosx">
+                            <ul class="list1 no-bullets">
+                                <li>
+                                    <div class="media small-teaser">
+                                        <div class="media-left">
+                                            <i class="fa fa-users highlight"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="grey">25364</strong> Total Users
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media small-teaser">
+                                        <div class="media-left">
+                                            <i class="fa fa-comment highlight"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="grey">12520</strong> Reviews
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media small-teaser">
+                                        <div class="media-left">
+                                            <i class="fa fa-shopping-cart highlight"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="grey">5674</strong> Total Products
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media small-teaser">
+                                        <div class="media-left">
+                                            <i class="fa fa-money highlight"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="grey">$132200</strong> Total Sales
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- .admin-scroll-panel -->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="with_shadow with_padding">
+                        <h4>Comment</h4>
+                        <div class="admin-scroll-panel scrollbar-macosx">
+                            <ul class="list-unstyled">
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="images/team/03.jpg" alt="...">
+                                        </div>
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Ann Andersen
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Victoria Grow
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                        <div class="media-right">
+                                            <img src="images/team/01.jpg" alt="...">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="images/team/03.jpg" alt="...">
+                                        </div>
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Ann Andersen
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Victoria Grow
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                        <div class="media-right">
+                                            <img src="images/team/01.jpg" alt="...">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="images/team/03.jpg" alt="...">
+                                        </div>
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Ann Andersen
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="chat-item">
+                                    <div class="media">
+                                        <div class="media-body with_shadow">
+                                            <h5>
+                                                Victoria Grow
+                                                <small>1 day ago</small>
+                                            </h5>
+                                            <div>
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                            </div>
+                                        </div>
+                                        <div class="media-right">
+                                            <img src="images/team/01.jpg" alt="...">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% include './include/footer.html' %}
+{% include './include/script.html' %}
+</body>
+</html>

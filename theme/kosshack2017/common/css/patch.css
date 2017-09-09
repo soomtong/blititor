@@ -7,6 +7,19 @@ span.strong {
     text-decoration: underline;
 }
 
+.ribbon {
+    background: #2d3e50;
+    color: #aaa;
+}
+
+.manager-info {
+    padding-bottom: 0.5em;
+}
+
+.mainmenu_side_wrapper .dashboard-menu {
+    padding: 10px 0;
+}
+
 .blur {
     -webkit-filter: blur(8px);
     -moz-filter: blur(8px);
