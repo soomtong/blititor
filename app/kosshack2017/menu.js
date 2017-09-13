@@ -25,6 +25,11 @@ var Menu = [    // for plain page used by site.plain method (this page has each 
         url: '/volunteer'
     },
     {
+        id: 'schedule_table',
+        name: 'Schedule',
+        url: '/schedule'
+    },
+    {
         id: 'project_list',
         name: 'Project List',
         url: '/project'
