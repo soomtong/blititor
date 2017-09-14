@@ -27,7 +27,7 @@
         "core": false
     },
     {
-        "folder": "appstore",
+        "folder": "app_store",
         "useDatabase": true,
         "ignore": false,
         "tables": {
@@ -57,6 +57,9 @@
         "ignore": false,
         "tables": {
             "controller": "b_controller",
+            "gateway": "b_gateway",
+            "gatewayGroup": "b_gateway_group",
+            "rtvm": "b_rtvm",
             "user": "b_user"
         },
         "core": false
