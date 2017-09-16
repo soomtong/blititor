@@ -119,7 +119,7 @@ function loginProcess(req, res) {
 }
 
 function dashboard(req, res) {
-    res.render(BLITITOR.config.site.manageTheme + '/manage/dashboard');
+    res.render(BLITITOR.config.site.manageTheme + '/manage/index');
 }
 
 function accountList(req, res) {

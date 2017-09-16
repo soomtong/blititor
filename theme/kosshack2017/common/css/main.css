@@ -6712,8 +6712,8 @@ a.logo.vertical_logo img {
 	}
 }
 
-@media (max-width: 600px) {
-	a.logo.logo_image_and_text .logo_text {
+@media (max-width: 375px) {
+	a.logo .logo_text {
 		display: none;
 	}
 }
@@ -9449,7 +9449,7 @@ section .intro_section .slide_description_wrapper {
 
 .intro_section .flexslider .container,
 .intro_section img + .container {
-	position: absolute;
+	/*position: absolute;*/
 	top: 0;
 	bottom: 0;
 	left: 0;
