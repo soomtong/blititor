@@ -178,7 +178,7 @@
                                             <h5>관리자</h5>
                                             <span class="comment-date"><time class="entry-date small-text big highlight semibold">{{ item.replied_at }}</time></span>
                                         </div>
-                                        <p>Third Level Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                        <p>{{ item.reply | striptags(true) | replace('\n', '<br>') | safe }}</p>
                                     </div>
                                 </article>
                             </li>
