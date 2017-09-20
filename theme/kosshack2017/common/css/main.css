@@ -3533,6 +3533,13 @@ div.ppt {
 	color: #ffffff;
 }
 
+#timetable h3.current {
+	padding: 0.5em;
+	color: #ffffff;
+	background-color: #00a6a1;
+	border-color: #00a6a1;
+}
+
 /* 
 ** toTop
 */

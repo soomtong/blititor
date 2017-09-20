@@ -581,11 +581,11 @@ function windowLoadInit() {
 			}
 			var selector = $thisA.attr('data-filter');
 			$timetable
-				.find('tbody td')
+				.find('h3')
 				.removeClass('current')
 				.end()
 				.find(selector)
-				.closest('td')
+				.closest('h3')
 				.addClass('current');
 			$thisA.closest('ul').find('a').removeClass('selected');
 			$thisA.addClass('selected');
