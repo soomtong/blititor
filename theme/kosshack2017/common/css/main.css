@@ -314,24 +314,24 @@ Border colors for elements in color section: rgba(255, 255, 255, 0.2)
 
 @media (min-width: 992px) {
 	.pagination > li:first-child > a,
-  .pagination > li:first-child > span {
+  	.pagination > li:first-child > span {
 		margin-right: 15px;
 	}
 
 	.pagination > li:last-child > a,
-  .pagination > li:last-child > span {
+    .pagination > li:last-child > span {
 		margin-left: 15px;
 	}
 }
 
 @media (min-width: 1200px) {
 	.pagination > li:first-child > a,
-  .pagination > li:first-child > span {
+  	.pagination > li:first-child > span {
 		margin-right: 25px;
 	}
 
 	.pagination > li:last-child > a,
-  .pagination > li:last-child > span {
+  	.pagination > li:last-child > span {
 		margin-left: 25px;
 	}
 }
@@ -1494,7 +1494,7 @@ td .media-body {
 	background-color: transparent;
 }
 
-.dropdwon-menu-title {
+.dropdown-menu-title {
 	padding: 10px 30px;
 }
 

@@ -148,6 +148,36 @@ function readGuestbook(connection, page, callback) {
     });
 }
 
+function readGuestbookWithoutReply(connection, page, callback) {
+    var pageSize = 10;
+    var result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        index: 0,
+        maxPage: 0,
+        pageSize: pageSize,
+        guestbookList: []
+    };
+
+    connection.query(query.countAllGuestbookWithoutReply, tables.guestbook, function (err, rows) {
+        result.total = rows[0]['count'] || 0;
+
+        var maxPage = Math.floor(result.total / pageSize);
+        if (maxPage < result.page) {
+            result.page = maxPage;
+        }
+
+        result.maxPage = maxPage;
+        result.index = Number(result.page) * pageSize;
+        if (result.index < 0) result.index = 0;
+
+        connection.query(query.readGuestbookWithoutReplyByPage, [tables.guestbook, result.index, pageSize], function (err, rows) {
+            if (!err) result.guestbookList = rows;
+            callback(err, result);
+        });
+    });
+}
+
 function insertGalleryCategory(connection, params, callback) {
     var titleData = {
         title: params.title,
@@ -326,6 +356,7 @@ module.exports = {
     readVisitLogByPage: readVisitLogByPage,
     readAccountCounterByMonth: selectAccountCounterByMonth,
     readGuestbook: readGuestbook,
+    readGuestbookWithoutReply: readGuestbookWithoutReply,
     createGalleryCategory: insertGalleryCategory,
     readGalleryCategory: selectGalleryCategory,
     readGalleryImageList: selectGalleryImageList,

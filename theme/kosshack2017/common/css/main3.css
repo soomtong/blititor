@@ -1494,7 +1494,7 @@ td .media-body {
 	background-color: transparent;
 }
 
-.dropdwon-menu-title {
+.dropdown-menu-title {
 	padding: 10px 30px;
 }
 
@@ -6769,7 +6769,8 @@ a.logo.vertical_logo img {
 }
 
 .page_header {
-	transition: background 0.2s ease-in-out 0s, margin 0.6s ease-in-out 0s;
+	transition: background 0.2s ease-in-out 0s,
+ margin 0.6s ease-in-out 0s;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -6798,7 +6799,8 @@ a.logo.vertical_logo img {
 	.page_header.section_padding_20 [class*="container"] {
 		padding-top: 20px;
 		padding-bottom: 20px;
-		transition: padding-top 0.2s linear 0s, padding-bottom 0.2s linear 0s;
+		transition: padding-top 0.2s linear 0s,
+ padding-bottom 0.2s linear 0s;
 	}
 
 	.page_header.section_padding_20.affix [class*="container"] {

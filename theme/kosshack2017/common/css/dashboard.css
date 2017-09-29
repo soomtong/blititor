@@ -50,7 +50,7 @@
 	top: initial;
 	bottom: 8px;
 	border-bottom: initial;
-	border-top: -8px solid #fff;
+	/*border-top: -8px solid #fff;*/
 }
 
 .daterangepicker.dropdown-menu {
@@ -588,7 +588,7 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 .fc-state-disabled {
-	cursor: disabled;
+	cursor: not-allowed;
 }
 
 .fc-state-hover {
@@ -1244,7 +1244,7 @@ a.fc-more:hover {
 /* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */
 /* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */
 .fc-view-container *,
-.fc-view-container *: before,
+.fc-view-container *:before,
 .fc-view-container *:after {
   box-sizing: content-box;
 }
@@ -2062,13 +2062,11 @@ body.admin {
 
 .admin .pagination > li > a,
 .admin .pagination > li > span {
-  font-weight: 400;
-  padding: 4px 6px;
-  margin-left: 2px;
-  margin-bottom: 0;
-  margin-top: 4px;
-  min-width: 28px;
-  border-radius: 1px;
+  	font-weight: 400;
+  	padding: 4px 6px;
+	margin: 4px 2px 0;
+	min-width: 28px;
+  	border-radius: 1px;
 }
 
 .admin .flex-row h4 + hr {

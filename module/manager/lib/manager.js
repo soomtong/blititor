@@ -272,28 +272,53 @@ function visitCounter(req, res) {
 function guestbookList(req, res) {
     var params = {
         title: "운영자 화면",
-        page: Number(req.query['p']) || 1
+        page: Number(req.query['p']) || 1,
+        flag: req.query['flag']
     };
 
     var mysql = connection.get();
 
-    db.readGuestbook(mysql, Number(params.page - 1), function (error, result) {
-        params.pagination = true;
-        params.total = result.total;
-        params.pageSize = result.pageSize;
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
-        params.list = result.guestbookList;
+    if (params.flag === 'noreply') {
+        db.readGuestbookWithoutReply(mysql, Number(params.page - 1), function (error, result) {
+            params.pagination = true;
+            params.totalCount = result.total || 0;
+            params.pageSize = result.pageSize;
+            params.hasNext = result.total > (result.page + 1) * result.pageSize;
+            params.hasPrev = result.page > 0;
+            params.maxPage = result.maxPage + 1;
+            params.page = result.page + 1;  // prevent when wrong page number assigned
+            params.list = result.guestbookList;
 
-        params.list.map(function (item) {
-            item.created_at = common.dateFormatter(item.created_at);
-            item.replied_at = common.dateFormatter(item.replied_at);
+            params.list.map(function (item) {
+                item.created_at = common.dateFormatter(item.created_at);
+            });
+
+            res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook_reply', params);
         });
+    } else {
+        db.readGuestbook(mysql, Number(params.page - 1), function (error, result) {
+            params.pagination = true;
+            params.totalCount = result.total || 0;
+            params.pageSize = result.pageSize;
+            params.hasNext = result.total > (result.page + 1) * result.pageSize;
+            params.hasPrev = result.page > 0;
+            params.maxPage = result.maxPage + 1;
+            params.page = result.page + 1;  // prevent when wrong page number assigned
+            params.list = result.guestbookList;
+            params.notRepliedCount = 0;
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook', params);
-    });
+            params.list.map(function (item) {
+                item.created_at = common.dateFormatter(item.created_at);
+                item.replied_at = common.dateFormatter(item.replied_at);
+
+                if (!item.reply) {
+                    params.notRepliedCount += 1;
+                }
+            });
+
+            res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook', params);
+        });
+    }
 }
 
 function galleryManager(req, res) {
