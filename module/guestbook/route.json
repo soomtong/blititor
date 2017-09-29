@@ -3,6 +3,7 @@
   "guestbook": {
     "form": "/",
     "message": "/register",
-    "reply": "/register/reply"
+    "reply": "/register/reply",
+    "delete": "/delete"
   }
 }

@@ -120,6 +120,9 @@ function selectVisitCounterByDate(connection, dates, callback) {
 
 function readGuestbook(connection, page, callback) {
     var pageSize = 10;
+    var GUTTER_SIZE = 10;
+    var GUTTER_MARGIN = 3;
+
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
@@ -132,17 +135,13 @@ function readGuestbook(connection, page, callback) {
     connection.query(query.countAllGuestbook, tables.guestbook, function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var maxPage = Math.floor(result.total / pageSize);
-        if (maxPage < result.page) {
-            result.page = maxPage;
-        }
+        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
 
-        result.maxPage = maxPage;
-        result.index = Number(result.page) * pageSize;
-        if (result.index < 0) result.index = 0;
-
-        connection.query(query.readGuestbookByPage, [tables.guestbook, result.index, pageSize], function (err, rows) {
+        connection.query(query.readGuestbookByPage, [tables.guestbook, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.guestbookList = rows;
+
+            result.pagination = pagination;
+
             callback(err, result);
         });
     });
@@ -175,6 +174,18 @@ function readGuestbookWithoutReply(connection, page, callback) {
             if (!err) result.guestbookList = rows;
             callback(err, result);
         });
+    });
+}
+
+function updateGuestbookReply(connection, guestbookID, replyData, callback) {
+    connection.query(query.updateByID, [tables.guestbook, replyData, guestbookID], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function deleteGuestbook(connection, guestbookID, callback) {
+    connection.query(query.deleteByID, [tables.guestbook, guestbookID], function (err, result) {
+        callback(err, result);
     });
 }
 
@@ -357,6 +368,8 @@ module.exports = {
     readAccountCounterByMonth: selectAccountCounterByMonth,
     readGuestbook: readGuestbook,
     readGuestbookWithoutReply: readGuestbookWithoutReply,
+    writeGuestbookReply: updateGuestbookReply,
+    deleteGuestbook: deleteGuestbook,
     createGalleryCategory: insertGalleryCategory,
     readGalleryCategory: selectGalleryCategory,
     readGalleryImageList: selectGalleryImageList,

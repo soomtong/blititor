@@ -99,7 +99,7 @@ function registerMessage(req, res) {
 }
 
 function updateReply(req, res) {
-    req.assert('account_id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
+    req.assert('guestbook_id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
     req.assert('reply', 'reply message is required').len(2).withMessage('Must be 2 chars over').notEmpty();
 
     var errors = req.validationErrors();
@@ -110,7 +110,7 @@ function updateReply(req, res) {
         return res.redirect('back');
     }
 
-    req.sanitize('account_id').escape();
+    req.sanitize('guestbook_id').escape();
     req.sanitize('reply').escape();
 
     var replyData = {
@@ -120,7 +120,7 @@ function updateReply(req, res) {
 
     var mysql = connection.get();
 
-    db.writeReply(mysql, req.body.account_id, replyData, function (err, result) {
+    db.writeReply(mysql, req.body.guestbook_id, replyData, function (err, result) {
         if (err) {
             req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
 
@@ -129,8 +129,6 @@ function updateReply(req, res) {
             res.redirect('back');
         }
 
-        console.log(result);
-        
         req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
 
         res.redirect(routeTable.guestbook_root);

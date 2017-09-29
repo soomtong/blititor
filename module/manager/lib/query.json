@@ -15,6 +15,7 @@
   "selectByUUID": "SELECT ?? FROM ?? WHERE `uuid` = ?",
   "selectByUUIDWithLimit": "SELECT ?? FROM ?? WHERE `uuid` = ? ORDER BY id DESC LIMIT ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "deleteByID": "DELETE FROM ?? WHERE `id` = ?",
   "updateAccountByUUID": "UPDATE ?? SET ? WHERE `uuid` = ?",
   "countAllGalleryCategory": "SELECT count(id) as `count` FROM ??",
   "readGalleryCategoryByPage": "SELECT * FROM ?? ORDER BY sort, id ASC LIMIT ?, ?",

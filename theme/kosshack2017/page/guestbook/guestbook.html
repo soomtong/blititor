@@ -35,7 +35,7 @@
                             <label for="password">패스워드
                                 <span class="required">*</span>
                             </label>
-                            <input type="text" aria-required="true" size="30" value="" name="account_password" id="password" class="form-control" placeholder="패스워드">
+                            <input type="password" aria-required="true" size="30" value="" name="account_password" id="password" class="form-control" placeholder="패스워드">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -158,7 +158,7 @@
                                     </div>
                                 </div>
                                 <div class="form-submit topmargin_30">
-                                    <input type="hidden" name="account_id" value="{{ item.id }}"/>
+                                    <input type="hidden" name="guestbook_id" value="{{ item.id }}"/>
                                     <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
                                     {% if item.reply or item.replied_at %}
                                     <button type="submit" class="btn btn-warning">Update</button>

@@ -297,13 +297,8 @@ function guestbookList(req, res) {
         });
     } else {
         db.readGuestbook(mysql, Number(params.page - 1), function (error, result) {
-            params.pagination = true;
+            params.pagination = result.pagination;
             params.totalCount = result.total || 0;
-            params.pageSize = result.pageSize;
-            params.hasNext = result.total > (result.page + 1) * result.pageSize;
-            params.hasPrev = result.page > 0;
-            params.maxPage = result.maxPage + 1;
-            params.page = result.page + 1;  // prevent when wrong page number assigned
             params.list = result.guestbookList;
             params.notRepliedCount = 0;
 
@@ -319,6 +314,75 @@ function guestbookList(req, res) {
             res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook', params);
         });
     }
+}
+
+function guestbookReply(req, res) {
+    req.assert('guestbook_id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
+    req.assert('reply', 'reply message is required').len(2).withMessage('Must be 2 chars over').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('guestbook_id').escape();
+    req.sanitize('reply').escape();
+
+    var replyData = {
+        reply: req.body.reply,
+        replied_at: new Date()
+    };
+
+    var mysql = connection.get();
+
+    db.writeGuestbookReply(mysql, req.body.guestbook_id, replyData, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '방명록 정보 저장에 실패했습니다.'});
+
+            winston.error(err);
+
+            res.redirect('back');
+        }
+
+        req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
+
+        res.redirect(routeTable.manage_root + routeTable.guestbook_root + '?flag=noreply');
+    });
+}
+
+function guestbookDelete(req, res) {
+    req.assert('guestbook_id', 'id as message ID field is not valid').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error', errors);
+
+        return res.redirect('back');
+    }
+
+    req.sanitize('guestbook_id').escape();
+
+    var mysql = connection.get();
+
+    db.deleteGuestbook(mysql, req.body.guestbook_id, function (err, result) {
+        if (err) {
+            req.flash('error', {msg: '방명록 정보 삭제에 실패했습니다.'});
+
+            winston.error(err);
+
+            res.redirect('back');
+        }
+
+        winston.info('Deleted guestbook id', req.body.guestbook_id);
+
+        req.flash('info', 'Deleted Guestbook id ' + req.body.guestbook_id);
+
+        res.send({status: "success", data: result})
+    });
 }
 
 function galleryManager(req, res) {
@@ -558,6 +622,8 @@ module.exports = {
     accountList: accountList,
     accountActionCounter: accountCounter,
     guestbookList: guestbookList,
+    guestbookReply: guestbookReply,
+    guestbookDelete: guestbookDelete,
     galleryImageList: galleryImageList,
     galleryManager: galleryManager,
     galleryCategory: galleryCategory,

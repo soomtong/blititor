@@ -1,7 +1,47 @@
 "use strict";
+$(document).ready(function () {
+    var control = false;
+    var guestbookController = '<tr class="control"><td colspan="6"><button class="btn btn-danger delete">Delete</button> <button class="btn btn-warning cancel">Cancel</button></td></tr>';
 
+    function callDelete(that, data) {
+    	var url = '/manage/guestbook/delete';
+
+        $.post(url, data).done(function (data, status) {
+            if (status === 'success') {
+                // delete this tr
+                // $(that).remove();
+                location.reload();
+            }
+        });
+    }
+
+    $('tbody.guestbook-list').on('click', 'tr.can-control', function (e) {
+        var that = this;
+        var secretToken = $('input[name="_csrf"]').eq(0).val();
+
+        if (!control) {
+            $(guestbookController).insertAfter($(that).closest('tr'));
+
+            control = true;
+
+            $('tr.control').one('click', 'button.delete', function (e) {
+                // go delete
+                var data = { guestbook_id: $(that).data('id'), _csrf: secretToken };
+
+                callDelete(that, data);
+
+                $(this).parent().parent().remove();
+
+                control = false;
+            }).one('click', 'button.cancel', function (e) {
+                $(this).parent().parent().remove();
+
+                control = false;
+            });
+        }
+    });
+});
 (function(){
-	
 	//Charts initialization
 	//http://www.chartjs.org/docs/
 
@@ -612,6 +652,5 @@
 			height: height,
 		});
 	});
-
 
 })();
