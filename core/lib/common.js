@@ -177,7 +177,7 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
         pageSize: PAGE_SIZE
     };
 
-    var maxPage = Math.floor(totalCount / PAGE_SIZE);
+    var maxPage = Math.ceil(totalCount / PAGE_SIZE);
 
     if (maxPage < params.page) params.page = maxPage;
 
