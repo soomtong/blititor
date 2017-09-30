@@ -164,12 +164,12 @@ function dashboard(req, res) {
         tempDate = moment(params.today).subtract(idx, 'days');
 
         if (tempDate.date() === 1) {
-            dates.push(tempDate.format('M월 D일'));
+            dates.unshift(tempDate.format('M월 D일'));
         } else {
-            dates.push(tempDate.format('D 일'));
+            dates.unshift(tempDate.format('D 일'));
         }
 
-        countOfDays.push(tempDate.format('YYYYMMDD'));
+        countOfDays.unshift(tempDate.format('YYYYMMDD'));
     }
 
     params.dates = dates;
