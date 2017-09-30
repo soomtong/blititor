@@ -47,9 +47,34 @@ $(document).ready(function () {
     var $dailyVisitors = $('.canvas-chart-line-daily-visitors');
 
     if ($dailyVisitors.length || $dailyViews.length) {
-    	$.get('/manage/dashboard', function (data, result) {
-            console.log(data, result);
+        Chart.defaults.global.defaultFontColor = '#666666';
+        Chart.defaults.global.defaultFontFamily = 'Poppins, Arial, sans-serif';
+        Chart.defaults.global.defaultFontSize = 12;
+        Chart.defaults.global.maintainAspectRatio = false;
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+        Chart.defaults.scale.gridLines.color = 'rgba(100,100,100,0.15)';
+        Chart.defaults.scale.gridLines.zeroLineColor = 'rgba(100,100,100,0.15)';
+        Chart.defaults.scale.ticks.beginAtZero = true;
+        Chart.defaults.scale.ticks.maxRotation = 0;
+        Chart.defaults.scale.ticks.padding = 3;
+        Chart.defaults.scale.ticks.autoSkipPadding = 10;
+        Chart.defaults.global.elements.point.radius = 5;
+        Chart.defaults.global.elements.point.borderColor = 'transparent';
 
+        Chart.pluginService.register({
+            beforeDraw: function (chart, easing) {
+                if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+                    var ctx = chart.chart.ctx;
+                    var chartArea = chart.chartArea;
+                    ctx.save();
+                    ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
+                    ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+                    ctx.restore();
+                }
+            }
+        });
+
+    	$.get('/manage/dashboard', function (data, result) {
             $dailyViews.each(function(i){
                 var canvas = jQuery(this)[0].getContext("2d");
                 new Chart(canvas, data.pageviewGraph);
@@ -61,36 +86,8 @@ $(document).ready(function () {
             });
         });
     }
-
 });
 (function(){
-	Chart.defaults.global.defaultFontColor = '#666666';
-	Chart.defaults.global.defaultFontFamily = 'Poppins, Arial, sans-serif';
-	Chart.defaults.global.defaultFontSize = 12;
-	Chart.defaults.global.maintainAspectRatio = false;
-	Chart.defaults.global.legend.labels.usePointStyle = true;
-	Chart.defaults.scale.gridLines.color = 'rgba(100,100,100,0.15)';
-	Chart.defaults.scale.gridLines.zeroLineColor = 'rgba(100,100,100,0.15)';
-	Chart.defaults.scale.ticks.beginAtZero = true;
-	Chart.defaults.scale.ticks.maxRotation = 0;
-	Chart.defaults.scale.ticks.padding = 3;
-	Chart.defaults.scale.ticks.autoSkipPadding = 10;
-	Chart.defaults.global.elements.point.radius = 5;
-	Chart.defaults.global.elements.point.borderColor = 'transparent';
-
-	Chart.pluginService.register({
-	beforeDraw: function (chart, easing) {
-		if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
-			var ctx = chart.chart.ctx;
-			var chartArea = chart.chartArea;
-				ctx.save();
-				ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
-				ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
-				ctx.restore();
-			}
-		}
-	});
-
 	///////////////////
 	//events calendar//
 	///////////////////

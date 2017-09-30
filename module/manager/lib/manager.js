@@ -120,10 +120,31 @@ function loginProcess(req, res) {
 
 function index(req, res) {
     var params = {
-        title: "운영자 화면"
+        title: "운영자 화면",
+        page: Number(req.query['p']) || 1
     };
 
-    res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
+    var mysql = connection.get();
+
+    db.readVisitLogByPage(mysql, Number(params.page - 1), function (error, result) {
+        if (error) {
+            req.flash('error', {msg: '로그 목록 읽기에 실패했습니다.'});
+
+            winston.error(error);
+
+            res.redirect('back');
+        }
+
+        params.pagination = result.pagination;
+        params.totalVisitLogCount = result.total;
+        params.visitLogList = result.visitLogList;
+
+        params.visitLogList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');
+        });
+
+        res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
+    });
 }
 
 function dashboard(req, res) {
@@ -269,9 +290,6 @@ function dashboard(req, res) {
                     }
                 });
             });
-        },
-        function (done) {
-
         }];
 
     async.parallel(tasks, function(err, result) {

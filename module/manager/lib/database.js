@@ -55,6 +55,8 @@ function selectAccountByPage(connection, page, callback) {
 
 function readVisitLogByPage(connection, page, callback) {
     var pageSize = 10;
+    var GUTTER_SIZE = 10;
+    var GUTTER_MARGIN = 3;
     var fields = ['path', 'method', 'ip', 'ref', 'client', 'device', 'created_at'];
     var result = {
         total: 0,
@@ -68,17 +70,13 @@ function readVisitLogByPage(connection, page, callback) {
     connection.query(query.countAllVisitLog, [tables.visitLog], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var maxPage = Math.floor(result.total / pageSize);
-        if (maxPage < result.page) {
-            result.page = maxPage;
-        }
+        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
 
-        result.maxPage = maxPage;
-        result.index = Number(result.page) * pageSize;
-        if (result.index < 0) result.index = 0;
-
-        connection.query(query.readVisitLogByPage, [fields, tables.visitLog, result.index, pageSize], function (err, rows) {
+        connection.query(query.readVisitLogByPage, [fields, tables.visitLog, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.visitLogList = rows;
+
+            result.pagination = pagination;
+
             callback(err, result);
         });
     });
