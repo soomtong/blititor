@@ -14,9 +14,10 @@ var routeTable = misc.getRouteTable();
 // caution. when use each middleware for other module's router. it affects all router that exist behind
 router.get(routeTable.manage_root + routeTable.manage.login, manager.loginForm);
 router.post(routeTable.manage_root + routeTable.manage.login, manager.loginProcess);
-
+// for dashboard
+router.get(routeTable.manage_root + routeTable.manage.dashboard, AccountMiddleware.checkManager, manager.dashboard);
 // for counter
-router.all(routeTable.manage_root,                                 AccountMiddleware.checkManager, manager.dashboard);
+router.all(routeTable.manage_root,                                 AccountMiddleware.checkManager, manager.index);
 router.all(routeTable.manage_root + routeTable.manage.pageCounter, AccountMiddleware.checkManager, manager.pageViewCounter);
 router.get(routeTable.manage_root + routeTable.manage.pageLog, AccountMiddleware.checkManager, manager.pageViewLog);
 // for account

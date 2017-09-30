@@ -118,8 +118,168 @@ function loginProcess(req, res) {
     });
 }
 
+function index(req, res) {
+    var params = {
+        title: "운영자 화면"
+    };
+
+    res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
+}
+
 function dashboard(req, res) {
-    res.render(BLITITOR.config.site.manageTheme + '/manage/index');
+    var params = {
+        title: "운영자 화면",
+        today: req.query['date'] || moment().format('YYYYMMDD'),
+        weekly: req.query['k'] || false,
+        list: []
+    };
+
+    var duration = '7';
+    var dates = [];
+    var countOfDays = [];
+    var tempDate;
+
+    for (var idx = 0; idx < duration; idx++) {
+        tempDate = moment(params.today).subtract(idx, 'days');
+
+        if (tempDate.date() === 1) {
+            dates.push(tempDate.format('M월 D일'));
+        } else {
+            dates.push(tempDate.format('D 일'));
+        }
+
+        countOfDays.push(tempDate.format('YYYYMMDD'));
+    }
+
+    params.dates = dates;
+
+    var mysql = connection.get();
+
+    var tasks = [
+        function (done) {
+            db.readAccountCounterByDate(mysql, countOfDays, function (error, result) {
+                if (error) {
+                    req.flash('error', {msg: '방문자 카운터 읽기에 실패했습니다.'});
+
+                    winston.error(error);
+
+                    res.redirect('back');
+                }
+
+                var sessions = [];
+                var logins = [];
+
+                var tempObj = {};
+
+                result.accountCounter.map(function (item) {
+                    tempObj[item.date] = {
+                        session: item['session_init'],
+                        login: item['sign_in']
+                    }
+                });
+
+                countOfDays.map(function (item) {
+                    sessions.push(tempObj[item].session || 0);
+                    logins.push(tempObj[item].login || 0);
+                });
+
+                done(null, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: "방문",
+                            backgroundColor: 'rgba(236, 104, 46, 0.5)',
+                            borderColor: 'rgba(236, 104, 46, 0.5)',
+                            borderWidth: 3,
+
+                            //point options
+                            pointBorderColor: "transparent",
+                            pointBackgroundColor: "rgba(236, 104, 46, 1)",
+                            pointBorderWidth: 0,
+                            tension: '0',
+
+                            data: sessions,
+                            fill: false
+                        }, {
+                            label: "로그인",
+                            backgroundColor: 'rgba(111, 211, 227, 0.6)',
+                            borderColor: 'rgba(91, 173, 186, 0.5)',
+                            borderWidth: 3,
+
+                            //point options
+                            pointBorderColor: "transparent",
+                            pointBackgroundColor: "rgba(111, 211, 227, 1)",
+                            pointBorderWidth: 0,
+                            tension: '0',
+
+                            data: logins,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        chartArea: {
+                            backgroundColor: 'rgba(100, 100, 100, 0.02)'
+                        }
+                    }
+                });
+            });
+        },
+        function (done) {
+            db.readPageCounterByDate(mysql, countOfDays, function (error, result) {
+                if (error) {
+                    req.flash('error', {msg: '페이지 뷰 카운터 읽기에 실패했습니다.'});
+
+                    winston.error(error);
+
+                    res.redirect('back');
+                }
+
+                done(null, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: "페이지뷰",
+                            backgroundColor: 'rgba(77, 177, 158, 0.5)',
+                            borderColor: 'rgba(77, 177, 158, 0.5)',
+                            borderWidth: '0',
+
+                            //point options
+                            pointBorderColor: "transparent",
+                            pointBackgroundColor: "rgba(77, 177, 158, 1)",
+                            pointBorderWidth: 0,
+                            tension: '0',
+                            data: [
+                                result.visitCounter['T0'],
+                                result.visitCounter['T1'],
+                                result.visitCounter['T2'],
+                                result.visitCounter['T3'],
+                                result.visitCounter['T4'],
+                                result.visitCounter['T5'],
+                                result.visitCounter['T6']
+                            ],
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        chartArea: {
+                            backgroundColor: 'rgba(100, 100, 100, 0.02)'
+                        }
+                    }
+                });
+            });
+        },
+        function (done) {
+
+        }];
+
+    async.parallel(tasks, function(err, result) {
+        params.accountGraph = result[0];
+        params.pageviewGraph = result[1];
+
+        res.send(params)
+    });
 }
 
 function accountList(req, res) {
@@ -616,6 +776,7 @@ function reservationTutorialStatus(req, res) {
 module.exports = {
     loginForm: loginForm,
     loginProcess: loginProcess,
+    index: index,
     dashboard: dashboard,
     pageViewLog: pageLogList,
     pageViewCounter: visitCounter,

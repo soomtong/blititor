@@ -1,0 +1,21 @@
+{
+  "manage_root": "/manage",
+  "manage": {
+    "login": "/login",
+    "dashboard": "/dashboard",
+    "account": "/account",
+    "reservation": "/reservation",
+    "reservationClean": "/reservation/clean",
+    "tutorial": "/tutorial",
+    "tutorialStatus": "/reservation/tutorial/status",
+    "gallery": "/gallery",
+    "galleryCategory": "/gallery/category",
+    "galleryImage": "/gallery/image",
+    "galleryImageSort": "/gallery/image/sort",
+    "galleryImageRemove": "/gallery/image/remove",
+    "pageLog": "/page/log",
+    "pageView": "/page",
+    "pageCounter": "/counter/page",
+    "accountCounter": "/counter/account"
+  }
+}

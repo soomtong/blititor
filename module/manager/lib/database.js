@@ -100,6 +100,19 @@ function selectAccountCounterByMonth(connection, month, callback) {
     });
 }
 
+function selectAccountCounterByDate(connection, dates, callback) {
+    var fields = ['date', 'session_init', 'sign_up', 'sign_in', 'sign_out', 'deactivated', 'reactivated'];
+    var result = {
+        accountCounter: []
+    };
+
+    connection.query(query.readAccountCounterByDate, [fields, tables.accountCounter, dates[0], dates[dates.length - 1]], function (err, rows) {
+        if (!err) result.accountCounter = rows;
+
+        callback(err, result);
+    });
+}
+
 function selectVisitCounterByDate(connection, dates, callback) {
     var result = {
         sum: [],
@@ -115,6 +128,18 @@ function selectVisitCounterByDate(connection, dates, callback) {
 
             callback(err, result);
         });
+    });
+}
+
+function selectPageCounterByDate(connection, dates, callback) {
+    var result = {
+        visitCounter: []
+    };
+
+    connection.query(query.readUserCounterByDate, [dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6], dates[7], tables.visitCounter], function (err, rows) {
+        if (!err) result.visitCounter = rows[0];
+
+        callback(err, result);
     });
 }
 
@@ -364,6 +389,8 @@ function readTutorialStatus(connection, params, callback) {
 module.exports = {
     readAccountByPage: selectAccountByPage,
     readVisitCounterByDate: selectVisitCounterByDate,
+    readPageCounterByDate: selectPageCounterByDate,
+    readAccountCounterByDate: selectAccountCounterByDate,
     readVisitLogByPage: readVisitLogByPage,
     readAccountCounterByMonth: selectAccountCounterByMonth,
     readGuestbook: readGuestbook,

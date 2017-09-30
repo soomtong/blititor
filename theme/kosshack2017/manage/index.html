@@ -63,84 +63,64 @@
                         <small>main page</small>
                     </h3>
                 </div>
-                <div class="col-md-8 text-md-right">
-                    <h3 class="sparklines-title">
-                        <sup>Today Earnings:</sup> $3,000
-                        <span class="sparklines" data-values="670,350,135,-170,-324,-386,-468,-200,55,375,520,270,790,-670,-350,135,170,324,386,468,10,55,375,520,270,790" data-type="bar" data-line-color="#eeb269" data-neg-color="#dc5753" data-height="30" data-bar-width="2"></span>
-                    </h3>
 
-                    <h3 class="sparklines-title">
-                        <sup>Yesterday Earn: </sup> $4,000
-                        <span class="sparklines" data-values="670,350,135,-170,-324,386,-468,-10,55,375,520,-270,790,670,-350,135,170,324,386,468,10,-55,-375,-520,270,790" data-type="bar" data-line-color="#4db19e" data-neg-color="#007ebd" data-height="30" data-bar-width="2"></span>
-                    </h3>
-                </div>
+                {% include './include/mini_graph.html' %}
 
             </div>
 
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
-
                     <div class="teaser warning_bg_color counter-background-teaser text-center">
                         <span class="counter counter-background" data-from="0" data-to="1257" data-speed="2100">0</span>
                         <h3 class="counter highlight" data-from="0" data-to="1257" data-speed="2100">0</h3>
-                        <p>Reviews / Month</p>
+                        <p>이달의 방문자</p>
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-sm-6">
-
                     <div class="teaser danger_bg_color counter-background-teaser text-center">
                         <span class="counter counter-background" data-from="0" data-to="346" data-speed="1500">0</span>
                         <h3 class="counter highlight" data-from="0" data-to="346" data-speed="1500">0</h3>
-                        <p>Clients / Month</p>
+                        <p>이달의 게시물</p>
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-sm-6">
-
                     <div class="teaser success_bg_color counter-background-teaser text-center">
                         <span class="counter counter-background" data-from="0" data-to="216" data-speed="1900">0</span>
                         <h3 class="counter highlight" data-from="0" data-to="216" data-speed="1900">0</h3>
-                        <p>Orders / Month</p>
+                        <p>이달의 댓글</p>
                     </div>
-
                 </div>
 
                 <div class="col-lg-3 col-sm-6">
-
                     <div class="teaser info_bg_color counter-background-teaser text-center">
                         <span class="counter counter-background" data-from="0" data-to="15" data-speed="1800">0</span>
                         <h3 class="counter-wrap highlight" data-from="0" data-to="346" data-speed="1800">
-                            <small>$</small>
+                            <small></small>
                             <span class="counter" data-from="0" data-to="346" data-speed="1500">0</span>
-                            <small class="counter-add">k</small>
+                            <small class="counter-add">MB</small>
                         </h3>
-                        <p>Total Profit</p>
+                        <p>이달의 트래픽</p>
                     </div>
-
                 </div>
             </div>
 
             <div class="row">
-                <!-- Yearly Visitors -->
+                <div class="col-xs-12 col-md-6">
+                    <div class="with_shadow with_padding">
+                        <h4>PageView Statistics</h4>
+                        <div class="canvas-chart-wrapper">
+                            <canvas class="canvas-chart-line-visitors-pageview"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-xs-12 col-md-6">
                     <div class="with_shadow with_padding">
                         <h4>Visitor Statistics</h4>
                         <div class="canvas-chart-wrapper">
-                            <canvas class="canvas-chart-line-yearly-visitors"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <!-- .col-* -->
-
-                <!-- Yearly Visitors -->
-                <div class="col-xs-12 col-md-6">
-                    <div class="with_shadow with_padding">
-                        <h4>Visitor vs Sells</h4>
-                        <div class="canvas-chart-wrapper">
-                            <canvas class="canvas-chart-line-visitors-sels"></canvas>
+                            <canvas class="canvas-chart-line-daily-visitors"></canvas>
                         </div>
                     </div>
                 </div>
@@ -205,7 +185,7 @@
                                 <li class="chat-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="images/team/03.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                         <div class="media-body with_shadow">
                                             <h5>
@@ -231,14 +211,14 @@
                                             </div>
                                         </div>
                                         <div class="media-right">
-                                            <img src="images/team/01.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                     </div>
                                 </li>
                                 <li class="chat-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="images/team/03.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                         <div class="media-body with_shadow">
                                             <h5>
@@ -264,14 +244,14 @@
                                             </div>
                                         </div>
                                         <div class="media-right">
-                                            <img src="images/team/01.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                     </div>
                                 </li>
                                 <li class="chat-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="images/team/03.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                         <div class="media-body with_shadow">
                                             <h5>
@@ -297,7 +277,7 @@
                                             </div>
                                         </div>
                                         <div class="media-right">
-                                            <img src="images/team/01.jpg" alt="...">
+                                            <img src="" alt="...">
                                         </div>
                                     </div>
                                 </li>
