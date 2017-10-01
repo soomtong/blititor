@@ -24,30 +24,26 @@ var query = require('./query');
 
 function selectAccountByPage(connection, page, callback) {
     var pageSize = 10;
+    var gutterSize = 10;
+    var gutterMargin = 3;
+
     var fields = ['user_id', 'uuid', 'nickname', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
-        index: 0,
-        maxPage: 0,
-        pageSize: pageSize,
-        teamblogList: []
+        accountList: []
     };
 
     connection.query(query.countAllAccount, [tables.auth, tables.user], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var maxPage = Math.floor(result.total / pageSize);
-        if (maxPage < result.page) {
-            result.page = maxPage;
-        }
+        var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
 
-        result.maxPage = maxPage;
-        result.index = Number(result.page) * pageSize;
-        if (result.index < 0) result.index = 0;
-
-        connection.query(query.readAccountByPage, [fields, tables.auth, tables.user, result.index, pageSize], function (err, rows) {
+        connection.query(query.readAccountByPage, [fields, tables.auth, tables.user, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.accountList = rows;
+
+            result.pagination = pagination;
+
             callback(err, result);
         });
     });
@@ -55,22 +51,19 @@ function selectAccountByPage(connection, page, callback) {
 
 function readVisitLogByPage(connection, page, callback) {
     var pageSize = 10;
-    var GUTTER_SIZE = 10;
-    var GUTTER_MARGIN = 3;
+    var gutterSize = 10;
+    var gutterMargin = 3;
     var fields = ['path', 'method', 'ip', 'ref', 'client', 'device', 'created_at'];
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
-        index: 0,
-        maxPage: 0,
-        pageSize: pageSize,
-        teamblogList: []
+        visitLogList: []
     };
 
     connection.query(query.countAllVisitLog, [tables.visitLog], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
+        var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
 
         connection.query(query.readVisitLogByPage, [fields, tables.visitLog, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.visitLogList = rows;
@@ -141,24 +134,21 @@ function selectPageCounterByDate(connection, dates, callback) {
     });
 }
 
-function readGuestbook(connection, page, callback) {
+function readGuestbook(connection, index, callback) {
     var pageSize = 10;
-    var GUTTER_SIZE = 10;
-    var GUTTER_MARGIN = 3;
+    var gutterSize = 10;
+    var gutterMargin = 3;
 
     var result = {
         total: 0,
-        page: Math.abs(Number(page)),
-        index: 0,
-        maxPage: 0,
-        pageSize: pageSize,
+        page: Math.abs(Number(index)),
         guestbookList: []
     };
 
     connection.query(query.countAllGuestbook, tables.guestbook, function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var pagination = common.pagination(result.page, result.total, result.pageSize, GUTTER_SIZE, GUTTER_MARGIN);
+        var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
 
         connection.query(query.readGuestbookByPage, [tables.guestbook, pagination.index, pagination.pageSize], function (err, rows) {
             if (!err) result.guestbookList = rows;

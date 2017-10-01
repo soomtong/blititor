@@ -126,7 +126,7 @@ function index(req, res) {
 
     var mysql = connection.get();
 
-    db.readVisitLogByPage(mysql, Number(params.page - 1), function (error, result) {
+    db.readVisitLogByPage(mysql, params.page, function (error, result) {
         if (error) {
             req.flash('error', {msg: '로그 목록 읽기에 실패했습니다.'});
 
@@ -308,7 +308,7 @@ function accountList(req, res) {
 
     var mysql = connection.get();
 
-    db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
+    db.readAccountByPage(mysql, Number(params.page), function (error, result) {
         if (error) {
             req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
 
@@ -317,13 +317,8 @@ function accountList(req, res) {
             res.redirect('back');
         }
 
-        params.pagination = true;
-        params.total = result.total;
-        params.pageSize = result.pageSize;
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.pagination = result.pagination;
+        params.totalCount = result.total || 0;
         params.list = result.accountList;
 
         params.list.map(function (item) {
@@ -457,14 +452,9 @@ function guestbookList(req, res) {
     var mysql = connection.get();
 
     if (params.flag === 'noreply') {
-        db.readGuestbookWithoutReply(mysql, Number(params.page - 1), function (error, result) {
-            params.pagination = true;
+        db.readGuestbookWithoutReply(mysql, Number(params.page), function (error, result) {
+            params.pagination = result.pagination;
             params.totalCount = result.total || 0;
-            params.pageSize = result.pageSize;
-            params.hasNext = result.total > (result.page + 1) * result.pageSize;
-            params.hasPrev = result.page > 0;
-            params.maxPage = result.maxPage + 1;
-            params.page = result.page + 1;  // prevent when wrong page number assigned
             params.list = result.guestbookList;
 
             params.list.map(function (item) {
@@ -474,7 +464,7 @@ function guestbookList(req, res) {
             res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook_reply', params);
         });
     } else {
-        db.readGuestbook(mysql, Number(params.page - 1), function (error, result) {
+        db.readGuestbook(mysql, Number(params.page), function (error, result) {
             params.pagination = result.pagination;
             params.totalCount = result.total || 0;
             params.list = result.guestbookList;

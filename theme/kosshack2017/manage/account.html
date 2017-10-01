@@ -62,10 +62,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h3>사이트 운영자는 게스트북 관리와 답변 달기를 할 수 있습니다.</h3>
+                    <h3>사이트 운영자는 등록된 회원과 페이지 로그를 확인할 수 있습니다.</h3>
                     <ul>
-                        <li>방명록 정보 열람 및 관리</li>
-                        <li>답변 달기</li>
+                        <li>회원 정보 열람</li>
+                        <li>페이지 접속 정보 열람</li>
                     </ul>
                 </div>
             </div>
@@ -74,18 +74,14 @@
                 <div class="col-xs-12">
                     <div class="row admin-table-filters">
                         <div class="col-lg-9">
-                            <h6>전체 레코드 <span class="label label-primary">{{ totalCount }}</span>건
-                                {% if notRepliedCount %}
-                                | 현재 페이지에 답변이 없는 레코드 <a href="?flag=noreply"><span class="label label-warning">{{ notRepliedCount }}</span></a>건
-                                {% endif %}
-                            </h6>
+                            <h6>전체 레코드 <span class="label label-primary">{{ totalCount }}</span>건</h6>
                         </div>
                         <div class="col-lg-3 text-lg-right">
                             <div class="widget widget_search">
                                 <form method="get" class="searchform">
                                     <div class="form-group">
                                         <label class="sr-only" for="widget-search">Search for:</label>
-                                        <input id="widget-search" type="text" value="" name="search" class="form-control" placeholder="Nickname">
+                                        <input id="widget-search" type="text" value="" name="search" class="form-control" placeholder="Username or Nickname">
                                     </div>
                                     <button type="submit" class="theme_button color1 no_bg_button">Search</button>
                                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
@@ -98,11 +94,14 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>문의자 (계정)</th>
-                                <th>내용</th>
-                                <th>답변</th>
-                                <th width="112">문의일시</th>
-                                <th width="112">응답일시</th>
+                                <th>아이디</th>
+                                <th>닉네임</th>
+                                <th>레벨</th>
+                                <th>권한</th>
+                                <th>로그인횟수</th>
+                                <th>최근로그인</th>
+                                <th>계정생성일</th>
+                                <th>정보수정일</th>
                             </tr>
                             </thead>
 
@@ -111,11 +110,14 @@
                             {% for item in list %}
                             <tr class="{{ cls.next() }} can-control" data-id="{{ item.id }}">
                                 <td>{{totalCount - loop.index0 - (pagination.pageSize * (pagination.page - 1))}}</td>
-                                <td>{{item.nickname}}<br>({{item.email}})</td>
-                                <td>{{item.message | safe}}</td>
-                                <td>{{item.reply | safe}}</td>
+                                <td>{{item.user_id}}</td>
+                                <td>{{item.nickname}}</td>
+                                <td>{{item.level}}</td>
+                                <td>{{item.grant}}</td>
+                                <td>{{item.login_counter}}</td>
+                                <td>{{item.last_logged_at}}</td>
                                 <td>{{item.created_at}}</td>
-                                <td>{{item.replied_at}}</td>
+                                <td>{{item.updated_at}}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -126,7 +128,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         {% import './include/pagination.html' as Page %}
-                        {{ Page.nation(pagination, route.manage_root + route.manage.guestbook_root) }}
+                        {{ Page.nation(pagination, route.manage_root + route.manage.account) }}
                     </div>
                 </div>
             </div>

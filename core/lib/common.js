@@ -171,7 +171,7 @@ function pageFormatter(url) {
 
 function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGIN) {
     var params = {
-        page: Math.abs(Number(pageIndex)),
+        page: Math.abs(Number(pageIndex)) || 1,
         index: 0,
         maxPage: 0,
         pageSize: PAGE_SIZE
@@ -182,11 +182,11 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
     if (maxPage < params.page) params.page = maxPage;
 
     params.maxPage = maxPage;
-    params.index = Number(params.page) * PAGE_SIZE;
+    params.index = (params.page - 1) * PAGE_SIZE;
 
     if (params.index < 0) params.index = 0;
 
-    params.hasNext = totalCount > ((params.page + 1) * PAGE_SIZE);
+    params.hasNext = totalCount > ((params.page) * PAGE_SIZE);
     params.hasPrev = params.index > 0;
 
     if (params.maxPage > GUTTER_SIZE) {
@@ -197,11 +197,11 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
     return params;
 
     function getPreIndex(page, maxPage, gutterMargin) {
-        if (page < gutterMargin * 2 + 1) {
+        if (page < gutterMargin * 2) {
             return 0
         } else {
             return (page - gutterMargin) + (gutterMargin * 2) > maxPage
-                ? maxPage - (gutterMargin * 2) : page - gutterMargin + 1
+                ? maxPage - (gutterMargin * 2) : page - gutterMargin
         }
     }
 
@@ -210,7 +210,7 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
             return maxPage
         } else {
             return (page + gutterMargin) < (gutterMargin * 2)
-                ? gutterMargin * 2 : page + gutterMargin + 1
+                ? gutterMargin * 2 + 1 : page + gutterMargin + 1
         }
     }
 }
