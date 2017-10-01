@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+    <link href="/lib/blueimp-file-upload/css/jquery.fileupload.css" rel="stylesheet">
+    <link href="/lib/blueimp-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet">
+    <link href="/lib/dragula.js/dist/dragula.min.css" rel="stylesheet">
+</head>
+<body class="admin">
+<!--[if lt IE 9]>
+<div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a
+        href="http://browsehappy.com/" class="highlight">upgrade your browser</a> to improve your experience.
+</div>
+<![endif]-->
+<div class="preloader">
+    <div class="preloader_image"></div>
+</div>
+<div id="box_wrapper" class="application-wrapper">
+    <header class="page_header_side page_header_side_sticked active-slide-side-header ds">
+        <div class="side_header_logo ds ms">
+            <a href="/"><span class="logo_text margin_0">BLITITOR</span></a>
+        </div>
+
+        <span class="toggle_menu_side toggler_light header-slide"><span></span></span>
+
+        <div class="scrollbar-macosx">
+            <div class="side_header_inner">
+
+                {% include './include/user_menu.html' %}
+                {% include './include/side_menu.html' %}
+
+                <div class="with_padding grey text-center hidden">
+                    10GB of <strong>250GB</strong> Free
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% include './include/top_menu.html' %}
+
+    <section class="ls with_bottom_border">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <ol class="breadcrumb darklinks">
+                        <li>
+                            <a href="{{site.root}}">Homepage</a>
+                        </li>
+                        <li>
+                            <a href="{{site.root}}{{menu.manage_root}}">Dashboard</a>
+                        </li>
+                        <li class="active">Gallery</li>
+                    </ol>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <span class="dashboard-daterangepicker">
+                        <i class="fa fa-calendar"></i><span></span><i class="caret"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ls section_padding_top_50 section_padding_bottom_50 columns_padding_10">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>사이트 운영자는 갤러리 목록과 범주를 관리할 수 있습니다.</h3>
+                    <ul>
+                        <li>갤러리 카테고리 관리 및 갤러리 이미지 관리</li>
+                        <li>드래그&드롭으로 사진 업로드을 업로드하세요</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="with_shadow with_padding">
+                        <h4>Category</h4>
+                        <form class="form" method="post" action="{{site.root}}{{ route.manage_root + route.manage.galleryCategory }}">
+                            <div class="form-group has-placeholder">
+                                <input type="text" name="title" class="form-control" placeholder="화면에 표시될 제목" tabindex="1">
+                            </div>
+                            <div class="form-group has-placeholder">
+                                <input type="text" name="sub_title" class="form-control" placeholder="설명이 필요하면 추가할 수 있습니다" tabindex="2">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="theme_button color1" tabindex="3">추가</button>
+                                <input type="text" name="type" value="add" hidden>
+                                <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive gallery">
+                        <table class="table table-striped table-bordered">
+                            {% for item in categoryList %}
+                            <thead>
+                            <tr id="cate_{{ item.id }}" class="toggle-category" data-id="{{ item.id }}">
+                                <th width="16px" data-sort="{{ item.sort }}">{{loop.index + (pageSize * (page - 1))}}</th>
+                                <th title="{{ item.sub_title }}">{{ item.title }}</th>
+                                <th width="24px" title="count" class="counter">0</th>
+                                <th width="122px">{{item.created_at}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr id="holder_{{ item.id }}" class="gallery-wrap" data-id="{{ item.id }}">
+                                <td colspan="4" class="img-holder">
+                                    <div class="files">
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+
+                        <div class="add-image">
+                            <form style="display: none;" id="add_image" method="post" class="pure-form" enctype="multipart/form-data" action="{{site.root}}{{ route.gallery_root + route.gallery.upload }}">
+
+                                <input type="text" name="message" class="form-control" id="image_message" placeholder="title" maxlength="100">
+
+                                <div id="progress" class="progress">
+                                    <div class="progress-bar progress-bar-success"></div>
+                                </div>
+
+                                <div class="btn btn-success fileinput-button">
+                                    <span>이미지 업로드</span>
+                                    <!-- The file input field used as target for the file upload widget -->
+                                    <input id="gallery_image_file" type="file" name="files">
+                                </div>
+
+                                <button type="submit" class="btn btn-warning" disabled>이미지를 추가해주세요</button>
+
+                                <input type="hidden" name="_csrf" value="{{ _csrf }}">
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% include './include/footer.html' %}
+{% include './include/script.html' %}
+<script src="/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="/lib/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+<script src="/lib/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script src="/lib/dragula.js/dist/dragula.min.js"></script>
+<script src="{{site.manageTheme}}/common/gallery.js"></script>
+</body>
+</html>
