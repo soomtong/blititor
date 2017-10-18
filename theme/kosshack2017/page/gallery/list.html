@@ -12,62 +12,32 @@
             <div class="col-sm-12">
                 <div class="filters isotope_filters">
                     <a href="#" class="selected" data-filter="*">전체</a>
-                    <a href="#" data-filter=".opening">개막식</a>
-                    <a href="#" data-filter=".operation">프로젝트 수행 기간</a>
-                    <a href="#" data-filter=".ceremony">시상식</a>
+                    <a href="#" data-filter=".gallery_1">개막식</a>
+                    <a href="#" data-filter=".gallery_2">프로젝트 수행 기간</a>
+                    <a href="#" data-filter=".gallery_3">시상식</a>
                 </div>
             </div>
-            <div class="col-sm-8 col-sm-push-2" style="display: none">
-                <div class="isotope_container isotope row masonry-layout columns_margin_bottom_20" data-filters=".isotope_filters">
+            <div id="gallery" class="col-sm-8 col-sm-push-2">
+                <div class="isotope_container isotope row columns_margin_bottom_20" data-filters=".isotope_filters">
 
                     {% for item in cateList %}
-                    <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
-                    {{ item.title }}
+                    <div class="isotope-item col-lg-12 col-md-12 col-sm-12 gallery_{{ item.id }}">
+                        <div class="vertical-item gallery-item content-absolute text-center ls">
+                            <div class="row gallery-wrap" id="gallery_{{ item.id }}" data-id="{{ item.id }}">
+                                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+                                    <h4><span class="glyphicon glyphicon-film" aria-hidden="true"></span> {{ item.title }}</h4>
 
-                    <p class="mbr-reviews__text">
-                        {{ item.sub_title }}
-                    </p>
+                                    <div class="media-body">
+                                        <p class="">{{ item.sub_title }}</p>
 
-                    <div class="image-list">
-                    </div>
-                    {% endfor %}
-
-                    <div class="isotope-item col-lg-12 col-md-12 col-sm-12 livingroom">
-                        <div class="vertical-item gallery-item content-absolute text-center ds">
-                            <div class="item-media">
-                                <img src="images/gallery/10.jpg" alt="">
-                                <div class="media-links">
-                                    <div class="links-wrap">
-                                        <a class="p-view prettyPhoto " title="" data-gal="prettyPhoto[gal]" href="images/gallery/10.jpg"></a>
-
+                                        <div class="image-list"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="item-content darken_gradient">
-                                <h4 class="poppins">
-                                    <a href="gallery-single.html">Consetetur sadipscing elitr, sed diam nonumy</a>
-                                </h4>
-                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="comingsoon1" class="ls section_padding_top_100 section_padding_bottom_75">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-
-                <h2 class="section_header">
-                    Coming Soon!
-                </h2>
-                <p>Stay Tuned!</p>
-
-                <div id="comingsoon-countdown"></div>
-
             </div>
         </div>
     </div>

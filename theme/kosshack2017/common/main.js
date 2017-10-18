@@ -436,7 +436,28 @@ function windowLoadInit() {
 		jQuery('[data-toggle="tooltip"]').tooltip();
 	}
 
-	
+	// Gallery
+    if ($('#gallery').find('.gallery-wrap').length) {
+        var imageFolder = '/upload/gallery/image/';
+
+        $('.gallery-wrap').map(function (idx, el) {
+            var cateID = $(el).data('id');
+
+            if (cateID) {
+                $.get('/gallery/image/' + Number(cateID), {}, function (response, status, xhr) {
+                    response.map(function (item) {
+                        // console.log(item);
+                        $('<img class="img-thumbnail center-block" />')
+                            .attr('src', imageFolder + item['thumbnail'])
+                            .attr('title', item['image'])
+                            .appendTo('#gallery_' + cateID + ' .image-list');
+                        $('<br>')
+                            .appendTo('#gallery_' + cateID + ' .image-list');
+                    });
+                });
+            }
+        });
+    }
 
 	//comingsoon counter
 	if (jQuery().countdown) {
@@ -1109,6 +1130,8 @@ function windowLoadInit() {
 		var $container = jQuery(this);
 		var layoutMode = ($container.hasClass('masonry-layout')) ? 'masonry' : 'fitRows';
 		var columnWidth = ($container.find('.col-lg-20').length) ? '.col-lg-20' : '';
+
+		/*	temporary not used
 		$container.isotope({
 			percentPosition: true,
 			layoutMode: layoutMode,
@@ -1117,6 +1140,7 @@ function windowLoadInit() {
 				columnWidth: columnWidth
 			}
 		});
+		*/
 
 		var $filters = jQuery(this).attr('data-filters') ? jQuery(jQuery(this).attr('data-filters')) : $container.prev().find('.filters');
 		// bind filter click
