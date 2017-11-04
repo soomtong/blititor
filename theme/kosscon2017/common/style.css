@@ -7,11 +7,11 @@ body {
   font-family: "나눔바른고딕", NanumBarunGothic, "Source Sans Pro", "Helvetica Neue", "돋움", dotum, Helvetica, Arial, sans-serif;
 }
 .header {
-  background: #4c82de;
-  background: -webkit-linear-gradient(86deg, #4c82de, #5257cf);
-  background: -o-linear-gradient(86deg, #4c82de, #5257cf);
-  background: -moz-linear-gradient(86deg, #4c82de, #5257cf);
-  background: linear-gradient(86deg, #4c82de, #5257cf);
+  background: #0f74a2;
+  background: -webkit-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: -o-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: -moz-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: linear-gradient(86deg, #0f74a2, #06a7bf);
   font-family: "Roboto", "Noto Sans KR", Helvetica, Arial, sans-serif;
 }
 .header .logo {
@@ -47,30 +47,43 @@ body {
 }
 .bg-image {
   transition: background 1s linear;
+  position: relative;
+}
+.bg-sw-week {
+  background: url(/kosscon2017/common/asset/sw_week.jpg) no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  bottom: 1em;
+  right: 3em;
+  position: absolute;
+  z-index: 0;
+  width: 20em;
+  max-width: 100px;
+  height: 100px;
 }
 .bg-image-1 {
-  background: url(/kosscon2016/common/asset/home-hero-1.jpg) no-repeat center center;
+  background: url(/kosscon2017/common/asset/home-hero-1.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 .bg-image-2 {
-  background: url(/kosscon2016/common/asset/home-hero-2.jpg) no-repeat center center;
+  background: url(/kosscon2017/common/asset/home-hero-2.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 .bg-image-3 {
-  background: url(/kosscon2016/common/asset/home-hero-3.jpg) no-repeat center center;
+  background: url(/kosscon2017/common/asset/home-hero-3.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 .bg-image-4 {
-  background: url(/kosscon2016/common/asset/home-hero-4.jpg) no-repeat center center;
+  background: url(/kosscon2017/common/asset/home-hero-4.jpg) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -151,7 +164,7 @@ body {
 }
 .about h2,
 .register h2 {
-  color: #4A90E2;
+  color: #0e8daa;
   margin: 1em 2em;
   font-size: 2.4em;
 }
@@ -192,32 +205,32 @@ body {
 }
 .about .category .mobile,
 .register .category .mobile {
-  background: url("/kosscon2016/common/asset/home-subject-mobile.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-mobile.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .category .web,
 .register .category .web {
-  background: url("/kosscon2016/common/asset/home-subject-web.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-web.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .category .iot,
 .register .category .iot {
-  background: url("/kosscon2016/common/asset/home-subject-iot.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-iot.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .category .app,
 .register .category .app {
-  background: url("/kosscon2016/common/asset/home-subject-app.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-app.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .category .kernel,
 .register .category .kernel {
-  background: url("/kosscon2016/common/asset/home-subject-kernel.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-kernel.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .category .platform,
 .register .category .platform {
-  background: url("/kosscon2016/common/asset/home-subject-platform.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-subject-platform.png") top center no-repeat;
   background-size: 60px 60px;
 }
 .about .link,
@@ -229,16 +242,16 @@ body {
   display: inline-block;
   margin: 4em auto;
   padding: 160px 8em 0;
-  color: #4A90E2;
+  color: #0e8daa;
 }
 .about .link a .program,
 .register .link a .program {
-  background: url("/kosscon2016/common/asset/home-shortcut-program.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-shortcut-program.png") top center no-repeat;
   background-size: 180px 140px;
 }
 .about .link a .register,
 .register .link a .register {
-  background: url("/kosscon2016/common/asset/home-shortcut-register.png") top center no-repeat;
+  background: url("/kosscon2017/common/asset/home-shortcut-register.png") top center no-repeat;
   background-size: 180px 140px;
 }
 .gift hr.hr {
@@ -249,7 +262,7 @@ body {
   margin-bottom: 3em;
 }
 .gift .gift-condition h2 {
-  color: #4A90E2;
+  color: #0e8daa;
   margin-top: 5em;
   margin-bottom: 2em;
   text-align: center;
@@ -260,7 +273,7 @@ body {
   text-align: center;
 }
 .gift .gift-condition .lead .strong {
-  color: #4A90E2;
+  color: #0e8daa;
 }
 .gift .product {
   display: inline-block;
@@ -300,7 +313,11 @@ body {
   text-decoration: underline;
 }
 .pre-con {
-  background: url("/kosscon2016/common/asset/home-lastet-bg.jpg") center center no-repeat;
+  background: #0f74a2;
+  background: -webkit-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: -o-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: -moz-linear-gradient(86deg, #0f74a2, #06a7bf);
+  background: linear-gradient(86deg, #0f74a2, #06a7bf);
   min-height: 324px;
   color: #FFFFFF;
 }
@@ -369,7 +386,7 @@ body {
   */
 }
 .program h2 {
-  color: #4A90E2;
+  color: #0e8daa;
   font-size: 1.9em;
   margin-top: 3.8em;
   margin-bottom: 1.5em;
@@ -445,7 +462,7 @@ body {
 }
 .tutorial dt {
   text-align: left;
-  color: #4A90E2;
+  color: #0e8daa;
   font-size: 1.2em;
   font-weight: normal;
   width: 120px;
@@ -490,7 +507,7 @@ body {
   text-decoration: underline;
 }
 .register form .form-group .additional-text a {
-  color: #4A90E2;
+  color: #0e8daa;
   margin: 0 0.5em;
 }
 .register form .form-group button.secret {
@@ -502,7 +519,7 @@ body {
   letter-spacing: 2px;
   padding: 10px 36px;
   border-radius: 1px;
-  background-color: #4A90E2;
+  background-color: #0e8daa;
 }
 .register form .form-group button.update {
   margin-top: 1em;
@@ -546,17 +563,17 @@ body {
 }
 .register .apply-section-title {
   color: #fff;
-  background-color: #4A90E2;
-  border-color: #4A90E2;
+  background-color: #0e8daa;
+  border-color: #0e8daa;
   text-align: center;
 }
 .register .speaker {
   padding-left: 5px;
   font-size: 0.8em;
-  color: #4A90E2;
+  color: #0e8daa;
 }
 .location h2 {
-  color: #4A90E2;
+  color: #0e8daa;
   font-size: 1.9em;
   margin-top: 3.8em;
   margin-bottom: 1.5em;
@@ -620,7 +637,7 @@ body {
 .footer {
   padding-top: 1em;
   color: #9B9B9B;
-  background: #f9f9f9;
+  background: #ffffff;
 }
 .footer .sponsor {
   display: inline-block;
@@ -654,19 +671,15 @@ body {
   padding-right: 0;
 }
 .footer .sponsor .msip img {
-  width: 132px;
   height: 32px;
 }
 .footer .sponsor .nipa a img {
-  width: 168px;
   height: 32px;
 }
 .footer .sponsor .ipa a img {
-  width: 147px;
   height: 32px;
 }
 .footer .sponsor .kosslab a img {
-  width: 177px;
   height: 32px;
 }
 #to-top {

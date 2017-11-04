@@ -1,0 +1,25 @@
+<table class="pure-table pure-table-horizontal table-wide">
+    <thead>
+    <tr>
+        <th width="16px">#</th>
+        <th width="102px">성명</th>
+        <th>이메일</th>
+        <th>전화번호</th>
+        <th width="98px">신청일</th>
+        <th width="98px">갱신일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for item in reservationList %}
+    <tr class="" title="{{item.info}}">
+        <td>{{loop.index}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.phone}}</td>
+        <td>{{item.created_at}}</td>
+        <td>{{item.updated_at}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

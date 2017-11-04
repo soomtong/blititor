@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{site.title}}</title>
+    {% include './include/style.html' %}
+</head>
+<body>
+
+{% include './include/header.html' %}
+
+<div class="application-wrapper">
+    <div class="describe">
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <h3>사이트 운영자는 게스트북 정보와 페이지 로그를 확인할 수 있습니다.</h3>
+                <ul>
+                    <li>예약 현황 정보 열람</li>
+                    <li>튜토리얼 참여 정보 열람</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="pure-g search">
+            <div class="pure-u-1">
+                <form class="pure-form" method="post">
+                    <label>
+                        <input type="text" class="pure-input" placeholder="Page (url)">
+                    </label>
+                    <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                    <button type="submit" class="pure-button">Search</button>
+
+                    <label for="weekly" class="pull-right" title="주간 구분 또는 최근 일주일">
+                        <input id="weekly" type="checkbox"> 요일별
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <table class="pure-table table-hover table-wide">
+                    <thead>
+                    <tr>
+                        <th>페이지</th>
+                        <th>전체</th>
+                        <th>{{ dates[7] }}</th>
+                        <th>{{ dates[6] }}</th>
+                        <th>{{ dates[5] }}</th>
+                        <th>{{ dates[4] }}</th>
+                        <th>{{ dates[3] }}</th>
+                        <th>{{ dates[2] }}</th>
+                        <th>{{ dates[1] }}</th>
+                        <th>오늘</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set cls = cycler("pure-table-odd", "") %}
+                    {% for item in list %}
+                    <tr class="{{ cls.next() }}">
+                        <td><a href="{{site.root}}{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.path}}</a></td>
+                        <td>{{sum[loop.index0].total}}</td>
+                        <td>{{item.T7}}</td>
+                        <td>{{item.T6}}</td>
+                        <td>{{item.T5}}</td>
+                        <td>{{item.T4}}</td>
+                        <td>{{item.T3}}</td>
+                        <td>{{item.T2}}</td>
+                        <td>{{item.T1}}</td>
+                        <td>{{item.T0}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pure-g">
+            <div class="pure-u-1">
+                {% if pagination %}
+                {% import './include/pagination.html' as Page %}
+                {{ Page.nation(pagination, route.manage_root + route.manage.account) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% include './include/footer.html' %}
+
+</div>
+</body>
+</html>
