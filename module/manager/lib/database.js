@@ -270,12 +270,12 @@ function selectReservationStatus(connection, category, callback) {
 
 function selectReservationList(connection, page, category, callback) {
     var pageSize = 10;
+    var gutterSize = 10;
+    var gutterMargin = 3;
+
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
-        index: 0,
-        maxPage: 0,
-        pageSize: pageSize,
         reservationList: [],
         statusInfo: {}
     };
@@ -289,19 +289,14 @@ function selectReservationList(connection, page, category, callback) {
         connection.query(query.countAllReservationList, [tables.reservationList, category], function (err, rows) {
             result.total = rows[0]['count'] || 0;
 
-            var maxPage = Math.floor(result.total / pageSize);
-            if (maxPage < result.page) {
-                result.page = maxPage;
-            }
+            var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
 
-            result.maxPage = maxPage;
-            result.index = Number(result.page) * pageSize;
-            if (result.index < 0) result.index = 0;
-
-            connection.query(query.readReservationListByPage, [tables.reservationList, category, result.index, pageSize], function (err, rows) {
+            connection.query(query.readReservationListByPage, [tables.reservationList, category, pagination.index, pagination.pageSize], function (err, rows) {
                 if (err) {
                     winston.error(err);
                 } else {
+                    result.pagination = pagination;
+
                     result.reservationList = rows;
 
                     result.reservationList.map(function (item) {

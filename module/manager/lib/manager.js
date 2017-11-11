@@ -698,13 +698,8 @@ function reservationList(req, res) {
     var mysql = connection.get();
 
     db.readReservationList(mysql, Number(params.page - 1), Number(params.cate), function (error, result) {
-        params.pagination = true;
-        params.total = result.total;
-        params.pageSize = result.pageSize;
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
+        params.pagination = result.pagination;
+        params.totalCount = result.total || 0;
         params.reservationList = result.reservationList;
 
         params.reservationList.map(function (item) {

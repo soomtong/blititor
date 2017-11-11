@@ -61,6 +61,13 @@ body {
   max-width: 100px;
   height: 100px;
 }
+.bg-image-0 {
+  background: url(/kosscon2017/common/asset/kosscon-bg.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .bg-image-1 {
   background: url(/kosscon2017/common/asset/home-hero-1.jpg) no-repeat center center;
   -webkit-background-size: cover;

@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
-var request = require('superagent');
+var request = require('request');
 
 var slack = require('../../slack');
 var mailgun = require('../../mailgun');
@@ -219,7 +219,8 @@ function generateSecret(req, res) {
     req.session.reservation = params;
 
     // for test
-    if (BLITITOR.env !== 'production') {
+    var test = true;
+    if (!test && BLITITOR.env !== 'production') {
         winston.warn('pass by sms sending, because it\'s a development mode');
         return res.send({
             "status": "success",
@@ -230,33 +231,46 @@ function generateSecret(req, res) {
     }
 
     // post request to phone message service
-    var host = 'http://welltag.com/kosscon2016/sms_send.asp';
+    var smsToken = misc.serviceToken('sms');
+    var smsProvider = misc.serviceProvider('sms');
+    var sender = '01021443188';
 
-    request
-        .post(host)
-        .type('form')
-        .send({hp: params.phone, code: params.secretNumber})
-        .end(function (error, response) {
-            winston.info('sent sms secret message by', host);
+    request({
+        uri: smsProvider,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'x-waple-authorization': smsToken
+        },
+        encoding: 'utf8',
+        json: true,
+        formData: {
+            dest_phone: params.phone,
+            send_phone: sender,
+            send_name: "코스콘 관리자",
+            msg_body: "[KOSSCON][" + params.secretNumber + "] 사전등록 신청 인증번호는 " + params.secretNumber + " 입니다"
+        }
+    }, function (error, response, body) {
+        winston.info('sent sms secret message by', smsProvider);
 
-            if (response.statusCode == 200 && response.text.includes('"result_code":"200"')) {
-                res.send({
-                    "status": "success",
-                    "data": {
-                        "phone": params.phone
-                    }
-                });
-            } else {
-                winston.error('failed sent sms to', params.phone);
+        if (response.statusCode == 200 && body['result_message'] == 'OK') {
+            res.send({
+                "status": "success",
+                "data": {
+                    "phone": params.phone
+                }
+            });
+        } else {
+            winston.error('failed sent sms to', params.phone);
 
-                res.send({
-                    "status": "fail",
-                    "data": {
-                        "phone": params.phone
-                    }
-                });
-            }
-        });
+            res.send({
+                "status": "fail",
+                "data": {
+                    "phone": params.phone
+                }
+            });
+        }
+    });
 }
 
 function findReservationByGiven(reservationData, callback) {
