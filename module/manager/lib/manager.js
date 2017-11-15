@@ -697,7 +697,7 @@ function reservationList(req, res) {
 
     var mysql = connection.get();
 
-    db.readReservationList(mysql, Number(params.page - 1), Number(params.cate), function (error, result) {
+    db.readReservationList(mysql, Number(params.page), Number(params.cate), function (error, result) {
         params.pagination = result.pagination;
         params.totalCount = result.total || 0;
         params.reservationList = result.reservationList;

@@ -26,7 +26,7 @@
                     <br>
                 </p>
                 <p>
-                    <span class="strong">일시</span> 2017년 11월 21일 목요일 10:00 ~ 18:00
+                    <span class="strong">일시</span> 2017년 11월 21일 화요일 10:00 ~ 18:00
                 </p>
                 <p>
                     <span class="strong">장소</span> 코엑스 컨퍼런스룸 317호, 318호, 327호
@@ -47,7 +47,7 @@
                     참관 인원은 300명으로 제한되어 있으므로 참가를 원하실 경우 지금 등록하세요.
                 </p>
                 <p>
-                    <span class="strong">일시</span> 2017년 11월 21일 목요일 10:00 ~ 18:00
+                    <span class="strong">일시</span> 2017년 11월 21일 화요일 10:00 ~ 18:00
                 </p>
                 <p>
                     <span class="strong">장소</span> 코엑스 컨퍼런스룸 317호, 318호, 327호
@@ -168,7 +168,7 @@
 
                         <div class="collapse" id="update_section_data">
 
-                            <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">12:30-14:45</span></h4>
+                            <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 1 <span class="small">13:00-15:00</span></h4>
 
                             <ul class="list-group">
                                 <li class="list-group-item">
@@ -194,7 +194,7 @@
                                 {% endfor %}
                             </ul>
 
-                            <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 2 <span class="small">15:00-17:15</span></h4>
+                            <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 2 <span class="small">15:00-17:00</span></h4>
 
                             <ul class="list-group">
                                 <li class="list-group-item">
@@ -212,6 +212,32 @@
                                         <input type="radio" name="register_apply_tutorial2" value="{{status[index].id}}"> {{status[index].title}}
                                         {% endif %}
                                         <a target="_blank" href="/program/tutorial#{{index+1}}"><span class="small">{{status[index].sub_title}}</span></a>
+                                        {% if closed %}
+                                        <span class="label label-danger closed">마감되었습니다</span>
+                                        {% endif %}
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                            <h4 class="section"><i class="glyphicon glyphicon-ok"></i>Section 3 <span class="small">13:00-17:00</span></h4>
+
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        <input type="radio" name="register_apply_tutorial3" value="" checked>  참여하지 않음
+                                    </label>
+                                </li>
+                                {% for index in range(4,5) %}
+                                <li class="list-group-item">
+                                    <label class="radio">
+                                        {% set closed = true if status[index].counter >= status[index].max_count else false %}
+                                        {% if closed %}
+                                        <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}" disabled> <span class="disabled">{{status[index].title}}</span>
+                                        {% else %}
+                                        <input type="radio" name="register_apply_tutorial3" value="{{status[index].id}}"> {{status[index].title}}
+                                        {% endif %}
+                                        <a target="_blank" href="https://contributhon.kr/project"><span class="small">{{status[index].sub_title}}</span></a>
                                         {% if closed %}
                                         <span class="label label-danger closed">마감되었습니다</span>
                                         {% endif %}

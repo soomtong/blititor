@@ -218,9 +218,7 @@ function generateSecret(req, res) {
 
     req.session.reservation = params;
 
-    // for test
-    var test = true;
-    if (!test && BLITITOR.env !== 'production') {
+    if (BLITITOR.env !== 'production') {
         winston.warn('pass by sms sending, because it\'s a development mode');
         return res.send({
             "status": "success",
