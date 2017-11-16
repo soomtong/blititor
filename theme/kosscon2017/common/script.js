@@ -194,6 +194,7 @@ var sendReservation = function (event) {
     var $phone = $('#phone');
     var $phone_secret = $('#phone_secret');
     var $info = $('#info');
+    var $privacy_order = $('#privacy_order');
 
     if (!$name.val()) {
         $name.focus();
@@ -246,6 +247,18 @@ var sendReservation = function (event) {
     if (!$info.val()) {
         $info.focus();
         $info.siblings('.info_message').fadeIn(function () {
+            var that = this;
+            setTimeout(function () {
+                $(that).fadeOut(1);
+            }, 1500);
+        });
+
+        return false;
+    }
+
+    if (!$privacy_order.is(':checked')) {
+        $privacy_order.focus();
+        $privacy_order.siblings('.privacy_message').fadeIn(function () {
             var that = this;
             setTimeout(function () {
                 $(that).fadeOut(1);
