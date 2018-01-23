@@ -3,7 +3,7 @@ var path = require('path');
 var winston = require('winston');
 var mysql = require('mysql');
 
-var common = require('./common');
+var misc = require('./misc');
 
 var configFile = require('../config/app_default.json').configFile;
 
@@ -17,7 +17,7 @@ function initializePool() {
     try {
         databaseConfiguration = require(path.join('../..', configFile))['database'];
 
-        winston.info('Getting connection information for Connection Pool' ,databasePublicInfo(databaseConfiguration));
+        winston.info('connection pool information is' ,databasePublicInfo(databaseConfiguration));
     } catch (e) {
         winston.warn('database config file not exist');
     }
@@ -30,8 +30,8 @@ function initializePool() {
             connectionLimit: 50,
             acquireTimeout: 30000, // 30s
             host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || common.databaseDefault.port,
-            database: databaseConfiguration.dbName || common.databaseDefault.database,
+            port: databaseConfiguration.dbPort || misc.databaseDefault.port,
+            database: databaseConfiguration.dbName || misc.databaseDefault.database,
             user: databaseConfiguration.dbUserID,
             password: databaseConfiguration.dbUserPassword
         });
@@ -64,9 +64,9 @@ function initSession(mysqlStore, callback) {
     try {
         databaseConfiguration = require(path.join('../..', configFile))['database'];
 
-        winston.info('Getting connection information for Session' ,databasePublicInfo(databaseConfiguration));
+        winston.verbose('session database connection information is' ,databasePublicInfo(databaseConfiguration));
     } catch (e) {
-        winston.warn('database config file not exist, initSession');
+        winston.warn('database config file not exist in initSession function');
     }
 
     var sessionStore;
@@ -81,14 +81,14 @@ function initSession(mysqlStore, callback) {
 
         sessionStore = new mysqlStore({
             host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || common.databaseDefault.port,
-            database: databaseConfiguration.dbName || common.databaseDefault.database,
+            port: databaseConfiguration.dbPort || misc.databaseDefault.port,
+            database: databaseConfiguration.dbName || misc.databaseDefault.database,
             user: databaseConfiguration.dbUserID,
             password: databaseConfiguration.dbUserPassword,
             autoReconnect: false,
             useConnectionPooling: true,
             schema: {
-                tableName: common.databaseDefault.prefix + 'session'
+                tableName: misc.databaseDefault.tablePrefix + 'session'
             }
         });
 

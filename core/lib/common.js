@@ -3,8 +3,6 @@ var bcrypt = require('bcryptjs');
 var removeMarkdown = require('remove-markdown');
 var moment = require('moment');
 
-var databaseConfiguration = require('../config/database_default');
-
 var salt = bcrypt.genSaltSync(8);
 
 function destructMarkdown(markdownText) {
@@ -146,10 +144,6 @@ function getHeaderTextFromDelta(delta, limit, joiner) {
     return joiner ? text.join(joiner).substr(0, limit).trim() + reduced : text.join('\n').substr(0, limit).trim() + reduced;
 }
 
-function getDatabaseDefault() {
-    return databaseConfiguration;
-}
-
 function dateFormatter(dateValue, format, fillDefault) {
     if (!format) format = "YYYY-MM-DD";
     if (!fillDefault) fillDefault = false;
@@ -239,5 +233,4 @@ module.exports = {
     getHeaderTextFromMarkdown: getHeaderTextFromMarkdown,
     getHeaderTextFromDelta: getHeaderTextFromDelta,
     splitString2Array: splitString2Array,
-    databaseDefault: getDatabaseDefault()
 };

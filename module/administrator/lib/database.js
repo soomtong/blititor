@@ -7,9 +7,9 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    auth: common.databaseDefault.prefix + 'auth',
-    user: common.databaseDefault.prefix + 'user',
-    accountLog: common.databaseDefault.prefix + 'account_counter_log'
+    auth: misc.databaseDefault.tablePrefix + 'auth',
+    user: misc.databaseDefault.tablePrefix + 'user',
+    accountLog: misc.databaseDefault.tablePrefix + 'account_counter_log'
 };
 
 var query = require('./query');

@@ -7,17 +7,17 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    auth: common.databaseDefault.prefix + 'auth',
-    user: common.databaseDefault.prefix + 'user',
-    accountLog: common.databaseDefault.prefix + 'account_counter_log',
-    accountCounter: common.databaseDefault.prefix + 'account_counter',
-    visitLog: common.databaseDefault.prefix + 'visit_counter_log',
-    visitCounter: common.databaseDefault.prefix + 'visit_counter',
-    guestbook: common.databaseDefault.prefix + 'guestbook',
-    galleryCategory : common.databaseDefault.prefix + 'gallery_category',
-    galleryImage: common.databaseDefault.prefix + 'gallery_image',
-    reservationList: common.databaseDefault.prefix + 'reservation_list',
-    reservationStatus : common.databaseDefault.prefix + 'reservation_status'
+    auth: misc.databaseDefault.tablePrefix + 'auth',
+    user: misc.databaseDefault.tablePrefix + 'user',
+    accountLog: misc.databaseDefault.tablePrefix + 'account_counter_log',
+    accountCounter: misc.databaseDefault.tablePrefix + 'account_counter',
+    visitLog: misc.databaseDefault.tablePrefix + 'visit_counter_log',
+    visitCounter: misc.databaseDefault.tablePrefix + 'visit_counter',
+    guestbook: misc.databaseDefault.tablePrefix + 'guestbook',
+    galleryCategory : misc.databaseDefault.tablePrefix + 'gallery_category',
+    galleryImage: misc.databaseDefault.tablePrefix + 'gallery_image',
+    reservationList: misc.databaseDefault.tablePrefix + 'reservation_list',
+    reservationStatus : misc.databaseDefault.tablePrefix + 'reservation_status'
 };
 
 var query = require('./query');

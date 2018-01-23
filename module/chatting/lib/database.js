@@ -9,8 +9,8 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    chattingLog : common.databaseDefault.prefix + 'chatting_log',
-    user: common.databaseDefault.prefix + 'user'
+    chattingLog : misc.databaseDefault.tablePrefix + 'chatting_log',
+    user: misc.databaseDefault.tablePrefix + 'user'
 };
 
 var query = require('./query');

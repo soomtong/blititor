@@ -5,7 +5,7 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    // mailgun: common.databaseDefault.prefix + 'mailgun'
+    // mailgun: misc.databaseDefault.tablePrefix + 'mailgun'
 };
 
 function deleteScheme(databaseConfiguration, callback) {

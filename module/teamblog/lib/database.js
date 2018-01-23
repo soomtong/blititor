@@ -11,12 +11,12 @@ var misc = require('../../../core/lib/misc');
 var postFlag = misc.commonFlag().post;
 
 var tables = {
-    teamblog: common.databaseDefault.prefix + 'teamblog',
-    teamblogHistory: common.databaseDefault.prefix + 'teamblog_history',
-    teamblogRelated: common.databaseDefault.prefix + 'teamblog_related',
-    teamblogTag: common.databaseDefault.prefix + 'teamblog_tag',
-    teamblogTagRelated: common.databaseDefault.prefix + 'teamblog_tag_related',
-    user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
+    teamblog: misc.databaseDefault.tablePrefix + 'teamblog',
+    teamblogHistory: misc.databaseDefault.tablePrefix + 'teamblog_history',
+    teamblogRelated: misc.databaseDefault.tablePrefix + 'teamblog_related',
+    teamblogTag: misc.databaseDefault.tablePrefix + 'teamblog_tag',
+    teamblogTagRelated: misc.databaseDefault.tablePrefix + 'teamblog_tag_related',
+    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var query = require('./query');

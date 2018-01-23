@@ -7,8 +7,11 @@ var colors = require('colors');
 var displayRoutes = require('express-routemap');
 var printRoutes = require('express-print-routes');
 
+var configFile = require('../config/app_default.json').configFile;
 var siteDefault = require('../config/site_default.json');
 var userPrivilege = require('../config/user_level.json');
+var configuration = require(path.join('..', '..', configFile));
+var databaseConfiguration = configuration['database'];
 
 var serviceTokens = loadServiceToken();
 var serviceProviders = loadServiceProvider();
@@ -17,7 +20,7 @@ function loadServiceToken() {
     var tokens;
 
     try {
-        tokens = require('../../config.json').service.token;
+        tokens = configuration.service.token;
     } catch (e) {
         winston.warn("Can't Get Service Token in `config.json`");
     }
@@ -29,7 +32,7 @@ function loadServiceProvider() {
     var providers;
 
     try {
-        providers = require('../../config.json').service.provider;
+        providers = configuration.service.provider;
     } catch (e) {
         winston.warn("Can't Get Service Provider in `config.json`");
     }
@@ -143,17 +146,19 @@ function commonFlag() {
 
 function setFlag(flag) {
     var flagList = commonFlag();
+    var flagCode = '';
 
     switch (flag) {
         case flagList.post.markdown.value:
-            return flagList.post.markdown.value;
+            flagCode = flagList.post.markdown.value;
             break;
         case flagList.post.delta.value:
-            return flagList.post.delta.value;
+            flagCode = flagList.post.delta.value;
             break;
         default:
-            return '';
     }
+
+    return flagCode;
 }
 
 function showRouteTable() {
@@ -293,4 +298,5 @@ module.exports = {
     showRoutes: showRoutes,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
+    databaseDefault: databaseConfiguration
 };

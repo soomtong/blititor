@@ -9,9 +9,9 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    user: common.databaseDefault.prefix + 'user',
-    auth: common.databaseDefault.prefix + 'auth',
-    point: common.databaseDefault.prefix + 'point'
+    user: misc.databaseDefault.tablePrefix + 'user',
+    auth: misc.databaseDefault.tablePrefix + 'auth',
+    point: misc.databaseDefault.tablePrefix + 'point'
 };
 
 var query = require('./query');

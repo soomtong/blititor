@@ -11,13 +11,13 @@ var misc = require('../../../core/lib/misc');
 var appstoreFlag = misc.commonFlag().appStore;
 
 var tables = {
-    storeApp: common.databaseDefault.prefix + 'store_app',
-    storeAppHistory: common.databaseDefault.prefix + 'store_app_history',
-    storeAppCategory: common.databaseDefault.prefix + 'store_app_category',
-    storeAppRelated: common.databaseDefault.prefix + 'store_app_related',
-    storeOrder: common.databaseDefault.prefix + 'store_order',
-    storeOrderDetail: common.databaseDefault.prefix + 'store_order_detail',
-    user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
+    storeApp: misc.databaseDefault.tablePrefix + 'store_app',
+    storeAppHistory: misc.databaseDefault.tablePrefix + 'store_app_history',
+    storeAppCategory: misc.databaseDefault.tablePrefix + 'store_app_category',
+    storeAppRelated: misc.databaseDefault.tablePrefix + 'store_app_related',
+    storeOrder: misc.databaseDefault.tablePrefix + 'store_order',
+    storeOrderDetail: misc.databaseDefault.tablePrefix + 'store_order_detail',
+    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var Queries = require('./query');

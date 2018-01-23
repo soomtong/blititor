@@ -5,17 +5,16 @@ var colors = require('colors');
 var mysql = require('mysql');
 var winston = require('winston');
 
-var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 // logged user view: account,
 // all user view(==page view): visit
 var tables = {
-    accountLog: common.databaseDefault.prefix + 'account_counter_log',
-    accountCounter: common.databaseDefault.prefix + 'account_counter',
-    visitLog: common.databaseDefault.prefix + 'visit_counter_log',
-    visitCounter: common.databaseDefault.prefix + 'visit_counter',
-    sessionLog: common.databaseDefault.prefix + 'session_counter_log'
+    accountLog: misc.databaseDefault.tablePrefix + 'account_counter_log',
+    accountCounter: misc.databaseDefault.tablePrefix + 'account_counter',
+    visitLog: misc.databaseDefault.tablePrefix + 'visit_counter_log',
+    visitCounter: misc.databaseDefault.tablePrefix + 'visit_counter',
+    sessionLog: misc.databaseDefault.tablePrefix + 'session_counter_log'
 };
 
 var query = require('./query');
@@ -23,8 +22,8 @@ var query = require('./query');
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || misc.databaseDefault.port,
+        database: databaseConfiguration.dbName || misc.databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });
@@ -45,8 +44,8 @@ function deleteScheme(databaseConfiguration, callback) {
 function createScheme(databaseConfiguration, callback, done) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || misc.databaseDefault.port,
+        database: databaseConfiguration.dbName || misc.databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });

@@ -11,11 +11,11 @@ var misc = require('../../../core/lib/misc');
 var controllerHubFlag = misc.commonFlag().controllerHub;
 
 var tables = {
-    controller: common.databaseDefault.prefix + 'controller',  // hub info and main controller info
-    gateway: common.databaseDefault.prefix + 'gateway',
-    gatewayGroup: common.databaseDefault.prefix + 'gateway_group',
-    rtvm: common.databaseDefault.prefix + 'rtvm',
-    user: common.databaseDefault.prefix + 'user'  // refer `module/account/lib/database.js`
+    controller: misc.databaseDefault.tablePrefix + 'controller',  // hub info and main controller info
+    gateway: misc.databaseDefault.tablePrefix + 'gateway',
+    gatewayGroup: misc.databaseDefault.tablePrefix + 'gateway_group',
+    rtvm: misc.databaseDefault.tablePrefix + 'rtvm',
+    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var Queries = require('./query');

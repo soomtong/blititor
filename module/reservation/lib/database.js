@@ -9,8 +9,8 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    reservationList: common.databaseDefault.prefix + 'reservation_list',
-    reservationStatus : common.databaseDefault.prefix + 'reservation_status'
+    reservationList: misc.databaseDefault.tablePrefix + 'reservation_list',
+    reservationStatus : misc.databaseDefault.tablePrefix + 'reservation_status'
 };
 
 var query = require('./query');

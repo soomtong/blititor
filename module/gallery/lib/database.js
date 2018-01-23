@@ -9,9 +9,9 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    galleryCategory : common.databaseDefault.prefix + 'gallery_category',
-    galleryImage: common.databaseDefault.prefix + 'gallery_image',
-    user: common.databaseDefault.prefix + 'user'
+    galleryCategory : misc.databaseDefault.tablePrefix + 'gallery_category',
+    galleryImage: misc.databaseDefault.tablePrefix + 'gallery_image',
+    user: misc.databaseDefault.tablePrefix + 'user'
 };
 
 var query = require('./query');

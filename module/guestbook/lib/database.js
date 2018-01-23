@@ -9,7 +9,7 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    guestbook: common.databaseDefault.prefix + 'guestbook'
+    guestbook: misc.databaseDefault.tablePrefix + 'guestbook'
 };
 
 var query = require('./query');

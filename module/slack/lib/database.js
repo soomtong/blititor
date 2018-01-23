@@ -5,7 +5,7 @@ var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
 
 var tables = {
-    // slack: common.databaseDefault.prefix + 'slack'
+    // slack: misc.databaseDefault.tablePrefix + 'slack'
 };
 
 function deleteScheme(databaseConfiguration, callback) {
