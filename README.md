@@ -7,6 +7,7 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 > This code is really easy to customize for your business! - Web developer journal in korean times
 
 ![blititor_logo_nodejsstyle7](https://cloud.githubusercontent.com/assets/22411481/18962436/cd87572a-86ab-11e6-8e6b-d145b325e119.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor?ref=badge_shield)
 
 (a logo presented by Hyejin Lee @melthleeth)
 
@@ -107,3 +108,6 @@ npm run dev
 Blititor has MIT License basically. but each theme design license depends on each maker's opinions.
 
 it will be described each `app` and `theme`'s readme file or description file.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor?ref=badge_large)
