@@ -1,5 +1,5 @@
+var lib = require('./lib/site');
 var middleware = require('./lib/middleware');
-var site = require('./lib/site');
 
-module.exports = site;
+module.exports = lib;
 module.exports.middleware = middleware;

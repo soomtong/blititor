@@ -461,10 +461,7 @@ function signIn(req, res) {
         req.session.previousURL = params.q.toString();
     }
 
-    // res.cookie('name', 'tobi', {expires: new Date(Date.now() + 900000)});
-
     res.render(BLITITOR.config.site.theme + '/page/account/sign_in', params);
-
 }
 
 function signUp(req, res) {
