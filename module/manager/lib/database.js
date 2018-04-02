@@ -28,14 +28,16 @@ function selectAccountByPage(connection, page, callback) {
     var gutterMargin = 3;
 
     var fields = ['user_id', 'uuid', 'nickname', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
+
     var result = {
         total: 0,
         page: Math.abs(Number(page)),
-        accountList: []
+        pageSize: pageSize,
+		accountList: []
     };
 
     connection.query(query.countAllAccount, [tables.auth, tables.user], function (err, rows) {
-        result.total = rows[0]['count'] || 0;
+		result.total = rows[0]['count'] || 0;
 
         var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
 
@@ -54,6 +56,7 @@ function readVisitLogByPage(connection, page, callback) {
     var gutterSize = 10;
     var gutterMargin = 3;
     var fields = ['path', 'method', 'ip', 'ref', 'client', 'device', 'created_at'];
+
     var result = {
         total: 0,
         page: Math.abs(Number(page)),

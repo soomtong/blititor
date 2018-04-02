@@ -134,7 +134,7 @@ function index(req, res) {
 
             res.redirect('back');
         }
-
+		console.log(result)
         params.pagination = result.pagination;
         params.totalVisitLogCount = result.total;
         params.visitLogList = result.visitLogList;
@@ -200,8 +200,11 @@ function dashboard(req, res) {
                 });
 
                 countOfDays.map(function (item) {
-                    sessions.push(tempObj[item].session || 0);
-                    logins.push(tempObj[item].login || 0);
+                    var s = tempObj[item] && tempObj[item].session
+                    var l = tempObj[item] && tempObj[item].login
+
+                    sessions.push(s || 0);
+                    logins.push(l || 0);
                 });
 
                 done(null, {
@@ -308,7 +311,7 @@ function accountList(req, res) {
 
     var mysql = connection.get();
 
-    db.readAccountByPage(mysql, Number(params.page), function (error, result) {
+    db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
         if (error) {
             req.flash('error', {msg: '계정 목록 읽기에 실패했습니다.'});
 
@@ -317,8 +320,14 @@ function accountList(req, res) {
             res.redirect('back');
         }
 
+        params.showPagination = true;
         params.pagination = result.pagination;
-        params.totalCount = result.total || 0;
+        params.total = result.total;
+        params.pageSize = result.pageSize;
+        params.hasNext = result.total > (result.page + 1) * result.pageSize;
+        params.hasPrev = result.page > 0;
+        params.maxPage = result.maxPage + 1;
+        params.page = result.page + 1;  // prevent when wrong page number assigned
         params.list = result.accountList;
 
         params.list.map(function (item) {
@@ -381,13 +390,9 @@ function pageLogList(req, res) {
             res.redirect('back');
         }
 
-        params.pagination = true;
-        params.total = result.total;
-        params.pageSize = result.pageSize;
-        params.hasNext = result.total > (result.page + 1) * result.pageSize;
-        params.hasPrev = result.page > 0;
-        params.maxPage = result.maxPage + 1;
-        params.page = result.page + 1;  // prevent when wrong page number assigned
+		params.showPagination = true;
+		params.pagination = result.pagination;
+
         params.list = result.visitLogList;
 
         params.list.map(function (item) {

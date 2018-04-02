@@ -166,6 +166,7 @@ function pageFormatter(url) {
 function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGIN) {
     var params = {
         page: Math.abs(Number(pageIndex)) || 1,
+        total: totalCount,
         index: 0,
         maxPage: 0,
         pageSize: PAGE_SIZE

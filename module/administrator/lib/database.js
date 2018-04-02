@@ -14,7 +14,7 @@ var tables = {
 
 var query = require('./query');
 
-function selectByPage(connection, page, callback) {
+function selectAccountByPage(connection, page, callback) {
     var pageSize = 10;
     var fields = ['user_id', 'uuid', 'nickname', 'level', 'grant', 'login_counter', 'last_logged_at', 'created_at', 'updated_at'];
     var result = {
@@ -23,7 +23,7 @@ function selectByPage(connection, page, callback) {
         index: 0,
         maxPage: 0,
         pageSize: pageSize,
-        teamblogList: []
+		accountList: []
     };
 
     connection.query(query.countAllAccount, [tables.auth, tables.user], function (err, rows) {
@@ -82,7 +82,7 @@ function selectByAccountLogUUID(connection, UUID, callback) {
 
 
 module.exports = {
-    readAccountByPage: selectByPage,
+    readAccountByPage: selectAccountByPage,
     readAccount: selectByAccountUUID,
     readAuthIDByUUID: selectAuthIDByUUID,
     updateAuthByID: updateAuthByID,
