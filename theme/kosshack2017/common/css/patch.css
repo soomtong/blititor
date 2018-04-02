@@ -20,6 +20,20 @@ span.strong {
     padding: 10px 0;
 }
 
+.prize-title {
+    padding-top: 5px;
+}
+
+.prize-members {
+    list-style: none;
+    margin-left: -2em;
+}
+
+.prize-members > li {
+    float: left;
+    margin-right: 2em;
+}
+
 .blur {
     -webkit-filter: blur(8px);
     -moz-filter: blur(8px);
