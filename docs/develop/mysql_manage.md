@@ -21,4 +21,8 @@ mysql> GRANT ALL PRIVILEGES ON *.* TO 'name_of_user'@'192.168.%';
 mysql> FLUSH PRIVILEGES;
 ```
 
+if your user's password didn't update then use this command
 
+```
+mysql> update user set authentication_string=password('password_for_user') where user='name_of_user';
+```
