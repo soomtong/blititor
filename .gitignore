@@ -1,6 +1,5 @@
 .DS_Store
 
-lib-cov
 *.seed
 *.log
 *.csv
@@ -14,8 +13,8 @@ lib-cov
 node_modules
 public/lib
 public/upload
+etc
 
-package-lock.json
 npm-debug.log
 database.json
 database.json.*
@@ -24,5 +23,4 @@ theme.json.*
 config*.json
 config*.json.*
 
-theme/smart_network_platform
-etc/
+# for commercial themes or modules here.

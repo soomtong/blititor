@@ -24,7 +24,7 @@ but *.html, *.css depends on each css frameworks.
 
 ## File name Convention
 
-파일명 또는 폴더명은 snake_case 를 사용합니다. 물론 소문자입니다.
+파일명은 snake_case 를 사용합니다. 물론 소문자입니다.
 
 incorrect
 
@@ -40,7 +40,15 @@ file_name.html  ( more preferred )
 filename.html
 ```
 
-폴더명의 경우 특정 버전을 지칭할 때는 예외적으로 '-' 를 사용합니다.
+## Folder name Convention
+
+폴더 이름의 구분은 '-' 를 사용합니다.
+
+```
+long-folder-name
+```
+
+특정 버전을 지칭할 때도 '-' 를 사용합니다.
 
 ```
 newlib-1.0.1

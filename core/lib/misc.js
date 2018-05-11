@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
-var colors = require('colors');
 
 var displayRoutes = require('express-routemap');
 var printRoutes = require('express-print-routes');

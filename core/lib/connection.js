@@ -37,11 +37,11 @@ function initializePool() {
         });
 
         pool.on('connection', function(){
-            winston.verbose('데이터베이스 커넥션 완료...');
+            winston.verbose('finish database connecting...');
         });
 
         pool.on('enqueue', function () {
-            winston.verbose('데이터베이스 커넥션 대기...');
+            winston.verbose('standby database connecting...');
         });
 
         return pool;

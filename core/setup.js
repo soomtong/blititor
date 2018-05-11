@@ -1,6 +1,6 @@
 // setup blititor process for command line interface
 var prompt = require('prompt');
-var colors = require('colors');
+var clc = require('cli-color');
 var async = require('neo-async');
 var parseArgs = require('minimist');
 
@@ -21,7 +21,7 @@ var params = parseArgs(process.argv.slice(2));
 var mainCommand = params._[0];
 var subCommand = params._[1];
 
-prompt.message = colors.green(" B");
+prompt.message = clc.green(" B");
 
 // todo: refactor for each module's CLI config process, that exposed each
 // or just go in to a web interface except these setups.

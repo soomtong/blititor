@@ -1,6 +1,5 @@
 var fs = require('fs');
 var async = require('neo-async');
-var colors = require('colors');
 
 var mysql = require('mysql');
 var winston = require('winston');
