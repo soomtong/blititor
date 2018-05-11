@@ -208,9 +208,9 @@ function checkDatabaseConfigFile(configFile) {
         winston.info('database config information in that file is loaded');
     } catch (e) {
         winston.error('database config information in that file is not exist');
-        console.error('----------------------------------------------------------------------------'.bgRed);
-        console.error(' Go to make `node core/setup db` and create database connection information '.bgRed);
-        console.error('----------------------------------------------------------------------------'.bgRed);
+        console.error('----------------------------------------------------------------------------');
+        console.error(' Go to make `node core/setup db` and create database connection information ');
+        console.error('----------------------------------------------------------------------------');
 
         process.exit(1);
     }

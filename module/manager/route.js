@@ -17,14 +17,14 @@ router.post(routeTable.manage.login, manager.loginProcess);
 // for dashboard
 router.get(routeTable.manage.dashboard, AccountMiddleware.checkManager, manager.dashboard);
 // for counter
-router.all(                               AccountMiddleware.checkManager, manager.index);
-router.all(routeTable.manage.pageCounter, AccountMiddleware.checkManager, manager.pageViewCounter);
+router.get('/', AccountMiddleware.checkManager, manager.index);
+router.get(routeTable.manage.pageCounter, AccountMiddleware.checkManager, manager.pageViewCounter);
 router.get(routeTable.manage.pageLog, AccountMiddleware.checkManager, manager.pageViewLog);
 // for account
 router.get(routeTable.manage.account, AccountMiddleware.checkManager, manager.accountList);
 router.get(routeTable.manage.accountCounter, AccountMiddleware.checkManager, manager.accountActionCounter);
 // for guestbook
-router.get('/', AccountMiddleware.checkManager, manager.guestbookList);
+router.get('/guestbook', AccountMiddleware.checkManager, manager.guestbookList);
 router.post(routeTable.guestbook.reply, AccountMiddleware.checkManager, manager.guestbookReply);
 router.post(routeTable.guestbook.delete, AccountMiddleware.checkManager, manager.guestbookDelete);
 // for gallery

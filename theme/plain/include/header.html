@@ -15,7 +15,7 @@
             {% endif %}
             {% endfor %}
             {% if user %}
-            <li class="pure-menu-item"><a href="{{site.root}}{{ route.account_root + route.account.signOut }}" class="pure-menu-link">로그아웃</a></li>
+            <li class="pure-menu-item"><a href="/account{{ route.account.signOut }}" class="pure-menu-link">로그아웃</a></li>
             {% endif %}
         </ul>
     </div>
