@@ -64,7 +64,7 @@ function setUserPrivilege() {
     return BLITITOR.userPrivilege;
 }
 
-function getRouteTable(customRouteData) {
+function getRouteData(customRouteData) {
     if (customRouteData && !Array.isArray(customRouteData)) {
         if (Array.isArray(customRouteData)) {
             customRouteData.map(function (item) {
@@ -284,7 +284,7 @@ function serviceProvider(vendor) {
 module.exports = {
     getUserPrivilege: getUserPrivilege,
     setUserPrivilege: setUserPrivilege,
-    getRouteTable: getRouteTable,
+    getRouteData: getRouteData,
     setRouteTable: setRouteTable,
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,

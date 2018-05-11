@@ -19,7 +19,7 @@ var menu = require('./menu');
 
 // init
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
@@ -29,20 +29,20 @@ router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
 
 // route
-router.use(Admin.route);       // to manage accounts
-router.use(Manager.route);     // to view log module
+router.use('/admin', Admin.route);       // to manage accounts
+router.use('/manage', Manager.route);     // to view log module
 
 // it uses common feature for each admin and manager, then assign in app router.
 // other features use each module's router. eg, modifying account records or log records
-router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
-router.post(routeTable.account_root + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
-router.post(routeTable.account_root + routeTable.account.add, Account.registerSimple);
+router.get('/account' + routeTable.account.signOut, Account.signOut);
+router.post('/account' + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
+router.post('/account' + routeTable.account.add, Account.registerSimple);
 
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
-router.use(routeTable.account_root, Account.route);
-router.use(routeTable.chatting_root, Chat.route);
+router.use('/account', Account.route);
+router.use('/chat', Chat.route);
 
 // init socket.io
 Chat.initSocket(BLITITOR._socketIO);

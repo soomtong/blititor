@@ -18,7 +18,7 @@ var menu = require('./menu');
 
 // init
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
@@ -29,8 +29,8 @@ router.use(Admin.middleware.exposeMenu);
 router.use(Manager.middleware.exposeMenu);
 
 // route
-router.use(Admin.route);       // to manage accounts
-router.use(Manager.route);     // to view log module
+router.use('/admin', Admin.route);       // to manage accounts
+router.use('/manage', Manager.route);     // to view log module
 
 // need to place down here for except admin page log
 router.use(Counter.middleware.sessionCounter);
@@ -41,8 +41,8 @@ router.all(routeTable.root, Teamblog.index);
 router.all(routeTable.about, Site.redirect(routeTable.root));
 
 // bind module
-router.use(routeTable.account_root, Account.route);
-router.use(Teamblog.route);
+router.use('/account', Account.route);
+router.use('/blog', Teamblog.route);
 
 module.exports = {
     exposeLocals: appLocals,

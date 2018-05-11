@@ -9,7 +9,7 @@ var connection = require('../../../core/lib/connection');   // todo: can load fr
 var db = require('./database');
 var query = require('./query');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 // todo: experiment, receive ws push in a guestbook page
 // todo: ajax load version when receive query param in page number (like ?p=10)

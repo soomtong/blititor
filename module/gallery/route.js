@@ -10,7 +10,7 @@ var AccountMiddleware = require('../account/lib/middleware');
 var CounterMiddleware = require('../counter/lib/middleware');
 
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 /*
 var uploader = new jqueryFileUploader({

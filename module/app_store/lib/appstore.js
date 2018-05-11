@@ -193,7 +193,7 @@ function saveApp(req, res) {
 
         req.flash('info', 'Saved app by ' + (appData.nickname || appData.user_id));
 
-        res.redirect(routeTable.account_root + routeTable.appstore.list);
+        res.redirect('/account' + routeTable.appstore.list);
     });
 }
 

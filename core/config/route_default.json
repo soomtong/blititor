@@ -1,7 +1,6 @@
 {
   "root": "/",
   "about": "/about",
-  "admin_root": "/admin",
   "admin": {
     "login": "/login",
     "install": "/install",

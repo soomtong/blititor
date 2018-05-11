@@ -2,7 +2,7 @@ var winston = require('winston');
 
 var misc = require('./lib/misc');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var siteThemeType = misc.siteThemeType();
 
 // bind common parameters
@@ -27,7 +27,7 @@ function checkDatabaseConfig(req, res, next) {
     if (BLITITOR.tweak.passDBCheckMiddleware || BLITITOR.config.database) {
         next();
     } else {
-        res.redirect(routeTable.admin_root + routeTable.admin.database_setup);
+        res.redirect('/admin' + routeTable.admin.database_setup);
     }
 }
 

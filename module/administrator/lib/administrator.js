@@ -16,7 +16,7 @@ var counter = require('../../counter');
 var db = require('./database');
 
 var userGrants = misc.getUserPrivilege();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var token = misc.commonToken();
 
 function accountList(req, res) {
@@ -141,7 +141,7 @@ function loginProcess(req, res) {
                             var agent = useragent.parse(req.headers['user-agent']);
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
-                            res.redirect(routeTable.admin_root);
+                            res.redirect('/admin');
                         });
                     } else {
                         req.flash('error', {msg: 'You have not Admin privilege'});
@@ -360,7 +360,7 @@ function accountProcess(req, res) {
 
             req.flash('info', {msg: '개인 정보가 갱신되었습니다.'});
 
-            return res.redirect(routeTable.admin_root + routeTable.admin.account + '/' + UUID);
+            return res.redirect('/admin' + routeTable.admin.account + '/' + UUID);
         });
     });
 }

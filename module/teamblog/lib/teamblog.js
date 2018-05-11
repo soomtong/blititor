@@ -12,7 +12,7 @@ var connection = require('../../../core/lib/connection');   // todo: can load fr
 var db = require('./database');
 var query = require('./query');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var postFlag = misc.commonFlag().post;
 
 function indexPage(req, res) {

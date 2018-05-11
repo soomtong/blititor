@@ -3,7 +3,7 @@ var winston = require('winston');
 
 var misc = require('../../core/lib/misc');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 var Menu = [
     {
@@ -31,17 +31,17 @@ var Menu = [
     {
         name: '로그인',
         logged: -1,
-        url: routeTable.account_root + routeTable.account.signIn
+        url: '/account' + routeTable.account.signIn
     },
     {
         name: '가입하기',
         logged: -1,
-        url: routeTable.account_root + routeTable.account.signUp
+        url: '/account' + routeTable.account.signUp
     },
     {
         name: '로그아웃',
         logged: 1,
-        url: routeTable.account_root + routeTable.account.signOut
+        url: '/account' + routeTable.account.signOut
     }
 ];
 

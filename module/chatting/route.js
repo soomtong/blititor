@@ -6,7 +6,7 @@ var chatting = require('./lib/chatting');
 var middleware = require('./lib/middleware');
 
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 router.use(middleware.exposeLocals);
 

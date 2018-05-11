@@ -3,7 +3,7 @@ var winston = require('winston');
 
 var misc = require('../../core/lib/misc');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 var Menu = [
     {
@@ -95,17 +95,17 @@ var AdminMenu = [
     {
         id: 'index',
         name: '관리자 홈',
-        url: routeTable.admin_root
+        url: '/admin'
     },
     {
         id: 'new',
         name: '신규 계정 생성',
-        url: routeTable.admin_root + routeTable.admin.accountNew
+        url: '/admin' + routeTable.admin.accountNew
     },
     {
         id: 'manage',
         name: '운영',
-        url: routeTable.manage_root
+        url: '/manage'
     }
 ];
 
@@ -113,27 +113,27 @@ var ManagerMenu = [
     {
         id: 'index',
         name: '운영자 홈',
-        url: routeTable.manage_root
+        url: '/manage'
     },
     {
         id: 'account',
         name: '계정',
-        url: routeTable.manage_root + routeTable.manage.account
+        url: '/manage' + routeTable.manage.account
     },
     {
         id: 'reservation',
         name: '예약자 명단',
-        url: routeTable.manage_root + routeTable.manage.reservation
+        url: '/manage' + routeTable.manage.reservation
     },
     {
         id: 'tutorial',
         name: '튜토리얼 현황',
-        url: routeTable.manage_root + routeTable.manage.tutorial
+        url: '/manage' + routeTable.manage.tutorial
     },
     {
         id: 'gallery',
         name: '갤러리',
-        url: routeTable.manage_root + routeTable.manage.gallery
+        url: '/manage' + routeTable.manage.gallery
     },
 ];
 

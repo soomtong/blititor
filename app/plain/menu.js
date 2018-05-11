@@ -3,7 +3,7 @@ var winston = require('winston');
 
 var misc = require('../../core/lib/misc');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 // var routeTable = require('../../core/config/route_default');
 // or sometime need to make your own routeTable
 // and update own route table
@@ -25,7 +25,7 @@ var Menu = [
         id: 'chatting',
         name: '채팅',
         logged: 1,
-        url: routeTable.chatting_root + routeTable.chat.form
+        url: '/chat' + routeTable.chat.form
     },
     {
         id: 'professional',
@@ -43,7 +43,7 @@ var Menu = [
         id: 'login',
         name: '로그인',
         logged: -1,
-        url: routeTable.account_root + routeTable.account.signIn
+        url: '/account' + routeTable.account.signIn
     }
 ];
 
@@ -51,17 +51,17 @@ var AdminMenu = [
     {
         id: 'index',
         name: '관리자 홈',
-        url: routeTable.admin_root
+        url: '/admin'
     },
     {
         id: 'new',
         name: '신규 계정 생성',
-        url: routeTable.admin_root + routeTable.admin.accountNew
+        url: '/admin' + routeTable.admin.accountNew
     },
     {
         id: 'manage',
         name: '운영',
-        url: routeTable.manage_root
+        url: '/manage'
     }
 ];
 
@@ -69,22 +69,22 @@ var ManagerMenu = [
     {
         id: 'index',
         name: '운영자 홈',
-        url: routeTable.manage_root
+        url: '/manage'
     },
     {
         id: 'account',
         name: '계정',
-        url: routeTable.manage_root + routeTable.manage.account
+        url: '/manage' + routeTable.manage.account
     },
     {
         id: 'page_log',
         name: '페이지 로그',
-        url: routeTable.manage_root + routeTable.manage.pageLog
+        url: '/manage' + routeTable.manage.pageLog
     },
     {
         id: 'admin',
         name: '관리',
-        url: routeTable.admin_root
+        url: '/admin'
     }
 ];
 

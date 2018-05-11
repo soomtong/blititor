@@ -7,8 +7,8 @@ var counter = require('./lib/counter');
 var middleware = require('./lib/middleware');
 
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
-router.get(routeTable.admin_root + routeTable.admin.counter, counter.index);
+router.get('/admin' + routeTable.admin.counter, counter.index);
 
 module.exports = router;

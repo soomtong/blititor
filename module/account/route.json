@@ -1,5 +1,4 @@
 {
-  "account_root": "/account",
   "account": {
     "signIn": "/sign-in",
     "signUp": "/sign-up",

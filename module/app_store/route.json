@@ -1,5 +1,4 @@
 {
-  "appstore_root": "/store",
   "appstore": {
     "list": "/apps",
     "category": "/category",

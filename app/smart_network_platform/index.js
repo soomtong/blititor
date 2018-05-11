@@ -19,7 +19,7 @@ var menu = require('./menu');
 
 // init
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
@@ -38,7 +38,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // bind module
-router.use(routeTable.account_root, Account.route);
+router.use('/account', Account.route);
 router.use(AppStore.route);
 router.use(ControllerHub.route);
 

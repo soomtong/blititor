@@ -17,7 +17,7 @@ var counter = require('../../counter');
 var db = require('./database');
 
 var userGrants = misc.getUserPrivilege();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var token = misc.commonToken();
 
 function loginForm(req, res) {
@@ -103,7 +103,7 @@ function loginProcess(req, res) {
                             var agent = useragent.parse(req.headers['user-agent']);
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
-                            res.redirect(routeTable.manage_root);
+                            res.redirect('/manage');
                         });
                     } else {
                         req.flash('error', {msg: 'You have not Manager privilege'});
@@ -522,7 +522,7 @@ function guestbookReply(req, res) {
 
         req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
 
-        res.redirect(routeTable.manage_root + routeTable.guestbook_root + '?flag=noreply');
+        res.redirect('/manage' + routeTable.guestbook_root + '?flag=noreply');
     });
 }
 

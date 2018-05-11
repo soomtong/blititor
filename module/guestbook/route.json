@@ -1,5 +1,4 @@
 {
-  "guestbook_root": "/guestbook",
   "guestbook": {
     "form": "/",
     "message": "/register",

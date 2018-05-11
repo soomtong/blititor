@@ -2,11 +2,11 @@ var winston = require('winston');
 
 var misc = require('../../../core/lib/misc');
 
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 function exposeMenu(req, res, next) {
     // it can be bound correctly, app/route's expose menu called at core stage
-    res.locals.menu.admin_root = routeTable.admin_root;
+    res.locals.menu.admin_root = '/admin';
 
     next();
 }

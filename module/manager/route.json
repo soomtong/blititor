@@ -1,5 +1,4 @@
 {
-  "manage_root": "/manage",
   "manage": {
     "login": "/login",
     "dashboard": "/dashboard",

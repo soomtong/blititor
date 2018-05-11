@@ -1,5 +1,4 @@
 {
-  "reservation_root": "/reservation",
   "reservation": {
     "form": "/",
     "status": "/status",

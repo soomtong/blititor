@@ -1,11 +1,10 @@
 {
-  "teamblog_root": "/blog",
   "teamblog": {
     "list": "/",
-    "write": "/write"
-  },
-  "teamblog_post": "/post",
-  "teamblog_tag": {
-    "list": "/tag"
+    "write": "/write",
+    "post": "/post",
+    "tag": {
+      "list": "/tag"
+    }
   }
 }

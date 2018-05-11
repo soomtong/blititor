@@ -1,5 +1,4 @@
 {
-  "controller_hub_root": "/hub",
   "controller_hub": {
     "gateway": "/gateway",
     "rtvm": "/rtvm",

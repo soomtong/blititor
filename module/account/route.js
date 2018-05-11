@@ -11,14 +11,14 @@ var middleware = require('./lib/middleware');
 var passport = require('./lib/passport');
 
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 
 // Passport Stuffs
 var passportLocalOptions = {
-	failureRedirect: routeTable.account_root + routeTable.account.signIn,
-	badRequestMessage: '아이디 또는 비밀번호를 입력해주세요!',
-	failureFlash: true,
-}
+    failureRedirect: '/account' + routeTable.account.signIn,
+    badRequestMessage: '아이디 또는 비밀번호를 입력해주세요!',
+    failureFlash: true,
+};
 
 Passport.use(new LocalStrategy({ usernameField: 'account_id', passwordField: 'account_password' }, passport.authenticate));
 Passport.serializeUser(passport.serialize);

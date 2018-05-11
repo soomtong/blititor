@@ -18,7 +18,7 @@ var page = require('./page');
 
 // init
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
@@ -33,7 +33,7 @@ router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage
 Site.bindMenu(menu, router);
 
 // bind module
-router.use(routeTable.account_root, Account.route);
+router.use('/account', Account.route);
 router.use(routeTable.guestbook_root, Guestbook.route);
 router.use(Teamblog.route);
 router.use('/lib', Editor.route);   //todo: for test at this time

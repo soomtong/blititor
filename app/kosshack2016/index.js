@@ -20,7 +20,7 @@ var menu = require('./menu');
 
 // init
 var router = express.Router();
-var routeTable = misc.getRouteTable();
+var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
@@ -35,7 +35,7 @@ router.use(Manager.route);     // to view log module
 
 // it uses common feature for each admin and manager, then assign in app router.
 // other features use each module's router. eg, modifying account records or log records
-router.get(routeTable.account_root + routeTable.account.signOut, Account.signOut);
+router.get('/account' + routeTable.account.signOut, Account.signOut);
 
 // no need to count
 
