@@ -3,9 +3,10 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    // slack: misc.databaseDefault.tablePrefix + 'slack'
+    // slack: databaseDefault.tablePrefix + 'slack'
 };
 
 function deleteScheme(databaseConfiguration, callback) {

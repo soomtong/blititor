@@ -6,17 +6,18 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var appstoreFlag = misc.commonFlag().appStore;
 
 var tables = {
-    storeApp: misc.databaseDefault.tablePrefix + 'store_app',
-    storeAppHistory: misc.databaseDefault.tablePrefix + 'store_app_history',
-    storeAppCategory: misc.databaseDefault.tablePrefix + 'store_app_category',
-    storeAppRelated: misc.databaseDefault.tablePrefix + 'store_app_related',
-    storeOrder: misc.databaseDefault.tablePrefix + 'store_order',
-    storeOrderDetail: misc.databaseDefault.tablePrefix + 'store_order_detail',
-    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
+    storeApp: databaseDefault.tablePrefix + 'store_app',
+    storeAppHistory: databaseDefault.tablePrefix + 'store_app_history',
+    storeAppCategory: databaseDefault.tablePrefix + 'store_app_category',
+    storeAppRelated: databaseDefault.tablePrefix + 'store_app_related',
+    storeOrder: databaseDefault.tablePrefix + 'store_order',
+    storeOrderDetail: databaseDefault.tablePrefix + 'store_order_detail',
+    user: databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var Queries = require('./query');

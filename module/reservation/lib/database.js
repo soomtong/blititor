@@ -6,10 +6,11 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    reservationList: misc.databaseDefault.tablePrefix + 'reservation_list',
-    reservationStatus : misc.databaseDefault.tablePrefix + 'reservation_status'
+    reservationList: databaseDefault.tablePrefix + 'reservation_list',
+    reservationStatus : databaseDefault.tablePrefix + 'reservation_status'
 };
 
 var query = require('./query');

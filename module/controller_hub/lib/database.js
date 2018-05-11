@@ -6,15 +6,16 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var controllerHubFlag = misc.commonFlag().controllerHub;
 
 var tables = {
-    controller: misc.databaseDefault.tablePrefix + 'controller',  // hub info and main controller info
-    gateway: misc.databaseDefault.tablePrefix + 'gateway',
-    gatewayGroup: misc.databaseDefault.tablePrefix + 'gateway_group',
-    rtvm: misc.databaseDefault.tablePrefix + 'rtvm',
-    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
+    controller: databaseDefault.tablePrefix + 'controller',  // hub info and main controller info
+    gateway: databaseDefault.tablePrefix + 'gateway',
+    gatewayGroup: databaseDefault.tablePrefix + 'gateway_group',
+    rtvm: databaseDefault.tablePrefix + 'rtvm',
+    user: databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var Queries = require('./query');

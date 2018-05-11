@@ -1,6 +1,7 @@
 var winston = require('winston');
 
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 var routeTable = misc.getRouteData();
 
 function exposeMenu(req, res, next) {

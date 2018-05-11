@@ -6,11 +6,12 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    galleryCategory : misc.databaseDefault.tablePrefix + 'gallery_category',
-    galleryImage: misc.databaseDefault.tablePrefix + 'gallery_image',
-    user: misc.databaseDefault.tablePrefix + 'user'
+    galleryCategory : databaseDefault.tablePrefix + 'gallery_category',
+    galleryImage: databaseDefault.tablePrefix + 'gallery_image',
+    user: databaseDefault.tablePrefix + 'user'
 };
 
 var query = require('./query');

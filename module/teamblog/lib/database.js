@@ -6,16 +6,17 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var postFlag = misc.commonFlag().post;
 
 var tables = {
-    teamblog: misc.databaseDefault.tablePrefix + 'teamblog',
-    teamblogHistory: misc.databaseDefault.tablePrefix + 'teamblog_history',
-    teamblogRelated: misc.databaseDefault.tablePrefix + 'teamblog_related',
-    teamblogTag: misc.databaseDefault.tablePrefix + 'teamblog_tag',
-    teamblogTagRelated: misc.databaseDefault.tablePrefix + 'teamblog_tag_related',
-    user: misc.databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
+    teamblog: databaseDefault.tablePrefix + 'teamblog',
+    teamblogHistory: databaseDefault.tablePrefix + 'teamblog_history',
+    teamblogRelated: databaseDefault.tablePrefix + 'teamblog_related',
+    teamblogTag: databaseDefault.tablePrefix + 'teamblog_tag',
+    teamblogTagRelated: databaseDefault.tablePrefix + 'teamblog_tag_related',
+    user: databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
 var query = require('./query');

@@ -6,11 +6,12 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    user: misc.databaseDefault.tablePrefix + 'user',
-    auth: misc.databaseDefault.tablePrefix + 'auth',
-    point: misc.databaseDefault.tablePrefix + 'point'
+    user: databaseDefault.tablePrefix + 'user',
+    auth: databaseDefault.tablePrefix + 'auth',
+    point: databaseDefault.tablePrefix + 'point'
 };
 
 var query = require('./query');

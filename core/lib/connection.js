@@ -4,6 +4,7 @@ var winston = require('winston');
 var mysql = require('mysql');
 
 var misc = require('./misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var configFile = require('../config/app_default.json').configFile;
 
@@ -30,8 +31,8 @@ function initializePool() {
             connectionLimit: 50,
             acquireTimeout: 30000, // 30s
             host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || misc.databaseDefault.port,
-            database: databaseConfiguration.dbName || misc.databaseDefault.database,
+            port: databaseConfiguration.dbPort || databaseDefault.port,
+            database: databaseConfiguration.dbName || databaseDefault.database,
             user: databaseConfiguration.dbUserID,
             password: databaseConfiguration.dbUserPassword
         });
@@ -81,14 +82,14 @@ function initSession(mysqlStore, callback) {
 
         sessionStore = new mysqlStore({
             host: databaseConfiguration.dbHost,
-            port: databaseConfiguration.dbPort || misc.databaseDefault.port,
-            database: databaseConfiguration.dbName || misc.databaseDefault.database,
+            port: databaseConfiguration.dbPort || databaseDefault.port,
+            database: databaseConfiguration.dbName || databaseDefault.database,
             user: databaseConfiguration.dbUserID,
             password: databaseConfiguration.dbUserPassword,
             autoReconnect: false,
             useConnectionPooling: true,
             schema: {
-                tableName: misc.databaseDefault.tablePrefix + 'session'
+                tableName: databaseDefault.tablePrefix + 'session'
             }
         });
 

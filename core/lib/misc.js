@@ -58,6 +58,19 @@ function getUserPrivilege() {
     };
 }
 
+function getDatabaseDefaultData() {
+    if (databaseConfiguration.tablePrefix) {
+        var trimmer = '_';
+        var last = databaseConfiguration.tablePrefix.length - 1;
+
+        if (databaseConfiguration.tablePrefix[last] !== trimmer) {
+            databaseConfiguration.tablePrefix += trimmer;
+        }
+    }
+
+    return databaseConfiguration;
+}
+
 function setUserPrivilege() {
     BLITITOR.userPrivilege = userPrivilege;
 
@@ -297,5 +310,5 @@ module.exports = {
     showRoutes: showRoutes,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
-    databaseDefault: databaseConfiguration
+    getDatabaseDefault: getDatabaseDefaultData
 };

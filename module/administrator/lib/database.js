@@ -5,11 +5,12 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    auth: misc.databaseDefault.tablePrefix + 'auth',
-    user: misc.databaseDefault.tablePrefix + 'user',
-    accountLog: misc.databaseDefault.tablePrefix + 'account_counter_log'
+    auth: databaseDefault.tablePrefix + 'auth',
+    user: databaseDefault.tablePrefix + 'user',
+    accountLog: databaseDefault.tablePrefix + 'account_counter_log'
 };
 
 var query = require('./query');

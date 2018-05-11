@@ -6,10 +6,11 @@ var winston = require('winston');
 
 var common = require('../../../core/lib/common');
 var misc = require('../../../core/lib/misc');
+var databaseDefault = misc.getDatabaseDefault();
 
 var tables = {
-    chattingLog : misc.databaseDefault.tablePrefix + 'chatting_log',
-    user: misc.databaseDefault.tablePrefix + 'user'
+    chattingLog : databaseDefault.tablePrefix + 'chatting_log',
+    user: databaseDefault.tablePrefix + 'user'
 };
 
 var query = require('./query');
