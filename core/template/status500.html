@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{app.title}} - {{site.title}}</title>
+    <style>
+        body {
+            margin: 1em;
+            padding: 1em;
+            border: 0;
+            outline: 0;
+            vertical-align: baseline;
+        }
+        .splash-container{
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">500 not found</h1>
+        <p>
+            An error was encountered.
+        </p>
+        <code>
+            {{error}}
+        </code>
+    </div>
+</div>
+</body>
+</html>

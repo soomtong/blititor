@@ -1,11 +1,8 @@
-var fs = require('fs');
-var winston = require('winston');
-
 var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteData();
 
-var Menu = [
+var StaticMenu = [
     {
         id: 'about',
         name: '소개',
@@ -74,6 +71,6 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = Menu;
+module.exports = StaticMenu;
 module.exports.AdminMenu = AdminMenu;
 module.exports.ManagerMenu = ManagerMenu;

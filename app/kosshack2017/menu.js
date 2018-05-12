@@ -1,6 +1,3 @@
-var fs = require('fs');
-var winston = require('winston');
-
 var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteData();
@@ -8,7 +5,7 @@ var routeTable = misc.getRouteData();
 // or sometime need to make your own routeTable
 // and update own route table
 
-var Menu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
+var StaticMenu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
     {
         id: 'index',
         name: 'KossLab Contributhon 2017',
@@ -77,6 +74,6 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = Menu;
+module.exports = StaticMenu;
 module.exports.AdminMenu = AdminMenu;
 module.exports.ManagerMenu = ManagerMenu;

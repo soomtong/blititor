@@ -98,6 +98,7 @@ var bootstrapArgv = args(process.argv.slice(2));
 
 // set express app
 app.set('views', 'theme');
+app.set('views', 'core/template');
 app.set('view engine', 'html');
 //app.set('view cache', false);
 app.set('port', bootstrapArgv['port'] || bootstrapArgv.p || BLITITOR.config.site.service.port);

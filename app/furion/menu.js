@@ -1,6 +1,3 @@
-var fs = require('fs');
-var winston = require('winston');
-
 var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteData();
@@ -8,7 +5,9 @@ var routeTable = misc.getRouteData();
 // or sometime need to make your own routeTable
 // and update own route table
 
-var Menu = [
+// static page menu describe here
+// these links are not included modules route paths
+var StaticMenu = [
     {
         id: 'post_new',
         name: '새글',
@@ -84,6 +83,6 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = Menu;
+module.exports = StaticMenu;
 module.exports.AdminMenu = AdminMenu;
 module.exports.ManagerMenu = ManagerMenu;

@@ -1,11 +1,8 @@
-var fs = require('fs');
-var winston = require('winston');
-
 var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteData();
 
-var Menu = [
+var StaticMenu = [
     {
         id: 'index',
         name: 'KossLab Conference 2016',
@@ -137,6 +134,6 @@ var ManagerMenu = [
     },
 ];
 
-module.exports = Menu;
+module.exports = StaticMenu;
 module.exports.AdminMenu = AdminMenu;
 module.exports.ManagerMenu = ManagerMenu;

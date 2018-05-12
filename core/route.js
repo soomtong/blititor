@@ -1,3 +1,6 @@
+var fs = require('fs');
+var path = require('path');
+
 var express = require('express');
 var winston = require('winston');
 
@@ -50,7 +53,15 @@ router.use(function _500Handler(err, req, res, next){
     // we possibly recovered from the error, simply next().
     winston.error(err);
     res.status(err.status || 500);
-    res.render('../theme/' + BLITITOR.config.site.theme + '/page/_500', { error: err });
+
+    // set default 500 page
+    fs.stat(path.join('..', 'theme', BLITITOR.config.site.theme, 'page', '_500.html'), function (error, stat) {
+        if (error) {
+            res.render('status500', { error: err });
+        } else {
+            res.render('../theme/' + BLITITOR.config.site.theme + '/page/_500', { error: err });
+        }
+    });
 });
 
 module.exports = router;
