@@ -62,15 +62,15 @@ switch (mainCommand) {
 
         break;
     default:
-        console.log(" = run setup script by each configuration \n".rainbow);
-        console.log(" > node core/setup module".white);
-        console.log(" > node core/setup db".white);
-        console.log(" > node core/setup db-init".white);
-        console.log(" or ( > node core/setup db-reset ) for reset table".white);
-        console.log(" > node core/setup theme".white);
-        console.log(" > node core/setup admin \n".white);
-        console.log(" or \n".gray);
-        console.log(" > node core/setup all \n".white);
+        console.log(clc.whiteBright.underline(" = run setup script by each configuration \n"));
+        console.log(" > node core/setup module");
+        console.log(" > node core/setup db");
+        console.log(" > node core/setup db-init [module name]");
+        console.log(" or ( > node core/setup db-reset [module name]) for reset table");
+        console.log(" > node core/setup theme");
+        console.log(" > node core/setup admin \n");
+        console.log(clc.whiteBright(" or \n"));
+        console.log(" > node core/setup all \n");
 }
 
 function makeDatabaseConfigFile(next) {

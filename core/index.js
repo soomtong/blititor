@@ -6,10 +6,10 @@ var BLITITOR = {};
 // global configuration
 BLITITOR.env = require('./lib/dependency')(process.env['NODE_ENV'] || 'development');
 BLITITOR.root = path.join(__dirname, '..');
-BLITITOR.tweak = {passDBCheckMiddleware: false}; // for speed
+BLITITOR.route = { root: '/' };
+BLITITOR.tweak = { passDBCheckMiddleware: false }; // for speed
 BLITITOR.config = require('./config/app_default.json');
 BLITITOR.moduleList = require('./config/module_list.json');
-BLITITOR.route = require('./config/route_default.json');
 
 // bind global
 global.BLITITOR = BLITITOR;
@@ -98,7 +98,6 @@ var bootstrapArgv = args(process.argv.slice(2));
 
 // set express app
 app.set('views', 'theme');
-app.set('views', 'core/template');
 app.set('view engine', 'html');
 //app.set('view cache', false);
 app.set('port', bootstrapArgv['port'] || bootstrapArgv.p || BLITITOR.config.site.service.port);
@@ -191,7 +190,7 @@ app.use(require('./route'));
 
 // start server
 server.listen(app.get('port'), function () {
-    winston.info("\x1B[32mServer listening on port \033[0m" + app.get('port') + "\x1B[32m in " + BLITITOR.env + " mode \033[0m");
+    winston.info("\033[0mServer listening on port \x1B[32m" + app.get('port') + "\033[0m in \x1B[32m" + BLITITOR.env + "\033[0m mode");
     // display default route table
     // misc.showRouteTable();
 });

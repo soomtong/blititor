@@ -173,12 +173,6 @@ function setFlag(flag) {
     return flagCode;
 }
 
-function showRouteTable() {
-    winston.info("\x1B[32mload default route table \033[0m");
-
-    winston.verbose(JSON.stringify(BLITITOR.route, null, 4));
-}
-
 function showGlobalVar(g) {
     Object.keys(g).forEach(function (item) {
         if (item.toString().indexOf('_') !== 0) {
@@ -305,7 +299,6 @@ module.exports = {
     commonToken: commonToken,
     serviceToken: serviceToken,
     serviceProvider: serviceProvider,
-    showRouteTable: showRouteTable,
     showGlobalVar: showGlobalVar,
     showRoutes: showRoutes,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
