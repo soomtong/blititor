@@ -2,10 +2,9 @@
   "locals": {
     "title": "Plain"
   },
-  "admin": {
-    "set": 1
-  },
-  "manager": {
-    "set": 1
+  "config": {
+    "admin": true,
+    "manage": true,
+    "vendor": ["pure", "jquery"]
   }
 }

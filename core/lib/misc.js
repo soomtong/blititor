@@ -115,6 +115,21 @@ function siteThemeType() {
     };
 }
 
+function vendorMap(vendorName) {
+    var map = {
+        jquery: 'node_modules/jquery/dist',
+        pure: 'node_modules/purecss/build'
+    };
+
+    if (map[vendorName]) {
+        return map[vendorName] || '/theme';
+    } else {
+        winston.error('no exist static library:', "'" + vendorName + "'");
+
+        throw Error(vendorName + ' package is not installed')
+    }
+}
+
 function commonToken() {
     return {
         session: {
@@ -295,6 +310,7 @@ module.exports = {
     setRouteTable: setRouteTable,
     siteThemeType: siteThemeType,
     commonFlag: commonFlag,
+    vendorMap: vendorMap,
     setFlag: setFlag,
     commonToken: commonToken,
     serviceToken: serviceToken,

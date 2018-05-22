@@ -4,6 +4,7 @@ var path = require('path');
 var express = require('express');
 var winston = require('winston');
 
+var misc = require('./lib/misc');
 var middleware = require('./middleware');
 var application = require('../app/' + BLITITOR.config.site.app);
 var admin = require('../module/administrator');
@@ -35,6 +36,14 @@ router.use(counter.middleware.pageCounter);
 // route for application
 router.use(application.exposeLocals);     // moved to own app's router
 router.use(application.router);
+
+if (application.config && application.config['vendor']) {
+    application.config.vendor.map(function (vendor) {
+        winston.info('bound static library:', "'" + vendor + "'");
+
+        router.use('/vendor/' + vendor, express.static(misc.vendorMap(vendor)));
+    });
+}
 
 // Extension
 if (BLITITOR.env == 'development') { // Only in dev environment

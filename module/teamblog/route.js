@@ -18,6 +18,7 @@ router.get(routeTable.teamblog.post + '/:postTitle', teamblog.view);
 router.get(routeTable.teamblog.write, AccountMiddleware.checkSignedIn, teamblog.write); // in order to avoid conflict with `:page` params
 router.post(routeTable.teamblog.write, AccountMiddleware.checkSignedIn, teamblog.save);
 
+router.get('/', teamblog.list);
 router.get(routeTable.teamblog.list, teamblog.list);
 router.get(routeTable.teamblog.list + ':page([0-9]+)', teamblog.list);
 router.get(routeTable.teamblog.list + ':year([0-9]+)/:month([0-9]+)', teamblog.list);

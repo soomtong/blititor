@@ -26,6 +26,7 @@ Passport.deserializeUser(passport.deserialize);
 
 router.use(middleware.exposeLocals);
 
+router.get('/', account.signIn);
 router.get(routeTable.account.signIn, account.signIn);
 router.get(routeTable.account.signUp, middleware.checkLoggedSession, account.signUp);
 router.get(routeTable.account.signOut, account.signOut);

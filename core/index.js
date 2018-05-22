@@ -37,6 +37,7 @@ var passport = require('passport');
 var moment = require('moment');
 var mkdirp = require('mkdirp');
 var args = require('minimist');
+var clc = require('cli-color');
 
 // set log level
 if (BLITITOR.env === 'production') {
@@ -190,7 +191,7 @@ app.use(require('./route'));
 
 // start server
 server.listen(app.get('port'), function () {
-    winston.info("\033[0mServer listening on port \x1B[32m" + app.get('port') + "\033[0m in \x1B[32m" + BLITITOR.env + "\033[0m mode");
+    winston.info("Server listening on port " + clc.yellow(app.get('port')) + " in " + clc.red(BLITITOR.env) + " mode");
     // display default route table
     // misc.showRouteTable();
 });

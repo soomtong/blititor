@@ -3,6 +3,6 @@
     "title": "팀블로그"
   },
   "config": {
-  },
-  "vendor": ["pure", "jquery"]
+    "vendor": ["pure", "jquery"]
+  }
 }
