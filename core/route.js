@@ -15,7 +15,7 @@ var counter = require('../module/counter');
 // extend router
 var router = express.Router();
 
-// Global middleware
+// Global middleware or locals
 router.use(middleware.exposeLocals);
 router.use(middleware.cacheControl);    // for global use
 router.use(middleware.checkDatabase);

@@ -38,9 +38,9 @@ function ensureManagerAuthenticated(req, res, next) {
 }
 
 function exposeLocals(req, res, next) {
-    // res.locals.user = req.user;  moved to site module
+    res.locals.user = req.user;
 
-    winston.verbose('bind locals in account: {}');
+    winston.verbose('bind locals in account: {user}');
     next();
 }
 

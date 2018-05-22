@@ -24,7 +24,7 @@ Passport.use(new LocalStrategy({ usernameField: 'account_id', passwordField: 'ac
 Passport.serializeUser(passport.serialize);
 Passport.deserializeUser(passport.deserialize);
 
-router.use(middleware.exposeLocals);
+// router.use(middleware.exposeLocals); it used in app level not route level
 
 router.get('/', account.signIn);
 router.get(routeTable.account.signIn, account.signIn);

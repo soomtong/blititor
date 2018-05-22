@@ -20,8 +20,6 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
 router.use(Account.middleware.exposeLocals);
-// router.use(Site.middleware.cacheControl);
-router.use(Site.middleware.exposeLocals);
 
 // bind static page
 router.all(routeTable.root, Teamblog.index);

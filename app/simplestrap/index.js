@@ -22,15 +22,10 @@ var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
-router.use(Site.middleware.exposeLocals);
+router.use(Account.middleware.exposeLocals);
 
 // separated page
 router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage);
-
-// bind static page
-// router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);
-// router.get(routeTable.about, Site.bindMenu);
-// Site.bindMenu(menu, router);
 
 // bind module
 router.use('/account', Account.route);
