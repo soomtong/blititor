@@ -1,6 +1,5 @@
 // load packages
 var express = require('express');
-var winston = require('winston');
 
 // load cores
 var misc = require('../../core/lib/misc');
@@ -9,9 +8,6 @@ var misc = require('../../core/lib/misc');
 var Chat = require('../../module/chatting');
 var Account = require('../../module/account');
 var Site = require('../../module/site');
-var Admin = require('../../module/administrator');
-var Manager = require('../../module/manager');
-var Counter = require('../../module/counter');
 
 // load locals
 var app = require('./app.json');
@@ -24,14 +20,8 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
 router.use(Account.middleware.exposeLocals);
-router.use(Site.middleware.exposeLocals);
-router.use(Admin.middleware.exposeMenu);
-router.use(Manager.middleware.exposeMenu);
 
 // route
-router.use('/admin', Admin.route);       // to manage accounts
-router.use('/manage', Manager.route);     // to view log module
-
 // it uses common feature for each admin and manager, then assign in app router.
 // other features use each module's router. eg, modifying account records or log records
 router.get('/account' + routeTable.account.signOut, Account.signOut);
@@ -39,8 +29,6 @@ router.post('/account' + routeTable.account.registerSimple, Account.middleware.c
 router.post('/account' + routeTable.account.add, Account.registerSimple);
 
 // need to place down here for except admin page log
-router.use(Counter.middleware.sessionCounter);
-router.use(Counter.middleware.pageCounter);
 router.use('/account', Account.route);
 router.use('/chat', Chat.route);
 
@@ -51,6 +39,7 @@ Chat.initSocket(BLITITOR._socketIO);
 Site.bindMenu(menu, router);
 
 module.exports = {
+    config: app.config,
     exposeLocals: appLocals,
     router: router,
 };

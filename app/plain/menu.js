@@ -34,7 +34,7 @@ var StaticMenu = [
         id: 'about',
         name: '소개',
         logged: -1,
-        url: routeTable.about
+        url: '/about'
     },
     {
         id: 'login',

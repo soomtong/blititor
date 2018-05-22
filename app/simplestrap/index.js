@@ -30,15 +30,19 @@ router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage
 // bind static page
 // router.get(routeTable.root, [middleware.test1, middleware.test2], Site.page.index);
 // router.get(routeTable.about, Site.bindMenu);
-Site.bindMenu(menu, router);
+// Site.bindMenu(menu, router);
 
 // bind module
 router.use('/account', Account.route);
-router.use(routeTable.guestbook_root, Guestbook.route);
-router.use(Teamblog.route);
+router.use('/guest', Guestbook.route);
+router.use('/blog', Teamblog.route);
 router.use('/lib', Editor.route);   //todo: for test at this time
 
+// bind static page
+Site.bindMenu(menu, router);
+
 module.exports = {
+    config: app.config,
     exposeLocals: appLocals,
     router: router,
 };

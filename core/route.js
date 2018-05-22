@@ -7,6 +7,7 @@ var winston = require('winston');
 var misc = require('./lib/misc');
 var middleware = require('./middleware');
 var application = require('../app/' + BLITITOR.config.site.app);
+var site = require('../module/site');
 var admin = require('../module/administrator');
 var manage = require('../module/manager');
 var counter = require('../module/counter');
@@ -18,15 +19,17 @@ var router = express.Router();
 router.use(middleware.exposeLocals);
 router.use(middleware.cacheControl);    // for global use
 router.use(middleware.checkDatabase);
+router.use(application.exposeLocals);
+router.use(site.middleware.exposeLocals);
 
 // route for admin or manage
 if (application.config && application.config['admin']) {
-    router.use(admin.middleware.exposeMenu);
-    router.use('/admin', admin.route);
+    router.use('/admin', admin.middleware.exposeLocals, admin.route);
+    winston.info('bound global administrator module to', '/admin');
 }
 if (application.config && application.config['manage']) {
-    router.use(manage.middleware.exposeMenu);
-    router.use('/manage', manage.route);
+    router.use('/manage', manage.middleware.exposeLocals, manage.route);
+    winston.info('bound global manager module to', '/manage');
 }
 
 // need to place down here for excluding admin/manage page log
@@ -34,7 +37,6 @@ router.use(counter.middleware.sessionCounter);
 router.use(counter.middleware.pageCounter);
 
 // route for application
-router.use(application.exposeLocals);     // moved to own app's router
 router.use(application.router);
 
 if (application.config && application.config['vendor']) {

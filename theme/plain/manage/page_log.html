@@ -31,7 +31,7 @@
                     </label>
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                     <button type="submit" class="pure-button">Search</button>
-                    <a href="{{site.root}}{{ route.manage_root + route.manage.pageCounter }}" class="pure-button pull-right">카운터</a>
+                    <a href="{{site.root}}{{ menu.manage_root + route.manage.pageCounter }}" class="pure-button pull-right">카운터</a>
                 </form>
             </div>
         </div>
@@ -70,22 +70,22 @@
                     <ul class="cd-pagination no-space move-buttons custom-icons">
                         {% if pagination.hasPrev %}
                         {% if pagination.page > 1 %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{pagination.page - 1}}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ menu.manage_root + route.manage.pageLog }}?p={{pagination.page - 1}}">Prev</a>
                         {% else %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ menu.manage_root + route.manage.pageLog }}">Prev</a>
                         {% endif %}
                         {% endif %}
 
                         {% for i in range(1, pagination.maxPage + 1) -%}
-                        {% if i == pagination.page %}
-                        <li><a class="current" href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
+                        {% if i == pagination.page + 1 %}
+                        <li><a class="current" href="{{site.root}}{{ menu.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
                         {% else %}
-                        <li><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
+                        <li><a href="{{site.root}}{{ menu.manage_root + route.manage.pageLog }}?p={{i}}">{{i}}</a>
                         {% endif %}
                         {%- endfor %}
 
                         {% if pagination.hasNext %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.pageLog }}?p={{pagination.page + 1}}">Next</a>
+                        <li class="button"><a href="{{site.root}}{{ menu.manage_root + route.manage.pageLog }}?p={{pagination.page + 1}}">Next</a>
                         {% endif %}
                     </ul>
                 </nav>

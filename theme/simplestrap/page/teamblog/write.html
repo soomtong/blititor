@@ -17,7 +17,7 @@
             <div class="bg-guest-form-holder">
 
                 <h4>Team Blog</h4>
-                <form id="message_form" method="post" action="{{ route.teamblog_root + route.teamblog.write }}">
+                <form id="message_form" method="post" action="/blog{{ route.teamblog.write }}">
                     <fieldset class="form-group">
                         <label for="message">Post using markdown format <a href="https://guides.github.com/features/mastering-markdown/" target="_blank">help</a></label>
                         <textarea class="form-control" name="content" id="message" rows="20"></textarea>

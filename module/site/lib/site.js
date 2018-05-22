@@ -36,7 +36,9 @@ function plainPageWithSubPath(req, res) {
 
 function bindMenuToRouter(menu, router) {
     menu.map(function (item) {
+        winston.verbose('Bound static menu:', item);
         if (!item.useSubPath) item.useSubPath = false;
+
         router[item['type'] || 'get'](item['url'], !item.useSubPath ? plainPage : plainPageWithSubPath);
     });
 }

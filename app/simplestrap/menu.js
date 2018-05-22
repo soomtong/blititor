@@ -4,26 +4,30 @@ var routeTable = misc.getRouteData();
 
 var StaticMenu = [
     {
+        id: 'index',
         name: '홈',
         url: routeTable.root
     },
     {
+        id: 'blog',
         name: '팀 블로그',
-        url: routeTable.teamblog_root
+        url: '/blog'
     },
     {
+        id: 'guestbook',
         name: '방명록',
-        url: routeTable.guestbook_root
+        url: '/guest'
     },
     {
+        id: 'about',
         name: '소개',
-        url: routeTable.about
+        url: '/about'
     },
     {
         name: '새글쓰기',
         logged: 1,
         level: 2, grant: 'AMC',
-        url: routeTable.teamblog_root + routeTable.teamblog.write
+        url: '/blog/write'
     },
     {
         name: '로그인',
