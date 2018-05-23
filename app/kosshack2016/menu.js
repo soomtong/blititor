@@ -25,6 +25,11 @@ var StaticMenu = [    // for plain page used by site.plain method (this page has
         id: 'project_list',
         name: 'Project List',
         url: '/project'
+    },
+    {
+        id: 'guestbook',
+        name: '문의',
+        url: '/guestbook'
     }
 ];
 
@@ -65,7 +70,7 @@ var ManagerMenu = [
     {
         id: 'guestbook',
         name: '방명록 관리',
-        url: '/manage' + routeTable.guestbook_root
+        url: '/manage' + routeTable.manage.guestbook
     }
 ];
 

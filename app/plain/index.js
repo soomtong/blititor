@@ -22,14 +22,10 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // route
-// it uses common feature for each admin and manager, then assign in app router.
-// other features use each module's router. eg, modifying account records or log records
-router.get('/account' + routeTable.account.signOut, Account.signOut);
+router.use('/account', Account.route);
 router.post('/account' + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
 router.post('/account' + routeTable.account.add, Account.registerSimple);
 
-// need to place down here for except admin page log
-router.use('/account', Account.route);
 router.use('/chat', Chat.route);
 
 // init socket.io

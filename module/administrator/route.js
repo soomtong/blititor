@@ -11,6 +11,8 @@ var Account = require('../account');
 var router = express.Router();
 var routeTable = misc.getRouteData();
 
+router.use(Account.middleware.exposeLocals);
+
 router.get(routeTable.admin.login, administrator.loginForm);
 router.post(routeTable.admin.login, administrator.loginProcess);
 

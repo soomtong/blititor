@@ -70,7 +70,7 @@ var ManagerMenu = [
     {
         id: 'guestbook',
         name: '방명록 관리',
-        url: '/manage' + routeTable.guestbook_root
+        url: '/manage' + routeTable.manage.guestbook
     }
 ];
 

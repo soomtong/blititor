@@ -118,6 +118,7 @@ function siteThemeType() {
 function vendorMap(vendorName) {
     var map = {
         jquery: 'node_modules/jquery/dist',
+        bootstrap: 'node_modules/bootstrap/dist',
         pure: 'node_modules/purecss/build'
     };
 

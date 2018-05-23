@@ -134,7 +134,7 @@ function index(req, res) {
 
             res.redirect('back');
         }
-		console.log(result)
+
         params.pagination = result.pagination;
         params.totalVisitLogCount = result.total;
         params.visitLogList = result.visitLogList;

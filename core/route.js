@@ -25,16 +25,19 @@ router.use(site.middleware.exposeLocals);
 // route for admin or manage
 if (application.config && application.config['admin']) {
     router.use('/admin', admin.middleware.exposeLocals, admin.route);
-    winston.info('bound global administrator module to', '/admin');
+    winston.info('Enabled administrator module to', '/admin');
 }
 if (application.config && application.config['manage']) {
     router.use('/manage', manage.middleware.exposeLocals, manage.route);
-    winston.info('bound global manager module to', '/manage');
+    winston.info('Enabled manager module to', '/manage');
 }
 
 // need to place down here for excluding admin/manage page log
-router.use(counter.middleware.sessionCounter);
-router.use(counter.middleware.pageCounter);
+if (application.config && (application.config['admin'] || application.config['manage'])) {
+    router.use(counter.middleware.sessionCounter);
+    router.use(counter.middleware.pageCounter);
+    winston.info('Enabled global counter {session, page}');
+}
 
 // route for application
 router.use(application.router);
