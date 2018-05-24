@@ -118,6 +118,7 @@ function siteThemeType() {
 function vendorMap(vendorName) {
     var map = {
         jquery: 'node_modules/jquery/dist',
+        bulma: 'node_modules/bulma/css',
         bootstrap: 'node_modules/bootstrap/dist',
         pure: 'node_modules/purecss/build'
     };
@@ -242,6 +243,7 @@ function checkThemeConfigFile(configFile) {
         fs.accessSync('./app/' + appSetting.appName, fs.R_OK);
         fs.accessSync('./theme/' + themeSetting.siteTheme, fs.R_OK);
     } catch (e) {
+        winston.error('=====================================', e);
         winston.error('theme folder or config file not exist', e);
 
         appSetting = {
