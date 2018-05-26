@@ -4,33 +4,85 @@
     {% include './include/head.html' %}
 </head>
 <body class="has-background-grey-light">
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
     {% include './include/menu.html' %}
 </nav>
 <section class="section">
     <div class="columns is-centered">
         <div class="column container is-wrap">
+            <!-- start tile -->
             <div class="tile is-ancestor">
-                <div class="tile is-6 is-vertical is-parent">
-                    <div class="tile is-child box">
-                        <h1 class="is-size-1">SAF 2018</h1>
-
-                        <p class="title">One</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-                    </div>
-                    <div class="tile is-child box">
-                        <p class="title">Two</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-                    </div>
-                </div>
                 <div class="tile is-parent">
-                    <div class="tile is-child box">
-                        <p class="title">Three</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
+                    <div class="tile is-child">
+                        <h2 class="title is-hidden">서울시 건축상</h2>
+                        <img src="{{site.theme}}/common/asset/banner_180611_2.png" alt="서울시 건축상">
+                        <div class="download">
+                            <div class="has-move-up">
+                                <a class="button is-danger is-medium" href="/">
+                                    <span class="icon"><i class="fas fa-download"></i></span>
+                                    <span>신청서</span></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="tile is-child">
+                        <h2 class="title is-hidden">대학생 아이디어 공모전</h2>
+                        <img src="{{site.theme}}/common/asset/banner_180611_3.png" alt="대학생 아이디어 공모전">
+                        <div class="download">
+                            <div class="has-move-up">
+                                <a class="button is-danger is-medium" href="/">
+                                    <span class="icon"><i class="fas fa-download"></i></span>
+                                    <span>신청서</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="tile is-child">
+                        <h2 class="title is-hidden">서울시 건축문화제 2018</h2>
+                        <img src="{{site.theme}}/common/asset/banner_180611_1.png" alt="서울시 건축문화제">
+                    </div>
+                </div>
+            </div>
+            <div class="tile is-ancestor">
+                <div class="tile is-6 is-vertical is-parent">
+                    <div class="tile is-child box">
+                        <h1 class="is-size-1">SAF 2018</h1>
+                        <h2 class="title">한양산천 서울강산</h2>
+                        <p>2018.10.5 - 10.28</p>
+                        <p>문화비축기지, 돈의문박물관마을</p>
+                    </div>
+                    <div class="tile is-child box">
+                        <h2 class="title">튜터 & 크리틱</h2>
+                        <p>여름건축학교를 이끌 맨토단</p>
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/sub_banner_180611_2.png">
+                        </figure>
+                    </div>
+                </div>
+                <div class="tile is-parent">
+                    <div class="tile is-child box">
+                        <h3 class="title">건축가 대담</h3>
+                        <p class="subtitle is-4">대담한 대담 - 건축가를 말하다</p>
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/sub_banner_180611_1.png">
+                        </figure>
+                        <div class="content">
+                            <div class="notification">
+                                <button class="delete"></button>
+                                <p class="has-text-centered">좌석이 한정되어 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile is-ancestor is-hidden">
                 <div class="tile is-vertical">
                     <div class="tile">
                         <div class="tile is-parent is-vertical">
@@ -70,13 +122,17 @@
     </div>
 </section>
 <section class="hero is-light">
-    <div class="hero-body">
+    <div class="hero-body has-background-grey-lighter">
         <div class="container is-wrap">
-            <h1 class="title">2018 서울건축문화재</h1>
-            <p class="subtitle"><strong>02-3443-6322</strong> 서울건축문화재 운영사무국
-                <span class="tag is-info is-medium">help@saf.kr</span>
-            </p>
-
+            <div class="columns">
+                <div class="column is-5">
+                    <img src="{{site.theme}}/common/asset/main-logo.png" alt="서울건축문화재 로고">
+                </div>
+                <div class="column">
+                    <h1 class="title">2018 서울건축문화재</h1>
+                    <p class="subtitle">운영사무국 <strong>02-3443-6322</strong> <span class="tag is-info is-medium">help@saf.kr</span></p>
+                </div>
+            </div>
         </div>
     </div>
 </section>

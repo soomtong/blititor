@@ -6,4 +6,58 @@
   color: #f5f5f5;
 }
 
+.navbar {
+  min-height: 4.5rem;
+}
+.navbar .top-logo {
+  padding: 0 2em;
+}
+.navbar .navbar-start {
+  margin-left: 1em;
+}
+.navbar a.navbar-item {
+  font-size: 1.1rem;
+}
+.navbar .navbar-item img {
+  max-height: 3rem;
+}
+.navbar .navbar-brand {
+  min-height: 4.5rem;
+}
+.navbar .navbar-burger {
+  height: 4.5rem;
+  width: 4.5rem;
+}
+.navbar a:hover {
+  color: #dedede;
+}
+.navbar .navbar-dropdown {
+  font-size: 1.1rem;
+}
+.navbar .is-boxed {
+  border-radius: 0;
+}
+
+.section {
+  margin-top: 4.5em;
+  padding: 1.5em;
+}
+
+.footer {
+  padding-bottom: 3em;
+}
+
+.notification, .box {
+  border-radius: 0;
+}
+
+.download {
+  position: relative;
+}
+.download .has-move-up {
+  position: absolute;
+  bottom: 124px;
+  right: 106px;
+}
+
 /*# sourceMappingURL=style.css.map */

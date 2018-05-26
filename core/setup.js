@@ -74,7 +74,7 @@ switch (mainCommand) {
 }
 
 function makeDatabaseConfigFile(next) {
-    console.log(" = Make database configuration \n".rainbow);
+    console.log(" = Make database configuration \n");
 
     var databaseDefault = require('./config/database_default.json');
 
@@ -194,7 +194,7 @@ function makeDatabaseConfigFile(next) {
 }
 
 function makeDatabaseTable(next) {
-    console.log(" = Make database tables for blititor \n".rainbow);
+    console.log(" = Make database tables for blititor \n");
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
@@ -233,7 +233,7 @@ function makeDatabaseTable(next) {
 }
 
 function makeDatabaseTableWithReset() {
-    console.log(" = Reset database tables for blititor \n".rainbow);
+    console.log(" = Reset database tables for blititor \n");
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
@@ -290,7 +290,7 @@ function makeDatabaseTableWithReset() {
 }
 
 function makeModuleDatabaseTable(moduleName, callback) {
-    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module".rainbow);
+    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module");
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
@@ -302,7 +302,7 @@ function makeModuleDatabaseTable(moduleName, callback) {
 }
 
 function makeModuleDatabaseTableWithReset(moduleName) {
-    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module".rainbow);
+    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module");
 
     var connectionInfo = require(path.join('..', configFile))['database'];
     var module = require('../module/'+ moduleName + '/lib/database');
@@ -312,7 +312,7 @@ function makeModuleDatabaseTableWithReset(moduleName) {
 }
 
 function makeThemeConfigFile(next) {
-    console.log(" = Make Theme configuration \n".rainbow);
+    console.log(" = Make Theme configuration \n");
 
     var config = {};
 
@@ -386,7 +386,7 @@ function makeThemeConfigFile(next) {
 }
 
 function makeAdminAccount() {
-    console.log(" = Make Administrator account \n".rainbow);
+    console.log(" = Make Administrator account \n");
 
     // prompt id and password
     prompt.start();
@@ -493,7 +493,7 @@ function makeAdminAccount() {
 }
 
 function loadModuleList(next) {
-    console.log(" = Gathering Modules Info for Database \n".rainbow);
+    console.log(" = Gathering Modules Info for Database \n");
 
     // generate module list
     var folderName = 'module';
