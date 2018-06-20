@@ -7,8 +7,14 @@ var StaticMenu = [
     },
     {
         id: 'about',
-        name: '개요',
+        name: '소개',
         url: '/about'
+    },
+    {
+        id: 'brief',
+        name: '개요',
+        useSubPath: true,
+        url: '/about/brief'
     },
     {
         id: 'about_director',
@@ -21,6 +27,11 @@ var StaticMenu = [
         name: '전시장 안내',
         useSubPath: true,
         url: '/about/location'
+    },
+    {
+        id: 'history',
+        name: '역대 서울건축문화재',
+        url: '/history'
     },
     {
         id: 'register',
@@ -52,7 +63,7 @@ var StaticMenu = [
     },
     {
         id: 'program_idea',
-        name: '대학생 아이디어',
+        name: '대학상 아이디어 공모전',
         useSubPath: true,
         url: '/program/idea'
     },

@@ -6,6 +6,7 @@ var misc = require('../../core/lib/misc');
 
 // load modules
 var Site = require('../../module/site');
+var Account = require('../../module/account');
 
 // load locals
 var app = require('./app.json');
@@ -19,12 +20,9 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 // middleware
 // router.use(Account.middleware.exposeLocals);
 
-// route
-// router.use('/account', Account.route);
-
-// bind root module
-// router.all(routeTable.root, Teamblog.index);
-// router.use('/travel', Teamblog.route);
+// bind module route
+router.use('/account', Account.route);
+// router.use('/notice', Notice.route);
 
 // bind static page
 Site.bindMenu(menu, router);
