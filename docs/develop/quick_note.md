@@ -2,6 +2,11 @@
 
 ## Development Log
 
+### `misc.js` or `common.js` in core
+
+- misc: domain specific functions
+- common: it's a common used functions
+
 ### how to set Fish shell environment variable 
 
 ```

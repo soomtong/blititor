@@ -1,7 +1,7 @@
 {% import './header_item.html' as Header %}
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="{{site.root}}/">Plain</a>
+        <a class="pure-menu-heading" href="{{site.root}}/">{{app.title}}</a>
         <ul class="pure-menu-list">
             {% for item in menu %}
             {% if not user %}

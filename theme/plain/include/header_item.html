@@ -1,5 +1,5 @@
 {% macro item(item, site) %}
-{% if item.id == page %}
+{% if item.id == page_id %}
 <li class="pure-menu-item pure-menu-selected"><a href="{{site.root}}{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>
 {% else %}
 <li class="pure-menu-item"><a href="{{site.root}}{{item.url}}" class="pure-menu-link">{{item.name}}</a></li>

@@ -107,6 +107,20 @@ function setRouteTable(configData) {
     });
 }
 
+function getPageName(menu, page_id, subPath) {
+    for (var i = 0; i < menu.length; i++) {
+        if (subPath) {
+            if (menu[i].url == page_id) {
+                return menu[i].name;
+            }
+        } else {
+            if (menu[i].id == page_id) {
+                return menu[i].name;
+            }
+        }
+    }
+}
+
 function siteThemeType() {
     return {
         setup: 'setup',
@@ -312,6 +326,7 @@ module.exports = {
     getRouteData: getRouteData,
     setRouteTable: setRouteTable,
     siteThemeType: siteThemeType,
+    getPageName: getPageName,
     commonFlag: commonFlag,
     vendorMap: vendorMap,
     setFlag: setFlag,

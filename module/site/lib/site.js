@@ -1,4 +1,5 @@
 var winston = require('winston');
+var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
 
 var filter = common.regexFilter();
@@ -6,32 +7,34 @@ var filter = common.regexFilter();
 function plainPage(req, res) {
 
     var params = {
-        title: "Plain",
         path: req.path,
-        page: req.path === '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
+        page_id: req.path === '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
+
+    params.title = misc.getPageName(res.locals.menu, params.page_id);
 
     //500 Error
     //throw Error('make noise!');
 
     // winston.info(req.path, params, req.path.match(filter.page));
 
-    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
+    res.render(BLITITOR.config.site.theme + '/page/' + params.page_id, params);
 }
 
 function plainPageWithSubPath(req, res) {
 
     var params = {
-        title: "Plain",
         path: req.path,
-        page: req.path.lastIndexOf('/') === req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
+        page_id: req.path.lastIndexOf('/') === req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
     };
+
+    params.title = misc.getPageName(res.locals.menu, params.page_id, true);
 
     // winston.info(req.path, params, req.path.match(filter.page));
     // console.log(req.path.lastIndexOf('/'), req.path.toString().length  -1 );
-    // console.log(params.page);
+    // console.log(params.page_id);
 
-    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
+    res.render(BLITITOR.config.site.theme + '/page' + params.page_id, params);
 }
 
 function bindMenuToRouter(menu, router) {
@@ -58,6 +61,8 @@ function exposeAppLocals(locals, menu) {
     return function (req, res, next) {
         res.locals.app = locals;
         res.locals.menu = menu;
+        //todo: Menu object by menu array
+        // res.locals.Menu = misc.makeMenuObject(menu) to object
         res.locals.adminMenu = menu.AdminMenu || {};
         res.locals.managerMenu = menu.ManagerMenu || {};
 

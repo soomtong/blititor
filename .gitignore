@@ -24,3 +24,5 @@ config*.json
 config*.json.*
 
 # for commercial themes or modules here.
+# or use start string with underbar
+# like `c_kosslab`
