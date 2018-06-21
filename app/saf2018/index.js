@@ -22,7 +22,7 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // bind module route
-router.use('/account', Account.route);
+// router.use('/account', Account.route);
 router.use('/notice', Notice.route);
 
 // bind static page

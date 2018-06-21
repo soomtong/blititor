@@ -1,0 +1,10 @@
+{
+  "notice": {
+    "list": "/",
+    "view": "/view",
+    "write": "/write",
+    "update": "/update",
+    "remove": "/remove",
+    "feedback": "/write/feedback"
+  }
+}

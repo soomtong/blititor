@@ -40,4 +40,6 @@ router.get(routeTable.manage.reservationClean, Account.middleware.checkManager, 
 router.get(routeTable.manage.tutorial, Account.middleware.checkManager, manager.reservationStatus);
 router.get(routeTable.manage.tutorialStatus, Account.middleware.checkManager, manager.reservationTutorialStatus);
 
+//todo: move each module features to module's router
+
 module.exports = router;

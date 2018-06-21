@@ -117,6 +117,17 @@
         "core": false
     },
     {
+        "folder": "notice",
+        "useDatabase": true,
+        "ignore": false,
+        "tables": {
+            "notice": "b_notice",
+            "noticeFeedback": "b_notice_feedback",
+            "user": "b_user"
+        },
+        "core": false
+    },
+    {
         "folder": "reservation",
         "useDatabase": true,
         "ignore": false,
