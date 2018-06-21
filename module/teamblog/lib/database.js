@@ -177,14 +177,14 @@ function insertDummy(databaseConfiguration, done) {
                     };
 
                     insertPost(connection, teamblogData, function (err, result) {
-                        console.log('   inserted post records...'.white, result['insertId']);
+                        console.log('   inserted post records...', result['insertId']);
 
                         callback(err, result);
                     });
                 };
 
                 var resultAsync = function (err, result) {
-                    console.log(' = Inserted default records...'.blue);
+                    console.log(' = Inserted default records...');
 
                     // for async
                     done && done(err, result);
@@ -310,7 +310,7 @@ function insertPost(connection, teamblogData, callback) {
                         done(err, result);
                     });
 
-                    winston.info('Processed tag records...'.white, affectedId);
+                    winston.info('Processed tag records...', affectedId);
                 });
             };
 

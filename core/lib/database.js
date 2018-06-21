@@ -1,5 +1,5 @@
 function createDatabase(connection, dbName, callback) {
-    console.log(' = Make database...'.blue);
+    console.log(' = Make database...');
 
     // make database by given name
     var sql = 'CREATE DATABASE IF NOT EXISTS ?? DEFAULT CHARACTER SET = ??';

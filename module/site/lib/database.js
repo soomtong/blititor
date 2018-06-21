@@ -63,7 +63,7 @@ function insertDummy(databaseConfiguration, done) {
 
     connection.query('select count(id) as `count` from ?? where `title` = ?', [tables.site, 'title'], function (error, rows) {
         if (rows && rows[0] && rows[0]['count'] > 0) {
-            console.log('   skip records...'.white);
+            console.log('   skip records...');
 
             // for async
             done && done();
@@ -76,7 +76,7 @@ function insertDummy(databaseConfiguration, done) {
                 'title': 'title',
                 'value': 'simplestrap demo'
             }], function (error, result) {
-                console.log(' = Inserted default records...'.blue);
+                console.log(' = Inserted default records...');
 
                 // for async
                 done && done(error, result);

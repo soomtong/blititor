@@ -12,31 +12,18 @@ var userPrivilege = require('../config/user_level.json');
 var configuration = require(path.join('..', '..', configFile));
 var databaseConfiguration = configuration['database'];
 
-var serviceTokens = loadServiceToken();
-var serviceProviders = loadServiceProvider();
+var serviceInformation = loadServiceInformation();
 
-function loadServiceToken() {
-    var tokens;
+function loadServiceInformation() {
+    var info;
 
     try {
-        tokens = configuration.service.token;
+        info = configuration.service;
     } catch (e) {
         winston.warn("Can't Get Service Token in `config.json`");
     }
 
-    return tokens || {};
-}
-
-function loadServiceProvider() {
-    var providers;
-
-    try {
-        providers = configuration.service.provider;
-    } catch (e) {
-        winston.warn("Can't Get Service Provider in `config.json`");
-    }
-
-    return providers || {};
+    return info || {};
 }
 
 function getUserPrivilege() {
@@ -303,7 +290,7 @@ function checkThemeConfigFile(configFile) {
 function serviceToken(vendor) {
     var token;
 
-    token = serviceTokens[vendor];
+    token = serviceInformation[vendor] && serviceInformation[vendor].token;
 
     if (!token) winston.error("No exist '" + vendor + "' token information");
 
@@ -313,7 +300,7 @@ function serviceToken(vendor) {
 function serviceProvider(vendor) {
     var provider;
 
-    provider = serviceProviders[vendor];
+    provider = serviceInformation[vendor] && serviceInformation[vendor].provider;
 
     if (!provider) winston.error("No exist '" + vendor + "' provider information");
 

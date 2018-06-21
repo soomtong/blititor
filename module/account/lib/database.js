@@ -126,13 +126,13 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 insertDummyAccount(connection, authData, userData, function (err, result) {
-                    console.log('   inserted records...'.white);
+                    console.log('   inserted records...');
 
                     callback(err, result);
                 });
             };
             var resultAsync = function (err, result) {
-                console.log(' = Inserted default records...'.blue);
+                console.log(' = Inserted default records...');
 
                 // for async
                 done && done(err, result);

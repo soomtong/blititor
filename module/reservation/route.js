@@ -5,9 +5,6 @@ var misc = require('../../core/lib/misc');
 var reservation = require('./lib/reservation');
 var middleware = require('./lib/middleware');
 
-var AccountMiddleware = require('../account/lib/middleware');
-var CounterMiddleware = require('../counter/lib/middleware');
-
 var router = express.Router();
 var routeTable = misc.getRouteData();
 

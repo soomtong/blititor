@@ -198,14 +198,14 @@ function insertDummy(databaseConfiguration, done) {
 
                     insertApp(connection, storeAppData, function (err, result) {
                         // console.log(err, result);
-                        console.log('   inserted storeApp records...'.white, result['insertId']);
+                        console.log('   inserted storeApp records...', result['insertId']);
 
                         callback(err, result);
                     });
                 };
 
                 var resultAsync = function (err, result) {
-                    console.log(' = Inserted default records...'.blue);
+                    console.log(' = Inserted default records...');
 
                     // for async
                     done && done(err, result);
@@ -240,14 +240,14 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 insertCategory(connection, storeAppCategoryData, function (err, result) {
-                    console.log('   inserted storeAppCategory records...'.white, result['insertId']);
+                    console.log('   inserted storeAppCategory records...', result['insertId']);
 
                     callback(null, result);
                 });
             };
 
             var resultAsync = function (err, result) {
-                console.log(' = Inserted category records...'.blue);
+                console.log(' = Inserted category records...');
 
                 // for async
                 done && done(err, result);

@@ -1,6 +1,6 @@
 ## Site
 
-> Default Site Module
+> Simple Reservation Module
 
 some description
 

@@ -7,6 +7,7 @@ var misc = require('../../core/lib/misc');
 // load modules
 var Site = require('../../module/site');
 var Account = require('../../module/account');
+var Notice = require('../../module/notice');
 
 // load locals
 var app = require('./app.json');
@@ -18,11 +19,11 @@ var routeTable = misc.getRouteData();
 var appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
-// router.use(Account.middleware.exposeLocals);
+router.use(Account.middleware.exposeLocals);
 
 // bind module route
 router.use('/account', Account.route);
-// router.use('/notice', Notice.route);
+router.use('/notice', Notice.route);
 
 // bind static page
 Site.bindMenu(menu, router);

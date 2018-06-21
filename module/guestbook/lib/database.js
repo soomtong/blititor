@@ -89,13 +89,13 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 insertMessage(connection, guestbookData, function (err, result) {
-                    console.log('   inserted records...'.white, result.insertId);
+                    console.log('   inserted records...', result.insertId);
 
                     callback(null, result);
                 });
             };
             var resultAsync = function (err, result) {
-                console.log(' = Inserted default records...'.blue);
+                console.log(' = Inserted default records...');
 
                 // for async
                 done && done(err, result);

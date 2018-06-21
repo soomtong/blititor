@@ -137,12 +137,12 @@ function makeDatabaseConfigFile(next) {
         try {
             config = require(path.join('..', configFile));
         } catch (e) {
-            console.log(' = Make new config.json file in root folder...'.blue);
+            console.log(' = Make new config.json file in root folder...');
             fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
         }
 
         if(!result){
-            return console.log('\n 취소되었습니다.'.white)
+            return console.log('\n 취소되었습니다.')
         }
 
         // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
@@ -166,7 +166,7 @@ function makeDatabaseConfigFile(next) {
         });
 
         connection.connect(function(err) {
-            console.log(' = Verify database connection...'.blue);
+            console.log(' = Verify database connection...');
 
             if (err) {
                 console.log(' = Verify database connection... Failed'.red);
@@ -180,11 +180,11 @@ function makeDatabaseConfigFile(next) {
 
                 fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
 
-                console.log(' = Verify configuration data... Done \n'.green);
+                console.log(' = Verify configuration data... Done \n');
 
                 // todo: if no database make new one
                 database.createDatabase(connection, params.dbName, function (err, result) {
-                    console.log(' = Make database... Done \n'.green);
+                    console.log(' = Make database... Done \n');
                     connection.destroy();
                     next && next();
                 });
@@ -209,7 +209,7 @@ function makeDatabaseTable(next) {
 
     var iteratorAsync = function (item, callback) {
         if (!item.ignore && item.useDatabase && item.core) {
-            console.log('\n = Make database table...'.green, item.folder);
+            console.log('\n = Make database table...', item.folder);
 
             var moduleName = item.folder;
 
@@ -224,7 +224,7 @@ function makeDatabaseTable(next) {
     database.createDatabase(connection, connectionInfo.dbName, function () {
         // make tables!
         async.mapSeries(moduleInfo, iteratorAsync, function(result){
-            console.log(' = Make database tables... Done \n'.green);
+            console.log(' = Make database tables... Done \n');
             connection.destroy();
             next && next();
         });
@@ -256,7 +256,7 @@ function makeDatabaseTableWithReset() {
     };
 
     var resultAsync = function (err, result) {
-        console.log(' = Make database tables... Done with clean \n'.green);
+        console.log(' = Make database tables... Done with clean \n');
     };
 
     database.createDatabase(connection, connectionInfo.dbName, function () {
@@ -281,7 +281,7 @@ function makeDatabaseTableWithReset() {
                 // reset tables!
                 async.mapSeries(moduleInfo, iteratorAsync, resultAsync);
             } else {
-                console.log(' = Make database tables request canceled... \n'.green);
+                console.log(' = Make database tables request canceled... \n');
             }
 
             connection.destroy();
@@ -319,7 +319,7 @@ function makeThemeConfigFile(next) {
     try {
         config = require(path.join('..', configFile));
     } catch (e) {
-        console.log(' = Make new config.json file in root folder...'.blue);
+        console.log(' = Make new config.json file in root folder...');
         fs.writeFileSync(configFile, JSON.stringify(config, null, 4));
     }
 
@@ -352,7 +352,7 @@ function makeThemeConfigFile(next) {
         prompt.get(configScheme, function (err, result) {
             // console.log(result, themeList[result.ask - 1].folderName);
             if(!result){
-                return console.log('\n 취소되었습니다.'.white)
+                return console.log('\n 취소되었습니다.')
             }
             var themeData = {
                 "appTheme": themeList[result.ask - 1].folderName || "simplestrap",
@@ -413,7 +413,7 @@ function makeAdminAccount() {
 
     prompt.get(configScheme, function (err, result) {
         if(!result){
-            return console.log('\n 취소되었습니다.'.white)
+            return console.log('\n 취소되었습니다.')
         }
         var query = require('../module/account/lib/query');
         var hash = common.hash(result.password);
@@ -442,7 +442,7 @@ function makeAdminAccount() {
 
                 console.error('error connecting: ' + err.stack);
             } else {
-                console.log(' = Make administrator account...'.blue);
+                console.log(' = Make administrator account...');
 
                 // make database by given name
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
@@ -529,7 +529,7 @@ function loadModuleList(next) {
 
     fs.readdir(path.join('.', folderName), function (err, files) {
         async.map(files, collectData, function (err, results) {
-            console.log(' = Module Data Gathering... Done \n'.green);
+            console.log(' = Module Data Gathering... Done \n');
 
             // ordering. first is site, second is account
             var temp = [];

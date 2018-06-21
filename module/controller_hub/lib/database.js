@@ -168,14 +168,14 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 createGatewayGroup(connection, groupData, function (err, result) {
-                    console.log('   inserted controllerGatewayGroup records...'.white, result['insertId']);
+                    console.log('   inserted controllerGatewayGroup records...', result['insertId']);
 
                     callback(null, result);
                 });
             };
 
             var resultAsync = function (err, result) {
-                console.log(' = Inserted controller records...'.blue);
+                console.log(' = Inserted controller records...');
 
                 // for async
                 done && done(err, result);
@@ -213,14 +213,14 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 createGateway(connection, gatewayData, function (err, result) {
-                    console.log('   inserted controllerGateway records...'.white, result['insertId']);
+                    console.log('   inserted controllerGateway records...', result['insertId']);
 
                     callback(null, result);
                 });
             };
 
             var resultAsync = function (err, result) {
-                console.log(' = Inserted gateway records...'.blue);
+                console.log(' = Inserted gateway records...');
 
                 // for async
                 done && done(err, result);
@@ -268,14 +268,14 @@ function insertDummy(databaseConfiguration, done) {
                 };
 
                 createRtvm(connection, rtvmData, function (err, result) {
-                    console.log('   inserted Real-time VM records...'.white, result['insertId']);
+                    console.log('   inserted Real-time VM records...', result['insertId']);
 
                     callback(null, result);
                 });
             };
 
             var resultAsync = function (err, result) {
-                console.log(' = Inserted rtvm records...'.blue);
+                console.log(' = Inserted rtvm records...');
 
                 // for async
                 done && done(err, result);
