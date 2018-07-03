@@ -3,6 +3,6 @@
     "title": "서울건축박람회"
   },
   "config": {
-    "vendor": ["bulma", "jquery"]
+    "vendor": ["bulma", "jquery", "fontawesome"]
   }
 }

@@ -14,7 +14,7 @@
                 <article class="message ">
                     <div class="message-header">
                         <p class="">{{ item.title | trim }}</p>
-                        <p class="subtitle is-6 has-text-white-ter"><span class="icon"><i class="fas fa-user-clock"></i></span>{{ item.updated_at | default(item.created_at) }}</p>
+                        <p class="subtitle is-6 has-text-white-ter"><span class="icon"><i class="fa fa-user-clock"></i></span>{{ item.updated_at | default(item.created_at) }}</p>
                     </div>
                     <div class="message-body is-body">
                         {{ item.body }}

@@ -2,6 +2,120 @@
   max-width: 768px
 .navbar-burger
   color: #f5f5f5
+.transparent-gradient-bg
+  div
+    background: linear-gradient(rgba(95, 95, 95, 0.2), rgba(93, 107, 142, 0.2), rgba(60, 87, 119, 0.2))
+    position: absolute
+    width: 100%
+    margin-top: 10px
+  .header-bg
+    min-height: 685px
+    padding: 160px 0
+    overflow: hidden
+    margin-bottom: -100px
+  .tilt-clock
+    -webkit-transform: skewY(11deg)
+    transform: skewY(11deg)
+    transform-origin: 0
+.transparent-gradient-bg :first-child
+  transform-origin: bottom
+  transform: skewY(-8deg)
+.transparent-gradient-bg :last-child
+  transform-origin: right
+  transform: skewY(5deg)
+  max-width: 100%
+
+#main_card
+  .title-desc1
+    color: #0533a6
+  .title-desc2
+    color: #266dcd
+
+#clinic_card
+  background: #114299
+  text-align: center
+  .title, .subtitle
+    color: #ffffff
+  .mentors
+    .subtitle
+      padding-top: 1em
+      padding-bottom: 1.2em
+      border-bottom: 1px solid #ffffff
+    .mentor
+      padding-top: 0.5em
+    .name
+      font-weight: bold
+    .image
+      width: 186px
+      height: 186px
+      margin: 1.2em auto 1.5em
+      img
+        border-radius: 50%!important
+  p
+    color: #ffffff
+
+#director_talk
+  background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg)
+  text-align: center
+  .directors
+    .subtitle
+      padding-top: 1em
+      padding-bottom: 1.2em
+      border-bottom: 1px solid #000000
+    .director
+      background: rgba(255, 255, 255, 0.8)
+      padding: 0.5em
+    .name
+      font-weight: bold
+    .image
+      width: 186px
+      height: 186px
+      margin: 1.2em auto 1.5em
+      img
+        border-radius: 50%!important
+  p
+    color: #000000
+
+
+.title-trans
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3)
+  text-stroke: 1px rgba(255, 255, 255, 0.3)
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  display: block
+
+.rainbow-gray
+  -webkit-animation: animateRainbow 8s ease infinite
+  animation: animateRainbow 12s ease infinite
+  background-image: linear-gradient(124deg, rgba(134, 135, 181, 0.97), rgb(237, 232, 242), rgba(207, 168, 177, 0.65), rgba(75, 130, 137, 0.8))
+  background-size: 300% 300%
+
+.rainbow-trans
+  -webkit-animation: animateRainbow 8s ease infinite
+  animation: animateRainbow 8s ease infinite
+  background-image: linear-gradient(135deg, rgba(255, 71, 15, 0.3), rgba(255, 56, 96, 0.3), rgba(184, 107, 255, 0.31), rgba(50, 115, 220, 0.3))
+  background-size: 300% 300%
+
+.rainbow
+  -webkit-animation: animateRainbow 8s ease infinite
+  animation: animateRainbow 8s ease infinite
+  //background-image: linear-gradient(124deg, #6e8Dc2, #6e8Dc2, #b085b5, #586075)
+  background-image: linear-gradient(124deg, #ff470f, #ff3860, #b86bff, #3273dc)
+  background-size: 100% 100%
+
+@keyframes animateRainbow
+  0%
+    background-position: 1% 80%
+  50%
+    background-position: 99% 20%
+  100%
+    background-position: 1% 80%
+
+@keyframes animateStars
+  from
+    transform: translateY(0)
+  to
+    transform: translateY(-200px)
 
 // patch
 .navbar

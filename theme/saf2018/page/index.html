@@ -7,6 +7,10 @@
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
     {% include './include/menu.html' %}
 </nav>
+<div class="transparent-gradient-bg">
+    <div class="header-bg tilt-clock"></div>
+    <div class="header-bg tilt-clock"></div>
+</div>
 <section class="section">
     <div class="columns is-centered">
         <div class="column container is-wrap">
@@ -19,7 +23,7 @@
                         <div class="download">
                             <div class="has-move-up">
                                 <a class="button is-danger is-medium" href="/">
-                                    <span class="icon"><i class="fas fa-download"></i></span>
+                                    <span class="icon"><i class="fa fa-download"></i></span>
                                     <span>신청서</span></a>
                             </div>
                         </div>
@@ -34,7 +38,7 @@
                         <div class="download">
                             <div class="has-move-up">
                                 <a class="button is-danger is-medium" href="/">
-                                    <span class="icon"><i class="fas fa-download"></i></span>
+                                    <span class="icon"><i class="fa fa-download"></i></span>
                                     <span>신청서</span></a>
                             </div>
                         </div>
@@ -52,31 +56,44 @@
             </div>
             <div class="tile is-ancestor">
                 <div class="tile is-6 is-vertical is-parent">
-                    <div class="tile is-child box">
-                        <h1 class="is-size-1">SAF 2018</h1>
-                        <h2 class="title">한양산천 서울강산</h2>
+                    <div class="tile is-child box rainbow-gray" id="main_card">
+                        <h1 class="is-size-1 has-text-weight-bold title-trans rainbow">SAF 2018</h1>
+                        <h2 class="title has-text-weight-bold">
+                            <span class="title-desc1">한양</span><span class="title-desc2">산천</span>
+                            <span class="title-desc1">서울</span><span class="title-desc2">강산</span>
+                        </h2>
                         <p>2018.10.5 - 10.28</p>
                         <p>문화비축기지, 돈의문박물관마을</p>
                     </div>
-                    <div class="tile is-child box">
+                    <div class="tile is-child box" id="clinic_card">
                         <h2 class="title">튜터 & 크리틱</h2>
                         <p>여름건축학교를 이끌 맨토단</p>
-                        <figure class="image">
-                            <img src="{{site.theme}}/common/asset/sub_banner_180611_2.png">
-                        </figure>
+                        <div class="mentors">
+                            <h3 class="subtitle is-5">참여 건축가</h3>
+
+                            <p class="mentor"><span class="name">한은주</span> 코디네이터</p>
+                            <figure class="image">
+                                <img src="{{site.theme}}/common/asset/mentor-1-pic.jpg">
+                            </figure>
+                        </div>
+
                     </div>
                 </div>
                 <div class="tile is-parent">
-                    <div class="tile is-child box">
+                    <div class="tile is-child box" id="director_talk">
                         <h3 class="title">건축가 대담</h3>
-                        <p class="subtitle is-4">대담한 대담 - 건축가를 말하다</p>
-                        <figure class="image">
-                            <img src="{{site.theme}}/common/asset/sub_banner_180611_1.png">
-                        </figure>
-                        <div class="content">
-                            <div class="notification">
-                                <button class="delete"></button>
-                                <p class="has-text-centered">좌석이 한정되어 있습니다.</p>
+                        <div class="directors">
+                            <h3 class="subtitle is-5">대담한 대담 - 건축가를 말하다</h3>
+
+                            <p class="director"><span class="name">이기옥</span> 건축가</p>
+                            <figure class="image">
+                                <img src="{{site.theme}}/common/asset/director-1-pic.jpg">
+                            </figure>
+                            <div class="content notice">
+                                <div class="notification">
+                                    <button class="delete"></button>
+                                    <p class="has-text-centered">좌석이 한정되어 있습니다.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
