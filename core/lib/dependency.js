@@ -8,10 +8,13 @@ function moduleInstalled(env) {
     if (env !== 'production' && env !== 'development') return;
 
     var errors = [];
+    var exceptions = ['font-awesome'];  // fa v4 npm has no main entry. it can't resolve
 
     Object.keys(packages['dependencies']).forEach(function (p) {
         try {
-            require.resolve(p);
+            if (!exceptions.includes(p)) {
+                require.resolve(p);
+            }
         } catch (e) {
             errors.push(e.message);
         }

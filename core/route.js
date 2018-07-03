@@ -46,7 +46,7 @@ router.use(application.router);
 
 if (application.config && application.config['vendor']) {
     application.config.vendor.map(function (vendor) {
-        winston.info('bound static library:', "'" + vendor + "'");
+        winston.info('bound static library:', "'" + vendor + "' to " + misc.vendorMap(vendor));
 
         router.use('/vendor/' + vendor, express.static(misc.vendorMap(vendor)));
     });

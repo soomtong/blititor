@@ -23,6 +23,7 @@
     "express-session": "^1.15.6",
     "express-status-monitor": "^1.0.1",
     "express-validator": "^5.2.0",
+    "font-awesome": "^4.7.0",
     "jimp": "^0.2.28",
     "jquery": "^3.3.1",
     "lusca": "^1.6.0",

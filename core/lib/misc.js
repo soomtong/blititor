@@ -120,6 +120,7 @@ function vendorMap(vendorName) {
     var map = {
         jquery: 'node_modules/jquery/dist',
         bulma: 'node_modules/bulma/css',
+        fontawesome: 'node_modules/font-awesome',
         bootstrap: 'node_modules/bootstrap/dist',
         pure: 'node_modules/purecss/build'
     };
