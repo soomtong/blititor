@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body>
+{% include '../include/nav.html' %}
+
+<section class="page_volunteer ds parallax section_padding_top_50 section_padding_bottom_50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2>문의사항</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ls columns_padding_25 section_padding_top_100 section_padding_bottom_25">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 to_animate" data-animation="scaleAppear">
+                <h3 class="module-header">궁금하신 사항을 남겨 주세요</h3>
+                <form class="columns_padding_5 row" method="post" action="{{ route.guestbook_root + route.guestbook.message }}">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="nickname">이름
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" aria-required="true" size="30" value="" name="nickname" id="nickname" class="form-control" placeholder="이름">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="password">패스워드
+                                <span class="required">*</span>
+                            </label>
+                            <input type="password" aria-required="true" size="30" value="" name="account_password" id="password" class="form-control" placeholder="패스워드">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="email">이메일
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" aria-required="true" size="30" value="" name="account_id" id="email" class="form-control" placeholder="이메일">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="phone">전화번호
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" aria-required="true" size="30" value="" name="phone_number" id="phone" class="form-control" placeholder="전화번호">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="contact-form-message form-group">
+                            <label for="message">남기실 말씀</label>
+                            <textarea aria-required="true" rows="3" cols="45" name="message" id="message" class="form-control" placeholder="Message..."></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 bottommargin_0">
+                        <div class="contact-form-submit topmargin_10">
+                            <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                            <button type="submit" id="contact_form_submit" name="contact_submit" class="theme_button color1 wide_button margin_0">저 장</button>
+                        </div>
+                    </div>
+
+                    {% if message.error %}
+                    <div class="col-sm-12 topmargin_10">
+                        {% for error in message.error %}
+                        <div class="alert alert-danger" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">×</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <strong>저장에 실패했습니다.</strong> {{ error.msg }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+
+            <div class="col-md-4 to_animate" data-animation="scaleAppear">
+                <h3 class="module-header">컨트리뷰톤 운영 사무국</h3>
+
+                <div class="media small-teaser topmargin_0">
+                    <div class="media-left">
+                        <i class="fa fa-map-marker highlight"></i>
+                    </div>
+                    <div class="media-body">
+                        서울시 강남구 테헤란로 311, 7층 KOSSLAB <br>(역삼동 702-10 아남타워)
+                    </div>
+                </div>
+                <div class="media small-teaser">
+                    <div class="media-left">
+                        <i class="fa fa-envelope highlight"></i>
+                    </div>
+                    <div class="media-body">
+                        kosslab@kosslab.kr
+                    </div>
+                </div>
+                <div class="media small-teaser">
+                    <div class="media-left">
+                        <i class="fa fa-phone highlight"></i>
+                    </div>
+                    <div class="media-body">
+                        02-561-0552
+                    </div>
+                </div>
+                <div class="media small-teaser">
+                    <div class="media-left">
+                        <i class="fa fa-clock-o highlight"></i>
+                    </div>
+                    <div class="media-body">
+                        월-금 10:00 - 18:00
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ls section_padding_bottom_100 columns_padding_25">
+    <div class="container">
+        <div class="with_padding with_shadow rounded comments-wrapper">
+            <div class="comments-area" id="comments">
+                {% for item in list %}
+                <ol class="comment-list">
+                    <li class="comment even thread-even depth-1 parent">
+                        <article class="comment-body media">
+                            <div class="media-body">
+                                <div class="comment-meta darklinks">
+                                    <h4 class="author_url">{{ item.nickname }}</h4>
+                                    <span class="comment-date">
+                                        <time class="entry-date small-text big highlight semibold">{{ item.created_at }}</time>
+                                    </span>
+                                </div>
+                                <p class="guest-message">
+                                    {{ item.message | striptags(true) | replace('\n', '<br>') | safe }}
+                                </p>
+                            </div>
+                        </article>
+
+                        {% if user and user.grant %}
+                        <div class="comment-respond" id="respond">
+                            <h5>답변 달기</h5>
+
+                            <form class="comment-form columns_padding_5" id="reply_form" method="post" action="{{ route.guestbook_root + route.guestbook.reply }}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group margin_0">
+                                            <label for="reply">Comment</label>
+                                            <textarea aria-required="true" rows="5" cols="45" name="reply" id="reply" class="form-control" placeholder="Reply...">{{ item.reply | striptags(true) | safe }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-submit topmargin_30">
+                                    <input type="hidden" name="guestbook_id" value="{{ item.id }}"/>
+                                    <input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+                                    {% if item.reply or item.replied_at %}
+                                    <button type="submit" class="btn btn-warning">Update</button>
+                                    {% else %}
+                                    <button type="submit" class="btn btn-info">Reply</button>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                        {% else %}
+                        {% if item.reply %}
+                        <ol class="children">
+                            <li class="comment byuser odd alt depth-2">
+                                <article class="comment-body media">
+                                    <div class="media-body">
+                                        <div class="comment-meta darklinks">
+                                            <h5>관리자</h5>
+                                            <span class="comment-date"><time class="entry-date small-text big highlight semibold">{{ item.replied_at }}</time></span>
+                                        </div>
+                                        <p>{{ item.reply | striptags(true) | replace('\n', '<br>') | safe }}</p>
+                                    </div>
+                                </article>
+                            </li>
+                        </ol>
+                        {% endif %}
+                        {% endif %}
+                    </li>
+                </ol>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row columns_padding_5 page-nav">
+            {% if hasNext %}
+            <div class="col-md-6">
+                <div class="theme_button color inverse">
+                    <a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page + 1}}">이전</a>
+                </div>
+            </div>
+            {% endif %}
+            {% if hasPrev %}
+            <div class="col-md-6 text-right">
+                <div class="theme_button color inverse">
+                    <div class="item-content">
+                        {% if page > 1 %}
+                        <a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}{{page - 1}}">다음</a>
+                        {% else %}
+                        <a href="{{site.root}}{{ route.guestbook_root + route.guestbook.form }}">다음</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% include '../include/footer.html' %}
+{% include '../include/script.html' %}
+</body>
+</html>

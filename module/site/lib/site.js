@@ -1,3 +1,4 @@
+var util = require('util');
 var winston = require('winston');
 var misc = require('../../../core/lib/misc');
 var common = require('../../../core/lib/common');
@@ -39,7 +40,7 @@ function plainPageWithSubPath(req, res) {
 
 function bindMenuToRouter(menu, router) {
     menu.map(function (item) {
-        winston.verbose('Bound static menu:', item);
+        winston.verbose('Bound static menu:' + util.inspect(item));
         if (!item.useSubPath) item.useSubPath = false;
 
         router[item['type'] || 'get'](item['url'], !item.useSubPath ? plainPage : plainPageWithSubPath);

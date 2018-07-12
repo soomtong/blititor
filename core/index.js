@@ -41,28 +41,28 @@ var clc = require('cli-color');
 
 // set log level
 if (BLITITOR.env === 'production') {
-    winston.remove(winston.transports.Console);
-    winston.add(winston.transports.File, {
+    winston.add(new winston.transports.File({
         filename: path.join(__dirname, 'log', 'winston.log'),
-        timestamp: function () {
-            var date = new Date();
-            return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0, 5);// + ' [' + global.process.pid + ']';
-        },
+        format: winston.format.combine(
+            winston.format.timestamp({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            }),
+            winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+        ),
         level: BLITITOR.config.logLevel || 'verbose'
-    });
+    }));
 } else {
-    winston.configure({
-        transports: [
-            new (winston.transports.Console)({
-                colorize: true,
-                timestamp: function () {
-                    var date = new Date();
-                    return (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.toTimeString().substr(0, 5);// + ' [' + global.process.pid + ']';
-                },
-                level: BLITITOR.config.logLevel || 'debug'
-            })
-        ]
-    });
+    winston.add(new winston.transports.Console({
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.timestamp({
+                format: 'MM-DD HH:mm:ss'
+            }),
+            // winston.format.simple(),
+            winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+        ),
+        level: BLITITOR.config.logLevel || 'debug'
+    }));
 }
 
 // load custom library
@@ -191,7 +191,8 @@ app.use(require('./route'));
 
 // start server
 server.listen(app.get('port'), function () {
-    winston.info("Server listening on port " + clc.yellow(app.get('port')) + " in " + clc.red(BLITITOR.env) + " mode");
+    winston.info('Server listening on port ' + app.get('port') + ' in ' + BLITITOR.env + ' mode')
+    console.info("=== Server listening on port " + clc.yellow(app.get('port')) + " in " + clc.red(BLITITOR.env) + " mode");
     // display default route table
     // misc.showRouteTable();
 });
@@ -199,11 +200,13 @@ server.listen(app.get('port'), function () {
 if (!process.send) {
     // If run using `node app`, log copyright info along with server info
     var config = require('../package.json');
+    winston.info('----------------------------------------------------------------');
     winston.info('BLITITOR v' + config.version + ' Copyright (C) 2016 @' + config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
     winston.info('This is free software, under ' + config.license + ' license');
     winston.info('and you are welcome to redistribute it under certain conditions.');
-    winston.verbose('module data file loaded.', BLITITOR.moduleList.length, 'modules located');
+    winston.info('----------------------------------------------------------------');
+    winston.verbose('module data file loaded. ' + BLITITOR.moduleList.length + ' modules located');
 
     if (BLITITOR.env === 'development') { // Only in dev environment
         setTimeout(function () {

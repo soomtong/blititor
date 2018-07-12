@@ -86,10 +86,10 @@ function setRouteTable(configData) {
         try {
             routeData = fs.readFileSync(BLITITOR.root + '/module/' + item.folder + routeFile);
 
-            winston.info('bound module route data:', "'" + item.folder + "'");
+            winston.info("bound module route data: '" + item.folder + "'");
             Object.assign(BLITITOR.route, JSON.parse(routeData.toString()));
         } catch (e) {
-            winston.verbose('there is no route data:', "'" + item.folder + "'");
+            winston.verbose("there is no route data: '" + item.folder + "'");
         }
     });
 }

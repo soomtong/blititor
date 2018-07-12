@@ -24,5 +24,12 @@
     </div>
 </section>
 {% include './include/footer.html' %}
+<script>
+    //page preloader
+    jQuery(".preloader_image").fadeOut(150);
+    jQuery(".preloader").fadeOut(350).delay(200, function(){
+        jQuery(this).remove();
+    });
+</script>
 </body>
 </html>

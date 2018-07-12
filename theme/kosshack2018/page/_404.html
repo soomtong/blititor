@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+{% include './include/nav.html' %}
+<section class="ls section_404 background_cover section_padding_top_130 section_padding_bottom_150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-7 text-center text-md-left">
+                <div class="inline-block text-center">
+                    <p class="not_found">
+                        <span class="highlight">404</span>
+                        <span class="oops grey">{{ url }}</span>
+                    </p>
+                    <h3 class="text-uppercase">없는 페이지입니다!</h3>
+                    <p>
+                        <a href="/" class="theme_button color1">홈으로 이동</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include './include/footer.html' %}
+<script src="{{site.theme}}/common/vendor/jquery-1.12.4.min.js"></script>
+<script>
+    //page preloader
+    jQuery(".preloader_image").fadeOut(150);
+    jQuery(".preloader").fadeOut(350).delay(200, function(){
+        jQuery(this).remove();
+    });
+</script>
+</body>
+</html>

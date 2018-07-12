@@ -27,11 +27,11 @@ router.use(site.middleware.exposeLocals);
 // route for admin or manage
 if (application.config && application.config['admin']) {
     router.use('/admin', admin.middleware.exposeLocals, admin.route);
-    winston.info('Enabled administrator module to', '/admin');
+    winston.info('Enabled administrator module to /admin');
 }
 if (application.config && application.config['manage']) {
     router.use('/manage', manage.middleware.exposeLocals, manage.route);
-    winston.info('Enabled manager module to', '/manage');
+    winston.info('Enabled manager module to /manage');
 }
 
 // need to place down here for excluding admin/manage page log
@@ -88,7 +88,7 @@ router.use(function _500Handler(err, req, res, next){
     res.status(err.status || 500);
 
     // set default 500 page
-    fs.stat(path.join('..', 'theme', BLITITOR.config.site.theme, 'page', '_500.html'), function (error, stat) {
+    fs.stat(path.join('.', 'theme', BLITITOR.config.site.theme, 'page', '_500.html'), function (error, stat) {
         if (error) {
             res.render('status500', { error: err });
         } else {
