@@ -350,12 +350,11 @@ function makeThemeConfigFile(next) {
         };
 
         prompt.get(configScheme, function (err, result) {
-            // console.log(result, themeList[result.ask - 1].folderName);
             if(!result){
                 return console.log('\n 취소되었습니다.')
             }
             var themeData = {
-                "appTheme": themeList[result.ask - 1].folderName || "simplestrap",
+                "appName": themeList[result.ask - 1].folderName || "simplestrap",
                 "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "adminTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "manageTheme": themeList[result.ask - 1].folderName || "simplestrap"
@@ -364,12 +363,12 @@ function makeThemeConfigFile(next) {
             if (!config.application) {
                 config.application = {
                     "port": siteDefault.port,
-                    "appName": themeData.appTheme,
+                    "appName": themeData.appName,
                     "url_prefix": siteDefault.url_prefix,
                     "title": siteDefault.title
                 }
             } else {
-                config.application.appName = themeData.appTheme;
+                config.application.appName = themeData.appName;
             }
 
             config.theme = {

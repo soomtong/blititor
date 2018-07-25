@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+<div class="app-container">
+    {% include './include/nav.html' %}
+    <main class="app-content">
+        <section class="section is-hero">
+            <div class="container">
+                <div class="columns is-vcentered is-centered">
+                    <div class="column">
+                        <h2>{{app.title}}</h2>
+                        <div>
+                            <p>{{title}} <code>{{page_id}}</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include './include/footer.html' %}
+</div>
+<script></script>
+</body>
+</html>

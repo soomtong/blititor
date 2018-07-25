@@ -27,7 +27,6 @@ var mysqlSession = require('express-mysql-session');
 var flash = require('connect-flash');
 var device = require('express-device');
 var compress = require('compression');
-var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var errorHandler = require('errorhandler');
 var lusca = require('lusca');
@@ -151,7 +150,6 @@ try {
 
 app.use(morgan('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
-app.use(favicon(path.join('public', 'favicon.ico')));
 app.use(multerUploader.any());  // should set before csrf middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -183,6 +181,7 @@ var staticOptions = {
     maxAge: WEEK
 };
 
+// bind static
 app.use(express.static('public', staticOptions));
 app.use(express.static('theme', staticOptions));
 

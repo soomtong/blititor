@@ -1,0 +1,97 @@
+@media screen and (min-width: 769px), print {
+	html {
+		font-size: 14px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	html {
+		font-size: 16px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	html.has-navbar-fixed-top {
+		padding-top: 5rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar {
+		min-height: 5rem;
+		box-shadow: 0 1px 4px 0 rgba(70, 56, 83, 0.1);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar > .container {
+		min-height: 5rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar .navbar-brand {
+		min-height: 5rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar .brand .brand-icon {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar-menu {
+		text-align: center;
+	}
+
+	.app-header .navbar-menu .navbar-item {
+		font-size: 1.5rem;
+	}
+
+	.app-header .navbar-menu .navbar-item img {
+		max-height: 3rem;
+	}
+}
+
+@media screen and (min-width: 769px), print {
+	.app-header .navbar-end {
+		-ms-flex-align: center;
+		align-items: center;
+	}
+
+	.app-header .navbar-menu .navbar-item {
+		position: relative;
+		padding: 0.875rem 1rem;
+		margin-left: 0.1rem;
+		margin-right: 0.1rem;
+		border-radius: 10px;
+		font-size: 1.125rem;
+		line-height: 1;
+		font-weight: 500;
+		transition-duration: 86ms;
+	}
+
+	.app-header .navbar-menu .navbar-item .tag {
+		position: absolute;
+		top: -8px;
+		left: 100%;
+		margin-left: calc(-1rem + 2px);
+		margin-top: calc(1rem - 0px);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.app-header .navbar .brand .brand-icon {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+@media screen and (min-width: 769px), print {
+	.is-hero {
+		margin-top: 1.5rem;
+	}
+}

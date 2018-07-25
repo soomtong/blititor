@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body class="has-background-grey-light">
+<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+    {% include '../include/menu.html' %}
+</nav>
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column container is-wrap">
+                {% for item in noticeList %}
+                <article class="message ">
+                    <div class="message-header">
+                        <p class="">{{ item.title | trim }}</p>
+                        <p class="subtitle is-6 has-text-white-ter"><span class="icon"><i class="fa fa-user-clock"></i></span>{{ item.updated_at | default(item.created_at) }}</p>
+                    </div>
+                    <div class="message-body is-body">
+                        {{ item.body }}
+                    </div>
+                </article>
+                {% endfor %}
+        </div>
+    </div>
+</section>
+<section class="hero is-light">
+    <div class="hero-body has-background-white-ter">
+        <div class="container is-wrap">
+        {% if pagination %}
+        {% import '../include/pagination.html' as Page %}
+        {{ Page.nation(pagination, '/notice') }}
+        {% endif %}
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    {% include '../include/footer.html' %}
+</footer>
+</body>
+</html>

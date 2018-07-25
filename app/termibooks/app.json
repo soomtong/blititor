@@ -1,0 +1,10 @@
+{
+  "locals": {
+    "title": "터미놀로지"
+  },
+  "config": {
+    "admin": true,
+    "manage": true,
+    "vendor": ["bulma", "jquery", "fontawesome"]
+  }
+}
