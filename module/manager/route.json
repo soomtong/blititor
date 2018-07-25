@@ -1,5 +1,6 @@
 {
   "manage": {
+    "root": "/manage",
     "login": "/login",
     "dashboard": "/dashboard",
     "account": "/account",

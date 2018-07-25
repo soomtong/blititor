@@ -94,7 +94,7 @@ function registerMessage(req, res) {
 
         req.flash('info', 'Saved Guestbook by ' + (guestbookData.nickname || guestbookData.email));
 
-        res.redirect(routeTable.guestbook_root);
+        res.redirect(routeTable.guestbook.root);
     });
 }
 
@@ -131,7 +131,7 @@ function updateReply(req, res) {
 
         req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
 
-        res.redirect(routeTable.guestbook_root);
+        res.redirect(routeTable.guestbook.root);
     });
 }
 

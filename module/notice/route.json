@@ -1,5 +1,6 @@
 {
   "notice": {
+    "root": "/notice",
     "list": "/",
     "view": "/view",
     "write": "/write",

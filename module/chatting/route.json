@@ -1,5 +1,6 @@
 {
   "chat": {
+    "root": "/chat",
     "form": ""
   }
 }

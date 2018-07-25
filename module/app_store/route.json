@@ -1,5 +1,6 @@
 {
   "appstore": {
+    "root": "/store",
     "list": "/apps",
     "category": "/category",
     "upload": "/upload/app"

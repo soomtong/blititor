@@ -1,5 +1,6 @@
 {
   "reservation": {
+    "root": "/reservation",
     "form": "/",
     "status": "/status",
     "phoneSecret": "/secret"

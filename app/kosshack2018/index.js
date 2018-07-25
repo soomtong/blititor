@@ -23,9 +23,9 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // route
-router.get('/account' + routeTable.account.signOut, Account.signOut);
-router.use('/gallery', Gallery.route);
-router.use('/guestbook', Guestbook.route);
+router.get(routeTable.account.root + routeTable.account.signOut, Account.signOut);
+router.use(routeTable.gallery.root, Gallery.route);
+router.use(routeTable.guestbook.root, Guestbook.route);
 
 // bind static page
 Site.bindMenu(menu, router);

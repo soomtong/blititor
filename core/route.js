@@ -14,6 +14,7 @@ var counter = require('../module/counter');
 
 // extend router
 var router = express.Router();
+var routeTable = misc.getRouteData();
 
 // Global locals and middleware
 router.use(middleware.exposeLocals);
@@ -26,11 +27,11 @@ router.use(site.middleware.exposeLocals);
 
 // route for admin or manage
 if (application.config && application.config['admin']) {
-    router.use('/admin', admin.middleware.exposeLocals, admin.route);
+    router.use(routeTable.admin.root, admin.middleware.exposeLocals, admin.route);
     winston.info('Enabled administrator module to /admin');
 }
 if (application.config && application.config['manage']) {
-    router.use('/manage', manage.middleware.exposeLocals, manage.route);
+    router.use(routeTable.manage.root, manage.middleware.exposeLocals, manage.route);
     winston.info('Enabled manager module to /manage');
 }
 

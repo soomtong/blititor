@@ -1,5 +1,6 @@
 {
   "controller_hub": {
+    "root": "/hub",
     "gateway": "/gateway",
     "rtvm": "/rtvm",
     "form": "/form",
