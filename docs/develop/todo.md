@@ -1,6 +1,0 @@
-- [ ] visit counter for manager home
-- [ ] bind global root folder for setup and init process
-- [ ] connect mysql by socket
-- [ ] use macro, layout for advanced template
-- [ ] 2 depth menu
-- [ ] replace session store by redis

@@ -11,7 +11,7 @@
 
 __could you do me a favor?__
 
-please use 4 space in *.js file.
+please use 4 space or 4 tab in *.js file.
 but *.html, *.css depends on each css frameworks.
 
 ## Variable or Class Convention
@@ -94,8 +94,7 @@ newlib-1.0.1
 커밋 설명의 첫 두 줄은 60~80 자 미만으로 적어주세요. 한글일 경우 40자 미만이 좋습니다. 세번째 줄 다음은 한 줄 띄우고 필요한 설명을 적습니다.
 
 ```
-근처에 있는 아무나 붙잡고 휴대폰 쥐어주면서 
-사진 찍어달라고 부탁해보세요.
+근처에 있는 아무나 붙잡고 휴대폰 쥐어주면서 사진 찍어달라고 부탁해보세요.
 (빈줄)
 99프로는 갤 노트 7 아니면 다 흔쾌히 찍어줍니다.
 아, 나머지 1프로는 들고 튀죠.
