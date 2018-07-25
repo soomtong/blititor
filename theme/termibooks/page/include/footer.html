@@ -36,14 +36,12 @@
                         <div class="menu">
                             <p class="menu-label">소셜미디어에서 만나요</p>
                             <ul class="menu-list">
-                                <li>
-                                    <a href="https://facebook.com/termibooks" target="_blank">
-                                        <img role="presentation" src="{{site.theme}}/common/asset/facebook.svg?1530712712">Facebook</a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/termibooks" target="_blank">
-                                        <img role="presentation" src="{{site.theme}}/common/asset/twitter.svg?1530712712">Twitter</a>
-                                </li>
+                                <li><a href="https://facebook.com/termibooks" target="_blank">
+                                    <img src="{{site.theme}}/common/asset/facebook.svg">Facebook</a></li>
+                                <li><a href="https://twitter.com/termibooks" target="_blank">
+                                    <img src="{{site.theme}}/common/asset/twitter.svg">Twitter</a></li>
+                                <li><a href="{{ route.account.root + route.account.signIn }}">
+                                    <i class="fa fa-user-secret"></i>Login</a></li>
                             </ul>
                         </div>
                     </div>

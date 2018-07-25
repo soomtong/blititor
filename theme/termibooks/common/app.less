@@ -1,0 +1,148 @@
+.app-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.app-header {
+  .navbar {
+    box-shadow: 0 1px 0 0 rgba(142, 81, 199, 0.05);
+    transition-duration: 172ms;
+    will-change: min-height;
+  }
+  .navbar > .container {
+    transition-duration: 172ms;
+    will-change: min-height;
+  }
+
+  .navbar .navbar-brand {
+    transition-duration: 172ms;
+    will-change: min-height;
+  }
+
+  .navbar .navbar-burger {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .navbar .navbar-burger span {
+    height: 2px;
+    border-radius: 99rem;
+  }
+
+  .navbar.is-small {
+    min-height: 4rem;
+    box-shadow: 0 1px 4px 0 rgba(70, 56, 83, 0.1);
+  }
+
+  .navbar.is-small > .container {
+    min-height: 4rem;
+  }
+
+  .navbar.navbar.is-small .navbar-burger {
+    height: 4rem;
+  }
+
+  .navbar.is-small .navbar-item {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .navbar.is-small .navbar-brand {
+    min-height: 4rem;
+  }
+
+  .navbar.is-small .brand .brand-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 1rem;
+  }
+
+  .navbar.is-small .brand .brand-title {
+    transform: translateY(calc(50% + 0.15rem));
+  }
+
+  .navbar.is-small .brand .brand-subtitle {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  .brand {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    line-height: 1;
+  }
+  .brand .brand-icon {
+    width: 56px;
+    height: 56px;
+    margin-right: 1rem;
+    transition-duration: 172ms;
+    will-change: width, height, margin-right;
+  }
+  .brand .brand-icon img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .brand .brand-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #463853;
+    transition-duration: 172ms;
+    will-change: transform;
+  }
+  .brand .brand-subtitle {
+    margin-top: 0.25rem;
+    font-size: 1.125rem;
+    font-weight: normal;
+    color: #998da0;
+    opacity: 1;
+    transition-duration: 172ms;
+    will-change: opacity, transform;
+  }
+}
+
+.app-footer {
+  .menu-label {
+    font-size: 1.375rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .menu-label:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-list {
+    margin-left: -0.75rem;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 1.125rem;
+  }
+
+  .menu-list .tag {
+    position: relative;
+    top: -10px;
+    left: -4px;
+  }
+
+  .menu-list img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1rem;
+  }
+  .menu-list i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1.35rem;
+    font-size: 1.5rem;
+  }
+}
