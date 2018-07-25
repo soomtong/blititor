@@ -10,6 +10,8 @@ Easy to custom for the all Web Agencies and Web Masters in Korea
 
 (a logo presented by Hyejin Lee @melthleeth)
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor?ref=badge_shield)
+
 ## Stack
 
 - NodeJS + MysqlDB(MariaDB) + Nginx(Caddy) + Sphinx
@@ -114,3 +116,5 @@ npm run dev
 Blititor has MIT License basically. but each theme design license depends on each maker's opinions.
 
 it will be described each `app` and `theme`'s readme file or description file.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsoomtong%2Fblititor?ref=badge_large)
