@@ -522,7 +522,7 @@ function guestbookReply(req, res) {
 
         req.flash('info', 'Saved Reply by ' + (req.user.nickname || req.user.email));
 
-        res.redirect('/manage' + routeTable.guestbook_root + '?flag=noreply');
+        res.redirect('/manage' + routeTable.guestbook.root + '?flag=noreply');
     });
 }
 

@@ -19,10 +19,12 @@ describe in `config.json` like below
 
 ```
 "service": {
-    "token": {
-        "slack": "1234--9898",
-        "mailgun": "1212--8882"
-    }
+    "slack": {
+        "token": "1234--9898"
+    },
+    "mailgun": {
+        "token": "1212--8882"
+    } 
 }
 ```
 

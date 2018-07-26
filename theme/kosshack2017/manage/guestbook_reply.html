@@ -44,7 +44,7 @@
                             <a href="{{site.root}}">Homepage</a>
                         </li>
                         <li>
-                            <a href="{{site.root}}{{menu.manage_root}}">Dashboard</a>
+                            <a href="{{site.root}}">Dashboard</a>
                         </li>
                         <li class="active">Comments</li>
                     </ol>
@@ -115,7 +115,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <form class="" method="post" action="{{ route.manage_root + route.guestbook_root + route.guestbook.reply }}">
+                                    <form class="" method="post" action="{{ route.manage.root + route.guestbook.root + route.guestbook.reply }}">
                                         <div class="form-group">
                                             <textarea class="form-control" name="reply" placeholder="Reply" required="required" rows="3"></textarea>
                                         </div>

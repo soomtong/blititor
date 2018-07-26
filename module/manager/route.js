@@ -25,9 +25,9 @@ router.get(routeTable.manage.pageLog, Account.middleware.checkManager, manager.p
 router.get(routeTable.manage.account, Account.middleware.checkManager, manager.accountList);
 router.get(routeTable.manage.accountCounter, Account.middleware.checkManager, manager.accountActionCounter);
 // for guestbook
-router.get('/guestbook', Account.middleware.checkManager, manager.guestbookList);
-router.post('/guestbook' + routeTable.guestbook.reply, Account.middleware.checkManager, manager.guestbookReply);
-router.post('/guestbook' + routeTable.guestbook.delete, Account.middleware.checkManager, manager.guestbookDelete);
+router.get(routeTable.guestbook.root, Account.middleware.checkManager, manager.guestbookList);
+router.post(routeTable.guestbook.root + routeTable.guestbook.reply, Account.middleware.checkManager, manager.guestbookReply);
+router.post(routeTable.guestbook.root + routeTable.guestbook.delete, Account.middleware.checkManager, manager.guestbookDelete);
 // for gallery
 router.get(routeTable.manage.gallery, Account.middleware.checkManager, manager.galleryManager);
 router.post(routeTable.manage.galleryImageSort, Account.middleware.checkManager, manager.galleryImageSort);
