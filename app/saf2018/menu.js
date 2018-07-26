@@ -1,5 +1,5 @@
 // static page menu describe here
-var StaticMenu = [
+var SiteMenu = [
     {
         id: 'index',
         name: '서울건축문화재',
@@ -97,8 +97,10 @@ var StaticMenu = [
 
 var AdminMenu = [];
 
-var ManagerMenu = [];
+var ManageMenu = [];
 
-module.exports = StaticMenu;
-module.exports.AdminMenu = AdminMenu;
-module.exports.ManagerMenu = ManagerMenu;
+module.exports = {
+    SiteMenu: SiteMenu,
+    AdminMenu: AdminMenu,
+    ManageMenu: ManageMenu,
+};

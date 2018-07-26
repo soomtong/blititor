@@ -5,7 +5,7 @@ var routeTable = misc.getRouteData();
 // or sometime need to make your own routeTable
 // and update own route table
 
-var StaticMenu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
+var SiteMenu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
     {
         id: 'index',
         name: 'KossLab Hackathon 2016',
@@ -51,7 +51,7 @@ var AdminMenu = [
     }
 ];
 
-var ManagerMenu = [
+var ManageMenu = [
     {
         id: 'index',
         name: '운영자 홈',
@@ -74,6 +74,8 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = StaticMenu;
-module.exports.AdminMenu = AdminMenu;
-module.exports.ManagerMenu = ManagerMenu;
+module.exports = {
+    SiteMenu: SiteMenu,
+    AdminMenu: AdminMenu,
+    ManageMenu: ManageMenu,
+};

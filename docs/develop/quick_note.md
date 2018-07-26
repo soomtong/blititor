@@ -73,7 +73,7 @@ e.g `req.logIn`
 이때 사용되는 것이 Menu 객체(변수)구요.
 
 ```
-var StaticMenu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
+var SiteMenu = [    // for plain page used by site.plain method (this page has each urls, not included modules)
     {
         id: 'index',
         name: 'KossLab Hackathon 2016',

@@ -21,9 +21,9 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // route
-router.use('/account', Account.route);
-router.post('/account' + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
-router.post('/account' + routeTable.account.add, Account.registerSimple);
+router.use(routeTable.account.root, Account.route);
+router.post(routeTable.account.root + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
+router.post(routeTable.account.root + routeTable.account.add, Account.registerSimple);
 
 // bind static page
 Site.bindMenu(menu, router);

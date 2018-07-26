@@ -2,7 +2,7 @@ var misc = require('../../core/lib/misc');
 
 var routeTable = misc.getRouteData();
 
-var StaticMenu = [
+var SiteMenu = [
     {
         id: 'index',
         name: '홈',
@@ -47,8 +47,10 @@ var StaticMenu = [
 ];
 
 var AdminMenu = {};
-var ManagerMenu = {};
+var ManageMenu = {};
 
-module.exports = StaticMenu;
-module.exports.AdminMenu = AdminMenu;
-module.exports.ManagerMenu = ManagerMenu;
+module.exports = {
+    SiteMenu: SiteMenu,
+    AdminMenu: AdminMenu,
+    ManageMenu: ManageMenu,
+};

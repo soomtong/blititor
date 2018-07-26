@@ -20,12 +20,12 @@ function authenticate(userID, password, done) {
 
     account.findAuthByUserID(userID, function (err, auth) {
         if (err) {
-			winston.error('passport system error in', userID, err);
+			winston.error('passport system error in ' + userID + ':' + err);
 
             return done(err);
         }
         if (!auth) {
-            winston.warn('user given id not exactly same with authorized hash', userID);
+            winston.warn('user given id not exactly same with authorized hash:' + userID);
 
             return done(null, false, {message: 'Unknown user account ' + userID});
         }
@@ -34,7 +34,7 @@ function authenticate(userID, password, done) {
 
         bcrypt.compare(password, auth.user_password, function (err, result) {
             if (err) {
-                winston.error("bcrypt system error", err);
+                winston.error("bcrypt system error: " + err);
 
                 return done(err);
             }
@@ -52,17 +52,18 @@ function authenticate(userID, password, done) {
 function serialize(authID, done) {
     account.findUserByAuthID(authID, function (error, user) {
         if (error) {
-            return winston.error('Error in serialize', error);
+            return winston.error('Error in serialize: ' + error);
 		}
 
-        winston.verbose('Serialize in process for Account', 'auth_id=' + authID, 'user_id=' + user.user_id, 'and user info', user);
+        winston.verbose('Serialize in process for Account auth_id='
+            + authID + ',user_id=' + user.user_id + ', and user info: ' + user);
 
         done(error, user.uuid); // keep uuid for passport session
     });
 }
 
 function deserialize(uuid, done) {
-    winston.verbose('DeSerialize in process for', uuid);
+    winston.verbose('De-Serialize in process for auth: ' + uuid);
 
     account.findUserByUUID(uuid, function (err, user) {
         var userGrant = [];
@@ -78,7 +79,7 @@ function deserialize(uuid, done) {
 }
 
 function loginSuccess(req, res, next) {
-    winston.info('Logged in user->uuid =', req.session['passport'].user);
+    winston.info('Logged in user->uuid: ' + req.session['passport'].user);
 
     // insert login logging
     var authID = req.user;
@@ -94,7 +95,7 @@ function loginSuccess(req, res, next) {
     if (!req.body.remember_me) { return next(); }
 
     issueToken(req.user, function(err, token) {
-        winston.info('Issue Cookie Token', token);
+        winston.info('Issue Cookie Token:' + token);
 
         if (err) { return next(err); }
         res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });

@@ -5,7 +5,7 @@ var routeTable = misc.getRouteData();
 // or sometime need to make your own routeTable
 // and update own route table
 
-var StaticMenu = [
+var SiteMenu = [
     {
         id: 'index',
         name: '처음',
@@ -54,7 +54,7 @@ var AdminMenu = [
     }
 ];
 
-var ManagerMenu = [
+var ManageMenu = [
     {
         id: 'index',
         name: '운영자 홈',
@@ -77,6 +77,8 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = StaticMenu;
-module.exports.AdminMenu = AdminMenu;
-module.exports.ManagerMenu = ManagerMenu;
+module.exports = {
+    SiteMenu: SiteMenu,
+    AdminMenu: AdminMenu,
+    ManageMenu: ManageMenu,
+};

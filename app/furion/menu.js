@@ -7,7 +7,7 @@ var routeTable = misc.getRouteData();
 
 // static page menu describe here
 // these links are not included modules route paths
-var StaticMenu = [
+var SiteMenu = [
     {
         id: 'post_new',
         name: '새글',
@@ -60,7 +60,7 @@ var AdminMenu = [
     }
 ];
 
-var ManagerMenu = [
+var ManageMenu = [
     {
         id: 'index',
         name: '운영자 홈',
@@ -83,6 +83,8 @@ var ManagerMenu = [
     }
 ];
 
-module.exports = StaticMenu;
-module.exports.AdminMenu = AdminMenu;
-module.exports.ManagerMenu = ManagerMenu;
+module.exports = {
+    SiteMenu: SiteMenu,
+    AdminMenu: AdminMenu,
+    ManageMenu: ManageMenu,
+};

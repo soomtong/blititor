@@ -60,7 +60,7 @@
                     {% set cls = cycler("pure-table-odd", "") %}
                     {% for item in list %}
                     <tr class="{{ cls.next() }}">
-                        <td><a href="{{site.root}}{{ route.admin_root + route.admin.account }}/{{ item.uuid }}">{{item.path}}</a></td>
+                        <td><a href="{{site.root}}{{ route.admin.root + route.admin.account }}/{{ item.uuid }}">{{item.path}}</a></td>
                         <td>{{sum[loop.index0].total}}</td>
                         <td>{{item.T7}}</td>
                         <td>{{item.T6}}</td>
@@ -83,22 +83,22 @@
                     <ul class="cd-pagination no-space move-buttons custom-icons">
                         {% if hasPrev %}
                         {% if page > 1 %}
-                        <li class="button"><a href="{{site.root}}{{ route.admin_root + route.admin.account }}?p={{page - 1}}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ route.admin.root + route.admin.account }}?p={{page - 1}}">Prev</a>
                         {% else %}
-                        <li class="button"><a href="{{site.root}}{{ route.admin_root + route.admin.account }}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ route.admin.root + route.admin.account }}">Prev</a>
                         {% endif %}
                         {% endif %}
 
                         {% for i in range(1, maxPage + 1) -%}
                         {% if i == page %}
-                        <li><a class="current" href="{{site.root}}{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        <li><a class="current" href="{{site.root}}{{ route.admin.root + route.admin.account }}?p={{i}}">{{i}}</a>
                         {% else %}
-                        <li><a href="{{site.root}}{{ route.admin_root + route.admin.account }}?p={{i}}">{{i}}</a>
+                        <li><a href="{{site.root}}{{ route.admin.root + route.admin.account }}?p={{i}}">{{i}}</a>
                         {% endif %}
                         {%- endfor %}
 
                         {% if hasNext %}
-                        <li class="button"><a href="{{site.root}}{{ route.admin_root + route.admin.account }}?p={{page + 1}}">Next</a>
+                        <li class="button"><a href="{{site.root}}{{ route.admin.root + route.admin.account }}?p={{page + 1}}">Next</a>
                         {% endif %}
                     </ul>
                 </nav>

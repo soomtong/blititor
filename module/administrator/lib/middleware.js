@@ -1,9 +1,8 @@
 var winston = require('winston');
+var util = require('util');
 
 function exposeLocals(req, res, next) {
-    res.locals.menu.admin_root = '/admin';
-
-    winston.verbose('bind locals in administrator: {admin_menu}');
+    winston.verbose('bind locals in administrator: {}');
     next();
 }
 
