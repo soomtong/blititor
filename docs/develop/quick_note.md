@@ -46,6 +46,36 @@ or
 <title>{{title | default(app.title)}} - {{site.application.title}}</title>
 ```
 
+### Default locals data for browser
+
+1. site global
+
+```html
+<p>{{site|dump}}</p>
+```
+
+2. app level
+
+```html
+<p>{{app|dump}}</p>
+```
+
+the route data from each `routeTable` variables.
+
+```html
+<p>{{route|dump}}</p>
+```
+
+and the `title` locals that told above.
+
+3. menus in app/menu.js
+
+```html
+<p>{{siteMenu|dump}}</p>
+<p>{{manageMenu|dump}}</p>
+<p>{{adminMenu|dump}}</p>
+```
+
 ### Account Sessions
 
 Referred passport session convention for all account methods (admin login or manager login)
