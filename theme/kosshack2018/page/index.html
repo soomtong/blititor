@@ -9,38 +9,42 @@
 <![endif]-->
 {% include './include/nav.html' %}
 <section class="intro_section ds">
-    <img class="hidden-xs" src="{{site.theme}}/common/asset/main_bg_top_hi.jpg" alt="">
+    <img class="hidden-xs" src="{{site.theme}}/common/asset/main_bg_top_full.jpg" alt="">
+    <img class="visible-xs" src="{{site.theme}}/common/asset/main_bg_top_full-mobile.jpg" alt="">
     <div class="container">
         <div class="row">
             <div class="slide_description_wrapper col-12 text-center">
                 <div class="slide_description">
+                    {#
                     <div class="intro-layer title-container">
                         <h1 class="title to_animate" data-animation="fadeInUp">
                             <div class="view">
                                 <span class="title-credit">2018 공개소프트웨어</span><span class="">컨트리뷰톤</span>
                             </div>
                         </h1>
-                        {#
                         <h3 class="subtitle to_animate" data-animation="fadeInUp">
                             <div class="view">
                                 <span class="year rainbow"><span>2018<span class="title-credit">contribution + marathon</span></span></span>
                             </div>
                         </h3>
-                        #}
                     </div>
+                    #}
+                    {#
                     <div class="intro-layer to_animate hidden-md clear text-center" data-animation="fadeInUp">
                         <p>글로벌/국내 주도 공개SW 프로젝트 참여 기회와 <br>
                             실제 기업에서 사용하는 코드를 체험하며 기여하는<br>
                             2018년 가장 주목할만한 개발자 행사가 여러분을 기다립니다.</p>
                     </div>
-                    {#
                     <div id="coming-soon-countdown"></div>
                     #}
-                    <div class="intro-layer to_animate" data-animation="fadeInUp">
-                        <br>
+                    <div class="hidden-xs intro-layer to_animate apply-button" data-animation="fadeInUp">
+                        <a href="https://docs.google.com/forms/d/1_IouStEThaDRA1NVRIaUoXAADM4HnTlLDx9zgnUuIvo" class="theme_button" target="_blank"><i class="fa fa-external-link"></i> 참가 신청</a>
+                    </div>
+                    <div class="visible-xs intro-layer to_animate" data-animation="fadeInUp">
                         <a href="https://docs.google.com/forms/d/1_IouStEThaDRA1NVRIaUoXAADM4HnTlLDx9zgnUuIvo" class="theme_button" target="_blank"><i class="fa fa-external-link"></i> 참가 신청</a>
                     </div>
                 </div>
+
             </div>
 
         </div>

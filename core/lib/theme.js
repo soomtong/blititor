@@ -58,16 +58,17 @@ function getThemeInfo(directory, done) {
 }
 
 function getFavicon(themeName) {
-    var faviconPath = path.join('.', 'theme', themeName, 'common', 'asset', 'favicon.ico');
+    var themeFaviconPath = path.join('.', 'theme', themeName, 'common', 'asset', 'favicon.ico');
+    var defaultFaviconPath = path.join('public', 'common', 'favicon.ico');
 
-    if (fs.existsSync(faviconPath)) {
-        winston.info('bind theme favicon: /' + faviconPath);
+    if (fs.existsSync(themeFaviconPath)) {
+        winston.info('bind theme favicon: /' + themeFaviconPath);
 
-        return favicon(faviconPath);
+        return favicon(themeFaviconPath);
     } else {
-        winston.verbose('bind default favicon');
+        winston.verbose('bind default favicon: /' + defaultFaviconPath);
 
-        return favicon(path.join('public', 'common', 'favicon.ico'));
+        return favicon(defaultFaviconPath);
     }
 }
 

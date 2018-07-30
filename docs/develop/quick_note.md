@@ -28,6 +28,12 @@ describe in `config.json` like below
 }
 ```
 
+### mandatory files
+
+- /public/common/favicon.ico
+- /theme/status404.html
+- /theme/status500.html
+
 ### Page's title in a browser
 
 there are locals exposing routines in each steps

@@ -250,9 +250,16 @@ span.strong {
   z-index: 2;
 }
 
+.intro_section .slide_description {
+  vertical-align: bottom !important;
+}
 .intro_section .slide_description h2 {
   margin-top: 2em;
   margin-bottom: 1em;
+}
+
+.apply-button {
+  margin-bottom: 2.5em;
 }
 
 .intro-layer p {
