@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body>
+
+<header id="top" class="header">
+
+    {% include '../include/menu.html' %}
+
+    <section id="page_header" class="page-header">
+        <h1>REGISTER</h1>
+    </section>
+</header>
+
+<section id="register" class="register">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>사전 등록</h2>
+                <p class="lead">
+                    감사합니다.
+                    <br>
+                    <span class="strong">{{name}}</span> 님의 사전 등록 정보가 <span class="strong">{{mode}}</span>되었습니다.
+                </p>
+
+                {% if sectionList.length %}
+                <div class="row">
+                    <div class="offset-sm-1 col-sm-10 offset-md-3 col-md-6">
+                        <ul class="list-group text-left">
+                            <li class="list-group-item apply-section-title">튜토리얼 신청 내역</li>
+                            {% for item in sectionList %}
+                            <li class="list-group-item">{{item.title}} <span class="speaker">{{item.sub_title}}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <p>
+                    <span class="strong">일시</span> 2018년 8월 16일 목요일 13:30 ~ 17:20
+                </p>
+                <p>
+                    <span class="strong">장소</span> 코엑스 컨퍼런스룸(남) 308호, 317호, 318호
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="location" class="location">
+    <hr class="hr">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>찾아오는 길</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="map">
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6329.564549403013!2d127.05509797630837!3d37.51305299999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd6bf8dde518b69a4!2z7L2U7JeR7IqkIOy7qOuypOyFmOyEvO2EsCDqt7jrnpzrk5zrs7zro7g!5e0!3m2!1sko!2sus!4v1476627323456">
+        </iframe>
+    </div>
+
+    <div class="container">
+        <div class="row transport">
+            <div class="col-sm-6 trans">
+                <p><span class="strong">승용차 이용 고객</span> GATE3(서문)을 통하여 옥상 및 지하주차장으로 진입.</p>
+                <p><span class="strong">지하철 이용 고객</span> 삼성역 5, 6번 출구와 연결된 통로로 진입, 밀레니엄 광장을 통하여 코엑스몰로 진입</p>
+                <p><span class="strong">버스 이용 고객</span> 그랜드 인터컨티넨탈 호텔(삼성역 5번 출구) 앞 | 23201 정류장</p>
+            </div>
+
+            <div class="col-sm-6 buses">
+                <p><span class="strong b1">간선버스</span> 146, 341, 360, 333, 740, N13(심야), N61(심야)</p>
+                <p><span class="strong b2">지선버스</span> 6411</p>
+                <p><span class="strong b3">마을버스</span> 강남07, 강남05</p>
+                <p><span class="strong b4">광역버스</span> 1100, 1700, 2000, 2000-1, 7007, 8001, 9414</p>
+                <p><span class="strong b5">공항리무진</span> 6000</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% include '../include/footer.html' %}
+
+</body>
+</html>
+

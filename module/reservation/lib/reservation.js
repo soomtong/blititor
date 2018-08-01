@@ -1,4 +1,5 @@
 var fs = require('fs');
+var util = require('util');
 var path = require('path');
 var async = require('neo-async');
 var winston = require('winston');
@@ -214,7 +215,7 @@ function generateSecret(req, res) {
         secretNumber: common.randomNumber(4)
     };
 
-    winston.info('Generated phone secret number', params);
+    winston.info('Generated phone secret number:' + util.inspect(params));
 
     req.session.reservation = params;
 
@@ -229,8 +230,8 @@ function generateSecret(req, res) {
     }
 
     // post request to phone message service
-    var smsToken = misc.serviceToken('sms');
-    var smsProvider = misc.serviceProvider('sms');
+    var smsToken = misc.serviceToken('sms_api');
+    var smsProvider = misc.serviceProvider('sms_api');
     var sender = '01021443188';
 
     request({
@@ -249,7 +250,7 @@ function generateSecret(req, res) {
             msg_body: "[KOSSCON][" + params.secretNumber + "] 사전등록 신청 인증번호는 " + params.secretNumber + " 입니다"
         }
     }, function (error, response, body) {
-        winston.info('sent sms secret message by', smsProvider);
+        winston.info('sent sms secret message by ' + smsProvider);
 
         if (response.statusCode == 200 && body['result_message'] == 'OK') {
             res.send({
@@ -259,7 +260,7 @@ function generateSecret(req, res) {
                 }
             });
         } else {
-            winston.error('failed sent sms to', params.phone);
+            winston.error('failed sent sms to ' + params.phone);
 
             res.send({
                 "status": "fail",

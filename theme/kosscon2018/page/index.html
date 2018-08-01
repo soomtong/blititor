@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+
+<header id="top" class="header">
+    {#<div class="bg-sw-week"></div>#}
+    <section class="hero bg-image bg-image-full-mobile d-block d-sm-none">
+        {% include './include/menu.html' %}
+    </section>
+
+    <section class="hero bg-image bg-image-full d-none d-sm-block">
+        {% include './include/menu.html' %}
+        <div class="text-vertical-center">
+            {#
+            <div class="typing-effect">
+                <h1 id="typing_text"></h1>
+            </div>#}
+            {#
+            <h2>행사를 성황리에 마쳤습니다.</h2>
+            <h2 class="location">감사합니다.</h2>
+            <h3>2018년 8월 16일(목) 오후 1시 ~ 오후 5시</h3>
+            <h4 class="location">코엑스 3층 컨퍼런스룸(남) 308호, 317호, 318호</h4>
+            #}
+        </div>
+    </section>
+</header>
+
+<section id="about" class="about">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <h2>
+                    공개 소프트웨어 개발자가 <br class="wide-break">
+                    {<span class="text-muted">소개</span>하는 <span class="text-info">트랜드</span>,<br class="narrow-break">
+                    <span class="text-muted">공유</span>하는 <span class="text-info">노하우</span>}
+                </h2>
+                <p class="lead">
+                    KOSSCON은 공개SW개발자센터 프로젝트 발표와 함께 최신 기술 지식을 공유하는 컨퍼런스입니다.<br>
+                    본 행사는 공개SW에 관심 있는 관련 학생, 개발자, 기업인 등 누구나 신청 가능하며 참여할 수 있습니다.
+                </p>
+            </div>
+        </div>
+        {#<div class="row justify-content-center">
+            <div class="col-md-10 col-sm-12 col-xs-12">
+                <div class="row">
+
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="mobile">A.I</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="web">Web</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="iot">Blockchain</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="app">App</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="kernel">Kernel</span>
+                    </div>
+                    <div class="category col-sm-2 col-xs-6">
+                        <span class="platform">Platform</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>#}
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <p class="link">
+                    <a href="/program"><span class="program">프로그램 보기</span></a>
+                    {#
+                    <a href="/reservation"><span class="register">사전 등록 신청</span></a>
+                    #}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{#<section id="gift" class="gift">
+    <hr class="hr">
+
+    <div class="container">
+        <div class="row gift-condition">
+            <div class="col-sm-12">
+                <h2>참관 혜택</h2>
+
+                <p class="lead">
+                    행사에 참여하신 모든 분께 점심 식권 및 다과를 제공합니다.
+                    <br>
+                    또한 사전 등록 후 참여하신 <span class="strong">선착순 100 분께 사은품</span>을,
+                    강의 종료 후 <span class="strong">추첨을 통해 경품</span>을 드립니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="row visible-xs">
+            <div class="col-xs-12">
+                <h3>경품</h3>
+                <ul class="gift-1">
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">1 명</span>
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">1 명</span>
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7 <span class="count">3 명</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-12">
+                <h3>사은품</h3>
+                <ul class="gift-2">
+                    <li>
+                        Samsung Galaxy Note 7
+                    </li>
+                    <li>
+                        Samsung Galaxy Note 7
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row hidden-xs">
+            <div class="col-sm-8 col-xs-12 text-center">
+                <div class="product">
+                    <img src="//placeimg.com/195/195/1" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">1 명</span>
+                </div>
+                <div class="product">
+                    <img src="//placeimg.com/195/195/2" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">1 명</span>
+                </div>
+                <div class="product">
+                    <img src="//placeimg.com/195/195/3" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">3 명</span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12 text-center divider">
+                <div class="product">
+                    <img src="//placeimg.com/300/195/1" alt="">
+                    <br>Samsung Galaxy Note 7<br><span class="count">선착순</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 notice">
+                <p>
+                    행사 주관기관의 사정에 의해 일부 품목 및 제품, 수량이 변경될 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>#}
+
+{#
+<section id="prev_con" class="pre-con">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 title">
+                <h4>지난 KOSSCON 다시보기</h4>
+            </div>
+            <div class="col-sm-6 link">
+                <div class="links">
+                    <a href="http://2017.kosscon.kr/"><span>KOSSCON 2017 <i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                    <a href="http://2016.kosscon.kr/"><span>KOSSCON 2016 <i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+#}
+{% include './include/footer.html' %}
+
+</body>
+</html>

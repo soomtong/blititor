@@ -7,20 +7,11 @@
 </head>
 <body>
 
-{% include './include/header.html' %}
+{% include './include/menu.html' %}
 
 <div class="application-wrapper">
-    <div class="describe">
-        <div class="pure-g">
-            <div class="pure-u-1">
-                <h3>사이트 운영자는 게스트북 정보와 페이지 로그를 확인할 수 있습니다.</h3>
-                <ul>
-                    <li>예약 현황 정보 열람</li>
-                    <li>튜토리얼 참여 정보 열람</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+
+    {% include './include/header.html' %}
 
     <div class="content">
         <div class="pure-g search">
@@ -32,7 +23,7 @@
                     <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
                     <button type="submit" class="pure-button">Search</button>
 
-                    <a href="{{site.root}}{{ route.manage_root + route.manage.reservationClean }}" class="pure-button pull-right">전체 리스트</a>
+                    <a href="{{site.root}}{{ route.manage.root + route.manage.reservationClean }}" class="pure-button pull-right">전체 리스트</a>
                 </form>
             </div>
         </div>

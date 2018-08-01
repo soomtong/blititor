@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% include './include/head.html' %}
+</head>
+<body>
+
+<header id="top" class="header">
+
+    {% include './include/menu.html' %}
+
+    <section id="hero" class="hero">
+        <div class="text-vertical-center">
+            <h2>알 수 없는 오류가 발생했습니다!</h2>
+            <h2 class="location">{{ error }}</h2>
+        </div>
+    </section>
+</header>
+
+{% include './include/footer.html' %}
+
+</body>
+</html>

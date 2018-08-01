@@ -7,18 +7,16 @@
 </head>
 <body>
 
-{% include './include/header.html' %}
+{% include './include/menu.html' %}
 
 <div class="application-wrapper">
+
+    {% include './include/header.html' %}
+
     <div class="content">
         <div class="pure-g">
             <div class="pure-u-1">
                 <h2>ACCESS MANAGER ONLY</h2>
-                <h3>사이트 운영자는 등록된 회원과 페이지 로그를 확인할 수 있습니다.</h3>
-                <ul>
-                    <li>예약 현황 정보 열람</li>
-                    <li>튜토리얼 참여 정보 열람</li>
-                </ul>
 
                 <form class="pure-form pure-form-stacked" method="post" action="/manage{{ route.manage.login }}">
                     <fieldset>
