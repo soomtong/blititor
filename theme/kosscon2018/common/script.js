@@ -258,7 +258,7 @@ var sendReservation = function (event) {
 
     if (!$privacy_order.is(':checked')) {
         $privacy_order.focus();
-        $privacy_order.siblings('.privacy_message').fadeIn(function () {
+        $('.privacy_message').fadeIn(function () {
             var that = this;
             setTimeout(function () {
                 $(that).fadeOut(1);

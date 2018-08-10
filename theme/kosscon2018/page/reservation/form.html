@@ -26,10 +26,10 @@
                     <br>
                 </p>
                 <p>
-                    <span class="strong">일시</span> 2018년 8월 16일 목요일 13:30 ~ 17:20
+                    <span class="strong">일시</span> 2018년 8월 16일 목요일 13:00 ~ 17:20
                 </p>
                 <p>
-                    <span class="strong">장소</span> 코엑스 컨퍼런스룸(남) 308호, 317호, 318호
+                    <span class="strong">장소</span> 코엑스 컨퍼런스룸(남) 308, 317, 318
                 </p>
                 <p class="additional-message">
                     현재 사전 등록이 마감되었습니다. <br>
@@ -44,13 +44,13 @@
                 <p class="lead">
                     KOSSCON은 공개SW에 관심있는 개발자, 커뮤니티 및 관련 기업인, 학생 등 국민 누구나 사전 등록 후 참가하실 수 있습니다.
                     <br>
-                    참관 인원은 300명으로 제한되어 있으므로 참가를 원하실 경우 지금 등록하세요.
+                    지금 등록하세요.
                 </p>
                 <p>
-                    <span class="strong">일시</span> 2018년 8월 16일 목요일 13:30 ~ 17:20
+                    <span class="strong">일시</span> 2018년 8월 16일 목요일 13:00 ~ 17:20
                 </p>
                 <p>
-                    <span class="strong">장소</span> 코엑스 컨퍼런스룸(남) 308호, 317호, 318호
+                    <span class="strong">장소</span> 코엑스 컨퍼런스룸(남) 308, 317, 318
                 </p>
                 {% if closedTutorial %}
                 <p class="additional-message">
@@ -109,23 +109,27 @@
                             </div>
 
                             <div class="offset-sm-2 col-sm-10 additional-text">
-                                <label for="privacy_order" class="pull-left"><input type="checkbox" name="privacy_order" id="privacy_order" value=""> 개인정보취급방침에 동의합니다.</label>
+                                <label for="privacy_order" class="pull-left" style="margin-right: 2em;margin-bottom: 0.8em;">
+                                    <input type="radio" name="privacy_order" id="privacy_order" value="1"> 본인은 개인정보의 수집 및 이용에  동의합니다.</label>
+                                <label for="privacy_order-deny" class="pull-left">
+                                    <input type="radio" name="privacy_order" id="privacy_order-deny" value="0"> 거부합니다.</label>
                                 <button class="" type="button" data-toggle="collapse" data-target="#privacy_order_info" aria-expanded="false" aria-controls="privacy_order_info">
                                     개인정보 취급방침 보기
                                 </button>
                                 <p class="small message privacy_message" style="display: none;">개인정보취급방침에 동의해주세요.</p>
                                 <div class="collapse" id="privacy_order_info">
-                                    <div class="well" style="margin-top: 1em;text-align: left;text-decoration: underline;">
-                                        공개소프트웨어개발자센터(이하 센터)는 이용자의 프라이버시를 매우 중요하게 생각하며 각별히 주의를 기울여 처리하고 있습니다.<br>
-                                        이용자의 프라이버시를 존중하고 보호하기 위하여 센터는 다음의 기본 원칙을 마련하여 준수하고 있습니다.<br>
-                                        <br>
-                                        1)센터는 이용자의 개인 정보를 수집, 처리, 사용 또는 공개하기 위해서 이를 적절한 방법에 따라 이용자에게 고지하고 동의를 구합니다.<br>
-                                        2)센터는 이용자 개인 정보의 수집, 처리에 필요한 최소범위로 이용 목적을 특정합니다.<br>
-                                        3)센터는 특정된 이용 목적을 달성에 필요한 최소한의 정보만을 수집합니다.<br>
-                                        4)센터는 이용자의 동의가 있는 경우 또는 관련 법령에서 정한 경우를 제외하고는 이용자로부터 수집한 정보를 수집 목적외에 사용하지 않으며, 목적 달성에 필요한 최소한의 기간만 해당 정보를 보관합니다.<br>
-                                        5)센터는 이용자의 개인 정보가 정확하고, 완전하며, 최신의 상태를 유지할 수 있도록 노력합니다.<br>
-                                        6)센터는 수집한 이용자의 개인정보에 대한 관리 책임을 갖습니다. 센터는 항상 이러한 원칙, 본 개인정보처리방침 및 적용되는 법률에 대한 이용자의 의견을 경청합니다.<br>
-                                    </div>
+                                    <div class="well" style="margin-top: 1em;text-align: left;text-decoration: none;">
+                                        정보통신산업진흥원(이하 진흥원)은 KOSSCON관련 서비스 제공을 위하여 아래와 같이 개인정보를 수집·이용 및 제공하고자 합니다.
+                                        내용을 자세히 읽으신 후 동의 여부를 결정하여 주십시오. <br>
+                                        <br>□ 개인정보 수집·이용 내역
+                                        <br>1) 항목
+                                        <br> - (필수) 이름, 이메일, 휴대폰번호, 소속/직급
+                                        <br>2) 수집목적
+                                        <br> - 홈페이지 서비스제공 등 민원 처리
+                                        <br>3) 보유기간
+                                        <br> - 수집일로 부터 1년 <br>
+                                        <br>□ 개인정보 수집 동의 거부에 대한 권리
+                                        <br> o 가입자는 동의를 거부할 권리가 있으며, 서비스 제공에 필요한 최소한의 개인정보 수집에 동의하지 않을 경우 서비스 이용이 불가능할 수 있습니다.                                        </div>
                                 </div>
                             </div>
                         </div>
