@@ -1,8 +1,8 @@
 // static page menu describe here
-var SiteMenu = [
+const SiteMenu = [
     {
         id: 'index',
-        name: '서울건축문화재',
+        name: '2018 서울건축문화재',
         url: '/'
     },
     {
@@ -11,37 +11,25 @@ var SiteMenu = [
         url: '/about'
     },
     {
-        id: 'brief',
-        name: '개요',
-        useSubPath: true,
-        url: '/about/brief'
-    },
-    {
-        id: 'about_director',
-        name: '총감독 소개',
-        useSubPath: true,
-        url: '/about/director'
-    },
-    {
-        id: 'about_location',
-        name: '전시장 안내',
-        useSubPath: true,
-        url: '/about/location'
-    },
-    {
-        id: 'history',
-        name: '역대 서울건축문화재',
-        url: '/history'
-    },
-    {
-        id: 'register',
-        name: '프로그램 신청',
-        url: '/register'
-    },
-    {
         id: 'program',
         name: '프로그램',
         url: '/program'
+    },
+    {
+        id: 'notice',
+        name: '공지사항',
+        url: '/notice'
+    },
+    {
+        id: 'archive',
+        name: '아카이브',
+        url: '/archive'
+    },
+    {
+        id: 'about_location',
+        name: '전시 안내',
+        useSubPath: true,
+        url: '/about/location'
     },
     {
         id: 'program_opening',
@@ -51,15 +39,21 @@ var SiteMenu = [
     },
     {
         id: 'program_main',
-        name: '본전시',
+        name: '전시',
         useSubPath: true,
         url: '/program/main'
     },
     {
-        id: 'program_special',
-        name: '특별전시',
+        id: 'tour',
+        name: '건축문화투어',
         useSubPath: true,
-        url: '/program/special'
+        url: '/program/tour'
+    },
+    {
+        id: 'voice',
+        name: '시민참여',
+        useSubPath: true,
+        url: '/program/voice'
     },
     {
         id: 'program_idea',
@@ -74,30 +68,69 @@ var SiteMenu = [
         url: '/program/ceremony'
     },
     {
-        id: 'voice',
-        name: '시민참여',
-        url: '/voice'
+        id: 'gallery',
+        name: '갤러리',
+        url: '/gallery'
     },
     {
-        id: 'tour',
-        name: '건축문화투어',
-        url: '/tour'
+        id: 'archive_2017',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2017'
     },
     {
-        id: 'schedule',
-        name: '일정',
-        url: '/schedule'
+        id: 'archive_2016',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2016'
     },
     {
-        id: 'notice',
-        name: '공지사항',
-        url: '/notice'
-    }
+        id: 'archive_2015',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2015'
+    },
+    {
+        id: 'archive_2014',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2014'
+    },
+    {
+        id: 'archive_2013',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2013'
+    },
+    {
+        id: 'archive_2012',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2012'
+    },
+    {
+        id: 'archive_2011',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2011'
+    },
+    {
+        id: 'archive_2010',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2010'
+    },
+    {
+        id: 'archive_2009',
+        name: '아카이브',
+        useSubPath: true,
+        url: '/archive/2009'
+    },
 ];
 
-var AdminMenu = [];
+const AdminMenu = [];
 
-var ManageMenu = [];
+const ManageMenu = [];
 
 module.exports = {
     SiteMenu: SiteMenu,

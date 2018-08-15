@@ -11,6 +11,7 @@
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
     "bulma": "^0.7.1",
+    "bulma-extensions": "^2.2.1",
     "cli-color": "^1.2.0",
     "compression": "^1.7.3",
     "connect-flash": "^0.1.1",

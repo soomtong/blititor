@@ -1,3 +1,17 @@
+.saf-awards {
+  background-image: url("/saf2018/common/asset/saf-awards.jpg");
+  background-size: cover;
+}
+
+.saf-ideas {
+  background-image: url("/saf2018/common/asset/saf-ideas.jpg");
+  background-size: cover;
+}
+
+.media .media-content a.plain-link {
+  text-decoration: none;
+}
+
 .is-wrap {
   max-width: 768px;
 }
@@ -7,32 +21,31 @@
 }
 
 .transparent-gradient-bg div {
-  background: linear-gradient(rgba(95, 95, 95, 0.2), rgba(93, 107, 142, 0.2), rgba(60, 87, 119, 0.2));
+  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI5MTUiIHZpZXdCb3g9IjAgMCAxNDQwIDkxNSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHRpdGxlPkdyb3VwIDE2PC90aXRsZT48ZGVzYz5DcmVhdGVkIHVzaW5nIEZpZ21hPC9kZXNjPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYyNyAtNTUzKSI+PHVzZSB4bGluazpocmVmPSIjYSIgdHJhbnNmb3JtPSJyb3RhdGUoLjUxOSAtODM5MDUuMzk1IC05MDk3Mi41MDIpIiBmaWxsPSIjRUY4NjdBIiBmaWxsLW9wYWNpdHk9Ii4yNSIvPjx1c2UgeGxpbms6aHJlZj0iI2EiIHRyYW5zZm9ybT0icm90YXRlKC0yLjMwMiAxNTEyOC4zMDEgMjAzNzYuMTAzKSIgZmlsbD0iI0VGRDU3QSIgZmlsbC1vcGFjaXR5PSIuNDUiLz48L2c+PGRlZnM+PHBhdGggaWQ9ImEiIGQ9Ik0wIDBsMTcyOC41OSAyNzYuNDE5IDIyLjA2IDQxOC4zN0w4LjYzNSAxNjMuNzczIDAgMHoiLz48L2RlZnM+PC9zdmc+) no-repeat;
+  background-size: cover;
   position: absolute;
   width: 100%;
+  height: 100vh;
   margin-top: 10px;
 }
 .transparent-gradient-bg .header-bg {
-  min-height: 685px;
   padding: 160px 0;
   overflow: hidden;
   margin-bottom: -100px;
 }
-.transparent-gradient-bg .tilt-clock {
-  -webkit-transform: skewY(11deg);
-  transform: skewY(11deg);
-  transform-origin: 0;
-}
 
-.transparent-gradient-bg :first-child {
-  transform-origin: bottom;
-  transform: skewY(-8deg);
+@media screen and (min-width: 1200px) {
+  .tile.is-wide {
+    margin-left: -12rem;
+    margin-right: -12rem;
+  }
 }
-
-.transparent-gradient-bg :last-child {
-  transform-origin: right;
-  transform: skewY(5deg);
-  max-width: 100%;
+span.opening-date {
+  background: rgba(26, 26, 26, 0.5);
+  font-size: 0.875em;
+  font-weight: 400;
+  padding: 0.25em 0.5em 0.25em;
+  margin-left: 0.5em;
 }
 
 #main_card .title-desc1 {
@@ -157,7 +170,7 @@
 .navbar .navbar-start {
   margin-left: 1em;
 }
-.navbar a.navbar-item {
+.navbar a.navbar-item, .navbar a.navbar-link {
   font-size: 1.1rem;
 }
 .navbar .navbar-item img {

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body class="has-background-light">
+<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+    {% include '../include/menu.html' %}
+</nav>
+<div class="transparent-gradient-bg">
+    <div class="header-bg tilt-clock"></div>
+</div>
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column container is-wrap">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child notification" style="background: #30306c; color: #ffffff;">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title">2016년 제8회 서울건축문화제</p>
+                                <p class="subtitle">인문도시 <span class="opening-date" style="color: #ff3860">10.06~10.31</span></p>
+                            </div>
+                            <div class="media-right">
+                                <figure class="image">
+                                    <img src="{{site.theme}}/common/archive/cover-wide-2016.jpg" alt="2016 자료">
+                                </figure>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="tile is-ancestor is-wide">
+                <div class="tile is-parent">
+                    <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true">
+                        <div class="carousel-container">
+                            {% for page in range(1002,1035) %}
+                            <div class="carousel-item has-background is-active">
+                                <img class="is-background" src="https://static.saf.kr/2016/{{page}}_preview.jpg" alt="{{page}}" />
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-navigation is-overlay">
+                            <div class="carousel-nav-left">
+                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                            </div>
+                            <div class="carousel-nav-right">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer has-background-grey-light">
+    {% include '../include/footer.html' %}
+</footer>
+{% include '../include/script.html' %}
+<script>
+    bulmaExtensions.bulmaCarousel.attach();
+</script>
+</body>
+</html>

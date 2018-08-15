@@ -1,7 +1,7 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var BLITITOR = {};
+let BLITITOR = {};
 
 // global configuration
 BLITITOR.env = require('./lib/dependency')(process.env['NODE_ENV'] || 'development');
@@ -15,28 +15,28 @@ BLITITOR.moduleList = require('./config/module_list.json');
 global.BLITITOR = BLITITOR;
 
 // load common package
-var http = require('http');
-var socketIO = require('socket.io');
-var express = require('express');
-var expressValidator = require('express-validator');
-var multer = require('multer');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var mysqlSession = require('express-mysql-session');
-var flash = require('connect-flash');
-var device = require('express-device');
-var compress = require('compression');
-var morgan = require('morgan');
-var errorHandler = require('errorhandler');
-var lusca = require('lusca');
-var nunjucks = require('nunjucks');
-var winston = require('winston');
-var passport = require('passport');
-var moment = require('moment');
-var mkdirp = require('mkdirp');
-var args = require('minimist');
-var clc = require('cli-color');
+const http = require('http');
+const socketIO = require('socket.io');
+const express = require('express');
+const expressValidator = require('express-validator');
+const multer = require('multer');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const mysqlSession = require('express-mysql-session');
+const flash = require('connect-flash');
+const device = require('express-device');
+const compress = require('compression');
+const morgan = require('morgan');
+const errorHandler = require('errorhandler');
+const lusca = require('lusca');
+const nunjucks = require('nunjucks');
+const winston = require('winston');
+const passport = require('passport');
+const moment = require('moment');
+const mkdirp = require('mkdirp');
+const args = require('minimist');
+const clc = require('cli-color');
 
 // set log level
 if (BLITITOR.env === 'production') {
@@ -65,10 +65,10 @@ if (BLITITOR.env === 'production') {
 }
 
 // load custom library
-var socket = require('./lib/socket');
-var connection = require('./lib/connection');
-var common = require('./lib/common');
-var misc = require('./lib/misc');
+const socket = require('./lib/socket');
+const connection = require('./lib/connection');
+const common = require('./lib/common');
+const misc = require('./lib/misc');
 
 // load Database configuration
 // be going to sync mode
@@ -83,18 +83,18 @@ misc.checkThemeConfiguration(BLITITOR.config.configFile || 'config.json');
 misc.setRouteTable(BLITITOR.moduleList || []);
 
 // constants
-var HOUR = 3600000;
-var DAY = HOUR * 24;
-var WEEK = DAY * 7;
+const HOUR = 3600000;
+const DAY = HOUR * 24;
+const WEEK = DAY * 7;
 
 // set locale
 moment.locale(BLITITOR.config.locale);
 
 // ready server
-var app = express();
-var server = http.Server(app);
-var sio = socketIO(server);
-var bootstrapArgv = args(process.argv.slice(2));
+const app = express();
+const server = http.Server(app);
+const sio = socketIO(server);
+const bootstrapArgv = args(process.argv.slice(2));
 
 // set express app
 app.set('views', 'theme');
@@ -120,22 +120,22 @@ if (!BLITITOR._socketIO) {
 }
 
 // use express middleware
-var logFile = fs.createWriteStream('core/log/express.log', {flags: 'a'});
+const logFile = fs.createWriteStream('core/log/express.log', { flags: 'a' });
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, 'public/upload/temp');
     },
     filename: function (req, file, callback) {
         if (!file.mimetype) return Error('Uploaded file is not Acceptable');
 
-        var arrExt = file.originalname.split('.');
-        var filename = common.UUID1() + '.' + arrExt[arrExt.length - 1];
+        const arrExt = file.originalname.split('.');
+        const filename = common.UUID1() + '.' + arrExt[arrExt.length - 1];
         callback(null, filename);   //can refer file.mimetype.split('/')[1]
     }
 });
 
-var multerUploader = multer({
+const multerUploader = multer({
     storage: storage,
     limits: {
         fileSize: 1024 * 1024 * 1024
@@ -158,11 +158,11 @@ app.use(compress({}));    // compress all for default
 app.use(expressValidator({errorFormatter: common.errorFormatter}));
 
 // prepare session store
-var mysqlStore = mysqlSession(session);
+const mysqlStore = mysqlSession(session);
 
 // init session
 connection.initSession(mysqlStore, function (sessionOptions) {
-    var sessionMiddleware = session(sessionOptions);
+    const sessionMiddleware = session(sessionOptions);
 
     app.use(sessionMiddleware);
     sio.use(socket.bindSession(sessionMiddleware));
@@ -176,7 +176,7 @@ app.use(passport.session());
 app.use(lusca.csrf());  // default key: _csrf
 
 // set static files
-var staticOptions = {
+const staticOptions = {
     dotfiles: 'allow',  // http://expressjs.com/4x/api.html#express many middleware is gone
     maxAge: WEEK
 };
@@ -198,7 +198,7 @@ server.listen(app.get('port'), function () {
 
 if (!process.send) {
     // If run using `node app`, log copyright info along with server info
-    var config = require('../package.json');
+    const config = require('../package.json');
     winston.info('----------------------------------------------------------------');
     winston.info('BLITITOR v' + config.version + ' Copyright (C) 2016 @' + config.author + '.');
     winston.info('This program comes with ABSOLUTELY NO WARRANTY.');
