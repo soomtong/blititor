@@ -1,13 +1,13 @@
-var util = require('util');
-var winston = require('winston');
-var misc = require('../../../core/lib/misc');
-var common = require('../../../core/lib/common');
+const util = require('util');
+const winston = require('winston');
+const misc = require('../../../core/lib/misc');
+const common = require('../../../core/lib/common');
 
-var filter = common.regexFilter();
+const filter = common.regexFilter();
 
 function plainPage(req, res) {
 
-    var params = {
+    const params = {
         path: req.path,
         page_id: req.path === '/' ? 'index' : req.path.match(filter.page)[1].replace(/-/g, '_'),
     };
@@ -19,12 +19,12 @@ function plainPage(req, res) {
 
     // winston.info(req.path, params, req.path.match(filter.page));
 
-    res.render(BLITITOR.config.site.theme + '/page/' + params.page_id, params);
+    res.render(BLITITOR.site.theme + '/page/' + params.page_id, params);
 }
 
 function plainPageWithSubPath(req, res) {
 
-    var params = {
+    const params = {
         path: req.path,
         page_id: req.path.lastIndexOf('/') === req.path.toString().length - 1 ? req.path.replace(/-/g, '_') + 'index' : req.path.replace(/-/g, '_'),
     };
@@ -35,7 +35,7 @@ function plainPageWithSubPath(req, res) {
     // console.log(req.path.lastIndexOf('/'), req.path.toString().length  -1 );
     // console.log(params.page_id);
 
-    res.render(BLITITOR.config.site.theme + '/page' + params.page_id, params);
+    res.render(BLITITOR.site.theme + '/page' + params.page_id, params);
 }
 
 function bindSiteMenuToRouter(menu, router) {

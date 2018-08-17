@@ -1,16 +1,16 @@
-var mysql = require('mysql');
-var winston = require('winston');
+const mysql = require('mysql');
+const winston = require('winston');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var databaseDefault = misc.getDatabaseDefault();
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const databaseDefault = misc.getDatabaseDefault();
 
-var tables = {
+const tables = {
     site: databaseDefault.tablePrefix + 'site'
 };
 
 function deleteScheme(databaseConfiguration, callback) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
         database: databaseConfiguration.dbName || common.databaseDefault.database,
@@ -18,8 +18,8 @@ function deleteScheme(databaseConfiguration, callback) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.site];
+    const sql = "DROP TABLE IF EXISTS ??";
+    const tableList = [tables.site];
 
     connection.query(sql, tableList, function (error, results, fields) {
         connection.destroy();
@@ -28,7 +28,7 @@ function deleteScheme(databaseConfiguration, callback) {
 }
 
 function createScheme(databaseConfiguration, callback, done) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
         database: databaseConfiguration.dbName || common.databaseDefault.database,
@@ -36,9 +36,9 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var charSet = 'utf8mb4';
+    const charSet = 'utf8mb4';
 
-    var sql_site = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_site = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`title` varchar(64), `value` varchar(256), ' +
         '`created_at` datetime)' +
@@ -53,7 +53,7 @@ function createScheme(databaseConfiguration, callback, done) {
 }
 
 function insertDummy(databaseConfiguration, done) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || common.databaseDefault.port,
         database: databaseConfiguration.dbName || common.databaseDefault.database,

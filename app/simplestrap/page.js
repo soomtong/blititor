@@ -19,7 +19,7 @@ function indexPage(req, res) {
             });
         }
 
-        res.render(BLITITOR.config.site.theme + '/page/index', params);
+        res.render(BLITITOR.site.theme + '/page/index', params);
     });
 }
 

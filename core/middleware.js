@@ -1,19 +1,20 @@
-var winston = require('winston');
+const winston = require('winston');
 
-var misc = require('./lib/misc');
+const misc = require('./lib/misc');
 
-var routeTable = misc.getRouteData();
-var siteThemeType = misc.siteThemeType();
+const routeTable = misc.getRouteData();
+const siteThemeType = misc.siteThemeType();
 
 // bind common parameters
 function exposeLocals(req, res, next) {
     res.locals.site = {
-        root: BLITITOR.config.site.service.url_prefix, // url_prefix shouldn't end with '/'
-        theme: BLITITOR.config.site.service.url_prefix + '/' +BLITITOR.config.site.theme,
-        adminTheme: BLITITOR.config.site.service.url_prefix + '/' +BLITITOR.config.site.adminTheme,
-        manageTheme: BLITITOR.config.site.service.url_prefix + '/' +BLITITOR.config.site.manageTheme,
+        env: BLITITOR.env,
+        root: BLITITOR.site.service.url_prefix, // url_prefix shouldn't end with '/'
+        theme: BLITITOR.site.service.url_prefix + '/' +BLITITOR.site.theme,
+        adminTheme: BLITITOR.site.service.url_prefix + '/' +BLITITOR.site.adminTheme,
+        manageTheme: BLITITOR.site.service.url_prefix + '/' +BLITITOR.site.manageTheme,
         themeType: siteThemeType,
-        title: BLITITOR.config.site.title,
+        title: BLITITOR.site.title,
         url: req.path
     };
     

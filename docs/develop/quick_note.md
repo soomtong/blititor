@@ -38,7 +38,7 @@ describe in `config.json` like below
 
 there are locals exposing routines in each steps
 
-- site.title: defined in `BLITITOR.config.site.application.title` at `core/index.js`
+- site.title: defined in `BLITITOR.site.application.title` at `core/index.js`
 - app.title: defined in each application's `menu.js`
 - title: defined in each response pages
  
@@ -149,7 +149,7 @@ function plainPage(req, res) {
     // winston.info(req.path, params, req.path.match(filter.page));
     // console.log(res.locals.menu);
 
-    res.render(BLITITOR.config.site.theme + '/page/' + params.page, params);
+    res.render(BLITITOR.site.theme + '/page/' + params.page, params);
 }
 ```
 

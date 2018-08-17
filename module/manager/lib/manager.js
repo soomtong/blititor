@@ -25,7 +25,7 @@ function loginForm(req, res) {
         title: "운영자 화면"
     };
 
-    res.render(BLITITOR.config.site.manageTheme + '/manage/login', params);
+    res.render(BLITITOR.site.manageTheme + '/manage/login', params);
 }
 
 function loginProcess(req, res) {
@@ -143,7 +143,7 @@ function index(req, res) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/index', params);
     });
 }
 
@@ -336,7 +336,7 @@ function accountList(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at);
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/account', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/account', params);
     });
 }
 
@@ -369,7 +369,7 @@ function accountCounter(req, res) {
             item.date = common.dateFormatter(item.date, 'M월 D일');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/account_counter', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/account_counter', params);
     });
 }
 
@@ -399,7 +399,7 @@ function pageLogList(req, res) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD HH:mm');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/page_log', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/page_log', params);
     });
 }
 
@@ -443,7 +443,7 @@ function visitCounter(req, res) {
         params.sum = result.sum;
         params.list = result.visitCounter;
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/index', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/index', params);
     });
 }
 
@@ -466,7 +466,7 @@ function guestbookList(req, res) {
                 item.created_at = common.dateFormatter(item.created_at);
             });
 
-            res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook_reply', params);
+            res.render(BLITITOR.site.manageTheme + '/manage/guestbook_reply', params);
         });
     } else {
         db.readGuestbook(mysql, Number(params.page), function (error, result) {
@@ -484,7 +484,7 @@ function guestbookList(req, res) {
                 }
             });
 
-            res.render(BLITITOR.config.site.manageTheme + '/manage/guestbook', params);
+            res.render(BLITITOR.site.manageTheme + '/manage/guestbook', params);
         });
     }
 }
@@ -580,7 +580,7 @@ function galleryManager(req, res) {
             item.created_at = common.dateFormatter(item.created_at);
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/gallery', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/gallery', params);
     });
 }
 
@@ -712,7 +712,7 @@ function reservationList(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:m');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/reservation', params);
     });
 }
 
@@ -734,7 +734,7 @@ function reservationListFull(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at, 'MM-DD HH:m');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation_download', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/reservation_download', params);
     });
 }
 
@@ -756,7 +756,7 @@ function reservationStatus(req, res) {
 */
 
         // console.log(params);
-        res.render(BLITITOR.config.site.manageTheme + '/manage/reservation_status', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/reservation_status', params);
     });
 }
 
@@ -777,7 +777,7 @@ function reservationTutorialStatus(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:mm');
         });
 
-        res.render(BLITITOR.config.site.manageTheme + '/manage/partial/reservation_status_list', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/partial/reservation_status_list', params);
     });
 }
 

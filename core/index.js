@@ -8,8 +8,8 @@ BLITITOR.env = require('./lib/dependency')(process.env['NODE_ENV'] || 'developme
 BLITITOR.root = path.join(__dirname, '..');
 BLITITOR.route = { root: '/' };
 BLITITOR.tweak = { passDBCheckMiddleware: false }; // for speed
-BLITITOR.config = require('./config/app_default.json');
-BLITITOR.moduleList = require('./config/module_list.json');
+BLITITOR.config = require('./config/app_default.json'); // {...require('./config/app_default.json')};
+BLITITOR.moduleList = require('./config/module_list.json'); // [...require('./config/module_list.json')];
 
 // bind global
 global.BLITITOR = BLITITOR;
@@ -100,7 +100,7 @@ const bootstrapArgv = args(process.argv.slice(2));
 app.set('views', 'theme');
 app.set('view engine', 'html');
 //app.set('view cache', false);
-app.set('port', bootstrapArgv['port'] || bootstrapArgv.p || BLITITOR.config.site.service.port);
+app.set('port', bootstrapArgv['port'] || bootstrapArgv.p || BLITITOR.site.service.port);
 
 // set template engine
 nunjucks.configure(app.get('views'), {

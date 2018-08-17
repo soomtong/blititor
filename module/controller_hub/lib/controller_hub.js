@@ -16,7 +16,7 @@ var routeData = require('../route.json');
 var routeTable = misc.getRouteTable(routeData);
 var controllerHubFlag = misc.commonFlag().controllerHub;
 
-var executePath = path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'bin');
+var executePath = path.join(BLITITOR.root, 'theme', BLITITOR.site.theme, 'bin');
 
 var consoleCommand = {
     list: path.join(executePath, 'list'),
@@ -49,7 +49,7 @@ function gatewayList(req, res) {
 
             params.gatewayList = results;
 
-            res.render(BLITITOR.config.site.theme + '/page/controller_hub/controller_hub', params);
+            res.render(BLITITOR.site.theme + '/page/controller_hub/controller_hub', params);
         });
     });
 }
@@ -89,7 +89,7 @@ function viewGateway(req, res) {
                         params.rtvmList = results;
                     }
 
-                    res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway', params);
+                    res.render(BLITITOR.site.theme + '/page/controller_hub/gateway', params);
                 });
             });
         } else {
@@ -109,7 +109,7 @@ function gatewayForm(req, res) {
     db.getGatewayGroupList(mysql, function (error, results) {
         params.groupList = results;
 
-        res.render(BLITITOR.config.site.theme + '/page/controller_hub/gateway_form', params);
+        res.render(BLITITOR.site.theme + '/page/controller_hub/gateway_form', params);
     });
 }
 
@@ -194,7 +194,7 @@ function rtvmForm(req, res) {
             params.gatewayInfo = result[0];
         }
 
-        res.render(BLITITOR.config.site.theme + '/page/controller_hub/rtvm_form', params);
+        res.render(BLITITOR.site.theme + '/page/controller_hub/rtvm_form', params);
     });
 }
 

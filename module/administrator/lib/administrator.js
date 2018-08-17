@@ -55,7 +55,7 @@ function accountList(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at);
         });
 
-        res.render(BLITITOR.config.site.adminTheme + '/admin/index', params);
+        res.render(BLITITOR.site.adminTheme + '/admin/index', params);
     });
 }
 
@@ -64,7 +64,7 @@ function loginForm(req, res) {
         title: "관리자 화면"
     };
 
-    res.render(BLITITOR.config.site.adminTheme + '/admin/login', params);
+    res.render(BLITITOR.site.adminTheme + '/admin/login', params);
 }
 
 function loginProcess(req, res) {
@@ -194,11 +194,11 @@ function accountView(req, res) {
                 params.account.created_at = common.dateFormatter(result.created_at);
                 params.account.updated_at = common.dateFormatter(result.updated_at);
 
-                res.render(BLITITOR.config.site.adminTheme + '/admin/account', params);
+                res.render(BLITITOR.site.adminTheme + '/admin/account', params);
             });
         });
     } else {
-        res.render(BLITITOR.config.site.adminTheme + '/admin/sign_up', params);
+        res.render(BLITITOR.site.adminTheme + '/admin/sign_up', params);
     }
 }
 
@@ -235,7 +235,7 @@ function accountForm(req, res) {
             params.account.grant_manager = result.grant.includes('M');
             params.account.grant_content = result.grant.includes('C');
 
-            res.render(BLITITOR.config.site.adminTheme + '/admin/account_form', params);
+            res.render(BLITITOR.site.adminTheme + '/admin/account_form', params);
         });
     }
 }

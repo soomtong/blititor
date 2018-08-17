@@ -39,7 +39,7 @@ function indexPage(req, res) {
                     params.recentNetAppList = results;
                 }
 
-                res.render(BLITITOR.config.site.theme + '/page/app_store/store_home', params);
+                res.render(BLITITOR.site.theme + '/page/app_store/store_home', params);
             });
         });
     });
@@ -67,7 +67,7 @@ function listApps(req, res) {
         params.totalCount = result.total;
         params.list = result.storeAppList;
 
-        res.render(BLITITOR.config.site.theme + '/page/app_store/app_list', params);
+        res.render(BLITITOR.site.theme + '/page/app_store/app_list', params);
     });
 }
 
@@ -100,7 +100,7 @@ function listAppByCategory(req, res) {
                 params.totalCount = result.total;
                 params.list = result.storeAppList;
 
-                res.render(BLITITOR.config.site.theme + '/page/app_store/app_list', params);
+                res.render(BLITITOR.site.theme + '/page/app_store/app_list', params);
             });
         });
     } else {
@@ -134,7 +134,7 @@ function uploadForm(req, res) {
                 params.tagList = tags;
             }
 
-            res.render(BLITITOR.config.site.theme + '/page/app_store/app_upload', params);
+            res.render(BLITITOR.site.theme + '/page/app_store/app_upload', params);
         });
     });
 }
@@ -227,13 +227,13 @@ function viewApp(req, res) {
                     if (results && results.length && results[0].user_uuid === req.user.uuid) {
                         params.orderInfo = results[0];
 
-                        return res.render(BLITITOR.config.site.theme + '/page/app_store/app_view', params);
+                        return res.render(BLITITOR.site.theme + '/page/app_store/app_view', params);
                     } else {
-                        return res.render(BLITITOR.config.site.theme + '/page/app_store/app_view', params);
+                        return res.render(BLITITOR.site.theme + '/page/app_store/app_view', params);
                     }
                 });
             } else {
-                return res.render(BLITITOR.config.site.theme + '/page/app_store/app_view', params);
+                return res.render(BLITITOR.site.theme + '/page/app_store/app_view', params);
             }
         });
     }
@@ -250,7 +250,7 @@ function viewApp(req, res) {
 
             params.app = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/app_store/app_view', params);
+            return res.render(BLITITOR.site.theme + '/page/app_store/app_view', params);
         });
     }
 }
@@ -312,7 +312,7 @@ function purchasedAppList(req, res) {
             params.appList = results;
         }
 
-        res.render(BLITITOR.config.site.theme + '/page/account/purchased_list', params);
+        res.render(BLITITOR.site.theme + '/page/account/purchased_list', params);
     })
 }
 

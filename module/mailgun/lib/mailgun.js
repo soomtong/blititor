@@ -34,10 +34,10 @@ function mailgunMessage1(receiver) {
     var mailSender = '"KOSSCON 관리자" <kosscon@kosslab.kr>';
 
     // send updated confirm mail
-    fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'page', 'register', 'confirm.html'), function (err, confirmHtml) {
+    fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.site.theme, 'page', 'register', 'confirm.html'), function (err, confirmHtml) {
         if (err) return winston.error("Can't read confirm mail html template");
 
-        fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.config.site.theme, 'page', 'register', 'confirm.txt'), function (err, conformText) {
+        fs.readFile(path.join(BLITITOR.root, 'theme', BLITITOR.site.theme, 'page', 'register', 'confirm.txt'), function (err, conformText) {
             if (err) return winston.error("Can't read confirm mail text template");
 
             var composer = mailcomposer({

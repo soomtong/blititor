@@ -38,7 +38,7 @@ function noticeBoardList(req, res) {
         params.pagination = result.pagination;
         params.noticeList = result.noticeList;
 
-        res.render(BLITITOR.config.site.theme + '/page/notice/list', params);
+        res.render(BLITITOR.site.theme + '/page/notice/list', params);
     });
 }
 

@@ -36,7 +36,7 @@ function indexPage(req, res) {
                 params.recentPostList.map(makePreviewContent);
             }
 
-            res.render(BLITITOR.config.site.theme + '/page/index', params);
+            res.render(BLITITOR.site.theme + '/page/index', params);
         });
     });
 }
@@ -75,7 +75,7 @@ function listPost(req, res) {
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+            res.render(BLITITOR.site.theme + '/page/teamblog/list', params);
         });
     } else if (params.tag) {
         db.readTeamblogAllByTag(mysql, params.tag.trim(), function (err, result) {
@@ -93,7 +93,7 @@ function listPost(req, res) {
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+            res.render(BLITITOR.site.theme + '/page/teamblog/list', params);
         });
     } else {
         db.readTeamblogByPage(mysql, params.page - 1, function (err, result) {
@@ -117,7 +117,7 @@ function listPost(req, res) {
             params.list = result.teamblogList;  // todo: convert markdown to html
             params.monthlyList = result.postGroupList;  // todo: convert markdown to html
 
-            res.render(BLITITOR.config.site.theme + '/page/teamblog/list', params);
+            res.render(BLITITOR.site.theme + '/page/teamblog/list', params);
         });
     }
 }
@@ -127,7 +127,7 @@ function writeForm(req, res) {
         title: '팀블로그',
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/teamblog/write', params);
+    res.render(BLITITOR.site.theme + '/page/teamblog/write', params);
 }
 
 function savePost(req, res) {
@@ -205,7 +205,7 @@ function viewPost(req, res) {
 
             params.post = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+            return res.render(BLITITOR.site.theme + '/page/teamblog/view', params);
         });
     }
 
@@ -221,7 +221,7 @@ function viewPost(req, res) {
 
             params.post = renderPost(result[0]);
 
-            return res.render(BLITITOR.config.site.theme + '/page/teamblog/view', params);
+            return res.render(BLITITOR.site.theme + '/page/teamblog/view', params);
         });
     }
 }

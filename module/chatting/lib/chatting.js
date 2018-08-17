@@ -125,7 +125,7 @@ function index(req, res) {
         title: 'Chatting'
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/chatting', params);
+    res.render(BLITITOR.site.theme + '/page/chatting', params);
 }
 
 module.exports = {

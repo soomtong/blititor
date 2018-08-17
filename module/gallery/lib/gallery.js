@@ -40,7 +40,7 @@ function categoryList(req, res) {
     db.readGalleryCategory(mysql, function (error, result) {
         params.cateList = result || [];
 
-        res.render(BLITITOR.config.site.theme + '/page/gallery/list', params);
+        res.render(BLITITOR.site.theme + '/page/gallery/list', params);
     });
 }
 

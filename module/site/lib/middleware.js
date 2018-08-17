@@ -1,4 +1,4 @@
-var winston = require('winston');
+const winston = require('winston');
 
 function exposeLocals(req, res, next) {
     // res.locals.user = req.user;

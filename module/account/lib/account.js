@@ -324,7 +324,7 @@ function showInfo(req, res) {
         params.userInfo = userData;
         params.userInfo.created_at = moment(new Date(userData.created_at)).format('LLL');
 
-        res.render(BLITITOR.config.site.theme + '/page/account/user_info', params);
+        res.render(BLITITOR.site.theme + '/page/account/user_info', params);
     });
 }
 
@@ -461,7 +461,7 @@ function signIn(req, res) {
         req.session.previousURL = params.q.toString();
     }
 
-    res.render(BLITITOR.config.site.theme + '/page/account/sign_in', params);
+    res.render(BLITITOR.site.theme + '/page/account/sign_in', params);
 }
 
 function signUp(req, res) {
@@ -472,7 +472,7 @@ function signUp(req, res) {
         title: "Home",
     };
 
-    res.render(BLITITOR.config.site.theme + '/page/account/sign_up', params);
+    res.render(BLITITOR.site.theme + '/page/account/sign_up', params);
 }
 
 function signOut(req, res) {

@@ -1,21 +1,21 @@
-var fs = require('fs');
-var path = require('path');
-var async = require('neo-async');
-var winston = require('winston');
+const fs = require('fs');
+const path = require('path');
+const async = require('neo-async');
+const winston = require('winston');
 
-var displayRoutes = require('express-routemap');
-var printRoutes = require('express-print-routes');
+const displayRoutes = require('express-routemap');
+const printRoutes = require('express-print-routes');
 
-var configFile = require('../config/app_default.json').configFile;
-var siteDefault = require('../config/site_default.json');
-var userPrivilege = require('../config/user_level.json');
-var configuration = require(path.join('..', '..', configFile));
-var databaseConfiguration = configuration['database'];
+const configFile = require('../config/app_default.json').configFile;
+const siteDefault = require('../config/site_default.json');
+const userPrivilege = require('../config/user_level.json');
+const configuration = require(path.join('..', '..', configFile));
+const databaseConfiguration = configuration['database'];
 
-var serviceInformation = loadServiceInformation();
+const serviceInformation = loadServiceInformation();
 
 function loadServiceInformation() {
-    var info;
+    let info;
 
     try {
         info = configuration.service;
@@ -47,8 +47,8 @@ function getUserPrivilege() {
 
 function getDatabaseDefaultData() {
     if (databaseConfiguration.tablePrefix) {
-        var trimmer = '_';
-        var last = databaseConfiguration.tablePrefix.length - 1;
+        const trimmer = '_';
+        const last = databaseConfiguration.tablePrefix.length - 1;
 
         if (databaseConfiguration.tablePrefix[last] !== trimmer) {
             databaseConfiguration.tablePrefix += trimmer;
@@ -80,8 +80,8 @@ function getRouteData(customRouteData) {
 
 function setRouteTable(configData) {
     configData.map(function (item) {
-        var routeFile = '/route.json';
-        var routeData;
+        const routeFile = '/route.json';
+        let routeData;
 
         try {
             routeData = fs.readFileSync(BLITITOR.root + '/module/' + item.folder + routeFile);
@@ -95,7 +95,7 @@ function setRouteTable(configData) {
 }
 
 function getPageName(menu, page_id, subPath) {
-    for (var i = 0; i < menu.length; i++) {
+    for (let i = 0; i < menu.length; i++) {
         if (subPath) {
             if (menu[i].url == page_id) {
                 return menu[i].name;
@@ -117,7 +117,7 @@ function siteThemeType() {
 }
 
 function vendorMap(vendorName) {
-    var map = {
+    const map = {
         jquery: 'node_modules/jquery/dist',
         bulma: 'node_modules/bulma/css',
         'bulma-ext': 'node_modules/bulma-extensions/dist',
@@ -177,8 +177,8 @@ function commonFlag() {
 }
 
 function setFlag(flag) {
-    var flagList = commonFlag();
-    var flagCode = '';
+    const flagList = commonFlag();
+    let flagCode = '';
 
     switch (flag) {
         case flagList.post.markdown.value:
@@ -210,7 +210,7 @@ function showRoutes(app) {
 }
 
 function checkDatabaseConfigFile(configFile) {
-    var databaseSetting = {};
+    let databaseSetting = {};
 
     try {
         fs.accessSync(configFile, fs.R_OK);
@@ -231,9 +231,9 @@ function checkDatabaseConfigFile(configFile) {
 }
 
 function checkThemeConfigFile(configFile) {
-    var config = {};
-    var appSetting = {};
-    var themeSetting = {};
+    let config = {};
+    let appSetting = {};
+    let themeSetting = {};
 
     try {
         fs.accessSync(configFile, fs.R_OK);
@@ -270,7 +270,7 @@ function checkThemeConfigFile(configFile) {
 
     } finally {
         // bind some vars to global, u can check this parameters in `core/log/global-var-config.log`
-        BLITITOR.config.site = {
+        BLITITOR.site = {
             "service": {
                 "port": appSetting.port,
                 "url_prefix": appSetting.url_prefix
@@ -282,15 +282,15 @@ function checkThemeConfigFile(configFile) {
             "manageTheme": themeSetting.manageTheme
         };
 
-        winston.info("Set site app to '" + BLITITOR.config.site.app + "'");
-        winston.info("Set site theme to '" + BLITITOR.config.site.theme + "'");
-        winston.info("Set site admin theme to '" + BLITITOR.config.site.adminTheme + "'");
-        winston.info("Set site manage theme to '" + BLITITOR.config.site.manageTheme + "'");
+        winston.info("Set site app to '" + BLITITOR.site.app + "'");
+        winston.info("Set site theme to '" + BLITITOR.site.theme + "'");
+        winston.info("Set site admin theme to '" + BLITITOR.site.adminTheme + "'");
+        winston.info("Set site manage theme to '" + BLITITOR.site.manageTheme + "'");
     }
 }
 
 function serviceToken(vendor) {
-    var token;
+    let token;
 
     token = serviceInformation[vendor] && serviceInformation[vendor].token;
 
@@ -300,7 +300,7 @@ function serviceToken(vendor) {
 }
 
 function serviceProvider(vendor) {
-    var provider;
+    let provider;
 
     provider = serviceInformation[vendor] && serviceInformation[vendor].provider;
 

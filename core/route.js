@@ -1,21 +1,21 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var express = require('express');
-var winston = require('winston');
+const express = require('express');
+const winston = require('winston');
 
-var theme = require('./lib/theme');
-var misc = require('./lib/misc');
-var middleware = require('./middleware');
-var application = require('../app/' + BLITITOR.config.site.app);
-var site = require('../module/site');
-var admin = require('../module/administrator');
-var manage = require('../module/manager');
-var counter = require('../module/counter');
+const theme = require('./lib/theme');
+const misc = require('./lib/misc');
+const middleware = require('./middleware');
+const application = require('../app/' + BLITITOR.site.app);
+const site = require('../module/site');
+const admin = require('../module/administrator');
+const manage = require('../module/manager');
+const counter = require('../module/counter');
 
 // extend router
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const router = express.Router();
+const routeTable = misc.getRouteData();
 
 // Global locals and middleware
 router.use(middleware.exposeLocals);
@@ -46,8 +46,8 @@ if (application.config && application.config['vendor']) {
 }
 
 // Favicon
-// theme.bindFavicon(router, BLITITOR.config.site.theme);
-router.use(theme.getFavicon(BLITITOR.config.site.theme));
+// theme.bindFavicon(router, BLITITOR.site.theme);
+router.use(theme.getFavicon(BLITITOR.site.theme));
 
 // need to place down here for excluding counters
 if (application.config && (application.config['admin'] || application.config['manage'])) {
@@ -62,13 +62,13 @@ router.use(application.router);
 
 // Extension
 if (BLITITOR.env !== 'production') { // Only in dev environment
-    var statusMonitor = require('express-status-monitor');
+    const statusMonitor = require('express-status-monitor');
 
     router.use(statusMonitor({path: '/system/status'}));
 }
 
 // error Handler
-router.use(theme.get404Handler(BLITITOR.config.site.theme));
-router.use(theme.get500Handler(BLITITOR.config.site.theme));
+router.use(theme.get404Handler(BLITITOR.site.theme));
+router.use(theme.get500Handler(BLITITOR.site.theme));
 
 module.exports = router;

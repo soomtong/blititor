@@ -37,7 +37,7 @@ function reservationForm(req, res) {
             }
         }
 
-        return res.render(BLITITOR.config.site.theme + '/page/reservation/form', params);
+        return res.render(BLITITOR.site.theme + '/page/reservation/form', params);
     });
 }
 
@@ -65,7 +65,7 @@ function reservationStatusList(req, res) {
     db.readReservationStatus(mysql, params.category, function (error, result) {
         params.cateList = result || [];
 
-        res.render(BLITITOR.config.site.theme + '/page/reservation/status_list', params);
+        res.render(BLITITOR.site.theme + '/page/reservation/status_list', params);
     });
 }
 
@@ -157,10 +157,10 @@ function createReservation(req, res) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
                         params.sectionList = rows;
 
-                        return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
                     });
                 } else {
-                    return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                    return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
                 }
             });
         } else {
@@ -199,10 +199,10 @@ function createReservation(req, res) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
                         params.sectionList = rows;
 
-                        return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
                     });
                 } else {
-                    return res.render(BLITITOR.config.site.theme + '/page/reservation/done', params);
+                    return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
                 }
             });
         }

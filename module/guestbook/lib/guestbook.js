@@ -42,7 +42,7 @@ function guestbookForm(req, res) {
 
         params.list = result.guestbookList;
 
-        res.render(BLITITOR.config.site.theme + '/page/guestbook/guestbook', params);
+        res.render(BLITITOR.site.theme + '/page/guestbook/guestbook', params);
     });
 }
 
