@@ -1,9 +1,9 @@
-var winston = require('winston');
+const winston = require('winston');
 
-var misc = require('../../../core/lib/misc');
+const misc = require('../../../core/lib/misc');
 
-var userPrivilege = misc.getUserPrivilege();
-var routeTable = misc.getRouteData();
+const userPrivilege = misc.getUserPrivilege();
+const routeTable = misc.getRouteData();
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

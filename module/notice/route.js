@@ -1,19 +1,22 @@
-var express = require('express');
+const express = require('express');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
+const { checkManager } = require('../account/lib/middleware');
 
-var notice = require('./lib/notice');
-var middleware = require('./lib/middleware');
+const notice = require('./lib/notice');
+const middleware = require('./lib/middleware');
 
-var AccountMiddleware = require('../account/lib/middleware');
+const routeTable = misc.getRouteData();
+const site = express.Router();
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+site.use(middleware.exposeLocals);
+site.get(routeTable.notice.list, notice.list);
+site.get(routeTable.notice.write, checkManager, notice.write);
+site.post(routeTable.notice.write, checkManager, notice.register);
+site.get(routeTable.notice.view, notice.view);
 
-router.use(middleware.exposeLocals);
+const manage = express.Router();
 
-router.all(routeTable.notice.list, notice.list);
-// router.post(routeTable.notice.write, AccountMiddleware.checkManager, notice.register);
-// router.get(routeTable.notice.view, notice.view);
+manage.get(routeTable.notice.home, notice.manage);
 
-module.exports = router;
+module.exports = { site, manage };

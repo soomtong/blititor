@@ -2,6 +2,7 @@
   "manage": {
     "root": "/manage",
     "login": "/login",
+    "home": "/",
     "dashboard": "/dashboard",
     "account": "/account",
     "reservation": "/reservation",

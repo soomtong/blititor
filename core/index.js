@@ -206,11 +206,12 @@ if (!process.send) {
     winston.info('and you are welcome to redistribute it under certain conditions.');
     winston.info('----------------------------------------------------------------');
     winston.verbose('module data file loaded. ' + BLITITOR.moduleList.length + ' modules located');
+}
 
-    if (BLITITOR.env === 'development') { // Only in dev environment
-        setTimeout(function () {
-            misc.showGlobalVar(BLITITOR);
-            misc.showRoutes(app);
-        }, 1000);
-    }
+if (BLITITOR.env === 'development') { // Only in dev environment
+    process.nextTick(function () {
+        winston.info('update route data to log folder');
+        misc.showGlobalVar(BLITITOR);
+        misc.showRoutes(app);
+    });
 }

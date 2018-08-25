@@ -28,7 +28,7 @@ router.use(Account.middleware.exposeLocals);
 router.all(routeTable.root, [middleware.test1, middleware.test2], page.indexPage);
 
 // bind module
-router.use('/account', Account.route);
+router.use('/account', Account.site);
 router.use('/guest', Guestbook.route);
 router.use('/blog', Teamblog.route);
 router.use('/lib', Editor.route);   //todo: for test at this time

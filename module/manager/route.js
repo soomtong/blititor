@@ -1,45 +1,51 @@
-var express = require('express');
-var winston = require('winston');
+const express = require('express');
+const winston = require('winston');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
-var manager = require('./lib/manager');
-var middleware = require('./lib/middleware');
+const manager = require('./lib/manager');
+const middleware = require('./lib/middleware');
 
-var Account = require('../account');
+const Account = require('../account');
+const Notice = require('../notice');
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const router = express.Router();
+const routeTable = misc.getRouteData();
 
 router.use(Account.middleware.exposeLocals);
-// caution. when use each middleware for other module's router. it affects all router that exist behind
+
 router.get(routeTable.manage.login, manager.loginForm);
 router.post(routeTable.manage.login, manager.loginProcess);
-// for dashboard
-router.get(routeTable.manage.dashboard, Account.middleware.checkManager, manager.dashboard);
-// for counter
-router.get('/', Account.middleware.checkManager, manager.index);
-router.get(routeTable.manage.pageCounter, Account.middleware.checkManager, manager.pageViewCounter);
-router.get(routeTable.manage.pageLog, Account.middleware.checkManager, manager.pageViewLog);
-// for account
-router.get(routeTable.manage.account, Account.middleware.checkManager, manager.accountList);
-router.get(routeTable.manage.accountCounter, Account.middleware.checkManager, manager.accountActionCounter);
-// for guestbook
-router.get(routeTable.guestbook.root, Account.middleware.checkManager, manager.guestbookList);
-router.post(routeTable.guestbook.root + routeTable.guestbook.reply, Account.middleware.checkManager, manager.guestbookReply);
-router.post(routeTable.guestbook.root + routeTable.guestbook.delete, Account.middleware.checkManager, manager.guestbookDelete);
-// for gallery
-router.get(routeTable.manage.gallery, Account.middleware.checkManager, manager.galleryManager);
-router.post(routeTable.manage.galleryImageSort, Account.middleware.checkManager, manager.galleryImageSort);
-router.post(routeTable.manage.galleryImageRemove, Account.middleware.checkManager, manager.galleryImageDelete);
-router.post(routeTable.manage.galleryCategory, Account.middleware.checkManager, manager.galleryCategory);
-router.get(routeTable.manage.galleryImage, Account.middleware.checkManager, manager.galleryImageList);
-// for reservation
-router.get(routeTable.manage.reservation, Account.middleware.checkManager, manager.reservationList);
-router.get(routeTable.manage.reservationClean, Account.middleware.checkManager, manager.reservationListFull);
-router.get(routeTable.manage.tutorial, Account.middleware.checkManager, manager.reservationStatus);
-router.get(routeTable.manage.tutorialStatus, Account.middleware.checkManager, manager.reservationTutorialStatus);
 
-//todo: move each module features to module's router
+router.use(Account.middleware.checkManager);
+
+router.get(routeTable.manage.home, manager.index);
+router.get(routeTable.manage.dashboard, manager.dashboard); // for ajax dashboard
+// for counter
+router.get(routeTable.manage.pageLog, manager.pageViewLog);
+router.get(routeTable.manage.pageCounter, manager.pageViewCounter);
+// for account
+router.get(routeTable.manage.account, manager.accountList);
+router.get(routeTable.manage.accountCounter, manager.accountActionCounter);
+
+//todo: move each module features to module's router. like this.
+router.use(routeTable.notice.root, Notice.manage);
+
+//todo: update like notice module
+// for guestbook
+router.get(routeTable.guestbook.root, manager.guestbookList);
+router.post(routeTable.guestbook.root + routeTable.guestbook.reply, manager.guestbookReply);
+router.post(routeTable.guestbook.root + routeTable.guestbook.delete, manager.guestbookDelete);
+// for gallery
+router.get(routeTable.manage.gallery, manager.galleryManager);
+router.post(routeTable.manage.galleryImageSort, manager.galleryImageSort);
+router.post(routeTable.manage.galleryImageRemove, manager.galleryImageDelete);
+router.post(routeTable.manage.galleryCategory, manager.galleryCategory);
+router.get(routeTable.manage.galleryImage, manager.galleryImageList);
+// for reservation
+router.get(routeTable.manage.reservation, manager.reservationList);
+router.get(routeTable.manage.reservationClean, manager.reservationListFull);
+router.get(routeTable.manage.tutorial, manager.reservationStatus);
+router.get(routeTable.manage.tutorialStatus, manager.reservationTutorialStatus);
 
 module.exports = router;

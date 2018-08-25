@@ -21,7 +21,7 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // route
-router.use(routeTable.account.root, Account.route);
+router.use(routeTable.account.root, Account.site);
 router.post(routeTable.account.root + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
 router.post(routeTable.account.root + routeTable.account.add, Account.registerSimple);
 

@@ -1,27 +1,27 @@
-var fs = require('fs');
-var path = require('path');
-var async = require('neo-async');
-var bcrypt = require('bcryptjs');
-var mkdirp = require('mkdirp');
-var winston = require('winston');
-var moment = require('moment');
-var useragent = require('useragent');
+const fs = require('fs');
+const path = require('path');
+const async = require('neo-async');
+const bcrypt = require('bcryptjs');
+const mkdirp = require('mkdirp');
+const winston = require('winston');
+const moment = require('moment');
+const useragent = require('useragent');
 
-var misc = require('../../../core/lib/misc');
-var common = require('../../../core/lib/common');
-var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
+const misc = require('../../../core/lib/misc');
+const common = require('../../../core/lib/common');
+const connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
-var account = require('../../account');
-var counter = require('../../counter');
+const account = require('../../account');
+const counter = require('../../counter');
 
-var db = require('./database');
+const db = require('./database');
 
-var userGrants = misc.getUserPrivilege();
-var routeTable = misc.getRouteData();
-var token = misc.commonToken();
+const userGrants = misc.getUserPrivilege();
+const routeTable = misc.getRouteData();
+const token = misc.commonToken();
 
 function loginForm(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면"
     };
 
@@ -32,7 +32,7 @@ function loginProcess(req, res) {
     req.assert('account_id', 'Email as Manager ID field is not valid').notEmpty().withMessage('Manager ID is required').isEmail();
     req.assert('account_password', 'Password must be at least 4 characters long').len(4);
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         req.flash('error', errors);
@@ -41,7 +41,7 @@ function loginProcess(req, res) {
 
     req.sanitize('account_password').trim();
 
-    var params = {
+    const params = {
         managerID: req.body.account_id,
         password: req.body.account_password
     };
@@ -78,7 +78,7 @@ function loginProcess(req, res) {
             } else {
                 // retrieve with auth
                 account.findUserByAuthID(auth.id, function (error, userData) {
-                    var user = {
+                    const user = {
                         user_id: auth.user_id,
                         id: userData.id,
                         uuid: userData.uuid,
@@ -100,7 +100,7 @@ function loginProcess(req, res) {
                             // insert login logging
                             account.insertLastLog(user.uuid, userData.login_counter || 0);
 
-                            var agent = useragent.parse(req.headers['user-agent']);
+                            const agent = useragent.parse(req.headers['user-agent']);
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                             res.redirect('/manage');
@@ -119,12 +119,12 @@ function loginProcess(req, res) {
 }
 
 function index(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readVisitLogByPage(mysql, params.page, function (error, result) {
         if (error) {
@@ -148,19 +148,19 @@ function index(req, res) {
 }
 
 function dashboard(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         today: req.query['date'] || moment().format('YYYYMMDD'),
         weekly: req.query['k'] || false,
         list: []
     };
 
-    var duration = '7';
-    var dates = [];
-    var countOfDays = [];
-    var tempDate;
+    const duration = '7';
+    const dates = [];
+    const countOfDays = [];
+    let tempDate;
 
-    for (var idx = 0; idx < duration; idx++) {
+    for (let idx = 0; idx < duration; idx++) {
         tempDate = moment(params.today).subtract(idx, 'days');
 
         if (tempDate.date() === 1) {
@@ -174,23 +174,23 @@ function dashboard(req, res) {
 
     params.dates = dates;
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
-    var tasks = [
+    const tasks = [
         function (done) {
             db.readAccountCounterByDate(mysql, countOfDays, function (error, result) {
                 if (error) {
-                    req.flash('error', {msg: '방문자 카운터 읽기에 실패했습니다.'});
+                    req.flash('error', { msg: '방문자 카운터 읽기에 실패했습니다.' });
 
                     winston.error(error);
 
                     res.redirect('back');
                 }
 
-                var sessions = [];
-                var logins = [];
+                const sessions = [];
+                const logins = [];
 
-                var tempObj = {};
+                const tempObj = {};
 
                 result.accountCounter.map(function (item) {
                     tempObj[item.date] = {
@@ -200,8 +200,8 @@ function dashboard(req, res) {
                 });
 
                 countOfDays.map(function (item) {
-                    var s = tempObj[item] && tempObj[item].session
-                    var l = tempObj[item] && tempObj[item].login
+                    const s = tempObj[item] && tempObj[item].session;
+                    const l = tempObj[item] && tempObj[item].login;
 
                     sessions.push(s || 0);
                     logins.push(l || 0);
@@ -252,7 +252,7 @@ function dashboard(req, res) {
         function (done) {
             db.readPageCounterByDate(mysql, countOfDays, function (error, result) {
                 if (error) {
-                    req.flash('error', {msg: '페이지 뷰 카운터 읽기에 실패했습니다.'});
+                    req.flash('error', { msg: '페이지 뷰 카운터 읽기에 실패했습니다.' });
 
                     winston.error(error);
 
@@ -304,12 +304,12 @@ function dashboard(req, res) {
 }
 
 function accountList(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
         if (error) {
@@ -341,12 +341,12 @@ function accountList(req, res) {
 }
 
 function accountCounter(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         month: req.query['m'] || moment().format('YYYYMM')
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountCounterByMonth(mysql, params.month, function (error, result) {
         if (error) {
@@ -374,12 +374,12 @@ function accountCounter(req, res) {
 }
 
 function pageLogList(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readVisitLogByPage(mysql, Number(params.page - 1), function (error, result) {
         if (error) {
@@ -404,18 +404,18 @@ function pageLogList(req, res) {
 }
 
 function visitCounter(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         today: req.query['date'] || moment().format('YYYYMMDD'),
         weekly: req.query['k'] || false
     };
 
-    var duration = '7';
-    var dates = [];
-    var countOfDays = [];
-    var tempDate;
+    const duration = '7';
+    const dates = [];
+    const countOfDays = [];
+    let tempDate;
 
-    for (var idx = 0; idx <= duration; idx++) {
+    for (let idx = 0; idx <= duration; idx++) {
         tempDate = moment(params.today).subtract(idx, 'days');
 
         if (tempDate.date() == 1) {
@@ -427,7 +427,7 @@ function visitCounter(req, res) {
         countOfDays.push(tempDate.format('YYYYMMDD'));
     }
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readVisitCounterByDate(mysql, countOfDays, function (error, result) {
         if (error) {
@@ -448,13 +448,13 @@ function visitCounter(req, res) {
 }
 
 function guestbookList(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1,
         flag: req.query['flag']
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     if (params.flag === 'noreply') {
         db.readGuestbookWithoutReply(mysql, Number(params.page), function (error, result) {
@@ -493,7 +493,7 @@ function guestbookReply(req, res) {
     req.assert('guestbook_id', 'id as message ID field is not valid').notEmpty().withMessage('Message ID is required');
     req.assert('reply', 'reply message is required').len(2).withMessage('Must be 2 chars over').notEmpty();
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         req.flash('error', errors);
@@ -504,12 +504,12 @@ function guestbookReply(req, res) {
     req.sanitize('guestbook_id').escape();
     req.sanitize('reply').escape();
 
-    var replyData = {
+    const replyData = {
         reply: req.body.reply,
         replied_at: new Date()
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.writeGuestbookReply(mysql, req.body.guestbook_id, replyData, function (err, result) {
         if (err) {
@@ -529,7 +529,7 @@ function guestbookReply(req, res) {
 function guestbookDelete(req, res) {
     req.assert('guestbook_id', 'id as message ID field is not valid').notEmpty();
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         req.flash('error', errors);
@@ -539,7 +539,7 @@ function guestbookDelete(req, res) {
 
     req.sanitize('guestbook_id').escape();
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.deleteGuestbook(mysql, req.body.guestbook_id, function (err, result) {
         if (err) {
@@ -559,12 +559,12 @@ function guestbookDelete(req, res) {
 }
 
 function galleryManager(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         page: Number(req.query['p']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readGalleryCategory(mysql, Number(params.page - 1), function (error, result) {
         params.pagination = true;
@@ -585,14 +585,14 @@ function galleryManager(req, res) {
 }
 
 function galleryCategory(req, res) {
-    var params = {
+    const params = {
         type: req.body.type,
         title: req.body.title || '',
         subTitle: req.body.sub_title || '',
         xhr: req.xhr || false
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     switch (params.type) {
         case 'add':
@@ -619,12 +619,12 @@ function galleryCategory(req, res) {
 }
 
 function galleryImageList(req, res) {
-    var params = {
+    const params = {
         category: req.body.cate,
         xhr: req.xhr || false
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readGalleryImageList(mysql, params, function (error, result) {
         return res.send(result);
@@ -632,14 +632,14 @@ function galleryImageList(req, res) {
 }
 
 function galleryImageSort(req, res) {
-    var params = {
+    const params = {
         category: req.body.category,
         sortArray: req.body.sort
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
-    var iterator = function (item, idx, done) {
+    const iterator = function (item, idx, done) {
         params.sort = idx + 1;
         params.id = item;
 
@@ -649,7 +649,7 @@ function galleryImageSort(req, res) {
         });
     };
 
-    var result = function (error, result) {
+    const result = function (error, result) {
         res.send({
             "status": "success",
             "data": {
@@ -663,11 +663,11 @@ function galleryImageSort(req, res) {
 }
 
 function galleryImageDelete(req, res) {
-    var params = {
+    const params = {
         file: req.body.file
     };
 
-    var folder = {
+    const folder = {
         temp: 'public/upload/temp/',
         thumb: 'public/upload/gallery/thumb/',
         image: 'public/upload/gallery/image/'
@@ -694,13 +694,13 @@ function galleryImageDelete(req, res) {
 }
 
 function reservationList(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         cate: Number(req.query['c']) || 1,
         page: Number(req.query['p']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readReservationList(mysql, Number(params.page), Number(params.cate), function (error, result) {
         params.pagination = result.pagination;
@@ -717,12 +717,12 @@ function reservationList(req, res) {
 }
 
 function reservationListFull(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         cate: Number(req.query['c']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readReservationListFull(mysql, Number(params.cate), function (error, result) {
         params.pagination = false;
@@ -739,12 +739,12 @@ function reservationListFull(req, res) {
 }
 
 function reservationStatus(req, res) {
-    var params = {
+    const params = {
         title: "운영자 화면",
         cate: Number(req.query['c']) || 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readReservationStatus(mysql, Number(params.cate), function (error, rows) {
         params.reservationStatus = rows;
@@ -761,13 +761,13 @@ function reservationStatus(req, res) {
 }
 
 function reservationTutorialStatus(req, res) {
-    var params = {
+    const params = {
         status_id: req.body.id || req.query.id,
         category: req.body.cate || 1,
         xhr: req.xhr || false
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readTutorialStatus(mysql, params, function (error, result) {
         params.reservationList = result;

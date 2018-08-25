@@ -38,7 +38,7 @@ router.use(Counter.middleware.sessionCounter);
 router.use(Counter.middleware.pageCounter);
 
 // bind module
-router.use('/account', Account.route);
+router.use('/account', Account.site);
 router.use(AppStore.route);
 router.use(ControllerHub.route);
 

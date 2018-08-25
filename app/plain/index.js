@@ -22,7 +22,7 @@ var appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // route
-router.use('/account', Account.route);
+router.use('/account', Account.site);
 router.post('/account' + routeTable.account.registerSimple, Account.middleware.checkLoggedSession, Account.registerSimple);
 router.post('/account' + routeTable.account.add, Account.registerSimple);
 

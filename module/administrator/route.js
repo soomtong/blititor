@@ -1,28 +1,30 @@
-var express = require('express');
-var winston = require('winston');
+const express = require('express');
+const winston = require('winston');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
-var administrator = require('./lib/administrator');
-var middleware = require('./lib/middleware');
+const administrator = require('./lib/administrator');
+const middleware = require('./lib/middleware');
 
-var Account = require('../account');
+const Account = require('../account');
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const routeTable = misc.getRouteData();
+const site = express.Router();
 
-router.use(Account.middleware.exposeLocals);
+site.use(Account.middleware.exposeLocals);
 
-router.get(routeTable.admin.login, administrator.loginForm);
-router.post(routeTable.admin.login, administrator.loginProcess);
+site.get(routeTable.admin.login, administrator.loginForm);
+site.post(routeTable.admin.login, administrator.loginProcess);
 
 // caution. use each middleware for other module's router. it affects all router exist behind
-router.get('/', Account.middleware.checkAdministrator, administrator.accountList);
-router.get(routeTable.admin.account, Account.middleware.checkAdministrator, administrator.accountList);
-router.get(routeTable.admin.accountNew, Account.middleware.checkAdministrator, administrator.accountView);
-router.post(routeTable.admin.accountAdd, Account.middleware.checkAdministrator, Account.registerSimple);
-router.get(routeTable.admin.account + '/:uuid', Account.middleware.checkAdministrator, administrator.accountView);
-router.get(routeTable.admin.accountEdit + '/:uuid', Account.middleware.checkAdministrator, administrator.accountForm);
-router.post(routeTable.admin.accountEdit + '/:uuid', Account.middleware.checkAdministrator, administrator.accountProcess);
+const admin = express.Router();
 
-module.exports = router;
+admin.get(routeTable.admin.home, Account.middleware.checkAdministrator, administrator.accountList);
+admin.get(routeTable.admin.account, Account.middleware.checkAdministrator, administrator.accountList);
+admin.get(routeTable.admin.accountNew, Account.middleware.checkAdministrator, administrator.accountView);
+admin.post(routeTable.admin.accountAdd, Account.middleware.checkAdministrator, Account.registerSimple);
+admin.get(routeTable.admin.account + '/:uuid', Account.middleware.checkAdministrator, administrator.accountView);
+admin.get(routeTable.admin.accountEdit + '/:uuid', Account.middleware.checkAdministrator, administrator.accountForm);
+admin.post(routeTable.admin.accountEdit + '/:uuid', Account.middleware.checkAdministrator, administrator.accountProcess);
+
+module.exports = { site, admin };

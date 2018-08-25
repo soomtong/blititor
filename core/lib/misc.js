@@ -87,7 +87,8 @@ function setRouteTable(configData) {
             routeData = fs.readFileSync(BLITITOR.root + '/module/' + item.folder + routeFile);
 
             winston.info("set module route data: '" + item.folder + "'");
-            Object.assign(BLITITOR.route, JSON.parse(routeData.toString()));
+            Object.assign(BLITITOR.route, JSON.parse(routeData.toString()));    // it perform better than spread operator.
+            // BLITITOR.route = {...BLITITOR.route, ...JSON.parse(routeData.toString())};   // but u can simply use like it.
         } catch (e) {
             winston.verbose("there is no route data: '" + item.folder + "'");
         }
@@ -196,10 +197,12 @@ function setFlag(flag) {
 function showGlobalVar(g) {
     Object.keys(g).forEach(function (item) {
         if (item.toString().indexOf('_') !== 0) {
-            winston.verbose('Saving var info of global', item, 'to log folder');
-            fs.writeFile(path.join(__dirname, '..', 'log', 'global-var-' + item + '.log'), JSON.stringify(g[item], null, 4), function (err, result) {
-                if (err) winston.error(err, result);
-            });
+            winston.verbose('Saving var info of global.' + item + ' to log folder');
+            fs.writeFile(path.join(__dirname, '..', 'log', 'global-var-' + item + '.log'),
+                JSON.stringify(g[item], null, 4),
+                function (err, result) {
+                    if (err) winston.error(err, result);
+                });
         }
     });
 }

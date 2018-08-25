@@ -26,7 +26,7 @@ router.all(routeTable.root, Teamblog.index);
 router.all('/about', Site.redirect(routeTable.root));
 
 // bind module
-router.use('/account', Account.route);
+router.use('/account', Account.site);
 router.use('/blog', Teamblog.route);
 
 module.exports = {

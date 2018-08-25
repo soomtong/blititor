@@ -1,6 +1,7 @@
 {
   "gallery": {
     "root": "/gallery",
+    "home": "/",
     "list": "/",
     "image": "/image",
     "upload": "/upload"

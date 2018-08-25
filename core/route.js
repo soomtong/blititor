@@ -26,7 +26,7 @@ router.use(middleware.checkDatabase);
 router.use(application.exposeLocals);
 router.use(site.middleware.exposeLocals);
 
-// route for admin or manage
+// route for admin or manage. it's not included counter stat
 if (application.config && application.config['admin']) {
     router.use(routeTable.admin.root, admin.middleware.exposeLocals, admin.route);
     winston.info('Enabled administrator module to /admin');

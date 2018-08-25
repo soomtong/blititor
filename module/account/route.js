@@ -1,20 +1,20 @@
-var express = require('express');
-var winston = require('winston');
+const express = require('express');
+const winston = require('winston');
 
-var Passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const Passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
-var account = require('./lib/account');
-var middleware = require('./lib/middleware');
-var passport = require('./lib/passport');
+const account = require('./lib/account');
+const middleware = require('./lib/middleware');
+const passport = require('./lib/passport');
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const routeTable = misc.getRouteData();
+const site = express.Router();
 
 // Passport Stuffs
-var passportLocalOptions = {
+const passportLocalOptions = {
     failureRedirect: '/account' + routeTable.account.signIn,
     badRequestMessage: '아이디 또는 비밀번호를 입력해주세요!',
     failureFlash: true,
@@ -26,16 +26,16 @@ Passport.deserializeUser(passport.deserialize);
 
 // router.use(middleware.exposeLocals); it used in app level not route level
 
-router.get('/', account.signIn);
-router.get(routeTable.account.signIn, account.signIn);
-router.get(routeTable.account.signUp, middleware.checkLoggedSession, account.signUp);
-router.get(routeTable.account.signOut, account.signOut);
-router.post(routeTable.account.checkToken, account.checkToken);
+site.get('/', account.signIn);
+site.get(routeTable.account.signIn, account.signIn);
+site.get(routeTable.account.signUp, middleware.checkLoggedSession, account.signUp);
+site.get(routeTable.account.signOut, account.signOut);
+site.post(routeTable.account.checkToken, account.checkToken);
 
-router.post(routeTable.account.login, Passport.authenticate('local', passportLocalOptions), passport.loginSuccess, passport.loginDone);
-router.post(routeTable.account.register, account.register);
+site.post(routeTable.account.login, Passport.authenticate('local', passportLocalOptions), passport.loginSuccess, passport.loginDone);
+site.post(routeTable.account.register, account.register);
 
-router.get(routeTable.account.info, middleware.checkSignedIn, account.infoForm);
-router.post(routeTable.account.updateInfo, middleware.checkSignedIn, account.updateInfo);
+site.get(routeTable.account.info, middleware.checkSignedIn, account.infoForm);
+site.post(routeTable.account.updateInfo, middleware.checkSignedIn, account.updateInfo);
 
-module.exports = router;
+module.exports = { site };
