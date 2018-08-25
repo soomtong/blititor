@@ -1,23 +1,23 @@
-var fs = require('fs');
-var path = require('path');
-var mkdirp = require('mkdirp');
-var moment = require('moment');
-var winston = require('winston');
-var useragent = require('useragent');
+const fs = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
+const moment = require('moment');
+const winston = require('winston');
+const useragent = require('useragent');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var connection = require('../../../core/lib/connection');
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const connection = require('../../../core/lib/connection');
 
-var counter = require('../../counter');
+const counter = require('../../counter');
 
-var db = require('./database');
-var query = require('./query');
+const db = require('./database');
+const query = require('./query');
 
-var token = misc.commonToken();
+const token = misc.commonToken();
 
 function findAccountByID(id, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountByID(mysql, id, function (err, account) {
         if (err || !account) {
@@ -31,7 +31,7 @@ function findAccountByID(id, callback) {
 }
 
 function findAccountByUUID(UUID, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountByUUID(mysql, UUID, function (err, account) {
         if (err || !account) {
@@ -45,7 +45,7 @@ function findAccountByUUID(UUID, callback) {
 }
 
 function findAccountByAuthID(authID, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountByAuthID(mysql, authID, function (err, account) {
         if (err || !account) {
@@ -59,7 +59,7 @@ function findAccountByAuthID(authID, callback) {
 }
 
 function findAuthByUserID(userID, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAuthByUserID(mysql, userID, function (err, auth) {
         if (err || !auth) {
@@ -73,12 +73,12 @@ function findAuthByUserID(userID, callback) {
 }
 
 function insertLastLog(uuid, loginCounter) {
-    var userData = {
+    const userData = {
         last_logged_at: new Date(),
         login_counter: loginCounter + 1
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.updateAccountByUUID(mysql, userData, uuid, function (err, result) {
         if (err) {
@@ -95,8 +95,8 @@ function register(req, res) {
     req.assert('account_id', 'Email as User ID field is not valid').notEmpty().withMessage('User ID is required').isEmail();
     req.assert('account_password', 'Password must be at least 4 characters long').len(4);
     req.assert('password_check', 'Password Check must be same as password characters').notEmpty().withMessage('Password Check field is required').equals(req.body.account_password);
-    
-    var errors = req.validationErrors();
+
+    const errors = req.validationErrors();
 
     if (errors) {
         req.flash('error', errors);
@@ -115,12 +115,12 @@ function register(req, res) {
 
         // var hash = common.hash(req.body.password);
         common.hash(req.body.account_password, function (err, hash) {
-            var authData = {
+            const authData = {
                 user_id: req.body.account_id,
                 user_password: hash
             };
 
-            var mysql = connection.get();
+            const mysql = connection.get();
 
             // save to auth table
             db.writeAuth(mysql, authData, function (err, result) {
@@ -133,10 +133,10 @@ function register(req, res) {
                     return res.redirect('back');
                 }
 
-                var auth_id = result['insertId'];
+                const auth_id = result['insertId'];
 
                 // save to user table
-                var userData = {
+                const userData = {
                     uuid: common.UUID4(),
                     auth_id: auth_id,
                     nickname: req.body.nickname,
@@ -158,9 +158,9 @@ function register(req, res) {
                         res.redirect('back');
                     }
 
-                    var id = result['insertId'];
+                    const id = result['insertId'];
 
-                    var user = {
+                    const user = {
                         id: id,
                         uuid: userData.uuid,
                         user_id: authData.user_id,
@@ -183,7 +183,7 @@ function register(req, res) {
                         // insert login logging
                         insertLastLog(user.uuid, userData.login_counter);
 
-                        var agent = useragent.parse(req.headers['user-agent']);
+                        const agent = useragent.parse(req.headers['user-agent']);
                         counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                         res.redirect('/');
@@ -201,7 +201,7 @@ function registerSimpleForTest(req, res) {
     req.assert('account_id', '이메일 형식의 사용자 아이디가 필요합니다.').isEmail();
     req.assert('account_password', '패스워드는 최소 4 자 이상의 문자열을 사용해주세요.').len(4);
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         if (Array.isArray(errors)) {
@@ -225,12 +225,12 @@ function registerSimpleForTest(req, res) {
 
         // var hash = common.hash(req.body.password);
         common.hash(req.body.account_password, function (err, hash) {
-            var authData = {
+            const authData = {
                 user_id: req.body.account_id,
                 user_password: hash
             };
 
-            var mysql = connection.get();
+            const mysql = connection.get();
 
             // save to auth table
             db.writeAuth(mysql, authData, function (err, result) {
@@ -242,10 +242,10 @@ function registerSimpleForTest(req, res) {
                     res.redirect('back');
                 }
 
-                var auth_id = result['insertId'];
+                const auth_id = result['insertId'];
 
                 // save to user table
-                var userData = {
+                const userData = {
                     uuid: common.UUID4(),
                     auth_id: auth_id,
                     nickname: req.body.nickname,
@@ -267,9 +267,9 @@ function registerSimpleForTest(req, res) {
                         res.redirect('back');
                     }
 
-                    var id = result['insertId'];
+                    const id = result['insertId'];
 
-                    var user = {
+                    const user = {
                         id: id,
                         uuid: userData.uuid,
                         user_id: authData.user_id,
@@ -298,7 +298,7 @@ function registerSimpleForTest(req, res) {
                         // insert login logging
                         insertLastLog(user.uuid, userData.login_counter);
 
-                        var agent = useragent.parse(req.headers['user-agent']);
+                        const agent = useragent.parse(req.headers['user-agent']);
                         counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                         res.redirect('/');
@@ -310,7 +310,7 @@ function registerSimpleForTest(req, res) {
 }
 
 function showInfo(req, res) {
-    var params = {
+    const params = {
         title: '정보수정',
         message: req.flash()
     };
@@ -329,12 +329,12 @@ function showInfo(req, res) {
 }
 
 function updateInfo(req, res) {
-    var params = {
+    const params = {
         updatePassword: false,
         updateProfileImage: false,
     };
 
-    var profileImage = null;
+    let profileImage = null;
 
     // console.log(req.body, req.files);
 
@@ -347,8 +347,8 @@ function updateInfo(req, res) {
         params.updatePassword = true;
         // params.password = common.hash(req.body.password);
     }
-    
-    var errors = req.validationErrors();
+
+    const errors = req.validationErrors();
 
     if (errors) {
         winston.error(errors, errors.length);
@@ -357,8 +357,8 @@ function updateInfo(req, res) {
     }
 
     req.sanitize('nickname').escape();
-    
-    var UUID = req.user.uuid;
+
+    let UUID = req.user.uuid;
 
     if (!UUID) {
         req.flash('error', {msg: 'No Session Info Exist!'});
@@ -366,7 +366,7 @@ function updateInfo(req, res) {
         return res.redirect('back');
     }
 
-    var userData = {
+    const userData = {
         nickname: req.body.nickname,
         level: 2,
         grant: 'M',
@@ -389,7 +389,7 @@ function updateInfo(req, res) {
         });
     }
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAuthIDByUUID(mysql, UUID, function (err, account) {
         if (err) {
@@ -400,7 +400,7 @@ function updateInfo(req, res) {
             return res.redirect('back');
         }
 
-        var authID = account.auth_id;
+        const authID = account.auth_id;
 
         // update auth table, it is async routine
         if (params.updatePassword) {
@@ -414,7 +414,7 @@ function updateInfo(req, res) {
                     // then pass this process for next login
                     // it can use before password
                 } else {
-                    var authData = {user_password: hash};
+                    const authData = { user_password: hash };
 
                     db.updateAuthByID(mysql, authData, authID, function (err, result) {
                         winston.warn('Updated user password into `auth` table record:', result);
@@ -452,7 +452,7 @@ function signIn(req, res) {
     // var prevLocation = '/';
     // res.redirect(prevLocation);
 
-    var params = {
+    const params = {
         title: "Home",
         q: req.query.q
     };
@@ -468,7 +468,7 @@ function signUp(req, res) {
     // var prevLocation = '/';
     // res.redirect(prevLocation);
 
-    var params = {
+    const params = {
         title: "Home",
     };
 
@@ -486,13 +486,13 @@ function signOut(req, res) {
 
 // check for available auth id or nickname, etc
 function checkToken(req, res) {
-    var params = {
+    const params = {
         type: req.query('type'),
         email: req.body.account_id,
         nickname: req.body.nickname
     };
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     switch (params.type) {
         case 'u':
