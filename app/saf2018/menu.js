@@ -2,7 +2,7 @@
 const SiteMenu = [
     {
         id: 'index',
-        name: '2018 서울건축문화재',
+        name: '2018 서울건축문화제',
         url: '/'
     },
     {

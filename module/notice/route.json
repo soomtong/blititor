@@ -1,12 +1,12 @@
 {
   "notice": {
     "root": "/notice",
-    "home": "/",
     "list": "/",
     "view": "/view",
     "write": "/write",
     "update": "/update",
     "remove": "/remove",
-    "feedback": "/write/feedback"
+    "feedback": "/write/feedback",
+    "manage": "/"
   }
 }

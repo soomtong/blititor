@@ -2,9 +2,10 @@
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
   "selectByIDs": "SELECT * FROM ?? WHERE `id` in (?)",
-  "countAll": "SELECT count(id) as `count` FROM ??",
+  "countAll": "SELECT count(id) AS `count` FROM ??",
   "readNoticeList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` ASC",
   "readNoticeListByPage": "SELECT ?? FROM ?? where `category` = ? ORDER BY id DESC LIMIT ?, ?",
+  "readNoticeListByPageWithAuthor": "SELECT ?? FROM ?? AS A, ?? AS B where `category` = ? and A.`user_id` = B.`auth_id` ORDER BY A.id DESC LIMIT ?, ?",
   "selectByIdentifier": "SELECT * FROM ?? WHERE `category` = ? and `name` = ? and `email` = ? and `phone` = ?",
-  "anyAuthor": "SELECT ?? FROM ?? ORDER BY `id` ASC LIMIT 1"
+  "anyAuthor": "SELECT ?? FROM ?? WHERE INSTR(`grant`, ?) ORDER BY `id` ASC LIMIT 1"
 }

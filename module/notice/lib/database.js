@@ -1,32 +1,32 @@
-var fs = require('fs');
-var async = require('neo-async');
+const fs = require('fs');
+const async = require('neo-async');
 
-var mysql = require('mysql');
-var winston = require('winston');
+const mysql = require('mysql');
+const winston = require('winston');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var databaseDefault = misc.getDatabaseDefault();
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const databaseDefault = misc.getDatabaseDefault();
 
-var tables = {
+const tables = {
     notice: databaseDefault.tablePrefix + 'notice',
-    noticeFeedback : databaseDefault.tablePrefix + 'notice_feedback',
+    noticeFeedback: databaseDefault.tablePrefix + 'notice_feedback',
     user: databaseDefault.tablePrefix + 'user'  // refer `module/account/lib/database.js`
 };
 
-var query = require('./query');
+const query = require('./query');
 
 function deleteScheme(databaseConfiguration, callback) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || databaseDefault.port,
+        database: databaseConfiguration.dbName || databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });
 
-    var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.notice, tables.noticeFeedback];
+    const sql = "DROP TABLE IF EXISTS ??";
+    const tableList = [tables.notice, tables.noticeFeedback];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -36,17 +36,17 @@ function deleteScheme(databaseConfiguration, callback) {
 }
 
 function createScheme(databaseConfiguration, callback, done) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || databaseDefault.port,
+        database: databaseConfiguration.dbName || databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });
 
-    var charSet = 'utf8mb4';
+    const charSet = 'utf8mb4';
 
-    var sql_notice_list = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_notice_list = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`category` tinyint default 1, ' +  // category => hidden notice
         '`user_uuid` char(36) not null, `user_id` int unsigned not null, ' +
@@ -63,7 +63,7 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX updated_at(`updated_at`), ' +
         'INDEX category(`category`))' +
         'DEFAULT CHARSET=' + charSet;
-    var sql_notice_feedback = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_notice_feedback = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`notice_id` int unsigned not null, ' +
         '`type` char(1), ' +
@@ -86,18 +86,18 @@ function createScheme(databaseConfiguration, callback, done) {
 function insertDummy(databaseConfiguration, done) {
     fs.stat(__dirname + '/dummy.json', function (error, result) {
         if (!error && result.size > 1) {
-            var connection = mysql.createConnection({
+            const connection = mysql.createConnection({
                 host: databaseConfiguration.dbHost,
-                port: databaseConfiguration.dbPort || common.databaseDefault.port,
-                database: databaseConfiguration.dbName || common.databaseDefault.database,
+                port: databaseConfiguration.dbPort || databaseDefault.port,
+                database: databaseConfiguration.dbName || databaseDefault.database,
                 user: databaseConfiguration.dbUserID,
                 password: databaseConfiguration.dbUserPassword
             });
 
             getAnyAuthor(connection, function (err, author) {
-                var dummy = require('./dummy.json');
-                var iteratorAsync = function (item, callback) {
-                    var noticeItem = {
+                const dummy = require('./dummy.json');
+                const iteratorAsync = function (item, callback) {
+                    const noticeItem = {
                         user_uuid: author.uuid,
                         user_id: author.id,
                         nickname: author.nickname,
@@ -115,7 +115,7 @@ function insertDummy(databaseConfiguration, done) {
                         callback(null, result);
                     });
                 };
-                var resultAsync = function (err, result) {
+                const resultAsync = function (err, result) {
                     console.log(' = Inserted default records...');
 
                     // for async
@@ -132,9 +132,9 @@ function insertDummy(databaseConfiguration, done) {
 }
 
 function getAnyAuthor(connection, callback) {
-    var fields = ['id', 'uuid', 'auth_id', 'nickname'];
+    const fields = ['id', 'uuid', 'auth_id', 'nickname'];
 
-    connection.query(query.anyAuthor, [fields, tables.user], function (error, results) {
+    connection.query(query.anyAuthor, [fields, tables.user, 'm'], function (error, results) {
         callback(error, results[0]);
     });
 }
@@ -146,11 +146,11 @@ function insertNotice(connection, noticeData, callback) {
 }
 
 function selectNotice(connection, params, callback) {
-    var pageSize = 5;
-    var gutterSize = 5;
-    var gutterMargin = 2;
+    const pageSize = 5;
+    const gutterSize = 5;
+    const gutterMargin = 2;
 
-    var result = {
+    const result = {
         page: Math.abs(Number(params.page)),
         noticeList: []
     };
@@ -158,11 +158,11 @@ function selectNotice(connection, params, callback) {
     connection.query(query.countAll, [tables.notice], function (err, rows) {
         result.total = rows[0]['count'] || 0;
 
-        var pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
-        var fields = ['id', 'title', 'body', 'nickname', 'hit_count', 'created_at', 'updated_at'];
-        var prepared = [fields, tables.notice, params.category, pagination.index, pagination.pageSize]
+        const pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
+        const fields = ['A.id', 'title', 'body', 'B.avatar', 'A.nickname', 'hit_count', 'A.created_at', 'A.updated_at'];
+        const prepared = [fields, tables.notice, tables.user, params.category, pagination.index, pagination.pageSize];
 
-        connection.query(query.readNoticeListByPage, prepared, function (err, rows) {
+        connection.query(query.readNoticeListByPageWithAuthor, prepared, function (err, rows) {
             if (!err) {
                 result.noticeList = rows;
             }
@@ -179,7 +179,7 @@ module.exports = {
     createScheme: createScheme,
     insertDummy: insertDummy,
     readNoticeList: selectNotice,
-    // createNotice: insertNotice,
+    createNotice: insertNotice,
     // updateNotice: updateNotice,
     option: {
         tables: tables,

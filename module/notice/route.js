@@ -17,6 +17,7 @@ site.get(routeTable.notice.view, notice.view);
 
 const manage = express.Router();
 
-manage.get(routeTable.notice.home, notice.manage);
+manage.get(routeTable.notice.manage, notice.manageHome);
+manage.post(routeTable.notice.manage, notice.manage);
 
 module.exports = { site, manage };

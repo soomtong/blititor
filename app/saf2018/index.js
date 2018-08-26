@@ -1,29 +1,29 @@
 // load packages
-var express = require('express');
+const express = require('express');
 
 // load cores
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
 // load modules
-var Site = require('../../module/site');
-var Account = require('../../module/account');
-var Notice = require('../../module/notice');
+const Site = require('../../module/site');
+const Account = require('../../module/account');
+const Notice = require('../../module/notice');
 
 // load locals
-var app = require('./app.json');
-var menu = require('./menu');
+const app = require('./app.json');
+const menu = require('./menu');
 
 // init
-var router = express.Router();
-var routeTable = misc.getRouteData();
-var appLocals = Site.exposeAppLocals(app.locals, menu);
+const router = express.Router();
+const routeTable = misc.getRouteData();
+const appLocals = Site.exposeAppLocals(app.locals, menu);
 
 // middleware
 router.use(Account.middleware.exposeLocals);
 
 // bind module route
-// router.use('/account', Account.route);
-router.use('/notice', Notice.route);
+router.use(routeTable.account.root, Account.site);
+router.use(routeTable.notice.root, Notice.site);
 
 // bind static page
 Site.bindMenu(menu, router);
