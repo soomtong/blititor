@@ -1,19 +1,19 @@
-var path = require('path');
+const path = require('path');
 
-var winston = require('winston');
-var mysql = require('mysql');
+const winston = require('winston');
+const mysql = require('mysql');
 
-var misc = require('./misc');
-var databaseDefault = misc.getDatabaseDefault();
+const misc = require('./misc');
+const databaseDefault = misc.getDatabaseDefault();
 
-var configFile = require('../config/app_default.json').configFile;
+const configFile = require('../config/app_default.json').configFile;
 
-var connectionPool = initializePool();
+const connectionPool = initializePool();
 
 function initializePool() {
     winston.info('Access database connection');
 
-    var databaseConfiguration, connectionPoolInstance;
+    let databaseConfiguration, connectionPoolInstance;
 
     try {
         databaseConfiguration = require(path.join('../..', configFile))['database'];
@@ -27,7 +27,7 @@ function initializePool() {
     function createPool() {
         winston.warn('Get database connection by new one');
 
-        var pool = mysql.createPool({
+        const pool = mysql.createPool({
             connectionLimit: 50,
             acquireTimeout: 30000, // 30s
             host: databaseConfiguration.dbHost,
@@ -60,7 +60,7 @@ function initializePool() {
 }
 
 function initSession(mysqlStore, callback) {
-    var databaseConfiguration;
+    let databaseConfiguration;
 
     try {
         databaseConfiguration = require(path.join('../..', configFile))['database'];
@@ -70,8 +70,8 @@ function initSession(mysqlStore, callback) {
         winston.warn('database config file not exist in initSession function');
     }
 
-    var sessionStore;
-    var sessionOptions = {
+    let sessionStore;
+    const sessionOptions = {
         secret: BLITITOR.config['sessionSecret'],
         resave: true,
         saveUninitialized: true
@@ -112,7 +112,7 @@ function clone(obj) {
 }
 
 function databasePublicInfo(databaseConfiguration) {
-    var info = clone(databaseConfiguration);
+    const info = clone(databaseConfiguration);
 
     info.dbUserPassword = '****';
 

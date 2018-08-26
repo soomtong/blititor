@@ -1,14 +1,14 @@
-var uuid = require('uuid');
-var bcrypt = require('bcryptjs');
-var removeMarkdown = require('remove-markdown');
-var moment = require('moment');
+const uuid = require('uuid');
+const bcrypt = require('bcryptjs');
+const removeMarkdown = require('remove-markdown');
+const moment = require('moment');
 
-var salt = bcrypt.genSaltSync(8);
+const salt = bcrypt.genSaltSync(8);
 
 function destructMarkdown(markdownText) {
-    var title = markdownText.toString().match(/^##[^#].+/m)[0].trim();
-    var quote = markdownText.toString().match(/^>.+/m)[0].trim();
-    var credit = markdownText.match(/^###[^#].*redit(\n|\r)(\n|\r)(.|\n|\r)*/igm)[0].trim().split('\n');
+    const title = markdownText.toString().match(/^##[^#].+/m)[0].trim();
+    const quote = markdownText.toString().match(/^>.+/m)[0].trim();
+    const credit = markdownText.match(/^###[^#].*redit(\n|\r)(\n|\r)(.|\n|\r)*/igm)[0].trim().split('\n');
     // console.log('markdown:',credit, credit.slice(1));
 
     return {
@@ -29,11 +29,11 @@ function getRandomInt(min, max) {
 }
 
 function randomString(len) {
-    var buf = [],
+    const buf = [],
         chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
         charLen = chars.length;
 
-    for (var i = 0; i < len; ++i) {
+    for (let i = 0; i < len; ++i) {
         buf.push(chars[getRandomInt(0, charLen - 1)]);
     }
 
@@ -41,11 +41,11 @@ function randomString(len) {
 }
 
 function randomNumber(len) {
-    var buf = [],
+    const buf = [],
         chars = '0123456789',
         charLen = chars.length;
 
-    for (var i = 0; i < len; ++i) {
+    for (let i = 0; i < len; ++i) {
         buf.push(chars[getRandomInt(0, charLen - 1)]);
     }
 
@@ -54,9 +54,9 @@ function randomNumber(len) {
 
 // todo: customize errorFormatter()
 function errorFormatter(param, msg, value) {
-    var namespace = param.split('.')
-        , root    = namespace.shift()
-        , formParam = root;
+    const namespace = param.split('.')
+        , root = namespace.shift()
+    ;let formParam = root;
 
     while(namespace.length) {
         formParam += '[' + namespace.shift() + ']';
@@ -93,15 +93,15 @@ function getHash(password, callback) {
 }
 
 function getHeaderTextFromMarkdown(markdown, limit, joiner) {
-    var arr = markdown.split(/\r*\n/);
-    var len = arr.length;
-    var text = [];
-    var reduced = '';
+    const arr = markdown.split(/\r*\n/);
+    const len = arr.length;
+    const text = [];
+    let reduced = '';
 
     limit = limit || 30;
 
-    for (var i = 0; i < len; i++) {
-        var temp = '';
+    for (let i = 0; i < len; i++) {
+        let temp = '';
 
         temp = removeMarkdown(arr[i]);
 
@@ -120,15 +120,15 @@ function getHeaderTextFromMarkdown(markdown, limit, joiner) {
 }
 
 function getHeaderTextFromDelta(delta, limit, joiner) {
-    var arr = JSON.parse(delta)['ops'];
-    var len = arr.length;
-    var text = [];
-    var reduced = '';
+    const arr = JSON.parse(delta)['ops'];
+    const len = arr.length;
+    const text = [];
+    let reduced = '';
 
     limit = limit || 30;
 
-    for (var i = 0; i < len; i++) {
-        var temp = '';
+    for (let i = 0; i < len; i++) {
+        let temp = '';
         temp = arr[i]['insert'];
 
         if (temp) {
@@ -154,7 +154,7 @@ function dateFormatter(dateValue, format, fillDefault) {
 function pageFormatter(url) {
     if (typeof url != 'string') url = url.toString();
 
-    var len = url.length;
+    const len = url.length;
 
     if (url.lastIndexOf('/') == len - 1) url = url.substr(0, len - 1);
     if (url.indexOf('https://') == 0) url = url.substr(7);
@@ -164,7 +164,7 @@ function pageFormatter(url) {
 }
 
 function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGIN) {
-    var params = {
+    const params = {
         page: Math.abs(Number(pageIndex)) || 1,
         total: totalCount,
         index: 0,
@@ -172,7 +172,7 @@ function pagination (pageIndex, totalCount, PAGE_SIZE, GUTTER_SIZE, GUTTER_MARGI
         pageSize: PAGE_SIZE
     };
 
-    var maxPage = Math.ceil(totalCount / PAGE_SIZE);
+    const maxPage = Math.ceil(totalCount / PAGE_SIZE);
 
     if (maxPage < params.page) params.page = maxPage;
 

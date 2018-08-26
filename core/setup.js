@@ -15,6 +15,7 @@ var misc = require('./lib/misc');
 
 var configFile = require('./config/app_default.json').configFile;
 var siteDefault = require('./config/site_default.json');
+var databaseDefault = misc.getDatabaseDefault();
 
 var moduleFile = 'module_list.json';
 var params = parseArgs(process.argv.slice(2));
@@ -76,7 +77,7 @@ switch (mainCommand) {
 function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n");
 
-    var databaseDefault = require('./config/database_default.json');
+    var databaseConf = require('./config/database_default.json');
 
     prompt.start();
 
@@ -91,7 +92,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_port: {
                 description: 'Enter mysql(maria) port',
-                default: databaseDefault.port,
+                default: databaseConf.port,
                 type: 'integer',
                 pattern: /^[0-9]+$/,
                 message: 'Port number must be only number',
@@ -99,7 +100,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_name: {
                 description: 'Enter mysql(maria) database name',
-                default: databaseDefault.database,
+                default: databaseConf.database,
                 type: 'string',
                 pattern: /^\w+$/,
                 message: 'database name must be letters',
@@ -107,7 +108,7 @@ function makeDatabaseConfigFile(next) {
             },
             db_table_prefix: {
                 description: 'Enter mysql(maria) database table prefix',
-                default: databaseDefault.prefix,
+                default: databaseConf.prefix,
                 type: 'string',
                 pattern: /^\w+$/,
                 message: 'Prefix must be only letters',
@@ -150,7 +151,7 @@ function makeDatabaseConfigFile(next) {
 
         var params = {
             dbHost: result['db_host'],
-            dbPort: result['db_port'] || databaseDefault.port,
+            dbPort: result['db_port'] || databaseConf.port,
             dbName: result['db_name'],
             tablePrefix: dbTablePrefix,
             dbUserID: result['db_user_id'],
@@ -159,7 +160,7 @@ function makeDatabaseConfigFile(next) {
 
         var connection = mysql.createConnection({
             host: params.dbHost,
-            port: params.dbPort || databaseDefault.port,
+            port: params.dbPort || databaseConf.port,
             database: params.dbName || undefined,
             user: params.dbUserID,
             password: params.dbUserPassword
@@ -201,8 +202,8 @@ function makeDatabaseTable(next) {
 
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,
-        port: connectionInfo.dbPort || common.databaseDefault.port,
-        database: connectionInfo.dbName || common.databaseDefault.database,
+        port: connectionInfo.dbPort || databaseDefault.port,
+        database: connectionInfo.dbName || databaseDefault.database,
         user: connectionInfo.dbUserID,
         password: connectionInfo.dbUserPassword
     });
@@ -240,8 +241,8 @@ function makeDatabaseTableWithReset() {
 
     var connection = mysql.createConnection({
         host: connectionInfo.dbHost,
-        port: connectionInfo.dbPort || common.databaseDefault.port,
-        database: connectionInfo.dbName || common.databaseDefault.database,
+        port: connectionInfo.dbPort || databaseDefault.port,
+        database: connectionInfo.dbName || databaseDefault.database,
         user: connectionInfo.dbUserID,
         password: connectionInfo.dbUserPassword
     });
@@ -427,8 +428,8 @@ function makeAdminAccount() {
 
         var connection = mysql.createConnection({
             host: connectionInfo.dbHost,
-            port: connectionInfo.dbPort || common.databaseDefault.port,
-            database: connectionInfo.dbName || common.databaseDefault.database,
+            port: connectionInfo.dbPort || databaseDefault.port,
+            database: connectionInfo.dbName || databaseDefault.database,
             user: connectionInfo.dbUserID,
             password: connectionInfo.dbUserPassword
         });

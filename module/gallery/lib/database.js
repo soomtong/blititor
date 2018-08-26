@@ -19,8 +19,8 @@ var query = require('./query');
 function deleteScheme(databaseConfiguration, callback) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || databaseDefault.port,
+        database: databaseConfiguration.dbName || databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });
@@ -38,8 +38,8 @@ function deleteScheme(databaseConfiguration, callback) {
 function createScheme(databaseConfiguration, callback, done) {
     var connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
-        port: databaseConfiguration.dbPort || common.databaseDefault.port,
-        database: databaseConfiguration.dbName || common.databaseDefault.database,
+        port: databaseConfiguration.dbPort || databaseDefault.port,
+        database: databaseConfiguration.dbName || databaseDefault.database,
         user: databaseConfiguration.dbUserID,
         password: databaseConfiguration.dbUserPassword
     });
