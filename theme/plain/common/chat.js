@@ -1,6 +1,6 @@
 var socket = io();
 
-$(document).ready(function () {
+$(funtion () {
     var $userList = $('#users');
     var $publicForm = $('#public');
     var $privateForm = $('#private');

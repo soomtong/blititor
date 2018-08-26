@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include '../include/head.html' %}
+</head>
+<body class="has-background-light">
+<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+    {% include '../include/menu.html' %}
+</nav>
+    <section class="hero is-fullheight">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-6-desktop is-offset-3-desktop is-8-tablet is-offset-2-tablet">
+                    <h3 class="title has-text-grey">로그인</h3>
+                    <p class="subtitle has-text-grey">Please login to proceed.</p>
+                    <div class="box">
+                        <figure class="avatar">
+                            <img src="{{site.theme}}/common/asset/terminology.svg">
+                        </figure>
+                        <form method="post" action="{{ route.account.root + route.account.login }}">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" name="account_id" type="email" placeholder="Your Email" autofocus="">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" name="account_password" type="password" placeholder="Your Password">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    Remember me
+                                </label>
+                            </div>
+                            <input type="hidden" name="_csrf" value="{{ _csrf }}" hidden>
+                            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                        </form>
+                    </div>
+                    {#
+                    <p class="has-text-grey">
+                        <a href="/account/sign-up">Sign Up</a> &nbsp;·&nbsp;
+                        <a href="/account/forgot">Forgot Password</a> &nbsp;·&nbsp;
+                        <a href="/">Home</a>
+                    </p>
+                    #}
+                </div>
+            </div>
+        </div>
+        <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+                <div class="container">
+                    <ul>
+                        <li class="is-active">
+                            <a href="/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+</div>
+</body>
+</html>

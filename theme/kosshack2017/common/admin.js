@@ -1,5 +1,5 @@
 "use strict";
-$(document).ready(function () {
+$(funtion () {
     var $guestbookList = $('tbody.guestbook-list');
     if ($guestbookList.length) {
         var control = false;

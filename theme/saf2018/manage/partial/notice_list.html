@@ -1,0 +1,37 @@
+{% for item in noticeList %}
+<article class="media recent-post">
+    <div class="media-left is-hidden-mobile">
+        <figure class="image is-32x32">
+            <img src="{{ site.theme }}/common/asset/avatar/{{item.avatar}}" alt="">
+        </figure>
+    </div>
+    <div class="media-content">
+        <div class="columns">
+            <h5 class="post-title column"><a href="/manage/notice/view">{{item.title}}</a></h5>
+            <div class="post-timestamp column is-2 has-text-right">{{item.updatedAt}}</div>
+        </div>
+        <div class="columns">
+            <div class="column post-body">
+                <div class="flex-card featured-feed-post light-bordered light-raised">
+                    <div class="card-body is-responsive">
+                        <div class="post-meta">
+                            <div class="author-meta">
+                                <div class="author-name">작성자 <span>{{item.nickname}}</span></div>
+                                <div class="post-timestamp">
+                                    <i class="fa fa-clock-o"></i> {{item.created_at}}
+                                </div>
+                            </div>
+                            <div class="comments-meta">
+                                <i class="fa fa-shower"><span class="counter">{{item.hit_count}}</span></i>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            {{item.body | striptags(true) | escape | nl2br }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endfor %}

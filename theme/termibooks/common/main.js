@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(funtion () {
     $(window).on('resize', resizeHeaderOnScroll);
     $(window).scroll(resizeHeaderOnScroll);
     // Check for click events on the navbar burger icon

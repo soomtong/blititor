@@ -1,0 +1,15 @@
+{% for item in noticeView %}
+<article class="media recent-post">
+    <div class="media-left is-hidden-mobile">
+        <figure class="image is-32x32">
+            <img src="{{ site.theme }}/common/asset/avatar/{{item.avatar}}" alt="">
+        </figure>
+    </div>
+    <div class="media-content">
+        <div class="columns">
+            <h5 class="post-title column">{{item.title}}</h5>
+            <div class="post-timestamp column is-2 has-text-right">{{item.updated_at}}</div>
+        </div>
+    </div>
+</article>
+{% endfor %}

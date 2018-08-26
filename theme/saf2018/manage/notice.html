@@ -7,98 +7,39 @@
 <div class="admin-container">
     {% include './include/menu.html' %}
     <div class="dashboard-wrapper">
-        <div class="columns dashboard-columns">
-            <!-- Tile -->
-            <div class="column is-3">
-                <div class="flex-card card-overflow light-bordered light-raised">
-                    <div class="icon-header">
-                        <i class="icons primary fa fa-ban" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                        <div class="card-title is-tile has-text-right">
-                            Sales
-                            <div class="card-stat primary has-text-right">284 <span class="stat-type">this month</span></div>
+        <div class="container">
+            <div class="flex-card compose-card light-bordered light-raised is-flex is-start is-vcenter">
+                <figure class="avatar image is-48x48 is-hidden-mobile">
+                    <img src="{{ site.theme }}/common/asset/avatar/{{user.avatar}}" alt="">
+                </figure>
+                <div class="status-wrapper">
+                    <form method="post" action="{{site.root}}{{route.manage.root}}{{ route.notice.root }}" id="notice-form">
+                        <div class="control field">
+                            <input class="input" name="title" type="text" placeholder="Title">
                         </div>
-                    </div>
-                    <div class="more">
-                        <a class="primary" href="#">See all</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile -->
-            <div class="column is-3">
-                <div class="flex-card card-overflow light-bordered light-raised">
-                    <div class="icon-header">
-                        <i class="icons primary fa fa-ban" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                        <div class="card-title is-tile has-text-right">
-                            Account
-                            <div class="card-stat primary has-text-right"><span class="stat-type">$</span> 122 839,49</div>
+                        <div class="control">
+                            <textarea class="textarea has-button" name="body" placeholder="Post a notice..."></textarea>
+                            <div class="textarea-button">
+                                <button type="submit" class="button is-secondary btn-align raised">Publish</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="more">
-                        <a class="primary" href="#">Open</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile -->
-            <div class="column is-3">
-                <div class="flex-card card-overflow light-bordered light-raised">
-                    <div class="icon-header">
-                        <i class="icons secondary fa fa-ban" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                        <div class="card-title is-tile has-text-right">
-                            Deals
-                            <div class="card-stat secondary has-text-right">14 <span class="stat-type">pending</span></div>
-                        </div>
-                    </div>
-                    <div class="more">
-                        <a class="secondary" href="#">See all</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Tile -->
-            <div class="column is-3">
-                <div class="flex-card card-overflow light-bordered light-raised">
-                    <div class="icon-header">
-                        <i class="icons primary fa fa-ban" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                        <div class="card-title is-tile has-text-right">
-                            Leads
-                            <div class="card-stat secondary has-text-right">53 <span class="stat-type">new leads</span></div>
-                        </div>
-                    </div>
-                    <div class="more">
-                        <a class="secondary" href="#">See all</a>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <section class="section section-feature-grey is-medium">
+        <section class="section">
             <div class="container">
-                <div class="title-wrapper has-text-centered">
-                    <h2 class="title is-2">Great Power Comes </h2>
-                    <h3 class="subtitle is-5 is-muted">With great Responsability</h3>
-                    <div class="divider is-centered"></div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="columns">
-                        <div class="column is-one-third"></div>
-                        <div class="column"></div>
-                        <div class="column"></div>
-                    </div>
+                <div class="flex-card light-bordered light-raised notice-list" id="notice-list">
+                    <h3 class="card-heading"><i class="fa fa-spinner fa-pulse"></i>Latest posts</h3>
                 </div>
             </div>
         </section>
     </div>
     {% include './include/footer.html' %}
 </div>
-<script src="/vendor/jquery/jquery.slim.min.js"></script>
+<script src="/vendor/jquery/jquery.min.js"></script>
 <script src="{{site.theme}}/common/admin.js"></script>
+<script src="{{site.theme}}/common/manage/notice.js"></script>
 </body>
 </html>

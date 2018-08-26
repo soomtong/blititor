@@ -1,6 +1,6 @@
-$(document).ready(function(){	
+$(funtion(){	
 	if($.browser.msie == true && $.browser.version < 7){
-		alert("ÀÍ½ºÇÃ·Î¾î6 ÀÌÇÏ ¹öÀü¿¡¼± ÃÖÀûÈ­ µÇ¾îÀÖÁö ¾Ê½À´Ï´Ù.\n\n¹öÀüÀ» ¾÷±×·¹ÀÌµå ÇÏ½Ã°Å³ª ´Ù¸¥ºê¶ó¿ìÀú¸¦ ÀÌ¿ëÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.");		
+		alert("ï¿½Í½ï¿½ï¿½Ã·Î¾ï¿½6 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.\n\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½Ï½Ã°Å³ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï½Ã±ï¿½ ï¿½Ù¶ï¿½ï¿½Ï´ï¿½.");		
 	}	
 	
 	$('#session11_info').hide();			
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		
 });
 
-//ÀÌÈñ½Â	
+//ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#session11")
 	.mouseover(function() {
 		var p =	$("#session11").position();
@@ -38,7 +38,7 @@ $("#session11")
    		 $('#session11_info').hide();
  	});
 
-//ÇÑµ¿È£	
+//ï¿½Ñµï¿½È£	
 $("#handongho")
 	.mouseover(function() {
 		var p =	$("#handongho").position();
@@ -68,7 +68,7 @@ $("#Armijn")
    		 $('#Armijn_info').hide();
  	});
 
-//±è¼º¹Î		
+//ï¿½è¼ºï¿½ï¿½		
 $("#kimsungmin")
 	.mouseover(function() {
 		var p =	$("#kimsungmin").position();
@@ -83,7 +83,7 @@ $("#kimsungmin")
    		 $('#kimsungmin_info').hide();
  	});
 
-//ÀüÀÍ¹ü		
+//ï¿½ï¿½ï¿½Í¹ï¿½		
 $("#jeonikbeom")
 	.mouseover(function() {
 		var p =	$("#jeonikbeom").position();
@@ -98,7 +98,7 @@ $("#jeonikbeom")
    		 $('#jeonikbeom_info').hide();
  	});
 
-//Àå±â¿µ		
+//ï¿½ï¿½â¿µ		
 $("#jangkiyeong")
 	.mouseover(function() {
 		var p =	$("#jangkiyeong").position();
@@ -113,7 +113,7 @@ $("#jangkiyeong")
    		 $('#jangkiyeong_info').hide();
  	});
 
-//Á¤ÁÖ¿ø	
+//ï¿½ï¿½ï¿½Ö¿ï¿½	
 $("#jungjoowon")
 	.mouseover(function() {		
 		var p =	$("#jungjoowon").position();
@@ -128,7 +128,7 @@ $("#jungjoowon")
    		 $('#jungjoowon_info').hide();
  	});
 
-//ÀÌÇüÃ¤	
+//ï¿½ï¿½ï¿½ï¿½Ã¤	
 $("#leehyungchae")
 	.mouseover(function() {
 		var p =	$("#leehyungchae").position();
@@ -143,7 +143,7 @@ $("#leehyungchae")
    		 $('#leehyungchae_info').hide();
  	});
 
-//¹ÚÇöÃµ	
+//ï¿½ï¿½ï¿½ï¿½Ãµ	
 $("#parkhyunchun")
 	.mouseover(function() {
 		var p =	$("#parkhyunchun").position();
@@ -158,7 +158,7 @@ $("#parkhyunchun")
    		 $('#parkhyunchun_info').hide();
  	});
 	
-//ÀÌÁØ¹ü	
+//ï¿½ï¿½ï¿½Ø¹ï¿½	
 $("#leejoonbeom")
 	.mouseover(function() {
 		var p =	$("#leejoonbeom").position();
@@ -173,7 +173,7 @@ $("#leejoonbeom")
    		 $('#leejoonbeom_info').hide();
  	});
 	
-//¾ç¼ö¿­	
+//ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#yangsooyeol")
 	.mouseover(function() {
 		var p =	$("#yangsooyeol").position();
@@ -188,7 +188,7 @@ $("#yangsooyeol")
    		 $('#yangsooyeol_info').hide();
  	});
 	
-//ÀåÅÂÈñ	
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#jangtaehee")
 	.mouseover(function() {
 		var p =	$("#jangtaehee").position();
@@ -203,7 +203,7 @@ $("#jangtaehee")
    		 $('#jangtaehee_info').hide();
  	});
 	
-//È²ÇÐ¹ü	
+//È²ï¿½Ð¹ï¿½	
 $("#whanghakbeom")
 	.mouseover(function() {
 		var p =	$("#whanghakbeom").position();
@@ -218,7 +218,7 @@ $("#whanghakbeom")
    		 $('#whanghakbeom_info').hide();
  	});
 	
-//ÀÌÁ¾Àº	
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#leejongeun")
 	.mouseover(function() {
 		var p =	$("#leejongeun").position();
@@ -233,7 +233,7 @@ $("#leejongeun")
    		 $('#leejongeun_info').hide();
  	});
 	
-//¼ÕÁöÈÆ	
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#sonjihoon")
 	.mouseover(function() {
 		var p =	$("#sonjihoon").position();
@@ -248,7 +248,7 @@ $("#sonjihoon")
    		 $('#sonjihoon_info').hide();
  	});
 	
-//ÀÌÃ¶³²	
+//ï¿½ï¿½Ã¶ï¿½ï¿½	
 $("#leecheolnam")
 	.mouseover(function() {
 		var p =	$("#leecheolnam").position();
@@ -263,7 +263,7 @@ $("#leecheolnam")
    		 $('#leecheolnam_info').hide();
  	});
 	
-//À±Á¾¼ö	
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 $("#yoonjongsoo")
 	.mouseover(function() {
 		var p =	$("#yoonjongsoo").position();

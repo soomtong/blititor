@@ -101,7 +101,7 @@
 </div>
 <script src="/vendor/jquery/jquery.slim.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(funtion () {
 
         //Preloader
         $(window).on('load', function () { // makes sure the whole site is loaded
@@ -190,12 +190,12 @@
         var scrollSpeed = 500;
         $(window).scroll(function () {
             if ($(window).scrollTop() >= pxShow) {
-                $("#backtotop").addClass('visible');
+                $("#back_to_top").addClass('visible');
             } else {
-                $("#backtotop").removeClass('visible');
+                $("#back_to_top").removeClass('visible');
             }
         });
-        $('#backtotop a').on('click', function () {
+        $('#back_to_top a').on('click', function () {
             $('html, body').animate({
                 scrollTop: 0
             }, scrollSpeed);
