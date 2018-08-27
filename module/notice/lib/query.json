@@ -1,6 +1,8 @@
 {
   "insertInto": "INSERT INTO ?? SET ?",
   "updateByID": "UPDATE ?? SET ? WHERE `id` = ?",
+  "deleteByID": "DELETE FROM ?? WHERE `id` = ?",
+  "selectByID": "SELECT ?? FROM ?? WHERE `id` = ?",
   "selectByIDs": "SELECT * FROM ?? WHERE `id` in (?)",
   "countAll": "SELECT count(id) AS `count` FROM ??",
   "readNoticeList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` ASC",

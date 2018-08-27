@@ -5,7 +5,7 @@
     "view": "/view",
     "write": "/write",
     "update": "/update",
-    "remove": "/remove",
+    "delete": "/delete",
     "feedback": "/write/feedback",
     "manage": "/"
   }

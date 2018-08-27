@@ -201,7 +201,7 @@ function showGlobalVar(g) {
             fs.writeFile(path.join(__dirname, '..', 'log', 'global-var-' + item + '.log'),
                 JSON.stringify(g[item], null, 4),
                 function (err, result) {
-                    if (err) winston.error(err, result);
+                    if (err) winston.error(`Saving global variables ${err}: ${result}`);
                 });
         }
     });

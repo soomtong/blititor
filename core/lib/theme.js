@@ -91,7 +91,7 @@ function bindFavicon(router, themeName) {
 function get404Handler(themeName) {
     return function _404Handler(req, res, next){
         res.status(404);
-        winston.warn('error status 404: ' + req.url);
+        winston.warn(`error status 404: ${req.url}`);
 
         // respond with html page
         if (req.accepts('html')) {
@@ -122,7 +122,7 @@ function get500Handler(themeName) {
         // here and next(err) appropriately, or if
         // we possibly recovered from the error, simply next().
         res.status(err.status || 500);
-        winston.error(err);
+        winston.error(`get 500 handler ${err}`);
 
         // set default 500 page
         fs.stat(path.join('.', 'theme', themeName, 'page', '_500.html'), function (error, stat) {

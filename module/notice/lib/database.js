@@ -145,7 +145,13 @@ function insertNotice(connection, noticeData, callback) {
     });
 }
 
-function selectNotice(connection, params, callback) {
+function updateNotice(connection, noticeData, noticeID, callback) {
+    connection.query(query.updateByID, [tables.notice, noticeData, noticeID], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function selectNotices(connection, params, callback) {
     const pageSize = 5;
     const gutterSize = 5;
     const gutterMargin = 2;
@@ -174,13 +180,38 @@ function selectNotice(connection, params, callback) {
     });
 }
 
+function deleteNotice(connection, noticeID, callback) {
+    connection.query(query.deleteByID, [tables.notice, noticeID], function (err, result) {
+        callback(err, result);
+    });
+}
+
+function selectNotice(connection, params, callback) {
+    const result = {
+        noticeItem: {}
+    };
+
+    const fields = ['id', 'title', 'body', 'nickname', 'hit_count', 'created_at', 'updated_at'];
+    const prepared = [fields, tables.notice, params.notice_id];
+
+    connection.query(query.selectByID, prepared, function (err, rows) {
+        if (!err) {
+            result.noticeItem = rows[0];
+        }
+
+        callback(err, result);
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    readNoticeList: selectNotice,
+    readNoticeList: selectNotices,
     createNotice: insertNotice,
-    // updateNotice: updateNotice,
+    removeNotice: deleteNotice,
+    readNotice: selectNotice,
+    updateNotice: updateNotice,
     option: {
         tables: tables,
         core: false

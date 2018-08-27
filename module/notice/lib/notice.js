@@ -10,6 +10,8 @@ const connection = require('../../../core/lib/connection');
 
 const db = require('./database');
 
+const routeTable = misc.getRouteData();
+
 function noticeBoardList(req, res) {
     const params = {
         title: '공지사항',
@@ -42,6 +44,127 @@ function noticeBoardList(req, res) {
     });
 }
 
+function noticeBoardControl(req, res) {
+    const params = {
+        mode: req.body['mode'] || 'modify',
+        category: req.body['cate'] || req.body['c'] || 1,
+        page: Number(req.body['page'] || Number(req.body['p'] || 1)),
+        xhr: req.xhr || false
+    };
+
+    switch (params.mode) {
+        case 'update':
+            const newNoticeItem = {
+                user_uuid: req.user.uuid,
+                user_id: req.user.id,
+                nickname: req.user.nickname,
+                category: req.body['cate'] || req.body['c'] || 1,
+                title: req.body['title'],
+                body: req.body['body'],
+                hit_count: 1,
+                created_at: new Date(),
+                updated_at: new Date()
+            };
+
+            params.noticeItem = newNoticeItem;
+
+            noticeWrite(params, (error, result) => {
+                res.render(BLITITOR.site.manageTheme + '/manage/partial/notice_list', result);
+            });
+
+            break;
+        case 'delete':
+            const noticeID = req.body['noticeID'];
+
+            params.noticeID = noticeID;
+
+            noticeDelete(params, () => {
+                res.redirect(routeTable.notice.root)
+            });
+
+            break;
+    }
+}
+
+function noticeBoardUpdateForm(req, res) {
+    const params = {
+        title: '공지사항',
+        notice_id: req.params['id'] || 0,
+    };
+
+    if (!params.notice_id) {
+        res.redirect(routeTable.notice.root);
+    }
+
+    const mysql = connection.get();
+
+    db.readNotice(mysql, params, function (error, result) {
+        if (error) {
+            winston.error('database read in notice:' + error);
+        }
+
+        params.noticeItem = result.noticeItem;
+
+        res.render(BLITITOR.site.theme + '/page/notice/update', params);
+    });
+}
+
+function noticeBoardUpdate(req, res) {
+    const params = {
+        title: '공지사항',
+        notice_id: req.params['id'] || 0,
+    };
+
+    const updatedNoticeItem = {
+        title: req.body['title'],
+        body: req.body['body'],
+        updated_at: new Date()
+    };
+
+    if (!params.notice_id) {
+        res.redirect(routeTable.notice.root);
+    }
+
+    const mysql = connection.get();
+
+    db.updateNotice(mysql, updatedNoticeItem, params.notice_id, function (error, result) {
+        res.redirect(routeTable.notice.root)
+    });
+}
+
+
+function noticeBoardWriteForm(req, res) {
+    const params = {
+        title: '공지사항',
+    };
+
+    res.render(BLITITOR.site.theme + '/page/notice/write', params);
+}
+
+function noticeBoardWrite(req, res) {
+    const params = {
+        title: '공지사항',
+    };
+
+    const newNoticeItem = {
+        user_uuid: req.user.uuid,
+        user_id: req.user.id,
+        nickname: req.user.nickname,
+        category: req.body['cate'] || req.body['c'] || 1,
+        title: req.body['title'],
+        body: req.body['body'],
+        hit_count: 1,
+        created_at: new Date(),
+        updated_at: new Date()
+    };
+
+    params.noticeItem = newNoticeItem;
+
+    noticeWrite(params, (error, result) => {
+        res.redirect(routeTable.notice.root)
+    });
+}
+
 function noticeManageHome(req, res) {
     const params = {
         title: '공지사항'
@@ -66,7 +189,7 @@ function noticeManage(req, res) {
 
             break;
         case 'write':
-            const noticeItem = {
+            const newNoticeItem = {
                 user_uuid: req.user.uuid,
                 user_id: req.user.id,
                 nickname: req.user.nickname,
@@ -78,7 +201,7 @@ function noticeManage(req, res) {
                 updated_at: new Date()
             };
 
-            params.noticeItem = noticeItem;
+            params.noticeItem = newNoticeItem;
 
             noticeWrite(params, (error, result) => {
                 res.render(BLITITOR.site.manageTheme + '/manage/partial/notice_list', result);
@@ -92,12 +215,11 @@ function noticeManage(req, res) {
 
 module.exports = {
     list: noticeBoardList,
-    write: (req, res) => {
-    },
-    register: (req, res) => {
-    },
-    view: (req, res) => {
-    },
+    control: noticeBoardControl,
+    updateForm: noticeBoardUpdateForm,
+    update: noticeBoardUpdate,
+    writeForm: noticeBoardWriteForm,
+    write: noticeBoardWrite,
     manageHome: noticeManageHome,
     manage: noticeManage
 };
@@ -149,5 +271,19 @@ function noticeWrite(params, callback) {
 
             callback(error, params)
         });
+    });
+}
+
+function noticeDelete(params, callback) {
+    const mysql = connection.get();
+
+    db.removeNotice(mysql, params.noticeID, function (error, result) {
+        if (error) {
+            winston.error(error);
+        }
+
+        winston.info('deleted notice record affected: ' + result.affectedRows);
+
+        callback(error, result);
     });
 }

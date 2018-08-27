@@ -7,7 +7,6 @@ var misc = require('../../../core/lib/misc');
 var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
 var db = require('./database');
-var query = require('./query');
 
 var routeTable = misc.getRouteData();
 

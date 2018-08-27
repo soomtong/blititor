@@ -22,6 +22,7 @@ const appLocals = Site.exposeAppLocals(app.locals, menu);
 router.use(Account.middleware.exposeLocals);
 
 // bind module route
+router.get(routeTable.account.login, Site.redirect(routeTable.account.root + routeTable.account.signIn));
 router.use(routeTable.account.root, Account.site);
 router.use(routeTable.notice.root, Notice.site);
 

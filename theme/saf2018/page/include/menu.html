@@ -27,15 +27,15 @@
                     <a class="navbar-item" href="{{siteMenu[9].url}}">{{siteMenu[9].name}}</a>
                 </div>
             </div>
-            {% if site.env !== 'production' %}
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link" href="{{siteMenu[3].url}}">{{siteMenu[3].name}}</a>
                 <div class="navbar-dropdown is-boxed">
                     <a class="navbar-item" href="{{siteMenu[3].url}}">{{siteMenu[3].name}}</a>
+                    {% if site.env !== 'production' %}
                     <a class="navbar-item" href="{{siteMenu[12].url}}">{{siteMenu[12].name}}</a>
+                    {% endif %}
                 </div>
             </div>
-            {% endif %}
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link" href="{{siteMenu[4].url}}">{{siteMenu[4].name}}</a>
                 <div class="navbar-dropdown is-boxed">
