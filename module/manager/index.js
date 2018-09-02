@@ -1,7 +1,8 @@
-var lib = require('./lib/manager');
-var route = require('./route');
-var middleware = require('./lib/middleware');
+const lib = require('./lib/manager');
+const { site, manage } = require('./route');
+const middleware = require('./lib/middleware');
 
 module.exports = lib;
-module.exports.route = route;
+module.exports.site = site;
+module.exports.manage = manage;
 module.exports.middleware = middleware;
