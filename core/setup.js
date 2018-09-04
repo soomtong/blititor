@@ -1,26 +1,26 @@
 // setup blititor process for command line interface
-var prompt = require('prompt');
-var clc = require('cli-color');
-var async = require('neo-async');
-var parseArgs = require('minimist');
+const prompt = require('prompt');
+const clc = require('cli-color');
+const async = require('neo-async');
+const parseArgs = require('minimist');
 
-var fs = require('fs');
-var path = require('path');
-var mysql = require('mysql');
+const fs = require('fs');
+const path = require('path');
+const mysql = require('mysql');
 
-var database = require('./lib/database');
-var theme = require('./lib/theme');
-var common = require('./lib/common');
-var misc = require('./lib/misc');
+const database = require('./lib/database');
+const theme = require('./lib/theme');
+const common = require('./lib/common');
+const misc = require('./lib/misc');
 
-var configFile = require('./config/app_default.json').configFile;
-var siteDefault = require('./config/site_default.json');
-var databaseDefault = misc.getDatabaseDefault();
+const configFile = require('./config/app_default.json').configFile;
+const siteDefault = require('./config/site_default.json');
+const databaseDefault = misc.getDatabaseDefault();
 
-var moduleFile = 'module_list.json';
-var params = parseArgs(process.argv.slice(2));
-var mainCommand = params._[0];
-var subCommand = params._[1];
+const moduleFile = 'module_list.json';
+const params = parseArgs(process.argv.slice(2));
+const mainCommand = params._[0];
+let subCommand = params._[1];
 
 prompt.message = clc.green(" B");
 
@@ -55,7 +55,7 @@ switch (mainCommand) {
         makeAdminAccount();
         break;
     case 'all':
-        var tasks = [loadModuleList, makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
+        const tasks = [loadModuleList, makeDatabaseConfigFile, makeDatabaseTable, makeThemeConfigFile, makeAdminAccount];
 
         async.series(tasks, function(err, res) {
             console.log(res);
@@ -77,11 +77,11 @@ switch (mainCommand) {
 function makeDatabaseConfigFile(next) {
     console.log(" = Make database configuration \n");
 
-    var databaseConf = require('./config/database_default.json');
+    const databaseConf = require('./config/database_default.json');
 
     prompt.start();
 
-    var configScheme = {
+    const configScheme = {
         properties: {
             db_host: {
                 description: 'Enter mysql(maria) host',
@@ -133,7 +133,7 @@ function makeDatabaseConfigFile(next) {
     };
 
     prompt.get(configScheme, function (err, result) {
-        var config = {};
+        let config = {};
 
         try {
             config = require(path.join('..', configFile));
@@ -147,9 +147,9 @@ function makeDatabaseConfigFile(next) {
         }
 
         // validate dbTablePrefix (ex. test => b_test_, b_test = b_test_)
-        var dbTablePrefix = validateDatabaseTablePrefix(result['db_table_prefix']);
+        const dbTablePrefix = validateDatabaseTablePrefix(result['db_table_prefix']);
 
-        var params = {
+        const params = {
             dbHost: result['db_host'],
             dbPort: result['db_port'] || databaseConf.port,
             dbName: result['db_name'],
@@ -158,7 +158,7 @@ function makeDatabaseConfigFile(next) {
             dbUserPassword: result['db_user_password']
         };
 
-        var connection = mysql.createConnection({
+        const connection = mysql.createConnection({
             host: params.dbHost,
             port: params.dbPort || databaseConf.port,
             database: params.dbName || undefined,
@@ -170,7 +170,7 @@ function makeDatabaseConfigFile(next) {
             console.log(' = Verify database connection...');
 
             if (err) {
-                console.log(' = Verify database connection... Failed'.red);
+                console.log(clc.red(' = Verify database connection... Failed'));
 
                 console.error('error connecting: ' + err.stack);
 
@@ -197,10 +197,10 @@ function makeDatabaseConfigFile(next) {
 function makeDatabaseTable(next) {
     console.log(" = Make database tables for blititor \n");
 
-    var connectionInfo = require(path.join('..', configFile))['database'];
-    var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
+    const connectionInfo = require(path.join('..', configFile))['database'];
+    const moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: connectionInfo.dbHost,
         port: connectionInfo.dbPort || databaseDefault.port,
         database: connectionInfo.dbName || databaseDefault.database,
@@ -208,11 +208,11 @@ function makeDatabaseTable(next) {
         password: connectionInfo.dbUserPassword
     });
 
-    var iteratorAsync = function (item, callback) {
+    const iteratorAsync = function (item, callback) {
         if (!item.ignore && item.useDatabase && item.core) {
             console.log('\n = Make database table...', item.folder);
 
-            var moduleName = item.folder;
+            const moduleName = item.folder;
 
             makeModuleDatabaseTable(moduleName, function () {
                 callback(null, moduleName);
@@ -236,10 +236,10 @@ function makeDatabaseTable(next) {
 function makeDatabaseTableWithReset() {
     console.log(" = Reset database tables for blititor \n");
 
-    var connectionInfo = require(path.join('..', configFile))['database'];
-    var moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
+    const connectionInfo = require(path.join('..', configFile))['database'];
+    const moduleInfo = require(path.join('..', 'core', 'config', moduleFile));
 
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: connectionInfo.dbHost,
         port: connectionInfo.dbPort || databaseDefault.port,
         database: connectionInfo.dbName || databaseDefault.database,
@@ -247,7 +247,7 @@ function makeDatabaseTableWithReset() {
         password: connectionInfo.dbUserPassword
     });
 
-    var iteratorAsync = function (item, callback) {
+    const iteratorAsync = function (item, callback) {
         if (!item.ignore && item.useDatabase && item.core) {
             var moduleName = item.folder;
 
@@ -256,7 +256,7 @@ function makeDatabaseTableWithReset() {
         callback(null, moduleName);
     };
 
-    var resultAsync = function (err, result) {
+    const resultAsync = function (err, result) {
         console.log(' = Make database tables... Done with clean \n');
     };
 
@@ -265,7 +265,7 @@ function makeDatabaseTableWithReset() {
 
         console.log('');
 
-        var configScheme = {
+        const configScheme = {
             properties: {
                 ask: {
                     description: "It'll delete all your data in blititor tables, Input YES if you are Sure",
@@ -291,10 +291,10 @@ function makeDatabaseTableWithReset() {
 }
 
 function makeModuleDatabaseTable(moduleName, callback) {
-    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module");
+    console.log(` = Make database tables for ${clc.greenBright(moduleName)} module`);
 
-    var connectionInfo = require(path.join('..', configFile))['database'];
-    var module = require('../module/'+ moduleName + '/lib/database');
+    const connectionInfo = require(path.join('..', configFile))['database'];
+    const module = require('../module/' + moduleName + '/lib/database');
 
     // inset dummy data after create table
     module.createScheme(connectionInfo, module.insertDummy, function () {
@@ -303,19 +303,19 @@ function makeModuleDatabaseTable(moduleName, callback) {
 }
 
 function makeModuleDatabaseTableWithReset(moduleName) {
-    console.log(" = Make database tables for " + '[' + moduleName + ']' + " module");
+    console.log(` = Reset database tables for ${clc.yellowBright(moduleName)} module`);
 
-    var connectionInfo = require(path.join('..', configFile))['database'];
-    var module = require('../module/'+ moduleName + '/lib/database');
+    const connectionInfo = require(path.join('..', configFile))['database'];
+    const module = require('../module/' + moduleName + '/lib/database');
 
     // delete scheme before create table
     module.deleteScheme(connectionInfo, module.createScheme);
 }
 
 function makeThemeConfigFile(next) {
-    console.log(" = Make Theme configuration \n");
+    console.log(' = Make Theme configuration \n');
 
-    var config = {};
+    let config = {};
 
     try {
         config = require(path.join('..', configFile));
@@ -329,7 +329,7 @@ function makeThemeConfigFile(next) {
 
         prompt.start();
 
-        var description = themeList.map(function (item, idx) {
+        const description = themeList.map(function (item, idx) {
             return "\n " + (idx + 1) + ". " +
                 (item.description.title || '무제') +
                 "(" + (item.folderName || '') + ")\n" +
@@ -337,7 +337,7 @@ function makeThemeConfigFile(next) {
                 (item.description.credit || '제작자 불분명');
         });
 
-        var configScheme = {
+        const configScheme = {
             properties: {
                 ask: {
                     description: "테마를 골라주세요...".white + description.join('\n') + "\n 선택".green,
@@ -354,7 +354,7 @@ function makeThemeConfigFile(next) {
             if(!result){
                 return console.log('\n 취소되었습니다.')
             }
-            var themeData = {
+            const themeData = {
                 "appName": themeList[result.ask - 1].folderName || "simplestrap",
                 "siteTheme": themeList[result.ask - 1].folderName || "simplestrap",
                 "adminTheme": themeList[result.ask - 1].folderName || "simplestrap",
@@ -391,7 +391,7 @@ function makeAdminAccount() {
     // prompt id and password
     prompt.start();
 
-    var configScheme = {
+    const configScheme = {
         properties: {
             id: {
                 description: "관리자 아이디를 입력해주세요... (E-Mail 형태를 사용합니다.)".white,
@@ -415,18 +415,18 @@ function makeAdminAccount() {
         if(!result){
             return console.log('\n 취소되었습니다.')
         }
-        var query = require('../module/account/lib/query');
-        var hash = common.hash(result.password);
-        var tables = require('../module/account/lib/database').option.tables;
-        var authData = {
+        const query = require('../module/account/lib/query');
+        const hash = common.hash(result.password);
+        const tables = require('../module/account/lib/database').option.tables;
+        const authData = {
             user_id: result.id,
             user_password: hash
         };
 
         // save administrator account to user table
-        var connectionInfo = require(path.join('..', configFile))['database'];
+        const connectionInfo = require(path.join('..', configFile))['database'];
 
-        var connection = mysql.createConnection({
+        const connection = mysql.createConnection({
             host: connectionInfo.dbHost,
             port: connectionInfo.dbPort || databaseDefault.port,
             database: connectionInfo.dbName || databaseDefault.database,
@@ -447,20 +447,20 @@ function makeAdminAccount() {
                 // make database by given name
                 connection.query(query.insertInto, [tables.auth, authData], function (err, result) {
                     if (err) {
-                        console.log(' = 관리자 로그인 정보 저장에 실패했습니다.'.red);
-                        console.log(' = ' + authData.user_id + ' 은 이미 존재합니다.');
+                        console.log(clc.red(' = 관리자 로그인 정보 저장에 실패했습니다.'));
+                        console.log(` = ${clc.greenBright(authData.user_id)} 은 이미 존재합니다.`);
                         
                         connection.destroy();
 
                         return;
                     }
 
-                    var auth_id = result['insertId'];
+                    const auth_id = result['insertId'];
 
                     console.log(' = New Auth ID Generated...', auth_id);
 
                     // save to user table
-                    var userData = {
+                    const userData = {
                         uuid: common.UUID4(),
                         auth_id: auth_id,
                         nickname: '관리자',
@@ -473,14 +473,14 @@ function makeAdminAccount() {
 
                     connection.query(query.insertInto, [tables.user, userData], function (err, result) {
                         if (err) {
-                            console.log(' = 관리자 계정 정보 저장에 실패했습니다.'.red);
+                            console.log(clc.red(' = 관리자 계정 정보 저장에 실패했습니다.'));
 
                             connection.destroy();
 
                             return;
                         }
 
-                        var id = result['insertId'];
+                        const id = result['insertId'];
 
                         console.log(' = New User ID Generated...', id);
 
@@ -496,10 +496,10 @@ function loadModuleList(next) {
     console.log(" = Gathering Modules Info for Database \n");
 
     // generate module list
-    var folderName = 'module';
+    const folderName = 'module';
 
     function collectData(item, callback) {
-        var moduleData = {
+        const moduleData = {
             folder: item,
             useDatabase: true,
             ignore: false
@@ -511,7 +511,7 @@ function loadModuleList(next) {
             if (err) {
                 moduleData.useDatabase = false;
             } else {
-                var module = require(path.join('..', folderName, item, 'lib', 'database.js'));
+                const module = require(path.join('..', folderName, item, 'lib', 'database.js'));
 
                 if (module.option && module.option.tables) {
                     moduleData.tables = module.option.tables || {};
@@ -532,23 +532,23 @@ function loadModuleList(next) {
             console.log(' = Module Data Gathering... Done \n');
 
             // ordering. first is site, second is account
-            var temp = [];
+            const temp = [];
 
             results.filter(function (item, index) {
-                if (item.folder == 'site') {
+                if (item.folder === 'site') {
                     temp.push(item);
                     results.splice(index, 1);
                 }
             });
 
             results.filter(function (item, index) {
-                if (item.folder == 'account') {
+                if (item.folder === 'account') {
                     temp.push(item);
                     results.splice(index, 1);
                 }
             });
 
-            var ordered = temp.concat(results);
+            const ordered = temp.concat(results);
 
             fs.writeFileSync(path.join('core', 'config', 'module_list.json'), JSON.stringify(ordered, null, 4));
             next && next();

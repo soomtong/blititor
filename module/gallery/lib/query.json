@@ -2,5 +2,7 @@
   "insertInto": "INSERT INTO ?? SET ?",
   "countAll": "SELECT count(id) as `count` FROM ??",
   "readGalleryCategory": "SELECT * FROM ?? ORDER BY `sort`, `id` ASC",
-  "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `id` ASC"
+  "readGalleryCategories": "SELECT * FROM ?? ORDER BY `sort`, `id` ASC",
+  "readGalleryImageList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `id` ASC",
+  "readGalleryImages": "SELECT * FROM ?? ORDER BY `sort`, `id` ASC"
 }

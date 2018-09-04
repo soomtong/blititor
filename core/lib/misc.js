@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const mkdirp = require('mkdirp');
 const async = require('neo-async');
 const winston = require('winston');
 
@@ -119,6 +120,7 @@ function siteThemeType() {
 
 function vendorMap(vendorName) {
     const map = {
+        flowjs: 'node_modules/@flowjs/flow.js/dist',
         jquery: 'node_modules/jquery/dist',
         bulma: 'node_modules/bulma/css',
         'bulma-ext': 'node_modules/bulma-extensions/dist',
@@ -312,6 +314,17 @@ function serviceProvider(vendor) {
     return provider || "";
 }
 
+function makeGalleryFolders(folder) {
+    Object.keys(folder).map(value => {
+        mkdirp.sync(folder[value]);
+    });
+    /*  ES2017
+    Object.values(folder).map(value => {
+        mkdirp.sync(value)
+    });
+    */
+}
+
 module.exports = {
     getUserPrivilege: getUserPrivilege,
     setUserPrivilege: setUserPrivilege,
@@ -329,5 +342,6 @@ module.exports = {
     showRoutes: showRoutes,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
-    getDatabaseDefault: getDatabaseDefaultData
+    getDatabaseDefault: getDatabaseDefaultData,
+    makeGalleryFolders: makeGalleryFolders
 };

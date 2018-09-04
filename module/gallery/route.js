@@ -1,30 +1,27 @@
-var express = require('express');
-// var jqueryFileUploader = require('jfum');
+const express = require('express');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
+const { checkManager } = require('../account/lib/middleware');
 
-var gallery = require('./lib/gallery');
-var middleware = require('./lib/middleware');
+const gallery = require('./lib/gallery');
+const middleware = require('./lib/middleware');
 
-var AccountMiddleware = require('../account/lib/middleware');
-var CounterMiddleware = require('../counter/lib/middleware');
+const routeTable = misc.getRouteData();
+const site = express.Router();
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+site.use(middleware.exposeLocals);
+site.get(routeTable.gallery.list, gallery.images);
+site.post(routeTable.gallery.category, checkManager, gallery.createCategory);
+site.post(routeTable.gallery.image, checkManager, gallery.uploadImage);
 
-/*
-var uploader = new jqueryFileUploader({
-    minFileSize:    2048,                      //  20 kB
-    maxFileSize: 5242880,                     // 5000 kB
-    acceptFileTypes: /\.(gif|jpe?g|png)$/i    // gif, jpg, jpeg, png
-});
-*/
+const manage = express.Router();
 
-router.use(middleware.exposeLocals);
+manage.get(routeTable.gallery.list, gallery.categoryList);
+manage.get(routeTable.gallery.image + '/:cate', gallery.imageList);
+manage.post(routeTable.gallery.upload, checkManager, gallery.createImageItem);
+manage.post(routeTable.gallery.upload + '/image', checkManager, gallery.uploadImage2);
 
-router.get(routeTable.gallery.list, CounterMiddleware.pageCounter, gallery.categoryList);
-router.get(routeTable.gallery.image + '/:cate', gallery.imageList);
-router.post(routeTable.gallery.upload, AccountMiddleware.checkSignedIn, gallery.createImageItem);
-router.post(routeTable.gallery.upload + '/image', AccountMiddleware.checkSignedIn, gallery.uploadImage);
-
-module.exports = router;
+module.exports = {
+    site,
+    manage
+};

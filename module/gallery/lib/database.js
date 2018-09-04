@@ -1,23 +1,23 @@
-var fs = require('fs');
-var async = require('neo-async');
+const fs = require('fs');
+const async = require('neo-async');
 
-var mysql = require('mysql');
-var winston = require('winston');
+const mysql = require('mysql');
+const winston = require('winston');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var databaseDefault = misc.getDatabaseDefault();
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const databaseDefault = misc.getDatabaseDefault();
 
-var tables = {
-    galleryCategory : databaseDefault.tablePrefix + 'gallery_category',
+const tables = {
+    galleryCategory: databaseDefault.tablePrefix + 'gallery_category',
     galleryImage: databaseDefault.tablePrefix + 'gallery_image',
     user: databaseDefault.tablePrefix + 'user'
 };
 
-var query = require('./query');
+const query = require('./query');
 
 function deleteScheme(databaseConfiguration, callback) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || databaseDefault.port,
         database: databaseConfiguration.dbName || databaseDefault.database,
@@ -25,8 +25,8 @@ function deleteScheme(databaseConfiguration, callback) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.galleryCategory, tables.galleryImage];
+    const sql = "DROP TABLE IF EXISTS ??";
+    const tableList = [tables.galleryCategory, tables.galleryImage];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -36,7 +36,7 @@ function deleteScheme(databaseConfiguration, callback) {
 }
 
 function createScheme(databaseConfiguration, callback, done) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || databaseDefault.port,
         database: databaseConfiguration.dbName || databaseDefault.database,
@@ -44,14 +44,14 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var charSet = 'utf8mb4';
+    const charSet = 'utf8mb4';
 
-    var sql_gallery_image = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_gallery_image = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`category` tinyint default 0, ' +
         '`sort` int unsigned not null default 0, ' +
         '`hide` int(1) default 0, ' +
-        '`image` varchar(128) not null, `thumbnail` varchar(128) not null, ' +
+        '`image_name` varchar(128) not null, `image_file` varchar(128) not null, ' +
         '`path` varchar(256) not null, ' +
         '`title` varchar(128), ' +
         '`link` varchar(128), ' +
@@ -62,10 +62,10 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX sort(`sort`), ' +
         'INDEX category(`category`))' +
         'DEFAULT CHARSET=' + charSet;
-    var sql_gallery_category = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_gallery_category = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` tinyint unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`sort` tinyint unsigned not null default 0, ' +
-        '`title` varchar(64), ' +
+        '`title` varchar(128) not null, ' +
         '`sub_title` varchar(256), ' +
         '`created_at` datetime, ' +
         'INDEX sort(`sort`))' +
@@ -87,22 +87,22 @@ function insertDummy(databaseConfiguration, done) {
 }
 
 function insertCategory(connection, params, callback) {
-    var titleData = {
-        title: params.title,
-        sub_title: params.subTitle,
+    const categoryData = {
+        title: params.title || '',
+        sub_title: params.subTitle || '',
         created_at: new Date()
     };
 
-    connection.query(query.insertInto, [tables.galleryCategory, titleData], function (err, result) {
+    connection.query(query.insertInto, [tables.galleryCategory, categoryData], function (err, result) {
         callback(err, result);
     });
 }
 
 function insertImage(connection, params, callback){
-    var imageData = {
+    const imageData = {
         category: Number(params.category),
-        image: params.image,
-        thumbnail: params.thumbnail,
+        image_name: params.imageName,
+        image_file: params.imageFile,
         path: params.path,
         title: params.message,
         created_at: new Date()
@@ -118,9 +118,30 @@ function selectCategory(connection, callback) {
         if (!err) callback(err, rows);
     });
 }
+
+function selectCategories(connection, callback) {
+    connection.query(query.readGalleryCategories, [tables.galleryCategory], function (err, rows) {
+        if (err) {
+            winston.error('gallery database error: ' + err)
+        }
+
+        callback(err, rows);
+    });
+}
+
 function selectImageList(connection, params, callback) {
     connection.query(query.readGalleryImageList, [tables.galleryImage, params.category], function (err, rows) {
         if (!err) callback(err, rows);
+    });
+}
+
+function selectImages(connection, callback) {
+    connection.query(query.readGalleryCategory, [tables.galleryImage], function (err, rows) {
+        if (err) {
+            winston.error('gallery database error: ' + err)
+        }
+
+        callback(err, rows);
     });
 }
 
@@ -128,8 +149,10 @@ module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
     insertDummy: insertDummy,
-    addCategory: insertCategory,
+    createCategory: insertCategory,
     createGalleryImageItem: insertImage,
+    readAllCategories: selectCategories,
+    readAllImages: selectImages,
     readGalleryCategory: selectCategory,
     readGalleryImageList: selectImageList,
     option: {

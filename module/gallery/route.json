@@ -4,6 +4,8 @@
     "home": "/",
     "list": "/",
     "image": "/image",
+    "category": "/category",
+    "control": "/control",
     "upload": "/upload"
   }
 }
