@@ -4,6 +4,6 @@
   },
   "config": {
     "manage": true,
-    "vendor": ["bulma", "bulma-ext", "jquery", "fontawesome"]
+    "vendor": ["bulma", "bulma-ext", "jquery", "fontawesome", "flowjs"]
   }
 }

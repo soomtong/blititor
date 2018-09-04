@@ -8,6 +8,7 @@ const misc = require('../../core/lib/misc');
 const Site = require('../../module/site');
 const Account = require('../../module/account');
 const Notice = require('../../module/notice');
+const Gallery = require('../../module/gallery');
 
 // load locals
 const app = require('./app.json');
@@ -25,6 +26,7 @@ router.use(Account.middleware.exposeLocals);
 router.get(routeTable.account.login, Site.redirect(routeTable.account.root + routeTable.account.signIn));
 router.use(routeTable.account.root, Account.site);
 router.use(routeTable.notice.root, Notice.site);
+router.use(routeTable.gallery.root, Gallery.site);
 
 // bind static page
 Site.bindMenu(menu, router);

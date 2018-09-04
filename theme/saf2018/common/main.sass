@@ -1,3 +1,60 @@
+.is-director
+  .timeline
+    .timeline-header
+      margin-left: 3.8em
+      margin-right: 3.0em
+      span
+        font-size: 1.5em
+        letter-spacing: 2px
+  .content
+    dl
+      margin-bottom: 0.2em
+  .headline
+    i
+      padding-left: 2px
+      padding-right: 3px
+    font-size: 1.1em
+    color: #a3a3a3
+  .name
+    font-size: 0.6em
+    color: #888888
+  .is-director-pic
+    width: 200px
+    margin-right: 1em
+    margin-bottom: 1em
+  .is-credit
+    .title
+      font-size: 1.1rem
+      padding-bottom: 5px
+    .subtitle
+      font-size: 0.9rem
+      color: #888888
+  .from
+    font-size: 0.8rem
+    color: #888888
+    word-break: keep-all
+.is-director-bg
+  background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg)
+  text-align: center
+  .directors
+    .subtitle
+      padding-top: 1em
+      padding-bottom: 1.2em
+      border-bottom: 1px solid #000000
+    .director
+      background: rgba(255, 255, 255, 0.8)
+      padding: 0.5em
+    .name
+      font-weight: bold
+    .image
+      width: 186px
+      height: 186px
+      margin: 1.2em auto 1.5em
+      img
+        border-radius: 50%!important
+  p
+    color: #000000
+
 .notice-write
   .ql-editor, textarea
     font-size: 18px
@@ -18,6 +75,34 @@
 .saf-ideas
   background-image: url("/saf2018/common/asset/saf-ideas.jpg")
   background-size: cover
+
+.is-gallery
+  .subtitle
+    padding-left: 0.75em
+    color: #acacac
+    font-size: 0.85em
+
+  .image-desc
+    padding-top: 4px
+
+  .message-body
+    border-width: 0 1px 1px 1px
+    border-radius: 0
+    position: relative
+
+  .gallery-list-control
+    position: absolute
+    bottom: 0
+    right: 0
+    margin-bottom: 2em
+    margin-right: 2.2em
+
+  .gallery-write-control
+    margin-bottom: 1em
+    padding-right: 0.75em
+
+.is-category-form
+  display: none
 
 .media
   .media-content
@@ -94,29 +179,6 @@ span.opening-date
   p
     color: #ffffff
 
-#director_talk
-  background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg)
-  text-align: center
-  .directors
-    .subtitle
-      padding-top: 1em
-      padding-bottom: 1.2em
-      border-bottom: 1px solid #000000
-    .director
-      background: rgba(255, 255, 255, 0.8)
-      padding: 0.5em
-    .name
-      font-weight: bold
-    .image
-      width: 186px
-      height: 186px
-      margin: 1.2em auto 1.5em
-      img
-        border-radius: 50%!important
-  p
-    color: #000000
-
-
 .title-trans
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3)
   text-stroke: 1px rgba(255, 255, 255, 0.3)
@@ -191,5 +253,15 @@ span.opening-date
   position: relative
   .has-move-up
     position: absolute
-    bottom: 124px
-    right: 106px
+    bottom: 76px
+    left: 58px
+
+.carousel
+  .carousel-navigation.is-overlay
+    z-index: 29
+  .carousel-item
+    cursor: pointer
+
+.modal
+  .modal-content
+    width: 1365px!important

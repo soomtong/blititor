@@ -2,7 +2,7 @@
 const SiteMenu = [
     {
         id: 'index',
-        name: '2018 서울건축문화제',
+        name: '서울건축문화제',
         url: '/'
     },
     {
@@ -30,6 +30,18 @@ const SiteMenu = [
         name: '전시 안내',
         useSubPath: true,
         url: '/about/location'
+    },
+    {
+        id: 'about_award',
+        name: '서울시 건축상',
+        useSubPath: true,
+        url: '/about/award'
+    },
+    {
+        id: 'about_idea',
+        name: '대학생 아이디어 공모전',
+        useSubPath: true,
+        url: '/about/idea'
     },
     {
         id: 'program_opening',

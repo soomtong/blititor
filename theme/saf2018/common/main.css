@@ -1,3 +1,73 @@
+.is-director .timeline .timeline-header {
+  margin-left: 3.8em;
+  margin-right: 3em;
+}
+.is-director .timeline .timeline-header span {
+  font-size: 1.5em;
+  letter-spacing: 2px;
+}
+.is-director .content dl {
+  margin-bottom: 0.2em;
+}
+.is-director .headline {
+  font-size: 1.1em;
+  color: #a3a3a3;
+}
+.is-director .headline i {
+  padding-left: 2px;
+  padding-right: 3px;
+}
+.is-director .name {
+  font-size: 0.6em;
+  color: #888888;
+}
+.is-director .is-director-pic {
+  width: 200px;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+.is-director .is-credit .title {
+  font-size: 1.1rem;
+  padding-bottom: 5px;
+}
+.is-director .is-credit .subtitle {
+  font-size: 0.9rem;
+  color: #888888;
+}
+.is-director .from {
+  font-size: 0.8rem;
+  color: #888888;
+  word-break: keep-all;
+}
+
+.is-director-bg {
+  background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg);
+  text-align: center;
+}
+.is-director-bg .directors .subtitle {
+  padding-top: 1em;
+  padding-bottom: 1.2em;
+  border-bottom: 1px solid #000000;
+}
+.is-director-bg .directors .director {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.5em;
+}
+.is-director-bg .directors .name {
+  font-weight: bold;
+}
+.is-director-bg .directors .image {
+  width: 186px;
+  height: 186px;
+  margin: 1.2em auto 1.5em;
+}
+.is-director-bg .directors .image img {
+  border-radius: 50% !important;
+}
+.is-director-bg p {
+  color: #000000;
+}
+
 .notice-write .ql-editor, .notice-write textarea {
   font-size: 18px;
   background: #FFFFFF;
@@ -23,6 +93,35 @@
 .saf-ideas {
   background-image: url("/saf2018/common/asset/saf-ideas.jpg");
   background-size: cover;
+}
+
+.is-gallery .subtitle {
+  padding-left: 0.75em;
+  color: #acacac;
+  font-size: 0.85em;
+}
+.is-gallery .image-desc {
+  padding-top: 4px;
+}
+.is-gallery .message-body {
+  border-width: 0 1px 1px 1px;
+  border-radius: 0;
+  position: relative;
+}
+.is-gallery .gallery-list-control {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2em;
+  margin-right: 2.2em;
+}
+.is-gallery .gallery-write-control {
+  margin-bottom: 1em;
+  padding-right: 0.75em;
+}
+
+.is-category-form {
+  display: none;
 }
 
 .media .media-content a.plain-link {
@@ -100,34 +199,6 @@ span.opening-date {
 }
 #clinic_card p {
   color: #ffffff;
-}
-
-#director_talk {
-  background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg);
-  text-align: center;
-}
-#director_talk .directors .subtitle {
-  padding-top: 1em;
-  padding-bottom: 1.2em;
-  border-bottom: 1px solid #000000;
-}
-#director_talk .directors .director {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 0.5em;
-}
-#director_talk .directors .name {
-  font-weight: bold;
-}
-#director_talk .directors .image {
-  width: 186px;
-  height: 186px;
-  margin: 1.2em auto 1.5em;
-}
-#director_talk .directors .image img {
-  border-radius: 50% !important;
-}
-#director_talk p {
-  color: #000000;
 }
 
 .title-trans {
@@ -228,8 +299,19 @@ span.opening-date {
 }
 .download .has-move-up {
   position: absolute;
-  bottom: 124px;
-  right: 106px;
+  bottom: 76px;
+  left: 58px;
+}
+
+.carousel .carousel-navigation.is-overlay {
+  z-index: 29;
+}
+.carousel .carousel-item {
+  cursor: pointer;
+}
+
+.modal .modal-content {
+  width: 1365px !important;
 }
 
 /*# sourceMappingURL=main.css.map */
