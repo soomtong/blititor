@@ -11,32 +11,32 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
-            {% for item in noticeList %}
-            <article class="message" id="{{item.id}}">
-                <div class="message-header">
-                    <p class="">{{ item.title | trim }}</p>
-                    <p class="subtitle is-7 has-text-white-ter"><span class="icon"><i class="fa fa-clock-o"></i></span>{{ item.updated_at | default(item.created_at) }}</p>
-                </div>
-                <div class="message-body is-body">
-                    {{item.body | striptags(true) | escape | nl2br }}
-                </div>
-                {% if user and user.grant %}
-                <div class="notice-list-control">
-                    <div class="field is-grouped is-grouped-right">
-                        <div class="control">
-                            <a href="{{site.root}}{{route.notice.root}}{{route.notice.update}}/{{item.id}}" class="button is-warning notice-update">수정</a>
-                        </div>
-                        <div class="control">
-                            <a href="{{site.root}}{{route.notice.root}}" class="button is-danger notice-delete">삭제</a>
-                        </div>
+    <div class="container is-wrap">
+        {% for item in noticeList %}
+        <article class="message" id="{{item.id}}">
+            <div class="message-header">
+                <p class="">{{ item.title | trim }}</p>
+                <p class="subtitle is-7 has-text-white-ter"><span class="icon"><i class="fa fa-clock-o"></i></span>{{
+                    item.updated_at | default(item.created_at) }}</p>
+            </div>
+            <div class="message-body is-body">
+                {{item.body | striptags(true) | escape | nl2br }}
+            </div>
+            {% if user and user.grant %}
+            <div class="notice-list-control">
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <a href="{{site.root}}{{route.notice.root}}{{route.notice.update}}/{{item.id}}"
+                           class="button is-warning notice-update">수정</a>
+                    </div>
+                    <div class="control">
+                        <a href="{{site.root}}{{route.notice.root}}" class="button is-danger notice-delete">삭제</a>
                     </div>
                 </div>
-                {% endif %}
-            </article>
-            {% endfor %}
-        </div>
+            </div>
+            {% endif %}
+        </article>
+        {% endfor %}
     </div>
 </section>
 <section class="hero is-light">

@@ -11,8 +11,93 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
+    <div class="container">
+        <div class="tile is-child carousel carousel-animated carousel-animate-slide is-hidden-desktop " data-autoplay="true" data-delay="7000">
+            <div class="carousel-container">
+                <div class="carousel-item has-background">
+                    <a href="/about">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_1.png" alt="건축문화제2018" />
+                        <div class="title is-hidden">건축문화제2018</div>
+                    </a>
+                </div>
+                <div class="carousel-item has-background">
+                    <a href="/program/main#idea2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_2.png" alt="대학생아이디어공모전" />
+                        <div class="title is-hidden">대학생아이디어공모전</div>
+                    </a>
+                </div>
+                <div class="carousel-item has-background is-active">
+                    <a href="/program/main#award2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_3.png" alt="서울시건축상" />
+                        <div class="title is-hidden">서울시건축상</div>
+                    </a>
+                </div>
+                <div class="carousel-item is-link has-background">
+                    <a href="/program/main#imagine2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_5.png" alt="한강건축상상전" />
+                        <div class="title is-hidden">한강건축상상전</div>
+                    </a>
+                </div>
+                <div class="carousel-item is-link has-background">
+                    <a target="_blank" href="http://www.hanriver.net/">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_4.png" alt="건축에이야기를더하다" />
+                        <div class="title is-hidden">건축에이야기를더하다</div>
+                    </a>
+                </div>
+            </div>
+            <div class="carousel-navigation is-overlay">
+                <div class="carousel-nav-left">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </div>
+                <div class="carousel-nav-right">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div class="custom-carousel is-hidden-touch">
+            <div class="carousel-container">
+                <div class="carousel-item is-left-float">
+                    <a href="/about">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_1.png" alt="건축문화제2018" />
+                        <div class="title is-hidden">건축문화제2018</div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="/program/main#idea2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_3.png" alt="대학생아이디어공모전" />
+                        <div class="title is-hidden">대학생아이디어공모전</div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="/program/main#award2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_2.png" alt="서울시건축상" />
+                        <div class="title is-hidden">서울시건축상</div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="/program/main#imagine2018">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_5.png" alt="한강건축상상전" />
+                        <div class="title is-hidden">한강건축상상전</div>
+                    </a>
+                </div>
+                <div class="carousel-item is-right-float">
+                    <a target="_blank" href="http://www.hanriver.net/#stroytelling">
+                        <img class="is-background" src="{{site.theme}}/common/asset/poster_web_4.png" alt="건축에이야기를더하다" />
+                        <div class="title is-hidden">건축에이야기를더하다</div>
+                    </a>
+                </div>
+            </div>
+            <div class="carousel-navigation is-overlay">
+                <div class="carousel-nav-left">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </div>
+                <div class="carousel-nav-right">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container is-wrap">
             <!-- start tile -->
             {#
             <div class="tile is-ancestor">
@@ -31,50 +116,6 @@
                 </div>
             </div>
             #}
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true" data-delay="7000">
-                        <div class="carousel-container">
-                            <div class="carousel-item has-background">
-                                <img class="is-background" src="{{site.theme}}/common/asset/banner_main1.jpg" alt="건축문화제2018" />
-                                <div class="title is-hidden">건축문화제2018</div>
-                            </div>
-                            <div class="carousel-item is-link has-background">
-                                <a href="/about/idea">
-                                    <img class="is-background" src="{{site.theme}}/common/asset/banner_main2.jpg" alt="대학생아이디어공모전" />
-                                    <div class="title is-hidden">대학생아이디어공모전</div>
-                                </a>
-                            </div>
-                            <div class="carousel-item is-link has-background is-active">
-                                <a href="/about/award">
-                                    <img class="is-background" src="{{site.theme}}/common/asset/banner_main3.jpg" alt="서울시건축상" />
-                                    <div class="title is-hidden">서울시건축상</div>
-                                </a>
-                            </div>
-                            <div class="carousel-item is-link has-background">
-                                <a target="_blank" href="http://www.hanriver.net/">
-                                    <img class="is-background" src="{{site.theme}}/common/asset/banner_main4.jpg" alt="한강건축상상전" />
-                                    <div class="title is-hidden">한강건축상상전</div>
-                                </a>
-                            </div>
-                            <div class="carousel-item is-link has-background">
-                                <a target="_blank" href="http://www.hanriver.net/#stroytelling">
-                                    <img class="is-background" src="{{site.theme}}/common/asset/banner_main5.jpg" alt="건축에이야기를더하다" />
-                                    <div class="title is-hidden">건축에이야기를더하다</div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="carousel-navigation is-overlay">
-                            <div class="carousel-nav-left">
-                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                            </div>
-                            <div class="carousel-nav-right">
-                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <div class="tile is-child">
@@ -102,7 +143,7 @@
                                 <img src="{{site.theme}}/common/asset/director-1-pic.jpg">
                             </figure>
                             <div class="has-text-centered">
-                                <a class="button is-info" href="/about"><span class="icon"><i class="fa fa-sign-in"></i></span><span>이기옥님을 소개합니다.</span></a>
+                                <a class="button is-info" href="/about#director"><span class="icon"><i class="fa fa-sign-in"></i></span><span>이기옥님을 소개합니다.</span></a>
                             </div>
                         </div>
                     </div>
@@ -197,7 +238,6 @@
             </div>
             {% endif %}
         </div>
-    </div>
 </section>
 <section class="hero is-light">
     <div class="hero-body has-background-grey-lighter">
@@ -226,31 +266,88 @@
     </div>
     <button class="modal-close is-large" aria-label="close"></button>
 </div>
-
 {% include './include/script.html' %}
 <script>
-    bulmaExtensions.bulmaCarousel.attach();
     $(function () {
-        const $carousel = $('.carousel');
-        const $modal = $('.modal');
+        bulmaExtensions.bulmaCarousel.attach();
 
-        $carousel.on('click', '.carousel-item', function (e) {
-            if (!$(this).hasClass('is-link')) {
-                e.preventDefault();
-                let img = $(this).find('img.is-background').attr('src');
+        const $carousel = $('.custom-carousel');
+        const $navigator = $('.carousel-navigation');
+        const $list = $carousel.find('.carousel-item');
 
-                img = img.split('banner_').join('');
-
-                $modal.find('p.image img').attr('src', img);
-                $modal.addClass('is-active');
-            }
-        });
-
-        $modal.on('click', 'button.modal-close', function (e) {
+        $navigator.on('click', '.carousel-nav-left', function (e) {
             e.preventDefault();
-            $modal.removeClass('is-active');
+
+            reArrangeElement($list, -1)
+        });
+        $navigator.on('click', '.carousel-nav-right', function (e) {
+            e.preventDefault();
+
+            reArrangeElement($list, 1)
+        });
+        $carousel.on('click', '.is-left-float', function (e) {
+            e.preventDefault();
+
+            reArrangeElement($list, 1)
+        });
+        $carousel.on('click', '.is-right-float', function (e) {
+            e.preventDefault();
+
+            reArrangeElement($list, -1)
         });
     });
+
+    function reArrangeElement($list, counter) {
+        const $elements = $list.map(function () {
+            return $(this).children()
+        });
+
+        if (counter > 0) {
+            $list.map(function (idx) {
+                let reindex = idx - 1;
+
+                if (reindex < 0) reindex = $elements.length - 1;
+                if (reindex >= $elements.length) reindex = 0;
+
+                $(this).html($elements[reindex])
+            })
+        } else {
+            $list.map(function (idx) {
+                let reindex = idx + 1;
+
+                if (reindex < 0) reindex = $elements.length - 1;
+                if (reindex >= $elements.length) reindex = 0;
+
+                $(this).html($elements[reindex])
+            })
+        }
+    }
+
+    function reArrangeImage($list, counter) {
+        const $imageList = $list.map(function () {
+            return $(this).find('img').attr('src')
+        });
+
+        if (counter > 0) {
+            $list.map(function (idx) {
+                let reindex = idx - 1;
+
+                if (reindex < 0) reindex = $imageList.length - 1;
+                if (reindex >= $imageList.length) reindex = 0;
+
+                $(this).find('img').attr('src', $imageList[reindex])
+            })
+        } else {
+            $list.map(function (idx) {
+                let reindex = idx + 1;
+
+                if (reindex < 0) reindex = $imageList.length - 1;
+                if (reindex >= $imageList.length) reindex = 0;
+
+                $(this).find('img').attr('src', $imageList[reindex])
+            })
+        }
+    }
 
     function makeWide() {
         const $carousel = $('.carousel');
@@ -262,7 +359,6 @@
             //
             // img = img.split('banner_').join('');
             // $(this).find('img.is-background').attr('src', img);
-
             $parent.addClass('is-wide')
         } else {
             // let img = $(this).find('img.is-background').attr('src');
@@ -270,7 +366,6 @@
             // let arr = img.split('main');
             // img = [arr[0], 'banner_main', arr[1]].join('');
             // $(this).find('img.is-background').attr('src', img);
-
             $parent.removeClass('is-wide')
         }
 

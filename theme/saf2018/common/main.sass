@@ -1,3 +1,94 @@
+.image-holder
+  line-height: 0
+  img
+    margin: 0
+    padding: 0
+
+.custom-carousel
+  $width: 180px
+  padding: 0.75rem
+  position: relative
+  .carousel-container
+    display: block
+    margin: 0 auto
+    max-width: 768px
+  .carousel-item
+    display: block
+    padding: .75rem
+  .carousel-navigation
+    display: none
+    .carousel-nav-left
+      height: 2.2em
+      width: 2em
+      background: rgba(255,255,255,.7)
+      display: flex
+      justify-content: center
+      align-items: center
+      color: #4a4a4a
+      position: absolute
+      left: 12px
+      cursor: pointer
+    .carousel-nav-right
+      height: 2.2em
+      width: 2em
+      background: rgba(255,255,255,.7)
+      display: flex
+      justify-content: center
+      align-items: center
+      color: #4a4a4a
+      position: absolute
+      right: 36px
+      cursor: pointer
+  .is-overlay
+    z-index: 19
+    top: 50%
+    transform: perspective(1px) translateY(-50%)
+    bottom: auto
+    left: auto
+    right: auto
+    align-items: center
+    justify-content: space-between
+  @media screen and (min-width: 1024px)
+    .carousel-container
+      display: flex
+      max-width: none
+    .carousel-item
+      display: block
+      flex-basis: 0
+      flex-grow: 1
+      flex-shrink: 1
+      padding: .75rem
+    .is-left-float
+      padding: 10px
+      width: $width
+      position: absolute
+      left: -$width
+      bottom: 0
+    .is-right-float
+      padding: 10px
+      width: $width
+      position: absolute
+      right: -$width
+      bottom: 0
+    .carousel-navigation
+      display: flex
+      width: 100%
+
+.is-about
+  .is-credit
+    .is-sentence
+      font-size: 1.1em
+      color: #5a5a5a
+      line-height: 1.8
+  .from
+    padding-top: 0.9em
+    font-size: 1.1em
+    color: #0d0d0d
+    word-break: keep-all
+  .has-text-justified
+    padding: 0.5em 0
+    line-height: 1.8
+
 .is-director
   .timeline
     .timeline-header
@@ -33,6 +124,17 @@
     font-size: 0.8rem
     color: #888888
     word-break: keep-all
+
+  @media screen and (max-width: 765px)
+    .media
+      display: block
+      .media-left
+        width: 100%
+        .is-director-pic
+          width: 100%
+        h3
+          margin-bottom: 1em
+
 .is-director-bg
   background-image: url(/saf2018/common/asset/director-talk-1-bg.jpg)
   text-align: center
@@ -253,10 +355,28 @@ span.opening-date
   position: relative
   .has-move-up
     position: absolute
-    bottom: 76px
+    bottom: 3em
     left: 58px
+.link-form
+  position: relative
+  .has-move-right
+    position: absolute
+    bottom: 2em
+    right: 3em
+  .has-move-up
+    position: absolute
+    bottom: 1.2em
+    left: 34px
+@media screen and (max-width: 765px)
+  .link-form
+    .has-move-up
+      left: 18px
+      bottom: 1em
+      a.button.is-medium
+        font-size: 0.8em
 
 .carousel
+  padding-bottom: 1.5em
   .carousel-navigation.is-overlay
     z-index: 29
   .carousel-item

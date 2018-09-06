@@ -11,48 +11,50 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification" style="background: #ebc1b3; color: #000000;">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title">2012년 제4회 서울건축문화제</p>
-                                <p class="subtitle">서울 마을 일상 <span class="opening-date" style="color: #fff528">10.22~10.28</span></p>
-                            </div>
-                            <div class="media-right">
-                                <figure class="image">
-                                    <img src="{{site.theme}}/common/archive/cover-wide-2012.jpg" alt="2012 자료">
-                                </figure>
-                            </div>
+
+    <div class="container is-wrap">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification" style="background: #ebc1b3; color: #000000;">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title">2012년 제4회 서울건축문화제</p>
+                            <p class="subtitle">서울 마을 일상 <span class="opening-date"
+                                                               style="color: #fff528">10.22~10.28</span></p>
                         </div>
-                    </article>
-                </div>
+                        <div class="media-right">
+                            <figure class="image">
+                                <img src="{{site.theme}}/common/archive/cover-wide-2012.jpg" alt="2012 자료">
+                            </figure>
+                        </div>
+                    </div>
+                </article>
             </div>
-            <div class="tile is-ancestor is-wide">
-                <div class="tile is-parent">
-                    <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true">
-                        <div class="carousel-container">
-                            {% for page in range(1002,1037) %}
-                            <div class="carousel-item has-background is-active">
-                                <img class="is-background" src="https://static.saf.kr/2012/{{page}}_preview.jpg" alt="{{page}}" />
-                            </div>
-                            {% endfor %}
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true">
+                    <div class="carousel-container">
+                        {% for page in range(1002,1037) %}
+                        <div class="carousel-item has-background is-active">
+                            <img class="is-background" src="https://static.saf.kr/2012/{{page}}_preview.jpg"
+                                 alt="{{page}}"/>
                         </div>
-                        <div class="carousel-navigation is-overlay">
-                            <div class="carousel-nav-left">
-                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                            </div>
-                            <div class="carousel-nav-right">
-                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-navigation is-overlay">
+                        <div class="carousel-nav-left">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </div>
+                        <div class="carousel-nav-right">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 <footer class="footer has-background-grey-light">
     {% include '../include/footer.html' %}

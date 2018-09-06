@@ -11,42 +11,42 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification" style="background: #deca9f; color: #000000;">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title">2015년 제7회 서울건축문화제</p>
-                                <p class="subtitle">도시재생 <span class="opening-date" style="color: #00ff58">10.08~11.08</span></p>
-                            </div>
-                            <div class="media-right">
-                                <figure class="image">
-                                    <img src="{{site.theme}}/common/archive/cover-wide-2015.jpg" alt="2015 자료">
-                                </figure>
-                            </div>
+    <div class="container is-wrap">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification" style="background: #deca9f; color: #000000;">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title">2015년 제7회 서울건축문화제</p>
+                            <p class="subtitle">도시재생 <span class="opening-date"
+                                                           style="color: #00ff58">10.08~11.08</span></p>
                         </div>
-                    </article>
-                </div>
+                        <div class="media-right">
+                            <figure class="image">
+                                <img src="{{site.theme}}/common/archive/cover-wide-2015.jpg" alt="2015 자료">
+                            </figure>
+                        </div>
+                    </div>
+                </article>
             </div>
-            <div class="tile is-ancestor is-wide">
-                <div class="tile is-parent">
-                    <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true">
-                        <div class="carousel-container">
-                            {% for page in range(1002,1039) %}
-                            <div class="carousel-item has-background is-active">
-                                <img class="is-background" src="https://static.saf.kr/2015/{{page}}_preview.jpg" alt="{{page}}" />
-                            </div>
-                            {% endfor %}
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child carousel carousel-animated carousel-animate-slide" data-autoplay="true">
+                    <div class="carousel-container">
+                        {% for page in range(1002,1039) %}
+                        <div class="carousel-item has-background is-active">
+                            <img class="is-background" src="https://static.saf.kr/2015/{{page}}_preview.jpg"
+                                 alt="{{page}}"/>
                         </div>
-                        <div class="carousel-navigation is-overlay">
-                            <div class="carousel-nav-left">
-                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                            </div>
-                            <div class="carousel-nav-right">
-                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-navigation is-overlay">
+                        <div class="carousel-nav-left">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </div>
+                        <div class="carousel-nav-right">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>

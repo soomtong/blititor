@@ -12,38 +12,71 @@
 </div>
 <section class="section">
     <div class="columns is-centered">
+
         <div class="column container is-wrap">
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
-                    <div class="tile is-child">
-                        <h2 class="is-size-1 has-text-weight-bold">자료 이관 중입니다.</h2>
-                        <h3 class="is-size-3">서울시 건축문화제 2018</h3>
-                        <p>2018.10.5 - 10.28</p>
-                        <p>문화비축기지, 돈의문박물관마을</p>
-                    </div>
+                    <article class="tile is-child notification is-warning">
+                        <p class="title">제 9회 SAF 대학생 아이디어 공모</p>
+                    </article>
                 </div>
             </div>
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <div class="tile is-child">
-                        <h2 class="title is-hidden">서울시 건축문화제 2018</h2>
-                        <img src="{{site.theme}}/common/asset/banner_main2.jpg" alt="서울시 건축문화제">
+                        <table class="table is-bordered is-striped is-fullwidth">
+                            <tbody>
+                            <tr>
+                                <th><strong>장소</strong></th>
+                                <th> 문화비축기지 탱크6 / 2층</th>
+                            </tr>
+                            <tr>
+                                <td><strong>전시구성</strong></td>
+                                <td> 영상, 패널, 모형 활용</td>
+                            </tr>
+                            <tr>
+                                <td><strong>작품</strong> <strong>수</strong></td>
+                                <td> 5개 팀 작품 + 프로필 5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>패널</strong> <strong>사이즈</strong></td>
+                                <td> 작품 패널 : 2700x1800 / 튜터, 팀원 프로필 패널 : 450x450</td>
+                            </tr>
+                            <tr>
+                                <td><strong>전시</strong> <strong>테이블</strong> <strong>사이즈</strong></td>
+                                <td> 2700x500 기본 테이블</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/idea-award1.jpg" alt="아이디어 전시">
+                        </figure>
+                    </div>
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/idea-award2.jpg" alt="아이디어 전시">
+                        </figure>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<section class="section">
-    <div class="columns is-centered">
-        <h1>{{app.title}}</h1>
-        <div>
-            <p>{{title}} <code>{{page_id}}</code></p>
+    <div class="column container">
+        <div class="image-holder">
+            <img src="{{site.theme}}/common/asset/saf-idea.png" alt="아이디어공모전">
         </div>
     </div>
+
 </section>
 <footer class="footer">
     {% include '../include/footer.html' %}
 </footer>
+{% include '../include/script.html' %}
 </body>
 </html>

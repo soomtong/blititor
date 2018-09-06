@@ -11,47 +11,46 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
-            {% if not galleryImageList or (galleryImageList | length) < 1 %}
-            <article class="message">
-                <div class="message-body">
-                    <p>아직 갤러리에 업로드된 사진이 없습니다.</p>
+    <div class="container is-wrap">
+        {% if not galleryImageList or (galleryImageList | length) < 1 %}
+        <article class="message">
+            <div class="message-body">
+                <p>아직 갤러리에 업로드된 사진이 없습니다.</p>
+            </div>
+        </article>
+        {% endif %}
+        {% for cate in galleryImageList %}
+        <article class="message is-gallery" id="{{cate.id}}">
+            <div class="message-header">
+                <p class="">{{ cate.title | trim }}<span class="subtitle">{{ cate.sub_title | trim }}</span></p>
+                {% if user and user.grant %}
+                <div class="control">
+                    <span class="button is-success image-append">사진 추가</span>
                 </div>
-            </article>
-            {% endif %}
-            {% for cate in galleryImageList %}
-            <article class="message is-gallery" id="{{cate.id}}">
-                <div class="message-header">
-                    <p class="">{{ cate.title | trim }}<span class="subtitle">{{ cate.sub_title | trim }}</span></p>
-                    {% if user and user.grant %}
-                    <div class="control">
-                        <span class="button is-success image-append">사진 추가</span>
-                    </div>
-                    {% endif %}
-                </div>
-                {% for img in cate.images %}
-                <div class="message-body">
-                    <figure class="image">
-                        <img src="/upload/gallery/image/{{img.image_file}}">
-                        <p class="image-desc">{{ img.title | trim }}</p>
-                    </figure>
-                    {#
-                    <!-- 업로드 이외의 기능은 관리자 모드에서 지원 -->
-                    <div class="gallery-list-control">
-                        <div class="field is-grouped is-grouped-right">
-                            <div class="control">
-                                <a href="{{site.root}}{{route.gallery.root}}" class="button is-danger image-delete">삭제</a>
-                            </div>
+                {% endif %}
+            </div>
+            {% for img in cate.images %}
+            <div class="message-body">
+                <figure class="image">
+                    <img src="/upload/gallery/image/{{img.image_file}}">
+                    <p class="image-desc">{{ img.title | trim }}</p>
+                </figure>
+                {#
+                <!-- 업로드 이외의 기능은 관리자 모드에서 지원 -->
+                <div class="gallery-list-control">
+                    <div class="field is-grouped is-grouped-right">
+                        <div class="control">
+                            <a href="{{site.root}}{{route.gallery.root}}" class="button is-danger image-delete">삭제</a>
                         </div>
                     </div>
-                    #}
                 </div>
-                {% endfor %}
-            </article>
+                #}
+            </div>
             {% endfor %}
-        </div>
+        </article>
+        {% endfor %}
     </div>
+
     {% if user and user.grant %}
     <div class="gallery-write-control">
         <div class="columns">
@@ -89,6 +88,6 @@
 </footer>
 {% include '../include/script.html' %}
 <script src="/vendor/flowjs/flow.min.js"></script>
-<script src="{{site.theme}}/common/gallery.js"></script>
+<script src="{{site.theme}}/common/gallery.js?v2"></script>
 </body>
 </html>

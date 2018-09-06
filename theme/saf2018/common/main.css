@@ -1,3 +1,109 @@
+.image-holder {
+  line-height: 0;
+}
+.image-holder img {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-carousel {
+  padding: 0.75rem;
+  position: relative;
+}
+.custom-carousel .carousel-container {
+  display: block;
+  margin: 0 auto;
+  max-width: 768px;
+}
+.custom-carousel .carousel-item {
+  display: block;
+  padding: 0.75rem;
+}
+.custom-carousel .carousel-navigation {
+  display: none;
+}
+.custom-carousel .carousel-navigation .carousel-nav-left {
+  height: 2.2em;
+  width: 2em;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4a4a4a;
+  position: absolute;
+  left: 12px;
+  cursor: pointer;
+}
+.custom-carousel .carousel-navigation .carousel-nav-right {
+  height: 2.2em;
+  width: 2em;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4a4a4a;
+  position: absolute;
+  right: 36px;
+  cursor: pointer;
+}
+.custom-carousel .is-overlay {
+  z-index: 19;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+  bottom: auto;
+  left: auto;
+  right: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+@media screen and (min-width: 1024px) {
+  .custom-carousel .carousel-container {
+    display: flex;
+    max-width: none;
+  }
+  .custom-carousel .carousel-item {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 0.75rem;
+  }
+  .custom-carousel .is-left-float {
+    padding: 10px;
+    width: 180px;
+    position: absolute;
+    left: -180px;
+    bottom: 0;
+  }
+  .custom-carousel .is-right-float {
+    padding: 10px;
+    width: 180px;
+    position: absolute;
+    right: -180px;
+    bottom: 0;
+  }
+  .custom-carousel .carousel-navigation {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.is-about .is-credit .is-sentence {
+  font-size: 1.1em;
+  color: #5a5a5a;
+  line-height: 1.8;
+}
+.is-about .from {
+  padding-top: 0.9em;
+  font-size: 1.1em;
+  color: #0d0d0d;
+  word-break: keep-all;
+}
+.is-about .has-text-justified {
+  padding: 0.5em 0;
+  line-height: 1.8;
+}
+
 .is-director .timeline .timeline-header {
   margin-left: 3.8em;
   margin-right: 3em;
@@ -38,6 +144,20 @@
   font-size: 0.8rem;
   color: #888888;
   word-break: keep-all;
+}
+@media screen and (max-width: 765px) {
+  .is-director .media {
+    display: block;
+  }
+  .is-director .media .media-left {
+    width: 100%;
+  }
+  .is-director .media .media-left .is-director-pic {
+    width: 100%;
+  }
+  .is-director .media .media-left h3 {
+    margin-bottom: 1em;
+  }
 }
 
 .is-director-bg {
@@ -299,10 +419,36 @@ span.opening-date {
 }
 .download .has-move-up {
   position: absolute;
-  bottom: 76px;
+  bottom: 3em;
   left: 58px;
 }
 
+.link-form {
+  position: relative;
+}
+.link-form .has-move-right {
+  position: absolute;
+  bottom: 2em;
+  right: 3em;
+}
+.link-form .has-move-up {
+  position: absolute;
+  bottom: 1.2em;
+  left: 34px;
+}
+
+@media screen and (max-width: 765px) {
+  .link-form .has-move-up {
+    left: 18px;
+    bottom: 1em;
+  }
+  .link-form .has-move-up a.button.is-medium {
+    font-size: 0.8em;
+  }
+}
+.carousel {
+  padding-bottom: 1.5em;
+}
 .carousel .carousel-navigation.is-overlay {
   z-index: 29;
 }

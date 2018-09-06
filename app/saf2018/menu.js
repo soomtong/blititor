@@ -32,18 +32,6 @@ const SiteMenu = [
         url: '/about/location'
     },
     {
-        id: 'about_award',
-        name: '서울시 건축상',
-        useSubPath: true,
-        url: '/about/award'
-    },
-    {
-        id: 'about_idea',
-        name: '대학생 아이디어 공모전',
-        useSubPath: true,
-        url: '/about/idea'
-    },
-    {
         id: 'program_opening',
         name: '개막식',
         useSubPath: true,

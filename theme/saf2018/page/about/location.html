@@ -11,39 +11,73 @@
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column container is-wrap">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <div class="tile is-child">
-                        <h2 class="title is-hidden">서울시 건축문화제 2018</h2>
-                        <img src="{{site.theme}}/common/asset/banner_180611_1.png" alt="서울시 건축문화제">
-                    </div>
-                </div>
+    <div class="container is-wrap">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification is-info">
+                    <p class="title">행사 개요</p>
+                </article>
             </div>
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <div class="tile is-child">
-                        <h2 class="is-size-1 has-text-weight-bold">자료 이관 중입니다.</h2>
-                        <h3 class="is-size-3">서울시 건축문화제 2018</h3>
-                        <p>2018.10.5 - 10.28</p>
-                        <p>문화비축기지, 돈의문박물관마을</p>
-                    </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <div class="tile is-child">
+                    <h2 class="title is-hidden">서울시 건축문화제 2018</h2>
+                    <img src="{{site.theme}}/common/asset/location_map1.jpg" alt="문화비축기지 배치도">
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="section">
-    <div class="columns is-centered">
-        <h1>{{app.title}}</h1>
-        <div>
-            <p>{{title}} <code>{{page_id}}</code></p>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <p class="title">전시관</p>
+                    <p class="subtitle">Tank 6</p>
+                    <ul class="">
+                        <li>주제전 (한양山川 서울 江山)</li>
+                        <li>서울건축문화제 10주년 기념전</li>
+                        <li>제36회 서울시 건축상 수상작</li>
+                        <li>대학생 아이디어 공모전</li>
+                        <li>한강건축상상전</li>
+                        <li>건축 스토리텔링 공모전</li>
+                        <li>우리동네 좋은집 찾기</li>
+                        <li>중·고등학생 건축사진 공모전</li>
+                        <li>서울江山, 함께 살어리랏다</li>
+                        <li>주제 파빌리온 _ 서울江山</li>
+                    </ul>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <p class="title">시민참여행사</p>
+                    <p class="subtitle">Tank 6</p>
+                    <ul>
+                        <li>건축가 대담</li>
+                        <li>오픈 오피스</li>
+                        <li>열린 강좌</li>
+                        <li>도슨트 투어</li>
+                        <li>건축영화상영</li>
+                        <li>도시건축포럼</li>
+                        <li>건축문화투어</li>
+                        <li>중고등학생 특별강연</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child has-background-white">
+                    <img src="{{site.theme}}/common/asset/floor_map1.png" alt="문화비축기지 배치도">
+                </div>
+                <div class="tile is-child has-background-white">
+                    <img src="{{site.theme}}/common/asset/floor_map2.png" alt="문화비축기지 배치도">
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <footer class="footer">
     {% include '../include/footer.html' %}
 </footer>
+{% include '../include/script.html' %}
 </body>
 </html>
