@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
     <div class="container is-wrap">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification content has-background-white">
+                    <h3>서울건축문화제 관람기간 </h3>
+                    <h6>2019. 2018. 10. 5(금) ~ 10.28(일)</h6>
+                    <ul>
+                        <li>화 – 금 10:00 – 19:00</li>
+                        <li>토,   일 10:00 – 20:00</li>
+                        <li>휴관일  매주 월요일 (10.8. 10.15, 10.22)</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+
         <!-- 주제전 한강 서울-->
         <div class="tile is-ancestor">
             <div class="tile is-parent is-wide">
                 <article class="tile is-child notification is-primary">
-                    <p class="title">한강山川 서울江山</p>
+                    <p class="title">주제전: 한강山川 서울江山</p>
                 </article>
             </div>
         </div>
@@ -44,42 +58,23 @@
         <div class="tile is-ancestor">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-primary">
-                    <p class="title">주제전 : 서울건축문화제 10주년 기념전</p>
+                    <p class="title">서울건축문화제 10주년 기념전</p>
                 </article>
-            </div>
-        </div>
-        <div class="tile is-ancestor">
-            <div class="tile is-parent">
-                <div class="tile is-child">
-                    <table class="table is-bordered is-striped is-fullwidth">
-                        <tbody>
-                        <tr>
-                            <th><strong>장소</strong></th>
-                            <th> 문화비축기지 탱크6 / 1층 입구</th>
-                        </tr>
-                        <tr>
-                            <td><strong>전시구성</strong></td>
-                            <td> 패널 활용</td>
-                        </tr>
-                        <tr>
-                            <td><strong>콘텐츠</strong></td>
-                            <td> 역대 포스터, 수상작</td>
-                        </tr>
-                        <tr>
-                            <td><strong>패널</strong> <strong>사이즈</strong></td>
-                            <td> 900x900x3000 목공기둥 4개, 3000x3000 목공패널 1개</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
         <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/main-history.jpg" alt="10주년 기념">
+                        <img src="{{site.theme}}/common/asset/main-history-archive.jpg" alt="10주년 기념">
                     </figure>
+                    <div class="download">
+                        <div class="has-move-up">
+                            <a class="button is-danger is-medium" href="https://static.saf.kr/10th-archive.jpg">
+                                <span class="icon"><i class="fa fa-download"></i></span>
+                                <span>이미지 다운로드(고해상도)</span></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,52 +83,219 @@
         <div class="tile is-ancestor" id="award2018">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-primary">
-                    <p class="title">제 36회 서울시 건축상 수상작</p>
+                    <p class="title">제 36회 서울시 건축상</p>
                 </article>
             </div>
         </div>
         <div class="tile is-ancestor">
             <div class="tile is-parent">
-                <div class="tile is-child">
-                    <table class="table is-bordered is-striped is-fullwidth">
-                        <tbody>
-                        <tr>
-                            <td><strong>장소</strong></td>
-                            <td> 문화비축기지 탱크6 / 1층</td>
-                        </tr>
-                        <tr>
-                            <td><strong>전시구성</strong></td>
-                            <td> 영상, 패널, 모형 활용</td>
-                        </tr>
-                        <tr>
-                            <td><strong>작품</strong> <strong>수</strong></td>
-                            <td> 수상작 14작품 + 프로필 14</td>
-                        </tr>
-                        <tr>
-                            <td><strong>패널</strong> <strong>사이즈</strong></td>
-                            <td> 작품 패널 : 900x2500 / 설계자 프로필 패널 : 450x450</td>
-                        </tr>
-                        <tr>
-                            <td><strong>전시</strong> <strong>테이블</strong> <strong>사이즈</strong></td>
-                            <td> 500*500 기본 테이블 1식~3식 조합 구성</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="box">
+                        <p>서울건축문화제 2018, [제36회 서울시 건축상]에는 총 116작품 (신축 81, 리모델링 26, 녹색건축 9)의 수준 높은 작품이 출품됐다. 지난 7월 20일 1차 서류 심사를 통해 먼저 수상 예정작 14작품을 선정하고, 8월 1일 그중 9작품에 대해 2차 현장심사를 하였다. 건축의 공공적 가치를 구현해 시민의 삶의 질을 향상시킨 우수한 건축물과 공간 환경을 장려라는 목표에 부합하면서 완성도가 가장 높은 <strong>대상 1작품, 최우수작 4작품, 우수작 9작품</strong>을 선정하였다.</p>
+                        <ul>
+                            <li>심사위원 :   함인선 (심사위원장 / (주)BHW건축 대표) 김영준 (서울시 총괄건축가 / 김영준도시건축 대표) 우대성 ((주)오퍼스건축사 사무소 대표) 이충기 (서울시립대학교 교수) 정수진 (SIE건축 대표)</li>
+                        </ul>
+                    </div>
+                </article>
             </div>
         </div>
-        <div class="tile is-ancestor is-wide">
+        <div class="tile is-ancestor">
             <div class="tile is-parent">
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/award-image1.jpg" alt="수상작 안내">
-                    </figure>
-                </div>
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/award-image2.jpg" alt="수상작 안내">
-                    </figure>
-                </div>
+                <article class="tile is-child notification content has-background-white-bis">
+                    <h3><span class="fa fa-trophy">&nbsp;</span> 대상</h3>
+                    <ul>
+                        <li>PLACE 1 / 김찬중(더시스템랩)</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize1-2.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize1-1.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <h3><span class="fa fa-trophy">&nbsp;</span> 최우수상</h3>
+                    <ul>
+                        <li>코오롱 One&amp;Only타워 / 윤세한(해안), 모포시스</li>
+                        <li>은혜공동체 협동조합주택 / 김현준[국립강원대학교] &amp; 김태영[한국예술종합학교] (온고당)</li>
+                        <li>수락행복발전소 / 신창훈, 장윤규(운생동)</li>
+                        <li>예진이네 집수리 / 김재관(무회)</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize2-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize2-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize3-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize3-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize4-2.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize4-1.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <h3><span class="fa fa-trophy">&nbsp;</span> 우수상</h3>
+                    <ul>
+                        <li>내를 건너서 숲으로 도서관 /조진만(조진만건축사사무소)</li>
+                        <li>THE ILLUSION (R TOWER) / 곽상준, 이소정(오비비에이)</li>
+                        <li>URBAN MEMBRANE / 홍만식(리슈)</li>
+                        <li>시연재 / 정문철(꼴라보)</li>
+                        <li>아산나눔재단 사옥 / 전숙희(와이즈)</li>
+                        <li>사당동 소행성 / 조성익 [홍익대학교] (TRU)</li>
+                        <li>홍릉 콘텐츠 문화광장 / 최정우(유니트유에이)</li>
+                        <li>평화문화진지 / 유종수, 김빈(코어)</li>
+                        <li>청연빌딩 / 김학건(청연)</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize6-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize6-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize7-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize7-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize8-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize8-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize9-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize9-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize10-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize10-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize11-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize11-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize12-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize12-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize13-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize13-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <div class="tile is-child box">
+                        <figure class="image">
+                            <img src="{{site.theme}}/common/asset/main-prize14-1.jpg" alt="10주년 기념">
+                            <img src="{{site.theme}}/common/asset/main-prize14-2.jpg" alt="10주년 기념">
+                        </figure>
+                    </div>
+                </article>
             </div>
         </div>
 
@@ -147,46 +309,73 @@
         </div>
         <div class="tile is-ancestor">
             <div class="tile is-parent">
-                <div class="tile is-child">
-                    <table class="table is-bordered is-striped is-fullwidth">
-                        <tbody>
-                        <tr>
-                            <th><strong>장소</strong></th>
-                            <th> 문화비축기지 탱크6 / 2층</th>
-                        </tr>
-                        <tr>
-                            <td><strong>전시구성</strong></td>
-                            <td> 영상, 패널, 모형 활용</td>
-                        </tr>
-                        <tr>
-                            <td><strong>작품</strong> <strong>수</strong></td>
-                            <td> 5개 팀 작품 + 프로필 5</td>
-                        </tr>
-                        <tr>
-                            <td><strong>패널</strong> <strong>사이즈</strong></td>
-                            <td> 작품 패널 : 2700x1800 / 튜터, 팀원 프로필 패널 : 450x450</td>
-                        </tr>
-                        <tr>
-                            <td><strong>전시</strong> <strong>테이블</strong> <strong>사이즈</strong></td>
-                            <td> 2700x500 기본 테이블</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <div class="tile is-child box">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <ul>
+                        <li><p>Studio 1 도심 속의 섬: 전철 지상역사의 재발견 </p>
+                            <ul>
+                                <li>튜터: 김민석(노션아키텍쳐)</li>
+                                <li>크리틱: 곽희수(이뎀도시건축)]</li>
+                                <li>참가자:  김다훈, 김지수, 유수정, 윤소영, 장승환, 정보근</li>
+                            </ul>
+                        </li>
+                    </ul>
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/idea-award1.jpg" alt="아이디어 전시">
+                        <img src="{{site.theme}}/common/asset/main-idea-prize1.jpg" alt="10주년 기념">
                     </figure>
-                </div>
-                <div class="tile is-child box">
+
+                    <ul>
+                        <li><p>Studio 2 옛 물길 새기다 </p>
+                            <ul>
+                                <li>튜터: 양근보(근보양앤파트너스) </li>
+                                <li>크리틱: 조남호(솔토지빈건축) </li>
+                                <li>참가자: 길반석, 류영민, 박주형, 이수민, 이은지, 최예찬</li>
+                            </ul>
+                        </li>
+                    </ul>
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/idea-award2.jpg" alt="아이디어 전시">
+                        <img src="{{site.theme}}/common/asset/main-idea-prize2.jpg" alt="10주년 기념">
                     </figure>
-                </div>
+
+                    <ul>
+                        <li><p>Studio 3 한강의 간극을 잇는 우리의 방법 산산조각 </p>
+                            <ul>
+                                <li>튜터: 이승택(STPMJ)</li>
+                                <li>크리틱: 이정훈(조호건축) </li>
+                                <li>참가자: 경민선, 배영랑, 서석현, 신승훈, 장해수, 한지숙</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-idea-prize3.jpg" alt="10주년 기념">
+                    </figure>
+
+                    <ul>
+                        <li><p>Studio 4 서울산(山): 서른네 번째 인공의 산 </p>
+                            <ul>
+                                <li>튜터: 나은중(네임리스건축)</li>
+                                <li>크리틱: 정영한(정영한아키텍츠)</li>
+                                <li>참가자: 김은혜, 김호진, 심민주, 오하늘, 이동근, 최한웅</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-idea-prize4.jpg" alt="10주년 기념">
+                    </figure>
+
+                    <ul>
+                        <li><p>Studio 5 The Garden of Tomorrow 모두를 위한 &#39;내일의 정원&#39; - 뚝섬 자벌레 콤플렉스와 인프라스트럭처를 중심으로</p>
+                            <ul>
+                                <li>튜터: 최장원(건축농장) </li>
+                                <li>크리틱 김찬중(더시스템랩) </li>
+                                <li>참가자: 강연재, 김나현, 김보경, 김지환, 박종호, 박혁범</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-idea-prize5.jpg" alt="10주년 기념">
+                    </figure>
+
+                </article>
             </div>
         </div>
 
@@ -199,27 +388,33 @@
             </div>
         </div>
         <div class="tile is-ancestor">
-            <div class="tile is-parent is-vertical">
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine1.jpg" alt="건축상상전">
-                    </figure>
-                </div>
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine2.jpg" alt="건축상상전">
-                    </figure>
-                </div>
+            <div class="tile is-parent">
+                <figure class="image">
+                    <img src="{{site.theme}}/common/asset/main_imagination_poster.jpg" alt="한강건축상상전">
+                </figure>
             </div>
-            <div class="tile is-parent is-vertical">
+        </div>
+
+        <div class="tile is-ancestor">
+            <div class="tile is-parent ">
+                <article class="tile is-child notification content has-background-white-bis">
+                    <p>한강은 서울의 젖줄이다. 한강은 분단 전까지 전국에서 올라오는 세곡미 등을 서울로 운송하는데 이용되었으며, 더 나아가 중국이나 일본에서 오는 대형 선박도 한강을 통해 서울로 물자를 운반하기도 했다. 전국 각지, 전 세계에서 오는 물자와 문화를 한강을 통해서 맞이했던 것이다. 이후 한강 하류가 군사지역으로 막히면서 그동안 치수(治水)와 이수(利水)의 개념으로만 접근하던 한강은 2000년대에 들어서면서 친수(親水)공간으로 변화하고 있다.</p>
+                    <p>한강을 거닐 수 있게 되고 그 주변에 다양한 시설물이 들어서면서 친수공간으로의 한강은 점차 변화하였으며, 그 결과 한강을 방문하는 시민과 한강을 구경하려는 관광객도 늘어났다. 한강은 사계절 내내 많은 사람들이 거닐고 유희할 수 있는 공간으로 인식되었으며, 한강은 그 자리에서 사람들을 맞이하고 있다.</p>
+                    <p>현재 한강은 하나의 물줄기로 인식 되지만, 서울권역의 고덕천, 성내천, 탄천, 중랑천, 반포천, 만초천, 홍제천, 안양천, -아라천(경인운하)- 의 물을 머금으며 임진강을 만나 서해로 흘러 간다. 서울권역의 이러한 ‘천’은 서울 전역에 거미줄처럼 흩어져 있으며, 이것은 점차 한강으로 모여 한강을 이루고 사람들은 그 한강과 함께 살아가고 있다.</p>
+                    <p>합수부(한강맞이)는 사람이 모이고, 천이 한강과 만나는 지점이다. 그동안의 한강건축상상전은 한강 물 위와 둔치, 인접부근 리서치와 시설물을 기반으로 구성되었다면 이번 전시는 자연과 도시, 사람이 만나는 ‘한강맞이’(합수부)에 대한 상상을 통해 시민들에게 건축의 무한한 가능성을 보여주고자 한다.</p>
+                    <ul>
+                        <li><strong>기획</strong> / 김명규_마실와이드</li>
+                        <li><strong>작가 전시</strong> / IDR Architects, SIWA Architects, 지음재 아키텍츠,  CTR Form Architects, 박지현, 홍범, 조재영,  커브 어소시에이츠, 양은혜 &amp; 이웅철</li>
+                        <li><strong>VR 전시</strong> / 30분 정도 소요  평일 11:00 / 17:00  주말 11:00 / 14:00 / 17:00 (10.9 한날 포함)</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine1.jpg" alt="건축상상전">
-                    </figure>
-                </div>
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine2.jpg" alt="건축상상전">
+                        <img src="{{site.theme}}/common/asset/main-imagine-2f.jpg" alt="건축상상전">
                     </figure>
                 </div>
             </div>
@@ -228,96 +423,84 @@
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine-plan1.png" alt="건축상상전">
+                        <img src="{{site.theme}}/common/asset/main-imagine1.jpg" alt="건축상상전">
                     </figure>
                 </div>
-            </div>
-        </div>
-        <div class="tile is-ancestor ">
-            <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine-plan2.png" alt="건축상상전">
+                        <img src="{{site.theme}}/common/asset/main-imagine2.jpg" alt="건축상상전">
+                    </figure>
+                </div>
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-imagine3.jpg" alt="건축상상전">
                     </figure>
                 </div>
             </div>
         </div>
 
         <!-- 스토리텔링전 -->
-        <div class="tile is-ancestor">
+        <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-warning">
                     <p class="title">건축 스토리텔링 공모전</p>
                 </article>
             </div>
         </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-storytelling-brief.jpg" alt="건축상상전">
+                    </figure>
+                </div>
+            </div>
+        </div>
         <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/imagine-story1.jpg" alt="건축상상전">
+                        <img src="{{site.theme}}/common/asset/main-storytelling1.jpg" alt="건축상상전">
+                    </figure>
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-storytelling2.jpg" alt="건축상상전">
                     </figure>
                 </div>
             </div>
         </div>
 
-        <!-- 우리동네 좋은집 찾기 -->
-        <div class="tile is-ancestor">
+        <!--서울산책 : 우리동네 좋은 집 찾기 & 중고등학생 건축사진 공모전 -->
+        <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-primary">
-                    <p class="title">우리동네 좋은집 찾기</p>
+                    <p class="title">서울산책 : 우리동네 좋은 집 찾기 & 중고등학생 건축사진 공모전</p>
                 </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-hoods-brief.jpg" alt="건축상상전">
+                    </figure>
+                </div>
             </div>
         </div>
         <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/neighborhood.jpg" alt="우리동네 좋은집 찾기">
+                        <img src="{{site.theme}}/common/asset/main-schoolhood1.jpg" alt="건축상상전">
                     </figure>
-                </div>
-            </div>
-        </div>
-        <div class="tile is-ancestor">
-            <div class="tile is-parent">
-                <div class="tile is-child">
-                    <article class="tile is-child notification content has-background-white-bis">
-                        작은집들의 가치를 되돌아볼 수 있는 공모전 출품작을 통해 사람들이 살아온 발자취와 희로애락이 녹아 있는 작은집을 재발견할 기회의 장이 되었으면 합니다.
-                    </article>
-                </div>
-            </div>
-        </div>
-
-        <!-- 중고등학생 건축사진 공모전 -->
-        <div class="tile is-ancestor">
-            <div class="tile is-parent">
-                <article class="tile is-child notification is-primary">
-                    <p class="title">중고등학생 건축사진 공모전</p>
-                </article>
-            </div>
-        </div>
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/highschool.jpg" alt="중고등학생 건축사진 공모전">
+                        <img src="{{site.theme}}/common/asset/main-neighborhood1.jpg" alt="건축상상전">
                     </figure>
-                </div>
-            </div>
-        </div>
-        <div class="tile is-ancestor">
-            <div class="tile is-parent">
-                <div class="tile is-child">
-                    <article class="tile is-child notification content has-background-white-bis">
-                        ‘서울. 건축 산책’ 이라는 주제로 중고등학생에게는 사진을 통해 건축과 건축문화를 이해하고
-                        건축에 대한 저변확대와 더불어 청소년들의 창의력 개발에 도움을 주었으면 합니다.
-                    </article>
                 </div>
             </div>
         </div>
 
         <!-- 서울江山, 함께 살어리랏다 -->
-        <div class="tile is-ancestor">
+        <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-primary">
                     <p class="title">서울江山, 함께 살어리랏다</p>
@@ -325,22 +508,20 @@
             </div>
         </div>
         <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-seoul-together-brief.jpg" alt="건축상상전">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
-                <div class="tile is-child">
-                    <article class="tile is-child notification content has-background-white-bis">
-                        &nbsp;
-                        <br>
-
-                        &nbsp;
-                        <br>
-
-                        (업로드 중입니다.)
-                        &nbsp;
-                        <br>
-
-                        &nbsp;
-                        <br>
-                    </article>
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-seoul-together1.jpg" alt="건축상상전">
+                    </figure>
                 </div>
             </div>
         </div>
@@ -349,27 +530,26 @@
         <div class="tile is-ancestor">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-primary">
-                    <p class="title">주제 파빌리온 : 서울江山</p>
+                    <p class="title">주제 파빌리온: 서울江山</p>
                 </article>
             </div>
         </div>
         <div class="tile is-ancestor">
+            <div class="tile is-parent is-wide">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-pavilion-brief.jpg" alt="파빌리온">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
-                <div class="tile is-child">
-                    <article class="tile is-child notification content has-background-white-bis">
-                        <p>우리의 컨셉은 참여에 의한 변화와 구축입니다. 지난 UAUS &lt;서울숲, 놀이를 심다&gt; 전시에서 지관과 접합부를 활용한 구축놀이 컨셉을 이번 전시 주제에 맞게
-                            재해석했습니다. </p>
-                        <p>시간이 지남에 따라 물과 바람이 흐르며 서서히 산수가 변하듯, 우리의 파빌리온도 사람들의 흐름속에서 그들의 선택에 의해 구축요소들이 재구성되고 공간의 변화를
-                            일으킵니다.</p>
-                        <p> 파빌리온은 사람들의 동선이 흐를 수 있는 3개의 크고 작은 길과 산맥으로 이루어져 있습니다. </p>
-                        <p>사람들은 입구를 통과하며 산의 내부를 먼저 체험합니다. </p>
-                        <p>파빌리온을 구성하는 지관이 중첩되면서 생기는 원근감은 나뭇가지가 되어 공간감을 다양하게 해줍니다. 내부 체험을 하고 마주하는 대공간은 정상에 올랐을 때의 개방감을
-                            느끼게 해줍니다. </p>
-                        <p>그 후 사람들은 파빌리온 주위의 의자에서 잠시 쉬어가며, 전체적인 파빌리온의 모습이 대지와 어우러지는 모습을 조망할 수 있습니다. </p>
-                        <p>서울의 산수를 새롭게 건축적으로 구축한 우리의 파빌리온에서 그 정취를 느끼고 가길 기대합니다</p>
-                        <h4>서울과학기술대학교 건축학부 건축학전공</h4>
-                        <p>박상우 조민정 정상훈 김효욱 이주훈 김주성 김종인 이경진 손태욱 박필준 박다은 최윤석 남상인 김윤지 심주희 김민지 정다경</p>
-                    </article>
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-around1.jpg" alt="건축상상전">
+                    </figure>
                 </div>
             </div>
         </div>
@@ -377,18 +557,26 @@
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/pavilion.jpg" alt="주제 파빌리온 : 서울江山">
+                        <img src="{{site.theme}}/common/asset/main-around3.jpg" alt="건축상상전">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/main-around2.jpg" alt="건축상상전">
                     </figure>
                 </div>
             </div>
         </div>
 
-
     </div>
 </section>
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
-{% include '../include/script.html' %}
+{% include '../_include/script.html' %}
 </body>
 </html>

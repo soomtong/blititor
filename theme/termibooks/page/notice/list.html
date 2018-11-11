@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-grey-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <section class="section">
     <div class="columns is-centered">
@@ -28,14 +28,14 @@
     <div class="hero-body has-background-white-ter">
         <div class="container is-wrap">
         {% if pagination %}
-        {% import '../include/pagination.html' as Page %}
+        {% import '../_include/pagination.html' as Page %}
         {{ Page.nation(pagination, '/notice') }}
         {% endif %}
         </div>
     </div>
 </section>
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
 </body>
 </html>

@@ -1,66 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
     <div class="container is-wrap">
-        <div class="tile is-ancestor is-wide">
+        <article class="tile is-child notification is-info">
+            <p class="subtitle">건축문화투어 공지사항</p>
+        </article>
+        <div class="tile is-ancestor">
             <div class="tile is-parent">
-                <article class="tile is-child notification content has-background-white-bis">
-                    <h4>나들이하기 좋은 10월의 하늘과 날씨를 더욱 멋지게 즐기는 방법!</h4>
-                    <p>2018 서울건축문화제에서는 시민과 함께 하는 건축문화투어 프로그램을 준비했습니다. </p>
-                    <p>이제는 쇼핑의 거리로 익숙한 명동, 화려한 이 도시를 옛날에는 &#39;남촌&#39;이라고 불렀다는 거 아시나요?</p>
-                    <p>&#39;조선시대에 청계천 북쪽 일대를 북촌, 그 남쪽 일대를 남촌으로 불렀다. 북촌이 권세 있는 양반들이 주로 모여 살았던 데 비해, 남산 기슭을 중심으로 한 남촌은 양반의
-                        자손이긴 하나 몰락한 사람들이거나 과거에 급제하지 못해 ‘남산골 샌님’, ‘남산골 딸깍발이’라 놀림을 받았던 불우한 선비들이 모여 사는 곳으로 알려져 있었다. 후에
-                        일제강점기에는 이 남촌 지역을 중심으로 일본인들이 많이 거주하게 되어, 조선인 중심의 거주지역으로서의 북촌과 일본인 중심의 거주지역으로서의 남촌으로 불려지기도 하였다. 또한
-                        조선인들이 이 남촌 지역을 왜놈들마을이라고 부르기도 하였다.’</p>
-                    <p>-출처 : [네이버 지식백과] 남촌 [南村] (서울지명사전, 2009. 2. 13., 서울특별시사편찬위원회)</p>
-                    <p>일본 미쓰코시백화점의 한국지점이었던 <strong>신세계백화점,</strong> 고종 29년에 착공해 이후 민주화운동의 중심지가 되었던 <strong>명동성당</strong>,
-                        일제강점기 동양척식주식회사 본사의 자리로 독립운동가 나석주 선생이 폭탄을 던졌던 장소인 <strong>하나은행</strong> <strong>본관</strong> 등
-                        역사문화 여행 작가이신 김수종 작가님과 함께 명동 곳곳에 남아있는 &#39;남촌&#39;의 발자취를 직접 찾아보는 시간, 소비문화의 메카에서 역사적 매력을 발견하는 즐거움을
-                        신청하세요!</p>
-                    <p class="is-size-6 has-text-grey">- 10월 7일 (일) 상암동 문화비축기지에서는 14시 [전시 도슨트 투어] / 16시 ‘2018올해의 건축상에
-                        빛나는 [민현식 건축가]와 [SPACE 공간 김정은] 편집장과 함께 따뜻한 건축에 대해 이야기 들어볼 수 있는 [건축가 대담] 이 진행됩니다.</p>
-                </article>
-            </div>
-        </div>
-
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <div class="tile is-child has-background-white">
-                    <img src="{{site.theme}}/common/asset/tour-course2.png" alt="건축문화투어">
+                <article class="tile is-child notification has-background-white-bis">
+                    <ul>
+                        <li>· <u>코스별 15명</u>을 선착순으로 모집합니다.</li>
+                        <li>· 원활한 진행을 위해 <u>사전 신청 완료되지 않은 현장 참가는 불가</u>합니다.</li>
+                        <li>· 1인당 1,000원의 참가비가 있습니다.</li>
+                        <li>· 도보 투어이니 <u>반드시 운동화를 신고 최소의 짐과 편한 복장</u>으로 오시기 바랍니다.</li>
+                        <li>· 참가자에게는 당일 현장에서 생수를 제공합니다.</li>
+                    </ul>
+                    <hr>
                     <div class="link-form">
-                        <div class="has-move-up">
-                            <a class="button is-info is-medium" href="https://goo.gl/forms/ebh3OEeHQMCjP4H42">
+                        <div class="has-text-centered">
+                            <a class="button is-medium is-primary" href="https://goo.gl/forms/vhgd9bbzxxgqDbpg2">
                                 <span class="icon"><i class="fa fa-link"></i></span>
                                 <span>신청서</span></a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <div class="tile is-child box">
-                    <figure class="image">
-                        <img src="{{site.theme}}/common/asset/course-detail2.png" alt="투어코스">
-                    </figure>
-                </div>
-            </div>
-        </div>
-
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <article class="tile is-child notification is-danger">
-                    <p class="title">10월 12일 건축문화투어 신청은 10월 4일 14:00에 시작됩니다.</p>
                 </article>
             </div>
         </div>
@@ -69,6 +41,15 @@
             <div class="tile is-parent">
                 <div class="tile is-child has-background-white">
                     <img src="{{site.theme}}/common/asset/tour-course2.png" alt="건축문화투어">
+                    <article class="tile is-child notification content has-background-white">
+                        <p><strong>한양도성</strong>은 조선왕조 도읍지의 경계를 표시하고 그 권위를 드러내며 외부의 침입으로부터 방어하기 위해 축조된 성입니다. </p>
+                        <p>북에는 숙청문, 동북에는 홍화문, 동에는 흥인지문, 동남에는 광희문, 남에는 숭례문, 남서에는 소덕문, 서에는 돈의문, 서북에는 창의문 이렇게 4대문과 4소문을 두었습니다. </p>
+                        <p>태조 5년(1396)에 북악산, 낙산, 남산, 인왕의 내사산 능선을 따라 축조한 이후 세종, 숙종, 순조시기에 보수공사를 거쳤습니다. </p>
+                        <p>한양도성은 삼국시대 이래 우리 민족이 발전시켜 온 축성기법과 성곽구조를 계승하였으며, 조선시대 성벽 축조 기술의 변천, 발전 과정을 고스란히 담고 있습니다. 처음 축조 당시의 모습은 물론이고 후에 보수하고 개축한 모습까지 간직하고 있어 성벽을 둘러보는 것만으로도 역사의 자취를 살펴볼 수 있는 특별한 문화유산입니다. 일제강점기와 한국전쟁을 거치며 크게 훼손되어 현재는 길이 18,627m 중 70%정도가 남아있습니다. 현존하는 전 세계의 도성 중 가장 오랫동안 (1396~1910, 514년) 도성 기능을 수행한 역사적 가치가 높은 유적입니다. </p>
+                        <p>한양도성 성곽을 따라 걷다 보면 전 국립중앙박물관장이자 미술사학자였던 <strong>혜곡 최순우 선생의 옛집</strong>도 만날 수 있습니다. 한국미의 발견에 평생을 바친 최순우 선생은 이 집에 본인이 생각하는 한국적 아름다움을 담으려 했습니다. </p>
+                        <p>그리고 한양도성의 품에 안겨 서울의 역사문화경관이 남아 있는 <strong>북정마을</strong>, 만해 한용운 선생이 기거하며 첫 장편소설 &lt;흑풍&gt;을 집필했던 <strong>심우장</strong> 등의 장소도 만나게 됩니다. </p>
+                        <p>역사문화 전문 작가 김수종 작가님의 해설이 어우러지는 <strong>한양도성 성곽길 산책</strong>에 함께 하세요.</p>
+                    </article>
                 </div>
             </div>
         </div>
@@ -76,7 +57,7 @@
             <div class="tile is-parent">
                 <div class="tile is-child box">
                     <figure class="image">
-                        <img src="{{site.theme}}/common/asset/course-detail6.png" alt="투어코스">
+                        <img src="{{site.theme}}/common/asset/course-detail10.png" alt="투어코스">
                     </figure>
                 </div>
             </div>
@@ -86,6 +67,13 @@
             <div class="tile is-parent">
                 <div class="tile is-child has-background-white">
                     <img src="{{site.theme}}/common/asset/tour-course3.png" alt="건축문화투어">
+                    <article class="tile is-child notification content has-background-white">
+                        <p>서울 도심 한복판에서 아직 정취 어린 옛 마을의 숨결을 품고 있는 마을, <strong>서촌</strong>.</p>
+                        <p>서촌은 경복궁 서쪽을 일컫는 말로, 경복궁 서문인 <strong>영추문</strong>을 끼고 청와대까지 곧장 이어지는 효자로 왼편, 즉 경복궁과 인왕산 사이의 지역을 말합니다.</p>
+                        <p>이곳은 겸재 정선, 추사 김정희, 화가 박노수와 이중섭, 시인 이상, 윤동주 등 한국의 유명한 예술가들이 기거했던 지역으로도 유명합니다. </p>
+                        <p>지금의 서촌은 예스러운 골목에 아기자기한 맛집들이 즐비한 핫플레이스로 주목받고 있지만, 서촌의 진면목은 이 마을이 간직한 역사적 의미와 마을을 오랫동안 묵묵히 지켜온 사람들에 있습니다. </p>
+                        <p>서촌 토박이로 지역문화콘텐츠 크리에이터라는 이색 직업을 갖고 계신 설재우 작가님과 함께 <strong>서촌의</strong> <strong>&#39;진짜&#39;</strong> <strong>이야기를 찾아가는 시간</strong>, &lt;<strong>서촌공정여행</strong>&gt;을 신청하세요.</p>
+                    </article>
                 </div>
             </div>
         </div>
@@ -133,7 +121,7 @@
             </div>
         </div>
 
-        <div class="tile is-ancestor is-wide">
+        <div class="tile is-ancestor">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-danger">
                     <p class="title">본 프로그램은 마감되었습니다.</p>
@@ -145,15 +133,6 @@
             <div class="tile is-parent">
                 <div class="tile is-child has-background-white">
                     <img src="{{site.theme}}/common/asset/tour-course1.png" alt="건축문화투어">
-                    {#
-                    <div class="link-form">
-                        <div class="has-move-up">
-                            <a class="button is-info is-medium" href="https://goo.gl/forms/A0exgpWaP5tJVALm1">
-                                <span class="icon"><i class="fa fa-link"></i></span>
-                                <span>신청서</span></a>
-                        </div>
-                    </div>
-                    #}
                 </div>
             </div>
         </div>
@@ -166,12 +145,63 @@
                 </div>
             </div>
         </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child has-background-white">
+                    <img src="{{site.theme}}/common/asset/tour-course2.png" alt="건축문화투어">
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/course-detail2.png" alt="투어코스">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/course-detail7.png" alt="투어코스">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/course-detail9.png" alt="투어코스">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child has-background-white">
+                    <img src="{{site.theme}}/common/asset/tour-course3.png" alt="건축문화투어">
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child box">
+                    <figure class="image">
+                        <img src="{{site.theme}}/common/asset/course-detail11.png" alt="투어코스">
+                    </figure>
+                </div>
+            </div>
+        </div>
 
     </div>
 </section>
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
-{% include '../include/script.html' %}
+{% include '../_include/script.html' %}
 </body>
 </html>

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% include './include/head.html' %}
+    {% include './_include/head.html' %}
 </head>
 <body class="has-navbar-fixed-top">
     <div class="app-container">
-        {% include './include/nav.html' %}
-
-        <main class="app-content">
+        {% include './_include/nav.html' %}
+        <div class="app-content">
             <section class="section is-hero">
                 <div class="container">
                     <div class="columns is-vcentered">
-                        <div class="column is-6 is-5-fullhd is-offset-1-fullhd">
+                        <div class="column is-6 {#is-5-fullhd is-offset-1-fullhd#}">
                             <div class="section-header">
                                 <h1 class="title is-spaced">라즈베리파이
                                     <span class="is-hidden-tablet">
@@ -19,7 +18,8 @@
                                     </span>노드제이에스</h1>
                                 <h2 class="subtitle is-3">이 책은 공개 소프트웨어의 한 축을 이끌고 있는
                                     리눅스와 자바스크립트를 사용하여 라즈베리파이를 제어하는 과정을 학습하기 위한 교재입니다.
-                                    노드JS를 통해 LED, 버튼 그리고 각종 센서를 조작하며 그 결과를 웹페이지로 서비스하기 위한 과정을 담고 있습니다.</h2>
+                                    노드JS를 통해 LED, 버튼 그리고 각종 센서를 조작하며
+                                    그 결과를 웹페이지로 서비스하기 위한 과정을 담고 있습니다.</h2>
                                 <div class="field is-grouped">
                                     <div class="control">
                                         <a class="button is-primary is-medium" href="#platform">주문하기</a>
@@ -94,6 +94,7 @@
                     </div>
                 </div>
             </section>
+            {#
             <section class="section is-reviews has-background is-medium">
                 <div class="container">
                     <div class="section-header has-text-centered">
@@ -137,12 +138,16 @@
                         </div>
                     </div>
                     <div class="section-media">
-                        <img role="presentation" src="{{site.theme}}/common/asset/terminology.svg"> </div>
+                        <img role="presentation" src="{{site.theme}}/common/asset/terminology.svg">
+                    </div>
                 </div>
             </section>
+            #}
 
-        </main>
-        {% include './include/footer.html' %}
+            <div class="is-divider" data-content="Terminology"></div>
+
+        </div>
+        {% include './_include/footer.html' %}
     </div>
     <script src="/vendor/jquery/jquery.slim.min.js"></script>
     <script src="{{site.theme}}/common/main.js"></script>

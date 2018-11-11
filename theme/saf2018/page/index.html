@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include './include/head.html' %}
+    {% include './_include/head.html' %}
 </head>
 <body class="has-background-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include './include/menu.html' %}
+    {% include './_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
@@ -99,23 +99,26 @@
     </div>
     <div class="container is-wrap">
             <!-- start tile -->
-            {#
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <div class="tile is-child">
-                        <h2 class="title is-hidden">대학생 아이디어 공모전</h2>
-                        <img src="{{site.theme}}/common/asset/banner_180611_3.png" alt="대학생 아이디어 공모전">
-                        <div class="download">
-                            <div class="has-move-up">
-                                <a class="button is-danger is-medium" href="/">
-                                    <span class="icon"><i class="fa fa-download"></i></span>
-                                    <span>신청서</span></a>
+                        <article class="notification" style="background: #5a5052; color: #ffffff;">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title">2018년 제36회 서울건축상 자료집</p>
+                                </div>
+                                <div class="media-right">
+                                    <figure class="image">
+                                        <a class="button is-black" href="https://static.saf.kr/SAA_ebook_2018.pdf"><span class="icon"><i class="fa fa-download"></i></span>
+                                            <span>다운로드</span></a>
+                                    </figure>
+                                </div>
                             </div>
-                        </div>
+                        </article>
+
                     </div>
                 </div>
             </div>
-            #}
             <div class="tile is-ancestor">
                 <div class="tile is-parent">
                     <div class="tile is-child">
@@ -149,6 +152,7 @@
                     </div>
                 </div>
             </div>
+
             {% if site.env == 'development' %}
             <div class="tile is-ancestor">
                 <div class="tile is-6 is-vertical is-parent">
@@ -255,7 +259,7 @@
     </div>
 </section>
 <footer class="footer has-background-grey-light">
-    {% include './include/footer.html' %}
+    {% include './_include/footer.html' %}
 </footer>
 <div class="modal">
     <div class="modal-background"></div>
@@ -266,7 +270,7 @@
     </div>
     <button class="modal-close is-large" aria-label="close"></button>
 </div>
-{% include './include/script.html' %}
+{% include './_include/script.html' %}
 <script>
     $(function () {
         bulmaExtensions.bulmaCarousel.attach();

@@ -69,7 +69,7 @@ function noticeBoardControl(req, res) {
             params.noticeItem = newNoticeItem;
 
             noticeWrite(params, (error, result) => {
-                res.render(BLITITOR.site.manageTheme + '/manage/partial/notice_list', result);
+                res.render(BLITITOR.site.manageTheme + '/manage/_partial/notice_list', result);
             });
 
             break;
@@ -184,7 +184,7 @@ function noticeManage(req, res) {
     switch (params.mode) {
         case 'list':
             noticeList(params, (error, result) => {
-                res.render(BLITITOR.site.manageTheme + '/manage/partial/notice_list', result);
+                res.render(BLITITOR.site.manageTheme + '/manage/_partial/notice_list', result);
             });
 
             break;
@@ -204,7 +204,7 @@ function noticeManage(req, res) {
             params.noticeItem = newNoticeItem;
 
             noticeWrite(params, (error, result) => {
-                res.render(BLITITOR.site.manageTheme + '/manage/partial/notice_list', result);
+                res.render(BLITITOR.site.manageTheme + '/manage/_partial/notice_list', result);
             });
 
             break;

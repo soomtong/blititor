@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
@@ -66,18 +66,22 @@
         <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
                 <div class="tile is-child has-background-white">
-                    <img src="{{site.theme}}/common/asset/floor_map1.png" alt="문화비축기지 배치도">
+                    <img src="{{site.theme}}/common/asset/exi-scale1.jpg" alt="문화비축기지 배치도">
                 </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
                 <div class="tile is-child has-background-white">
-                    <img src="{{site.theme}}/common/asset/floor_map2.png" alt="문화비축기지 배치도">
+                    <img src="{{site.theme}}/common/asset/exi-scale2.jpg" alt="문화비축기지 배치도">
                 </div>
             </div>
         </div>
     </div>
 </section>
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
-{% include '../include/script.html' %}
+{% include '../_include/script.html' %}
 </body>
 </html>

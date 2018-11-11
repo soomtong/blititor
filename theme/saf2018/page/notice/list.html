@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-white">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
@@ -43,7 +43,7 @@
     <div class="hero-body has-background-white-ter">
         <div class="container is-wrap">
             {% if pagination %}
-            {% import '../include/pagination.html' as Page %}
+            {% import '../_include/pagination.html' as Page %}
             {{ Page.nation(pagination, '/notice') }}
             {% endif %}
         </div>
@@ -59,9 +59,9 @@
 </div>
 {% endif %}
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
-{% include '../include/script.html' %}
+{% include '../_include/script.html' %}
 <script src="{{site.theme}}/common/notice.js"></script>
 </body>
 </html>

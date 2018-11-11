@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body class="has-background-light">
 <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 </nav>
 <div class="transparent-gradient-bg">
     <div class="header-bg tilt-clock"></div>
 </div>
 <section class="section">
     <div class="container is-wrap">
+        <div class="tile is-ancestor is-wide">
+            <div class="tile is-parent">
+                <div class="tile is-child has-background-white">
+                    <img src="{{site.theme}}/common/asset/open_office-title.png" alt="시민참여프로그램">
+                    <div class="link-form">
+                        <div class="has-move-right">
+                            <a class="button is-info is-medium"
+                               href="https://docs.google.com/forms/d/17b_dSWwX0Ae3UlOqPMuNA9Swf8niXLhI1WeBxYjjTSQ/edit">
+                                <span class="icon"><i class="fa fa-link"></i></span>
+                                <span>참가신청</span></a>
+                        </div>
+                    </div>
+                    <img src="{{site.theme}}/common/asset/open_office1.png" alt="시민참여프로그램">
+                    <img src="{{site.theme}}/common/asset/open_office2.png" alt="시민참여프로그램">
+                    <img src="{{site.theme}}/common/asset/open_office3.png" alt="시민참여프로그램">
+                    <img src="{{site.theme}}/common/asset/open_office4.png" alt="시민참여프로그램">
+                </div>
+            </div>
+        </div>
+
 
         <div class="tile is-ancestor is-wide">
             <div class="tile is-parent">
@@ -182,30 +202,11 @@
             </div>
         </div>
 
-        <div class="tile is-ancestor is-wide">
-            <div class="tile is-parent">
-                <div class="tile is-child has-background-white">
-                    <img src="{{site.theme}}/common/asset/openclass-subject4.png" alt="시민참여프로그램">
-                    {#
-                    <div class="link-form">
-                        <div class="has-move-right">
-                            <a class="button is-info is-medium"
-                               href="https://docs.google.com/forms/d/1sD4uxRe7O3kJPwOPp8HEs9C6UkIbDaWl_Ay3bjB4lFc/edit">
-                                <span class="icon"><i class="fa fa-link"></i></span>
-                                <span>참가신청</span></a>
-                        </div>
-                    </div>
-                    #}
-                    <img src="{{site.theme}}/common/asset/openclass4.png" alt="시민참여프로그램">
-                </div>
-            </div>
-        </div>
-
     </div>
 </section>
 <footer class="footer">
-    {% include '../include/footer.html' %}
+    {% include '../_include/footer.html' %}
 </footer>
-{% include '../include/script.html' %}
+{% include '../_include/script.html' %}
 </body>
 </html>

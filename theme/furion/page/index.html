@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-    {% include '../include/head.html' %}
+    {% include '../_include/head.html' %}
 </head>
 <body>
 <div id="layout" class="pure-g">
 
-    {% include '../include/menu.html' %}
+    {% include '../_include/menu.html' %}
 
-    {% import './include/headed_picture.html' as HeadedPicture %}
+    {% import './_include/headed_picture.html' as HeadedPicture %}
 
     {% set cls = cycler("1", "2", "3", "4") %}
 
@@ -182,7 +182,7 @@
                 </section>
             </div>
 
-            {% include '../include/footer.html' %}
+            {% include '../_include/footer.html' %}
         </div>
     </div>
 </div>
