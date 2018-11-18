@@ -1,26 +1,26 @@
-var fs = require('fs');
-var path = require('path');
-var bcrypt = require('bcryptjs');
-var mkdirp = require('mkdirp');
-var winston = require('winston');
-var moment = require('moment');
-var useragent = require('useragent');
+const fs = require('fs');
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const mkdirp = require('mkdirp');
+const winston = require('winston');
+const moment = require('moment');
+const useragent = require('useragent');
 
-var misc = require('../../../core/lib/misc');
-var common = require('../../../core/lib/common');
-var connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
+const misc = require('../../../core/lib/misc');
+const common = require('../../../core/lib/common');
+const connection = require('../../../core/lib/connection');   // todo: can load from CLI modules
 
-var account = require('../../account');
-var counter = require('../../counter');
+const account = require('../../account');
+const counter = require('../../counter');
 
-var db = require('./database');
+const db = require('./database');
 
-var userGrants = misc.getUserPrivilege();
-var routeTable = misc.getRouteData();
-var token = misc.commonToken();
+const userGrants = misc.getUserPrivilege();
+const routeTable = misc.getRouteData();
+const token = misc.commonToken();
 
 function accountList(req, res) {
-    var params = {
+    const params = {
         title: "관리자 화면",
         page: Number(req.query['p']) || 1,
         uuid: req.query['uuid']
@@ -29,7 +29,7 @@ function accountList(req, res) {
     // redirect to account view
     if (params.uuid) return res.redirect('account/' + params.uuid);
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAccountByPage(mysql, Number(params.page - 1), function (error, result) {
         if (error) {
@@ -60,7 +60,7 @@ function accountList(req, res) {
 }
 
 function loginForm(req, res) {
-    var params = {
+    const params = {
         title: "관리자 화면"
     };
 
@@ -71,7 +71,7 @@ function loginProcess(req, res) {
     req.assert('account_id', 'Email as Admin ID field is not valid').notEmpty().withMessage('Admin ID is required').isEmail();
     req.assert('account_password', 'Password must be at least 4 characters long').len(4);
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         req.flash('error', errors);
@@ -80,7 +80,7 @@ function loginProcess(req, res) {
 
     req.sanitize('password').trim();
 
-    var params = {
+    const params = {
         adminID: req.body.account_id,
         password: req.body.account_password
     };
@@ -116,7 +116,15 @@ function loginProcess(req, res) {
             } else {
                 // retrieve with auth
                 account.findUserByAuthID(auth.id, function (error, userData) {
-                    var user = {
+                    if (error || !userData) {
+                        req.flash('error', {msg: '로그인 데이터베이스에 문제가 있습니다.'});
+
+                        winston.error(err);
+
+                        return res.redirect('back');
+                    }
+
+                    const user = {
                         user_id: auth.user_id,
                         id: userData.id,
                         uuid: userData.uuid,
@@ -138,7 +146,7 @@ function loginProcess(req, res) {
                             // insert login logging
                             account.insertLastLog(user.uuid, userData.login_counter || 0);
 
-                            var agent = useragent.parse(req.headers['user-agent']);
+                            const agent = useragent.parse(req.headers['user-agent']);
                             counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
 
                             res.redirect('/admin');
@@ -158,13 +166,13 @@ function loginProcess(req, res) {
 
 function accountView(req, res) {
     // if no account id then do register mode or view mode
-    var params = {
+    const params = {
         title: "관리자 화면",
         uuid: req.params.uuid
     };
 
     if (params.uuid) {
-        var mysql = connection.get();
+        const mysql = connection.get();
 
         db.readAccount(mysql, params.uuid, function (error, result) {
             if (error) {
@@ -204,7 +212,7 @@ function accountView(req, res) {
 
 function accountForm(req, res) {
     // if no account id then do register mode or view mode
-    var params = {
+    const params = {
         title: "관리자 화면",
         uuid: req.params.uuid
     };
@@ -216,7 +224,7 @@ function accountForm(req, res) {
 
         res.redirect('back');
     } else {
-        var mysql = connection.get();
+        const mysql = connection.get();
 
         db.readAccount(mysql, params.uuid, function (error, result) {
             if (error) {
@@ -241,12 +249,12 @@ function accountForm(req, res) {
 }
 
 function accountProcess(req, res) {
-    var params = {
+    const params = {
         updatePassword: false,
         updateProfileImage: false,
     };
 
-    var profileImage = null;
+    let profileImage = null;
 
     console.log(req.params.uuid, req.body, req.files);
 
@@ -259,7 +267,7 @@ function accountProcess(req, res) {
         params.updatePassword = true;
     }
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         winston.error(errors, errors.length);
@@ -271,7 +279,7 @@ function accountProcess(req, res) {
     req.sanitize('desc').escape();
     req.sanitize('point').escape();
 
-    var UUID = req.params.uuid;
+    let UUID = req.params.uuid;
 
     if (!UUID) {
         req.flash('error', {msg: 'No Session Info Exist!'});
@@ -279,12 +287,12 @@ function accountProcess(req, res) {
         return res.redirect('back');
     }
 
-    var userData = {
+    const userData = {
         nickname: req.body.nickname,
         level: req.body.level,
         grant: String(req.body.grant_checker_admin || '').toUpperCase().trim() +
-               String(req.body.grant_checker_manager || '').toUpperCase().trim() +
-               String(req.body.grant_checker_content || '').toUpperCase().trim(),
+            String(req.body.grant_checker_manager || '').toUpperCase().trim() +
+            String(req.body.grant_checker_content || '').toUpperCase().trim(),
         desc: req.body.desc,
         point: Number(req.body.point),
         created_at: new Date(req.body.created_at),
@@ -307,7 +315,7 @@ function accountProcess(req, res) {
         });
     }
 
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readAuthIDByUUID(mysql, UUID, function (err, account) {
         if (err) {
@@ -318,7 +326,7 @@ function accountProcess(req, res) {
             return res.redirect('back');
         }
 
-        var authID = account.auth_id;
+        const authID = account.auth_id;
 
         // update auth table, it is async routine
         if (params.updatePassword) {
@@ -332,7 +340,7 @@ function accountProcess(req, res) {
                     // then pass this process for next login
                     // it can use before password
                 } else {
-                    var authData = {user_password: hash};
+                    const authData = { user_password: hash };
 
                     db.updateAuthByID(mysql, authData, authID, function (err, result) {
                         winston.warn('Updated user password into `auth` table record:', result);

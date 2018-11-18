@@ -5,8 +5,6 @@
     "home": "/",
     "dashboard": "/dashboard",
     "account": "/account",
-    "reservation": "/reservation",
-    "reservationClean": "/reservation/clean",
     "tutorial": "/tutorial",
     "tutorialStatus": "/reservation/tutorial/status",
     "guestbook": "/guestbook",
@@ -15,9 +13,9 @@
     "galleryImage": "/gallery/image",
     "galleryImageSort": "/gallery/image/sort",
     "galleryImageRemove": "/gallery/image/remove",
-    "pageLog": "/page/log",
+    "page_log": "/page/log",
     "pageView": "/page",
-    "pageCounter": "/counter/page",
-    "accountCounter": "/counter/account"
+    "page_counter": "/counter/page",
+    "account_counter": "/counter/account"
   }
 }

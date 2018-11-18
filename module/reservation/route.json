@@ -1,8 +1,10 @@
 {
   "reservation": {
     "root": "/reservation",
-    "form": "/",
+    "form": "",
     "status": "/status",
-    "phoneSecret": "/secret"
+    "phone_secret": "/secret",
+    "manage": "/",
+    "clean_list": "/clean"
   }
 }

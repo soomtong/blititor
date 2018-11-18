@@ -1,33 +1,37 @@
-var fs = require('fs');
-var util = require('util');
-var path = require('path');
-var async = require('neo-async');
-var winston = require('winston');
-var request = require('request');
+const fs = require('fs');
+const util = require('util');
+const path = require('path');
+const async = require('neo-async');
+const winston = require('winston');
+const request = require('request');
 
-var slack = require('../../slack');
-var mailgun = require('../../mailgun');
+const slack = require('../../slack');
+const mailgun = require('../../mailgun');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var connection = require('../../../core/lib/connection');
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const connection = require('../../../core/lib/connection');
 
-var db = require('./database');
+const db = require('./database');
+
+const categoryList = ['', 'summer', 'fall', 'tutorial'];
 
 function reservationForm(req, res) {
-    var params = {
-        category: req.params['cate'] || req.query['cate'] || 1,
+    const params = {
+        category: req.params['cate'] || req.query['cate']
     };
 
-    var mysql = connection.get();
+    const categoryID = categoryIndex(params.category);
 
-    db.readReservationStatus(mysql, params.category, function (error, results) {
+    const mysql = connection.get();
+
+    db.readReservationStatus(mysql, categoryID, function (error, results) {
         params.status = results;
         params.closedTutorial = true;
 
-        var maxTutorials = results.length;
+        const tutorialCount = results.length;
 
-        for (var i = 0; i < maxTutorials; i++) {
+        for (let i = 0; i < tutorialCount; i++) {
             if (results[i].counter < results[i].max_count) {
                 params.closedTutorial = false;
 
@@ -37,51 +41,29 @@ function reservationForm(req, res) {
             }
         }
 
-        return res.render(BLITITOR.site.theme + '/page/reservation/form', params);
-    });
-}
-
-function reservationList(req, res) {
-    var params = {
-        category: req.params['cate'] || req.query['cate'] || 1,
-        xhr: req.xhr || false
-    };
-
-    var mysql = connection.get();
-
-    db.readReservationList(mysql, params, function (error, result) {
-        return res.send(result);
-    });
-}
-
-function reservationStatusList(req, res) {
-    var params = {
-        category: req.params['cate'] || req.query['cate'] || 1,
-        xhr: req.xhr || false
-    };
-
-    var mysql = connection.get();
-
-    db.readReservationStatus(mysql, params.category, function (error, result) {
-        params.cateList = result || [];
-
-        res.render(BLITITOR.site.theme + '/page/reservation/status_list', params);
+        if (params.category) {
+            return res.render(BLITITOR.site.theme + `/page/reservation/${params.category}/form`, params);
+        } else {
+            return res.render(BLITITOR.site.theme + '/page/reservation/form', params);
+        }
     });
 }
 
 function createReservation(req, res) {
-    var reservedSession = req.session['reservation'] || {};
+    const reservedSession = req.session['reservation'] || {};
 
     req.assert('register_name', 'Name is required').len(2, 20).withMessage('Must be between 2 and 10 chars long').notEmpty();
     req.assert('register_email', 'Email is required').notEmpty().withMessage('Email ID should be email type string').isEmail();
     req.assert('register_phone', 'Phone number is required').notEmpty();
-    req.assert('register_phone_secret', '휴대폰 인증정보가 일치하지 않습니다.').equals(reservedSession.secretNumber);
+    // req.assert('register_phone_secret', '휴대폰 인증정보가 일치하지 않습니다.').equals(reservedSession.secretNumber);
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
-        winston.error('phone number with secret number', reservedSession.phone, reservedSession.secretNumber);
-        winston.warn(errors);
+        winston.error('phone number with secret number');
+        winston.error(reservedSession.phone);
+        // winston.error(reservedSession.secretNumber);
+        winston.warn(util.inspect(errors));
         req.flash('error', errors);
 
         return res.redirect('back');
@@ -92,15 +74,35 @@ function createReservation(req, res) {
     req.sanitize('register_phone').trim();
 
     // remove dash in phone field
-    var reservationData = {
-        category: 1,
+    const reservationData = {
+        category: categoryIndex(req.body.category),
         name: req.body.register_name,
         email: req.body.register_email,
         phone: req.body.register_phone.replace(/-/g, '')
     };
 
     // custom data for status
-    var sectionStatusData = [];
+    const sectionStatusData = [];
+
+    if (req.body.track_choice1) sectionStatusData.push(req.body.track_choice1);
+    if (req.body.track_choice2_1) sectionStatusData.push(req.body.track_choice2_1);
+    if (req.body.track_choice2_2) sectionStatusData.push(req.body.track_choice2_2);
+    if (req.body.track_choice2_3) sectionStatusData.push(req.body.track_choice2_3);
+    if (req.body.track_choice3_1) sectionStatusData.push(req.body.track_choice3_1);
+    if (req.body.track_choice3_2) sectionStatusData.push(req.body.track_choice3_2);
+    if (req.body.track_choice3_3) sectionStatusData.push(req.body.track_choice3_3);
+    if (req.body.track_choice4_1) sectionStatusData.push(req.body.track_choice4_1);
+    if (req.body.track_choice4_2) sectionStatusData.push(req.body.track_choice4_2);
+    if (req.body.track_choice4_3) sectionStatusData.push(req.body.track_choice2_3);
+    if (req.body.track_choice5_1) sectionStatusData.push(req.body.track_choice5_1);
+    if (req.body.track_choice5_2) sectionStatusData.push(req.body.track_choice5_2);
+    if (req.body.track_choice5_3) sectionStatusData.push(req.body.track_choice2_3);
+    if (req.body.track_choice6_1) sectionStatusData.push(req.body.track_choice6_1);
+    if (req.body.track_choice6_2) sectionStatusData.push(req.body.track_choice6_2);
+    if (req.body.register_introduce) sectionStatusData.push(req.body.register_introduce);
+    if (req.body.register_motive) sectionStatusData.push(req.body.register_motive);
+    if (req.body.register_invited) sectionStatusData.push(req.body.register_invited);
+    if (req.body.register_birthday) sectionStatusData.push(req.body.register_birthday);
 
     if (req.body.register_apply_tutorial1) sectionStatusData.push(req.body.register_apply_tutorial1);
     if (req.body.register_apply_tutorial2) sectionStatusData.push(req.body.register_apply_tutorial2);
@@ -108,13 +110,13 @@ function createReservation(req, res) {
 
     // console.log(reservationData, sectionStatusData);
 
-    var params = {};
+    let params = {};
 
     findReservationByGiven(reservationData, function (error, reservation) {
 
-        var slackChannel = "C2SM667BP";
+        const slackChannel = "C2SM667BP";
 
-        var mysql = connection.get();
+        const mysql = connection.get();
 
         if (reservation) {
             // go update
@@ -123,7 +125,7 @@ function createReservation(req, res) {
                 reservationData: {
                     info: req.body.register_info,
                     updated_at: new Date(),
-                    status: sectionStatusData.join(',')
+                    status: sectionStatusData.join(' | ')
                 },
                 prevReservationStatus: reservation.status
             };
@@ -134,7 +136,7 @@ function createReservation(req, res) {
                 if (err) {
                     req.flash('error', {msg: err});
 
-                    winston.error(err);
+                    winston.error('Reservation Status Update Error: ' + err);
 
                     return res.redirect('back');
                 }
@@ -157,16 +159,24 @@ function createReservation(req, res) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
                         params.sectionList = rows;
 
-                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                        if (req.body.category) {
+                            return res.render(BLITITOR.site.theme + `/page/reservation/${req.body.category}/done`, params);
+                        } else {
+                            return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                        }
                     });
                 } else {
-                    return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                    if (req.body.category) {
+                        return res.render(BLITITOR.site.theme + `/page/reservation/${req.body.category}/done`, params);
+                    } else {
+                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                    }
                 }
             });
         } else {
             // go insert
             reservationData.info = req.body.register_info;
-            reservationData.status = sectionStatusData.join(',');
+            reservationData.status = sectionStatusData.join(' | ');
             reservationData.created_at = new Date();
             reservationData.updated_at = new Date();
 
@@ -181,7 +191,7 @@ function createReservation(req, res) {
                     return res.redirect('back');
                 }
 
-                winston.warn('Inserted reservation ID:', result.insertId);
+                winston.warn('Inserted reservation ID:', result);
 
                 params.name = reservationData.name;
                 params.mode = '입력 완료';
@@ -199,18 +209,54 @@ function createReservation(req, res) {
                     getReservationStatusByID(sectionStatusData, function (error, rows) {
                         params.sectionList = rows;
 
-                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                        if (req.body.category) {
+                            return res.render(BLITITOR.site.theme + `/page/reservation/${req.body.category}/done`, params);
+                        } else {
+                            return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                        }
                     });
                 } else {
-                    return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                    if (req.body.category) {
+                        return res.render(BLITITOR.site.theme + `/page/reservation/${req.body.category}/done`, params);
+                    } else {
+                        return res.render(BLITITOR.site.theme + '/page/reservation/done', params);
+                    }
                 }
             });
         }
     });
 }
 
+function reservationList(req, res) {
+    const params = {
+        category: req.params['cate'] || req.query['cate'],
+        xhr: req.xhr || false
+    };
+
+    const mysql = connection.get();
+
+    db.readReservationList(mysql, params, function (error, result) {
+        return res.send(result);
+    });
+}
+
+function reservationStatusList(req, res) {
+    const params = {
+        category: req.params['cate'] || req.query['cate'],
+        xhr: req.xhr || false
+    };
+
+    const mysql = connection.get();
+
+    db.readReservationStatus(mysql, params.category, function (error, result) {
+        params.cateList = result || [];
+
+        res.render(BLITITOR.site.theme + '/page/reservation/status_list', params);
+    });
+}
+
 function generateSecret(req, res) {
-    var params = {
+    const params = {
         phone: req.body.phone.replace(/-/g, ''),
         secretNumber: common.randomNumber(4)
     };
@@ -230,9 +276,9 @@ function generateSecret(req, res) {
     }
 
     // post request to phone message service
-    var smsToken = misc.serviceToken('sms_api');
-    var smsProvider = misc.serviceProvider('sms_api');
-    var sender = '01045151082';
+    const smsToken = misc.serviceToken('sms_api');
+    const smsProvider = misc.serviceProvider('sms_api');
+    const sender = '01045151082';
 
     request({
         uri: smsProvider,
@@ -273,7 +319,7 @@ function generateSecret(req, res) {
 }
 
 function findReservationByGiven(reservationData, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readReservationByReservationData(mysql, reservationData, function (err, result) {
         if (err || !result) {
@@ -289,7 +335,7 @@ function findReservationByGiven(reservationData, callback) {
 }
 
 function getReservationStatusByID(sectionData, callback) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     db.readReservationStatusByID(mysql, sectionData, function (err, rows) {
         callback(err, rows);
@@ -297,11 +343,11 @@ function getReservationStatusByID(sectionData, callback) {
 }
 
 function updateReservationStatus(status, prevStatus) {
-    var mysql = connection.get();
+    const mysql = connection.get();
 
     // decrease
     if (prevStatus) {
-        prevStatus = prevStatus.split(','); // in fact it's bad habit, i know. will go into details next time.
+        prevStatus = prevStatus.split(' | '); // in fact it's bad habit, i know. will go into details next time.
 
         prevStatus.map(function (item) {
             db.decreaseReservationStatus(mysql, item, function (error, result) {
@@ -312,7 +358,7 @@ function updateReservationStatus(status, prevStatus) {
 
     // increase
     if (status) {
-        status = status.split(','); // in fact it's bad habit, i know. will go into details next time.
+        status = status.split(' | '); // in fact it's bad habit, i know. will go into details next time.
 
         status.map(function (item) {
             db.increaseReservationStatus(mysql, item, function (error, result) {
@@ -322,11 +368,96 @@ function updateReservationStatus(status, prevStatus) {
     }
 }
 
+function reservationManageHome(req, res) {
+    const params = {
+        title: "운영자 화면",
+        cate: Number(req.query['c']) || 2,
+        page: Number(req.query['p']) || 1
+    };
+
+    const mysql = connection.get();
+
+    db.readReservationList(mysql, Number(params.page), Number(params.cate), function (error, result) {
+        params.pagination = result.pagination;
+        params.totalCount = result.total || 0;
+        params.reservationList = result.reservationList;
+
+        params.reservationList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
+            item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:m');
+        });
+
+        res.render(BLITITOR.site.manageTheme + '/manage/reservation', params);
+    });
+}
+
+function reservationManage(req, res) {
+
+}
+
+function reservationListFull(req, res) {
+    const params = {
+        title: "운영자 화면",
+        cate: Number(req.query['c']) || 2
+    };
+
+    const mysql = connection.get();
+
+    db.readReservationListFull(mysql, Number(params.cate), function (error, result) {
+        params.pagination = false;
+        params.total = result.total;
+        params.reservationList = result.reservationList;
+
+        params.reservationList.map(function (item) {
+            item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
+            item.updated_at = common.dateFormatter(item.updated_at, 'MM-DD HH:m');
+        });
+
+        res.render(BLITITOR.site.manageTheme + '/manage/reservation_download', params);
+    });
+}
+
 module.exports = {
     form: reservationForm,
     register: createReservation,
     list: reservationList,
     status: reservationStatusList,
-    sendSecret: generateSecret
+    sendSecret: generateSecret,
+    manageHome: reservationManageHome,
+    manage: reservationManage,
+    manageFullList: reservationListFull
 };
+
+function categoryIndex(value) {
+    return categoryList.findIndex(function (item) {
+        return item === value
+    })
+}
+
+function reservationForm_legacy(req, res) {
+    const params = {
+        category: req.params['cate'] || req.query['cate'] || categoryID,
+    };
+
+    const mysql = connection.get();
+
+    db.readReservationStatus(mysql, params.category, function (error, results) {
+        params.status = results;
+        params.closedTutorial = true;
+
+        const maxTutorials = results.length;
+
+        for (let i = 0; i < maxTutorials; i++) {
+            if (results[i].counter < results[i].max_count) {
+                params.closedTutorial = false;
+
+                winston.verbose('Tutorial Section is not closed');
+
+                break;
+            }
+        }
+
+        return res.render(BLITITOR.site.theme + '/page/reservation/form', params);
+    });
+}
 

@@ -1,20 +1,22 @@
-var express = require('express');
+const express = require('express');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
-var guestbook = require('./lib/guestbook');
-var middleware = require('./lib/middleware');
+const guestbook = require('./lib/guestbook');
+const middleware = require('./lib/middleware');
 
-var AccountMiddleware = require('../account/lib/middleware');
+const AccountMiddleware = require('../account/lib/middleware');
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const site = express.Router();
+const routeTable = misc.getRouteData();
 
-router.use(middleware.exposeLocals);
+site.use(middleware.exposeLocals);
 
-router.get(routeTable.guestbook.form, guestbook.guestbook);
-router.get(routeTable.guestbook.form + ':page', guestbook.guestbook);
-router.post(routeTable.guestbook.message, guestbook.registerMessage);
-router.post(routeTable.guestbook.reply, AccountMiddleware.checkSignedIn ,guestbook.registerReply);
+site.get(routeTable.guestbook.form, guestbook.guestbook);
+site.get(routeTable.guestbook.form + ':page', guestbook.guestbook);
+site.post(routeTable.guestbook.message, guestbook.registerMessage);
+site.post(routeTable.guestbook.reply, AccountMiddleware.checkSignedIn ,guestbook.registerReply);
 
-module.exports = router;
+module.exports = {
+    site
+};

@@ -1,22 +1,22 @@
-var fs = require('fs');
-var async = require('neo-async');
+const fs = require('fs');
+const async = require('neo-async');
 
-var mysql = require('mysql');
-var winston = require('winston');
+const mysql = require('mysql');
+const winston = require('winston');
 
-var common = require('../../../core/lib/common');
-var misc = require('../../../core/lib/misc');
-var databaseDefault = misc.getDatabaseDefault();
+const common = require('../../../core/lib/common');
+const misc = require('../../../core/lib/misc');
+const databaseDefault = misc.getDatabaseDefault();
 
-var tables = {
+const tables = {
     reservationList: databaseDefault.tablePrefix + 'reservation_list',
-    reservationStatus : databaseDefault.tablePrefix + 'reservation_status'
+    reservationStatus: databaseDefault.tablePrefix + 'reservation_status'
 };
 
-var query = require('./query');
+const query = require('./query');
 
 function deleteScheme(databaseConfiguration, callback) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || databaseDefault.port,
         database: databaseConfiguration.dbName || databaseDefault.database,
@@ -24,8 +24,8 @@ function deleteScheme(databaseConfiguration, callback) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var sql = "DROP TABLE IF EXISTS ??";
-    var tableList = [tables.reservationStatus, tables.reservationList];
+    const sql = "DROP TABLE IF EXISTS ??";
+    const tableList = [tables.reservationStatus, tables.reservationList];
 
     connection.query(sql, [tableList], function (error, results, fields) {
         connection.destroy();
@@ -35,7 +35,7 @@ function deleteScheme(databaseConfiguration, callback) {
 }
 
 function createScheme(databaseConfiguration, callback, done) {
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: databaseConfiguration.dbHost,
         port: databaseConfiguration.dbPort || databaseDefault.port,
         database: databaseConfiguration.dbName || databaseDefault.database,
@@ -43,18 +43,18 @@ function createScheme(databaseConfiguration, callback, done) {
         password: databaseConfiguration.dbUserPassword
     });
 
-    var charSet = 'utf8mb4';
+    const charSet = 'utf8mb4';
 
-    var sql_reservation_list = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_reservation_list = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`category` tinyint default 0, ' +
         '`name` varchar(16) not null, ' +
         '`email` varchar(256), ' +
         '`phone` varchar(16), ' +
-        '`info` varchar(128), ' +
-        '`status` varchar(128), ' +   // applied status id a string divided ','
+        '`info` tinytext, ' +
+        '`status` text, ' +   // applied status id a string divided ','
         '`flag` varchar(1), ' +        // special flag for the future
-        '`comment` varchar(256), ' +
+        '`comment` tinytext, ' +
         '`created_at` datetime, ' +
         '`updated_at` datetime, ' +
         'INDEX name(`name`), ' +
@@ -63,7 +63,7 @@ function createScheme(databaseConfiguration, callback, done) {
         'INDEX updated_at(`updated_at`), ' +
         'INDEX category(`category`))' +
         'DEFAULT CHARSET=' + charSet;
-    var sql_reservation_status = 'CREATE TABLE IF NOT EXISTS ?? ' +
+    const sql_reservation_status = 'CREATE TABLE IF NOT EXISTS ?? ' +
         '(`id` int unsigned not null AUTO_INCREMENT PRIMARY KEY, ' +
         '`sort` int unsigned not null default 0, ' +
         '`category` tinyint default 0, ' +
@@ -94,7 +94,7 @@ function createScheme(databaseConfiguration, callback, done) {
 function insertDummy(databaseConfiguration, done) {
     fs.stat(__dirname + '/dummy_status.json', function (error, result) {
         if (!error && result.size > 1) {
-            var connection = mysql.createConnection({
+            const connection = mysql.createConnection({
                 host: databaseConfiguration.dbHost,
                 port: databaseConfiguration.dbPort || databaseDefault.port,
                 database: databaseConfiguration.dbName || databaseDefault.database,
@@ -102,9 +102,9 @@ function insertDummy(databaseConfiguration, done) {
                 password: databaseConfiguration.dbUserPassword
             });
 
-            var dummy = require('./dummy_status.json');
-            var iteratorAsync = function (item, callback) {
-                var reservationStatus = {
+            const dummy = require('./dummy_status.json');
+            const iteratorAsync = function (item, callback) {
+                const reservationStatus = {
                     category: item.category,
                     title: item.title,
                     sub_title: item.sub_title,
@@ -120,7 +120,7 @@ function insertDummy(databaseConfiguration, done) {
                     callback(null, result);
                 });
             };
-            var resultAsync = function (err, result) {
+            const resultAsync = function (err, result) {
                 console.log(' = Inserted default records...');
 
                 // for async
@@ -207,6 +207,101 @@ function decreaseReservationStatus(connection, statusID, callback) {
     });
 }
 
+function selectReservationList(connection, page, category, callback) {
+    const pageSize = 10;
+    const gutterSize = 10;
+    const gutterMargin = 3;
+
+    const result = {
+        total: 0,
+        page: Math.abs(Number(page)),
+        reservationList: [],
+        statusInfo: {}
+    };
+
+    selectReservationStatus(connection, category, function (error, statusInfo) {
+
+        statusInfo.map(function (item) {
+            result.statusInfo[item.id] = item.title;
+        });
+
+        connection.query(query.countAllReservationList, [tables.reservationList, category], function (err, rows) {
+            result.total = rows[0]['count'] || 0;
+
+            const pagination = common.pagination(result.page, result.total, pageSize, gutterSize, gutterMargin);
+
+            connection.query(query.readReservationListByPage, [tables.reservationList, category, pagination.index, pagination.pageSize], function (err, rows) {
+                if (err) {
+                    winston.error(err);
+                } else {
+                    result.pagination = pagination;
+
+                    result.reservationList = rows;
+
+                    result.reservationList.map(function (item) {
+                        if (item.status && item.status.length) {
+                            const statusTitle = [];
+                            const status = item.status.split(',');
+
+                            status.map(function (info) {
+                                statusTitle.push({id: info, title: result.statusInfo[info]});
+                            });
+
+                            item.statusInfo = statusTitle;
+                        }
+                    });
+                }
+
+                callback(err, result);
+            });
+        });
+    });
+}
+
+function selectReservationListFull(connection, category, callback) {
+    const result = {
+        total: 0,
+        reservationList: [],
+        statusInfo: {}
+    };
+
+    selectReservationStatus(connection, category, function (error, statusInfo) {
+
+        statusInfo.map(function (item) {
+            result.statusInfo[item.id] = item.title;
+        });
+
+        connection.query(query.countAllReservationList, [tables.reservationList, category], function (err, rows) {
+
+            result.total = rows[0]['count'] || 0;
+
+            connection.query(query.readReservationList, [tables.reservationList, category], function (err, rows) {
+                if (err) {
+                    winston.error(err);
+                } else {
+                    result.reservationList = rows;
+
+                    result.reservationList.map(function (item) {
+                        if (item.status && item.status.length) {
+                            const statusTitle = [];
+                            const status = item.status.split(',');
+
+                            status.map(function (info) {
+                                statusTitle.push({id: info, title: result.statusInfo[info]});
+                            });
+
+                            item.statusInfo = statusTitle;
+                        }
+                    });
+                }
+
+                callback(err, result);
+            });
+
+        });
+    });
+}
+
 module.exports = {
     deleteScheme: deleteScheme,
     createScheme: createScheme,
@@ -219,6 +314,8 @@ module.exports = {
     updateReservation: updateReservation,
     increaseReservationStatus: increaseReservationStatus,
     decreaseReservationStatus: decreaseReservationStatus,
+    readReservationList: selectReservationList,
+    readReservationListFull: selectReservationListFull,
     option: {
         tables: tables,
         core: false

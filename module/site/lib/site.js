@@ -40,7 +40,7 @@ function plainPageWithSubPath(req, res) {
 
 function bindSiteMenuToRouter(menu, router) {
     menu.SiteMenu.map(function (item) {
-        winston.verbose('Bound static menu:' + util.inspect(item));
+        winston.verbose('Bound static menu:' + util.inspect(item).split('\n').map(i => i.trim()).join(' '));
         if (!item.useSubPath) item.useSubPath = false;
 
         router[item['type'] || 'get'](item['url'], !item.useSubPath ? plainPage : plainPageWithSubPath);

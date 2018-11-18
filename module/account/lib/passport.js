@@ -1,14 +1,15 @@
-var winston = require('winston');
-var bcrypt = require('bcryptjs');
-var useragent = require('useragent');
+const util = require('util');
+const winston = require('winston');
+const bcrypt = require('bcryptjs');
+const useragent = require('useragent');
 
-var misc = require('../../../core/lib/misc');
-var common = require('../../../core/lib/common');
-var counter = require('../../counter');
-var account = require('./account');
+const misc = require('../../../core/lib/misc');
+const common = require('../../../core/lib/common');
+const counter = require('../../counter');
+const account = require('./account');
 
-var token = misc.commonToken();
-var grants = misc.getUserPrivilege();
+const token = misc.commonToken();
+const grants = misc.getUserPrivilege();
 
 function authenticate(userID, password, done) {
 /*  no need it, it checked by passport system. and that print out with `badRequestMessage` parameter
@@ -56,7 +57,7 @@ function serialize(authID, done) {
 		}
 
         winston.verbose('Serialize in process for Account auth_id='
-            + authID + ',user_id=' + user.user_id + ', and user info: ' + user);
+            + authID + ',user_id=' + user.user_id + ', and user info: ' + util.inspect(user));
 
         done(error, user.uuid); // keep uuid for passport session
     });
@@ -66,7 +67,7 @@ function deserialize(uuid, done) {
     winston.verbose('De-Serialize in process for auth: ' + uuid);
 
     account.findUserByUUID(uuid, function (err, user) {
-        var userGrant = [];
+        const userGrant = [];
 
         if (user.grant.includes(grants.siteAdmin)) userGrant.push('시스템관리자');
         if (user.grant.includes(grants.siteManager)) userGrant.push('사이트운영자');
@@ -82,12 +83,12 @@ function loginSuccess(req, res, next) {
     winston.info('Logged in user->uuid: ' + req.session['passport'].user);
 
     // insert login logging
-    var authID = req.user;
+    const authID = req.user;
 
     account.findUserByAuthID(authID, function (error, user) {
         account.insertLastLog(user.uuid, user.login_counter);
 
-        var agent = useragent.parse(req.headers['user-agent']);
+        const agent = useragent.parse(req.headers['user-agent']);
         counter.insertAccountCounter(user.uuid, token.account.login, agent, req.device);
     });
 
@@ -104,7 +105,7 @@ function loginSuccess(req, res, next) {
 }
 
 function loginDone(req, res) {
-    var q = req.session.previousURL;
+    const q = req.session.previousURL;
 
     if (q !== undefined) {
         req.session.previousURL = undefined;
@@ -116,7 +117,7 @@ function loginDone(req, res) {
 
 // for internal use
 function issueToken(user, done) {
-    var token = common.randomString(64);
+    const token = common.randomString(64);
     saveRememberMeToken(token, user.id, function(err) {
         if (err) { return done(err); }
         return done(null, token);
@@ -124,7 +125,7 @@ function issueToken(user, done) {
 }
 
 function consumeRememberMeToken(token, fn) {
-    var uid = tokens[token];
+    const uid = tokens[token];
     // invalidate the single-use token
     delete tokens[token];
     return fn(null, uid);

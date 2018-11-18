@@ -1,18 +1,24 @@
-var express = require('express');
+const express = require('express');
 
-var misc = require('../../core/lib/misc');
+const misc = require('../../core/lib/misc');
 
-var reservation = require('./lib/reservation');
-var middleware = require('./lib/middleware');
+const reservation = require('./lib/reservation');
+const middleware = require('./lib/middleware');
 
-var router = express.Router();
-var routeTable = misc.getRouteData();
+const routeTable = misc.getRouteData();
+const site = express.Router();
 
-router.use(middleware.exposeLocals);
+site.use(middleware.exposeLocals);
 
-router.get(routeTable.reservation.form, reservation.form);
-router.post(routeTable.reservation.form, reservation.register);
-router.get(routeTable.reservation.status, reservation.status);
-router.post(routeTable.reservation.phoneSecret, reservation.sendSecret);
+site.get(routeTable.reservation['form'] + '/:cate?', reservation.form);
+site.post(routeTable.reservation['form'], reservation.register);
+site.get(routeTable.reservation['status'], reservation.status);
+site.post(routeTable.reservation['phone_secret'], reservation.sendSecret);
 
-module.exports = router;
+const manage = express.Router();
+
+manage.get(routeTable.reservation['manage'], reservation.manageHome);
+manage.post(routeTable.reservation['manage'], reservation.manage);
+manage.get(routeTable.reservation['clean_list'], reservation.manageFullList);
+
+module.exports = { site, manage };

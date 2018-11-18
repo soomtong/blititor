@@ -22,6 +22,10 @@ but *.html, *.css depends on each css frameworks.
 - 클래스는 첫문자를 대문자로 사용합니다.
 - 글로벌 변수와 로컬 상수는 모두 UPPER_CASE 로 사용합니다.
 
+### Constant in JSON
+
+JSON 포맷의 상수형 데이터 타입은 snake_case 를 사용합니다.
+
 ## File name Convention
 
 파일명은 snake_case 를 사용합니다. 물론 소문자입니다.
@@ -40,7 +44,7 @@ file_name.html  ( more preferred )
 filename.html
 ```
 
-## Folder name Convention
+### Folder name Convention
 
 폴더 이름의 구분은 '-' 를 사용합니다.
 

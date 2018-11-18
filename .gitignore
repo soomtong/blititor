@@ -23,6 +23,13 @@ theme.json.*
 config*.json
 config*.json.*
 
+*.psd
+*.pxd
+
 # for commercial themes or modules here.
 # or use start string with underbar
-# like `c_kosslab`
+# like `c_commercialcompany`
+# like `m_marketproduction`
+# like `e_enterprisesolution`
+app/c_**
+theme/c_**

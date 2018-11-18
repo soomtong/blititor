@@ -77,22 +77,22 @@
                     <ul class="cd-pagination no-space move-buttons custom-icons">
                         {% if pagination.hasPrev %}
                         {% if pagination.page > 1 %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.account }}?p={{pagination.page - 1}}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ route.manage.root + route.manage.account }}?p={{pagination.page - 1}}">Prev</a>
                         {% else %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.account }}">Prev</a>
+                        <li class="button"><a href="{{site.root}}{{ route.manage.root + route.manage.account }}">Prev</a>
                         {% endif %}
                         {% endif %}
 
                         {% for i in range(1, pagination.maxPage + 1) -%}
                         {% if i == pagination.page %}
-                        <li><a class="current" href="{{site.root}}{{ route.manage_root + route.manage.account }}?p={{i}}">{{i}}</a>
+                        <li><a class="current" href="{{site.root}}{{ route.manage.root + route.manage.account }}?p={{i}}">{{i}}</a>
                         {% else %}
-                        <li><a href="{{site.root}}{{ route.manage_root + route.manage.account }}?p={{i}}">{{i}}</a>
+                        <li><a href="{{site.root}}{{ route.manage.root + route.manage.account }}?p={{i}}">{{i}}</a>
                         {% endif %}
                         {%- endfor %}
 
                         {% if pagination.hasNext %}
-                        <li class="button"><a href="{{site.root}}{{ route.manage_root + route.manage.account }}?p={{pagination.page + 1}}">Next</a>
+                        <li class="button"><a href="{{site.root}}{{ route.manage.root + route.manage.account }}?p={{pagination.page + 1}}">Next</a>
                         {% endif %}
                     </ul>
                 </nav>

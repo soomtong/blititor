@@ -7,5 +7,8 @@
   "countAll": "SELECT count(id) as `count` FROM ??",
   "readReservationStatus": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `sort`, `updated_at`, `id` ASC",
   "readReservationList": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` ASC",
-  "selectByIdentifier": "SELECT * FROM ?? WHERE `category` = ? and `name` = ? and `email` = ? and `phone` = ?"
+  "selectByIdentifier": "SELECT * FROM ?? WHERE `category` = ? and `name` = ? and `email` = ? and `phone` = ?",
+  "countAllReservationList": "SELECT count(id) as `count` FROM ?? WHERE `category` = ?",
+  "readReservationListByPage": "SELECT * FROM ?? WHERE `category` = ? ORDER BY `updated_at` DESC LIMIT ?, ?",
+  "readTutorialStatusList": "SELECT * from ?? WHERE `category` = ? and FIND_IN_SET(?, `status`)"
 }

@@ -29,10 +29,15 @@ router.use(site.middleware.exposeLocals);
 // route for admin or manage. it's not included counter stat
 if (application.config && application.config['admin']) {
     router.use(routeTable.admin.root, admin.middleware.exposeLocals, admin.site);
+    // todo: remove, use temporary before migrate to each module's admin routes
+    router.use(routeTable.admin.root, admin.middleware.exposeLocals, admin.admin);
+
     winston.info('Enabled administrator module to /admin');
 }
 if (application.config && application.config['manage']) {
     router.use(routeTable.manage.root, manage.middleware.exposeLocals, manage.site);
+    // todo: remove, use temporary before migrate to each module's manage routes
+    router.use(routeTable.manage.root, manage.middleware.exposeLocals, manage.manage);
     winston.info('Enabled manager module to /manage');
 }
 

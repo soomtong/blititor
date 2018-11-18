@@ -61,7 +61,7 @@ function loginProcess(req, res) {
             return res.redirect('back');
         }
 
-        // winston.verbose(auth, userID, password);
+        winston.verbose('retrieved auth record id: ' + (auth && auth.id));
 
         bcrypt.compare(params.password, auth.user_password, function (err, result) {
             if (err) {
@@ -78,6 +78,14 @@ function loginProcess(req, res) {
             } else {
                 // retrieve with auth
                 account.findUserByAuthID(auth.id, function (error, userData) {
+                    if (error || !userData) {
+                        req.flash('error', {msg: '로그인 데이터베이스에 문제가 있습니다.'});
+
+                        winston.error(err);
+
+                        return res.redirect('back');
+                    }
+
                     const user = {
                         user_id: auth.user_id,
                         id: userData.id,
@@ -696,7 +704,7 @@ function galleryImageDelete(req, res) {
 function reservationList(req, res) {
     const params = {
         title: "운영자 화면",
-        cate: Number(req.query['c']) || 1,
+        cate: Number(req.query['c']) || 2,
         page: Number(req.query['p']) || 1
     };
 
@@ -719,7 +727,7 @@ function reservationList(req, res) {
 function reservationListFull(req, res) {
     const params = {
         title: "운영자 화면",
-        cate: Number(req.query['c']) || 1
+        cate: Number(req.query['c']) || 2
     };
 
     const mysql = connection.get();
@@ -777,7 +785,7 @@ function reservationTutorialStatus(req, res) {
             item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:mm');
         });
 
-        res.render(BLITITOR.site.manageTheme + '/manage/partial/reservation_status_list', params);
+        res.render(BLITITOR.site.manageTheme + '/manage/_partial/reservation_status_list', params);
     });
 }
 

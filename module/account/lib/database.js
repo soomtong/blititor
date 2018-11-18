@@ -212,9 +212,10 @@ function selectByAuthID(connection, authID, callback) {
     const field1 = ['user_id'];
     const field2 = ['id', 'uuid', 'nickname', 'avatar', 'photo', 'level', 'grant', 'created_at', 'updated_at', 'last_logged_at', 'login_counter'];
 
-    connection.query(query.selectByAuthIDWithAuth, [field1, field2, tables.auth, tables.user, authID], function (err, rows) {
+    let q = connection.query(query.selectByAuthIDWithAuth, [field1, field2, tables.auth, tables.user, authID], function (err, rows) {
         if (err || !rows || !rows[0]) {
-            winston.error("Can't Find by This authID", err, rows);
+            winston.error("Can't Select by This authID");
+            winston.error(q.sql);
 
             return callback(err);
         }

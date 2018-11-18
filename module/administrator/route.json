@@ -8,9 +8,9 @@
     "database_init": "/make-db-init",
     "theme_setup": "/theme-config",
     "account": "/account",
-    "accountEdit": "/account/edit",
-    "accountNew": "/account/register",
-    "accountAdd": "/account/add",
+    "account_edit": "/account/edit",
+    "account_new": "/account/register",
+    "account_add": "/account/add",
     "counter": "/counter"
   }
 }

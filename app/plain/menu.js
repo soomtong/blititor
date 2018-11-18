@@ -53,7 +53,7 @@ var AdminMenu = [
     {
         id: 'new',
         name: '신규 계정 생성',
-        url: '/admin' + routeTable.admin.accountNew
+        url: '/admin' + routeTable.admin.account_new
     },
     {
         id: 'manage',
@@ -76,7 +76,7 @@ var ManageMenu = [
     {
         id: 'page_log',
         name: '페이지 로그',
-        url: '/manage' + routeTable.manage.pageLog
+        url: '/manage' + routeTable.manage.page_log
     },
     {
         id: 'admin',
