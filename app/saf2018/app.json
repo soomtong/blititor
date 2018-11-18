@@ -1,9 +1,0 @@
-{
-  "locals": {
-    "title": "서울건축박람회"
-  },
-  "config": {
-    "manage": true,
-    "vendor": ["bulma", "bulma-ext", "jquery", "fontawesome", "flowjs"]
-  }
-}

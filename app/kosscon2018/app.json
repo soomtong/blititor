@@ -1,9 +1,0 @@
-{
-  "locals": {
-    "title": "공개SW개발자센터 컨퍼런스 2018"
-  },
-  "config": {
-    "manage": true,
-    "vendor": ["pure", "bootstrap", "jquery", "fontawesome"]
-  }
-}
