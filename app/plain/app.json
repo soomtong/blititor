@@ -1,10 +1,11 @@
 {
-  "locals": {
-    "title": "Plain"
-  },
-  "config": {
-    "admin": true,
-    "manage": true,
-    "vendor": ["pure", "jquery"]
-  }
+	"locals": {
+		"title": "Plain"
+	},
+	"config": {
+		"modules": [],
+		"vendors": ["pure", "jquery"],
+		"admin": true,
+		"manage": true
+	}
 }

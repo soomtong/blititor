@@ -295,8 +295,21 @@ function checkThemeConfigFile(configFile) {
     }
 }
 
+function checkMandatoryModule(moduleList, callback) {
+    let notExists = []
+    moduleList.map(function (moduleName) {
+        try {
+            fs.accessSync(path.join(BLITITOR.root, 'module', moduleName), fs.constants.F_OK)
+        } catch (e) {
+            notExists.push(moduleName)
+        }
+    })
+
+    callback(notExists.length > 0, notExists.join(', '))
+}
+
 function serviceToken(vendor) {
-    let token;
+    let token = '';
 
     token = serviceInformation[vendor] && serviceInformation[vendor].token;
 
@@ -306,7 +319,7 @@ function serviceToken(vendor) {
 }
 
 function serviceProvider(vendor) {
-    let provider;
+    let provider = '';
 
     provider = serviceInformation[vendor] && serviceInformation[vendor].provider;
 
@@ -341,6 +354,7 @@ module.exports = {
     serviceProvider: serviceProvider,
     showGlobalVar: showGlobalVar,
     showRoutes: showRoutes,
+    checkMandatoryModule: checkMandatoryModule,
     checkDatabaseConfiguration: checkDatabaseConfigFile,
     checkThemeConfiguration: checkThemeConfigFile,
     getDatabaseDefault: getDatabaseDefaultData,

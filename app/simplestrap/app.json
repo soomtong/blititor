@@ -1,8 +1,11 @@
 {
-  "locals": {
-    "title": "Simplestrap"
-  },
-  "config": {
-    "vendor": ["jquery"]
-  }
+	"locals": {
+		"title": "Simplestrap"
+	},
+	"config": {
+		"modules": [],
+		"vendors": ["bootstrap", "jquery"],
+		"admin": true,
+		"manage": true
+	}
 }

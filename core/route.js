@@ -42,12 +42,22 @@ if (application.config && application.config['manage']) {
 }
 
 // route for vendor static files
-if (application.config && application.config['vendor']) {
-    application.config.vendor.map(function (vendor) {
+if (application.config && application.config['vendors']) {
+    application.config.vendors.map(function (vendor) {
         winston.info('bound static library: \'' + vendor + '\' to ' + misc.vendorMap(vendor));
 
         router.use('/vendor/' + vendor, express.static(misc.vendorMap(vendor)));
     });
+}
+
+// check for mandatory modules
+if (application.config && application.config['modules']) {
+    misc.checkMandatoryModule(application.config['modules'], function (err, notExistModules) {
+        if (err) {
+            winston.error('some mandatory module is not exist');
+            winston.error(notExistModules)
+        }
+    })
 }
 
 // Favicon

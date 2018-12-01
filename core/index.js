@@ -150,7 +150,7 @@ try {
 
 app.use(morgan('combined', { stream: logFile }));
 app.use(errorHandler({ dumpExceptions: true, showStack: true, log: winston.error }));
-app.use(multerUploader.any());  // should set before csrf middleware
+app.use(multerUploader.any());  // should set before CSRF middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(device.capture({parseUserAgent: true}));

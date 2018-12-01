@@ -1,8 +1,11 @@
 {
-  "locals": {
-    "title": "팀블로그"
-  },
-  "config": {
-    "vendor": ["pure", "jquery"]
-  }
+	"locals": {
+		"title": "팀블로그"
+	},
+	"config": {
+    "modules": [],
+    "vendors": ["pure", "jquery"],
+		"admin": true,
+		"manage": true
+	}
 }

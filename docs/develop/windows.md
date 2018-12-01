@@ -12,8 +12,6 @@ PS C:\Windows\system32> npm -g i windows-build-tools
 > windows-build-tools@5.0.0 postinstall C:\Users\soomtong\AppData\Roaming\npm\node_modules\windows-build-tools
 > node ./dist/index.js
 
-
-
 Downloading vs_BuildTools.exe
 [>                                            ] 0.0% (0 B/s)
 Downloaded vs_BuildTools.exe. Saved to C:\Users\soomtong\.windows-build-tools\vs_BuildTools.exe.
