@@ -8,7 +8,7 @@ var routeTable = misc.getRouteData();
 var SiteMenu = [
     {
         id: 'index',
-        name: '홈',
+        name: '홈!!',
         logged: -1,
         url: routeTable.root
     },

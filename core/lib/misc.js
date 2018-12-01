@@ -122,6 +122,7 @@ function vendorMap(vendorName) {
     const map = {
         flowjs: 'node_modules/@flowjs/flow.js/dist',
         jquery: 'node_modules/jquery/dist',
+        uikit: 'node_modules/uikit/dist',
         bulma: 'node_modules/bulma/css',
         'bulma-ext': 'node_modules/bulma-extensions/dist',
         fontawesome: 'node_modules/font-awesome',

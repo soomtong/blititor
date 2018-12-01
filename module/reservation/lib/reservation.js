@@ -93,10 +93,10 @@ function createReservation(req, res) {
     if (req.body.track_choice3_3) sectionStatusData.push(req.body.track_choice3_3);
     if (req.body.track_choice4_1) sectionStatusData.push(req.body.track_choice4_1);
     if (req.body.track_choice4_2) sectionStatusData.push(req.body.track_choice4_2);
-    if (req.body.track_choice4_3) sectionStatusData.push(req.body.track_choice2_3);
+    if (req.body.track_choice4_3) sectionStatusData.push(req.body.track_choice4_3);
     if (req.body.track_choice5_1) sectionStatusData.push(req.body.track_choice5_1);
     if (req.body.track_choice5_2) sectionStatusData.push(req.body.track_choice5_2);
-    if (req.body.track_choice5_3) sectionStatusData.push(req.body.track_choice2_3);
+    if (req.body.track_choice5_3) sectionStatusData.push(req.body.track_choice5_3);
     if (req.body.track_choice6_1) sectionStatusData.push(req.body.track_choice6_1);
     if (req.body.track_choice6_2) sectionStatusData.push(req.body.track_choice6_2);
     if (req.body.register_introduce) sectionStatusData.push(req.body.register_introduce);
@@ -385,6 +385,7 @@ function reservationManageHome(req, res) {
         params.reservationList.map(function (item) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
             item.updated_at = common.dateFormatter(item.updated_at, 'DD, HH:m');
+            item.statusList = item.status.split(/\||,/).map(sess => sess.trim()).filter(title => !!title);
         });
 
         res.render(BLITITOR.site.manageTheme + '/manage/reservation', params);
@@ -401,6 +402,31 @@ function reservationListFull(req, res) {
         cate: Number(req.query['c']) || 2
     };
 
+    // it should be go to database records
+    const sessionTitle = [
+        '[Opening] Keynote',
+        '[Track1] AI Development',
+        '[Track1] AI Industry',
+        '[Track1] AI Community',
+        '[Track2] BigData Development',
+        '[Track2] BigData Industry',
+        '[Track2] BigData Community',
+        '[Track3] BlockChain Development',
+        '[Track3] BlockChain Industry',
+        '[Track3] BlockChain Community',
+        '[Track4] Cloud Development',
+        '[Track4] Cloud Industry',
+        '[Track4] Cloud Community',
+        '[Track1] A.I Development',
+        '[Track1] A.I Industry',
+        '[Track1] A.I Community',
+    ];
+    const tutorialTitle = [
+        '튜토리얼1',
+        '튜토리얼2',
+        '기타정보',
+    ];
+
     const mysql = connection.get();
 
     db.readReservationListFull(mysql, Number(params.cate), function (error, result) {
@@ -408,12 +434,39 @@ function reservationListFull(req, res) {
         params.total = result.total;
         params.reservationList = result.reservationList;
 
+        if (params.cate == 2) {
+            params.statusMap = sessionTitle.slice(0, 12);    // only need 0~12 to show in a view
+        } else {
+            params.statusMap = tutorialTitle.slice(0, 3);    // only need 0~12 to show in a view
+        }
+
         params.reservationList.map(function (item) {
             item.created_at = common.dateFormatter(item.created_at, 'MM-DD');
             item.updated_at = common.dateFormatter(item.updated_at, 'MM-DD HH:m');
+            item.statusList = [];
+
+            const statusArray = item.status.split(/\||,/).map(sess => sess.trim()).filter(title => !!title);
+
+            statusArray.map(function (sess) {
+                if (params.cate == 2) {
+                    const idx = sessionTitle.findIndex(title => title == sess);
+
+                    item.statusList.push(idx)
+                } else {
+                    const idx = tutorialTitle.findIndex(title => title == sess);
+                    item.statusList.push(idx);
+                    item.additionalInfo = statusArray.join(' | ')
+
+                }
+            });
+
+            console.log(item.statusList);
+
         });
 
-        res.render(BLITITOR.site.manageTheme + '/manage/reservation_download', params);
+        const renderFile = params.cate == 2 ? 'reservation_download' : 'tutorial_download';
+
+        res.render(BLITITOR.site.manageTheme + '/manage/' + renderFile, params);
     });
 }
 

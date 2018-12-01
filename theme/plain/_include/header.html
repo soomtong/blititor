@@ -3,7 +3,7 @@
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading" href="{{site.root}}/">{{app.title}}</a>
         <ul class="pure-menu-list">
-            {% for item in menu %}
+            {% for item in siteMenu %}
             {% if not user %}
             {% if item.logged < 0 %}
             {{ Header.item(item, site) }}

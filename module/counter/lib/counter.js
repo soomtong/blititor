@@ -40,7 +40,7 @@ function accountCounter(uuid, type, agent, device) {
 
     db.insertAccountActionLog(mysql, logData, function (error, result) {
         if (error) {
-            winston.error(error);
+            winston.error('insert account counter error: ' + error);
         } else {
             winston.verbose('Insert user ' + counterData.type + ' record:', uuid);
         }
@@ -48,7 +48,7 @@ function accountCounter(uuid, type, agent, device) {
 
     db.updateAccountCounter(mysql, counterData, function (error, result) {
         if (error) {
-            winston.error(error);
+            winston.error('update account counter error: ' + error);
         } else {
             winston.verbose('Updated ' + counterData.type + ' info record:', uuid);
         }
@@ -65,7 +65,7 @@ function sessionCounter(type) {
 
     db.updateAccountCounter(mysql, counterData, function (error, result) {
         if (error) {
-            winston.error(error);
+            winston.error('update session counter error: ' + error);
         } else {
             winston.verbose('Updated ' + counterData.type + ' info record:');
         }
@@ -100,7 +100,7 @@ function pageCounter(path, method, ip, ref, agent, device) {
     // insert log
     db.insertPageViewLog(mysql, logData, function (error, result) {
         if (error) {
-            winston.error(error);
+            winston.error('insert log error: ' + error);
         } else {
             winston.verbose('Insert visit log record:', result.insertId);
         }
@@ -109,7 +109,7 @@ function pageCounter(path, method, ip, ref, agent, device) {
     // update counter
     db.updatePageCounter(mysql, counterData, function (error, result) {
         if (error) {
-            winston.error(error);
+            winston.error('counter update error: '+ error);
         } else {
             winston.verbose('Update visit counter record:', result.insertId || result.changedRows);
         }
