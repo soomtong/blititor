@@ -126,6 +126,7 @@ function vendorMap(vendorName) {
         'bulma-ext': 'node_modules/bulma-extensions/dist',
         fontawesome: 'node_modules/font-awesome',
         bootstrap: 'node_modules/bootstrap/dist',
+        popper: 'node_modules/popper.js/dist',
         pure: 'node_modules/purecss/build'
     };
 
