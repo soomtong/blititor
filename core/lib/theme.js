@@ -61,11 +61,12 @@ function getFavicon(themeName) {
     var themeFaviconPath = path.join('.', 'theme', themeName, 'common', 'asset', 'favicon.ico');
     var defaultFaviconPath = path.join('public', 'common', 'favicon.ico');
 
-    if (fs.existsSync(themeFaviconPath)) {
+    try {
+        fs.accessSync(themeFaviconPath)
         winston.info('bind theme favicon: /' + themeFaviconPath);
 
         return favicon(themeFaviconPath);
-    } else {
+    } catch(err) {
         winston.verbose('bind default favicon: /' + defaultFaviconPath);
 
         return favicon(defaultFaviconPath);
