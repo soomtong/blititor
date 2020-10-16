@@ -27,7 +27,7 @@
     "express-validator": "^5.3.0",
     "font-awesome": "^4.7.0",
     "jimp": "^0.5.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "lusca": "^1.6.1",
     "mailcomposer": "^4.0.2",
     "mailgun-js": "^0.22.0",
