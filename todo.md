@@ -1,0 +1,2 @@
+- [ ] remove bower
+- [ ] introduce cli
