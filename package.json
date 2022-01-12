@@ -31,7 +31,7 @@
     "lusca": "^1.6.1",
     "mailcomposer": "^4.0.2",
     "mailgun-js": "^0.22.0",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^12.3.2",
     "method-override": "^3.0.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
