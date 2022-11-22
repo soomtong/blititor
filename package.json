@@ -52,7 +52,7 @@
     "semver": "^5.6.0",
     "serve-favicon": "^2.5.0",
     "sharp": "^0.21.0",
-    "socket.io": "^2.1.1",
+    "socket.io": "^2.5.0",
     "striptags": "^3.1.1",
     "superagent": "^4.0.0-beta.5",
     "useragent": "^2.3.0",
